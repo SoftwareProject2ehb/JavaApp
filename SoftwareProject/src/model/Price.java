@@ -21,6 +21,9 @@ public class Price {
 	double costPerUnit;
 	
 	public Price (String typeTicket, betalingsType bt, double cpu) {
+		if (typeTicket == null || typeBetaling == null || cpu < 0)
+			throw new IllegalArgumentException();
+		
 		this.typeTicket = typeTicket;
 		this.typeBetaling = bt;
 		this.costPerUnit = cpu;
@@ -34,23 +37,35 @@ public class Price {
 		return typeTicket;
 	}
 
-	public void setTypeTicket(String typeTicket) {
+	public int setTypeTicket(String typeTicket) {
+		if (typeTicket == null)
+			return 200;
+		
 		this.typeTicket = typeTicket;
+		return 0;
 	}
 
 	public betalingsType getTypeBetaling() {
 		return typeBetaling;
 	}
 
-	public void setTypeBetaling(betalingsType typeBetaling) {
+	public int setTypeBetaling(betalingsType typeBetaling) {
+		if (typeBetaling == null)
+			return 200;
+		
 		this.typeBetaling = typeBetaling;
+		return 0;
 	}
 
 	public double getCostPerUnit() {
 		return costPerUnit;
 	}
 
-	public void setCostPerUnit(double costPerUnit) {
+	public int setCostPerUnit(double costPerUnit) {
+		if (costPerUnit < 0)
+			return 100;
+		
 		this.costPerUnit = costPerUnit;
+		return 0;
 	}
 }
