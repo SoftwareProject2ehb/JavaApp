@@ -1,6 +1,6 @@
 package data_control;
-import databaseConnect.*;
-import databaseConnectDAO.*;
+
+import model.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,43 +8,31 @@ import java.sql.SQLException;
 
 public class LostObjectDAO extends BaseDAO{
 
-	protected ResultSet rs;
-    protected PreparedStatement ps;
-    protected Connection conn;
-	public LostObjectDAO() {
-	    conn = null;
-        rs = null;
-        ps = null;
-        getConnection();
-	}
 	
 	
-	public void getConnection(){
-    	DatabaseConnect db = new DatabaseConnect();
-        this.conn = db.getInstance().getConnection();
-    }
 	
 	
-	public int CreatLostObject (LostObject object)
+	
+	public void CreatLostObject (LostObject object)
 	{
 		 PreparedStatement ps = null;
 
-		    String sql = "INSERT INTO User VALUES(?,?,?,?)";
+		    String sql = "INSERT INTO LostObject VALUES(null,?,?,?,?)";
 
 		    try {
 
-		        if (conn.isClosed()) {
+		        if (getCon().isClosed()) {
 		            throw new IllegalStateException("error unexpected");
 		        }
-		        ps = conn.prepareStatement(sql);
+		        ps = getCon().prepareStatement(sql);
 		        
 		        ps.setInt(1, object.getUserID());
 		        ps.setString(2, object.getName());
 		        ps.setString(3, object.getPlace());
-		        ps.setDate(3, object.getDate());
+		        ps.setString(4, object.getDate());
 		  
 		        
-		        return ps.executeUpdate();
+		       ps.executeUpdate();
 		    } catch (SQLException e) {
 		        System.out.println(e.getMessage());
 		        throw new RuntimeException(e.getMessage());
@@ -62,37 +50,11 @@ public class LostObjectDAO extends BaseDAO{
 
 
  
-/*
-    
- public User find(int userId) {
-     User user = new User();      
-       
-     try {
-       ResultSet result = this.conn.createStatement(
-         ResultSet.TYPE_SCROLL_INSENSITIVE,
-         ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM User WHERE id = " + userId);
-       if(result.first())
-         user = new User(
-                 result.getInt("ID"),
-                 result.getString("name"),
-                 result.getString("email"),
-                 result.getString("phone"),
-                 result.getString("address"),
-                 result.getString("login"),
-                 result.getString("passwoord"),
-                 result.getString("role"),
-                 result.getBoolean("actif"));         
-     } catch (SQLException e) {
-       e.printStackTrace();
-     }
-     return user;
-   }
-   */
    public static void main(String[] args) {
        
-     
+	   LostObjectDAO lost = new LostObjectDAO();
        LostObject u = new LostObject(1,"daoud","ehb","19/10/2001");
-       
+       lost.CreatLostObject(u);
        //User u = ud.find(1);
      
       //System.out.println(u.getEmail());

@@ -1,4 +1,4 @@
-
+package model;
 
 import java.sql.Date;
 
@@ -10,11 +10,13 @@ private String Place;
 private String date;
 
 
-public LostObject( int userID, String name, String place, String date) {
+
+
+public LostObject(int userID, String name, String place, String date) {
 	super();
 	this.userID = userID;
 	this.name = name;
-	Place = place;
+	this.Place = place;
 	this.date = date;
 }
 public int getID() {

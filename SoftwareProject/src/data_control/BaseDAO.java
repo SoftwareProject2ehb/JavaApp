@@ -1,24 +1,34 @@
-package DatabaseConnectDAO;
+
 
 package data_control;
+
+
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import databaseConnect.*;
+import java.sql.SQLException;
+
 public class BaseDAO {
-	protected ResultSet rs;
-    protected PreparedStatement ps;
-    protected Connection conn;
-    
-    public BaseDAO(){
-        conn = null;
-        rs = null;
-        ps = null;
-        getConnection();
-    }
-    
-    public void getConnection(){
-    	DatabaseConnect db = new DatabaseConnect();
-        this.conn = db.getInstance().getConnection();
-    }
+
+	private Connection con;
+	
+	public BaseDAO()
+	{
+		try {
+			con = DatabaseConnect.getInstance().getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public Connection getCon() {
+		return con;
+	}
+
+	public void setCon(Connection con) {
+		this.con = con;
+	}
+	
+	
+	
+	
 }
