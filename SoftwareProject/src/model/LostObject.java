@@ -8,10 +8,42 @@ private int userID;
 private String name;
 private String Place;
 private String date;
+private boolean claimed;
+private String nameClaimed;
+private String dateClaimed;
 
 
 
-
+public LostObject(int iD, int userID, String name, String place, String date, boolean claimed, String nameClaimed,
+		String dateClaimed) {
+	super();
+	ID = iD;
+	this.userID = userID;
+	this.name = name;
+	Place = place;
+	this.date = date;
+	this.claimed = claimed;
+	this.nameClaimed = nameClaimed;
+	this.dateClaimed = dateClaimed;
+}
+public boolean isClaimed() {
+	return claimed;
+}
+public void setClaimed(boolean claimed) {
+	this.claimed = claimed;
+}
+public String getNameClaimed() {
+	return nameClaimed;
+}
+public void setNameClaimed(String nameClaimed) {
+	this.nameClaimed = nameClaimed;
+}
+public String getDateClaimed() {
+	return dateClaimed;
+}
+public void setDateClaimed(String dateClaimed) {
+	this.dateClaimed = dateClaimed;
+}
 public LostObject(int userID, String name, String place, String date) {
 	super();
 	this.userID = userID;
@@ -69,4 +101,11 @@ public int setDate(String date) {
 	this.date = date;
 	return 0;
 }
+@Override
+public String toString() {
+	return "LostObject [ID=" + ID + ", userID=" + userID + ", name=" + name + ", Place=" + Place + ", date=" + date
+			+ ", claimed=" + claimed + ", nameClaimed=" + nameClaimed + ", dateClaimed=" + dateClaimed + "]";
+}
+
+
 }
