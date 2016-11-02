@@ -173,6 +173,9 @@ public ArrayList<LostObject> getAllLostObjectClaimed() {
 
 	return lijst;
 }
+
+
+//ZOEK op attribuut werkt niet
 public ArrayList<LostObject> getLostObjectOpAttribut(ZoekLostObject attribuut,String zoekop) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
