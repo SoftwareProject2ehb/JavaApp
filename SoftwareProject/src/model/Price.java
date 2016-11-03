@@ -39,10 +39,10 @@ public class Price {
 
 	public int setTypeTicket(String typeTicket) {
 		if (typeTicket == null)
-			return 200;
+			return ErrorCode.NULL_PARAM;
 		
 		this.typeTicket = typeTicket;
-		return 0;
+		return ErrorCode.NO_ERROR;
 	}
 
 	public betalingsType getTypeBetaling() {
@@ -51,10 +51,10 @@ public class Price {
 
 	public int setTypeBetaling(betalingsType typeBetaling) {
 		if (typeBetaling == null)
-			return 200;
+			return ErrorCode.NULL_PARAM;
 		
 		this.typeBetaling = typeBetaling;
-		return 0;
+		return ErrorCode.NO_ERROR;
 	}
 
 	public double getCostPerUnit() {
@@ -63,9 +63,9 @@ public class Price {
 
 	public int setCostPerUnit(double costPerUnit) {
 		if (costPerUnit < 0)
-			return 100;
+			return ErrorCode.INCORRECT_PARAM;
 		
 		this.costPerUnit = costPerUnit;
-		return 0;
+		return ErrorCode.NO_ERROR;
 	}
 }

@@ -26,10 +26,10 @@ public class Ticket {
 
 	public int setTypeTicket(String typeTicket) {
 		if (typeTicket == null)
-			return 200;
+			return ErrorCode.NULL_PARAM;
 		
 		this.typeTicket = typeTicket;
-		return 0;
+		return ErrorCode.NO_ERROR;
 	}
 
 	public String getStartStation() {
@@ -38,10 +38,10 @@ public class Ticket {
 
 	public int setStartStation(String startStation) {
 		if (startStation == null)
-			return 200;
+			return ErrorCode.NULL_PARAM;
 		
 		this.startStation = startStation;
-		return 0;
+		return ErrorCode.NO_ERROR;
 	}
 
 	public String getEndStation() {
@@ -50,10 +50,10 @@ public class Ticket {
 
 	public int setEndStation(String endStation) {
 		if (endStation == null)
-			return 200;
+			return ErrorCode.NULL_PARAM;
 
 		this.endStation = endStation;
-		return 0;
+		return ErrorCode.NO_ERROR;
 	}
 
 	public double getPrice() {
@@ -62,9 +62,9 @@ public class Ticket {
 
 	public int setPrice(double price) {
 		if (price < 0)
-			return 100;
+			return ErrorCode.INCORRECT_PARAM;
 
 		this.price = price;
-		return 0;
+		return ErrorCode.NO_ERROR;
 	}
 }
