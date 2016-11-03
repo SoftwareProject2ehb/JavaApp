@@ -1,0 +1,31 @@
+package model;
+
+import java.sql.*;
+
+
+
+public class Main {
+	public static void main(String[] args) {
+		try {
+			// get a connection to the database
+			Connection myConn = DriverManager.getConnection("jdbc:mysql:https://dt5.ehb.be/phpmyadmin/SP2GR2", "SP2GR2","Jw84y");
+			
+			//Create a statement
+			
+			Statement stmt = myConn.createStatement();
+			
+			// Execute SQL query
+			
+			ResultSet rs = stmt.executeQuery("Select * from Abonnement");
+			
+			// process the result
+			
+			while (rs.next()) {
+				System.out.println(rs.getInt(1) + ", " + rs.getString(2));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+}
