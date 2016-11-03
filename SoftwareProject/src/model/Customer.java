@@ -5,7 +5,8 @@ import java.util.HashMap;
 public class Customer {
 	
 	private int id = -1;
-	private String name = null;
+	private String first_name = null;
+	private String last_name = null;
 	private String email = null;
 	private String phone = null;
 	private String address = null;
@@ -17,9 +18,10 @@ public class Customer {
 	 * @param phone The phone number of the created customer
 	 * @param address The address of the created customer
 	 */
-	public Customer(String name, String email, String phone, String address) {
+	public Customer(String first_name, String last_name, String email, String phone, String address) {
 		this.id = -1;	//TODO
-		this.name = name;
+		this.first_name = first_name;
+		this.last_name = last_name;
 		this.email = email;
 		this.phone = phone;
 		this.address = address;
@@ -33,8 +35,8 @@ public class Customer {
 	 * @param phone The phone number of the created customer
 	 * @param address The address of the created customer
 	 */
-	public Customer(int id, String name, String email, String phone, String address) {
-		this(name, email, phone, address);
+	public Customer(int id, String first_name, String last_name, String email, String phone, String address) {
+		this(first_name, last_name, email, phone, address);
 		this.id = id;
 	}
 
@@ -42,8 +44,12 @@ public class Customer {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return first_name;
+	}
+	
+	public String getLastName() {
+		return last_name;
 	}
 
 	public String getEmail() {
@@ -73,17 +79,19 @@ public class Customer {
 
 	/**
 	 * Setter for the name attribute of Customer
-	 * @param name A string value larger than one character and smaller than 100
+	 * @param first_name A string value larger than one character and smaller than 100
+	 * @param last_name A string value larger than one character and smaller than 100
 	 * @return 0: the set operation succeeded, 100: the name parameter is not valid, 200: the name object is NULL
 	 */
-	public int setName(String name) {
-		if (name == null) {
+	public int setName(String first_name, String last_name) {
+		if (first_name == null || last_name == null) {
 			return 200;
 		}
-		if (name.length() < 1 || name.length() >= 100) {
+		if (first_name.length() < 1 || first_name.length() >= 100 || last_name.length() < 1 || last_name.length() >= 100) {
 			return 100;
 		}
-		this.name = name;
+		this.first_name = first_name;
+		this.last_name = last_name;
 		return 0;
 	}
 
