@@ -1,18 +1,19 @@
 package model;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Abonnement {
 	private int id;
-	private int ticketType;
+	private String ticketType;
 	private double price;
 	private String startStation;
 	private String endStation;
 	private int customerId;
-	private LocalDateTime startDate;
-	private LocalDateTime endDate;
+	private Date startDate;
+	private Date endDate;
 	
-	public Abonnement(int id, int ticketType, double price, String startStation, String endStation, int customerId,
-			LocalDateTime startDate, LocalDateTime endDate) {
+	public Abonnement(int id, String ticketType, double price, int customerId, String endStation, String startStation,
+			Date startDate, Date endDate) {
 		super();
 		this.id = id;
 		this.ticketType = ticketType;
@@ -32,11 +33,11 @@ public class Abonnement {
 		this.id = id;
 	}
 
-	public int getTicketType() {
+	public String getTicketType() {
 		return ticketType;
 	}
 
-	public void setTicketType(int ticketType) {
+	public void setTicketType(String ticketType) {
 		this.ticketType = ticketType;
 	}
 
@@ -72,19 +73,19 @@ public class Abonnement {
 		this.customerId = customerId;
 	}
 
-	public LocalDateTime getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDateTime getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 	
