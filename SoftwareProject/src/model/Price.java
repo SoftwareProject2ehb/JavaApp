@@ -14,19 +14,47 @@ public class Price {
 			default: throw new IllegalArgumentException();
 			}
 		}
+		
+		public static betalingsType stringToBetalingsType(String s) {
+			if (s.toUpperCase() == "PER_STATION") {
+				return betalingsType.PER_STATION;
+			}
+			if (s.toUpperCase() == "PER_KM") {
+				return betalingsType.PER_KM;
+			}
+			if (s.toUpperCase() == "PER_HOUR") {
+				return betalingsType.PER_HOUR;
+			}
+			if (s.toUpperCase() == "PER_ZONE") {
+				return betalingsType.PER_ZONE;
+			}
+			
+			return null;
+		}
 	};
 	
+	int id;
 	String typeTicket;
 	betalingsType typeBetaling;
 	double costPerUnit;
 	
-	public Price (String typeTicket, betalingsType bt, double cpu) {
+	public Price (int id, String typeTicket, betalingsType bt, double cpu) {
 		if (typeTicket == null || typeBetaling == null || cpu < 0)
 			throw new IllegalArgumentException();
 		
+		this.id = id;
 		this.typeTicket = typeTicket;
 		this.typeBetaling = bt;
 		this.costPerUnit = cpu;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int setId(int id) {
+		this.id = id;
+		return ErrorCode.NO_ERROR;
 	}
 
 	public String getPriceInfo() {

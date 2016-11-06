@@ -1,21 +1,32 @@
 package model;
 
 public class Ticket {
+	int ID;
 	String typeTicket;
 	String startStation;
 	String endStation;
 	double price;
 	
-	public Ticket(String type, String start, String end, double price) {
+	public Ticket(int ID, String type, String start, String end, double price) {
 		if (type == null || start == null || end == null || price < 0)
 			throw new IllegalArgumentException();
 		
+		this.ID = ID;
 		this.typeTicket = type;
 		this.startStation = start;
 		this.endStation = end;
 		this.price = price;
 	}
 	
+	public int getID() {
+		return ID;
+	}
+
+	public int setID(int iD) {
+		ID = iD;
+		return ErrorCode.NO_ERROR;
+	}
+
 	public String getTicketInfo() {
 		return typeTicket + " van " + startStation + " tot " + endStation + " : €" + price;
 	}
