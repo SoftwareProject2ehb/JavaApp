@@ -1,19 +1,21 @@
 package model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Train {
-int trainId;
+int id;
 String start;
 String arrival;
-LocalDateTime startTime;
-LocalDateTime arrivalTime;
+Date startTime;
+Date arrivalTime;
 
 
 
-public Train(int trainId, String start, String arrival, LocalDateTime startTime, LocalDateTime arrivalTime) {
+public Train(int id, String start, String arrival, Date startTime, Date arrivalTime) {
 	super();
-	this.trainId = trainId;
+	
+	this.id = id;
 	this.start = start;
 	this.arrival = arrival;
 	this.startTime = startTime;
@@ -22,14 +24,14 @@ public Train(int trainId, String start, String arrival, LocalDateTime startTime,
 
 
 
-public int getTrainId() {
-	return trainId;
+public int getId() {
+	return id;
 }
 
 
 
-public void setTrainId(int trainId) {
-	this.trainId = trainId;
+public void setId(int id) {
+	this.id = id;
 }
 
 
@@ -58,25 +60,25 @@ public void setArrival(String arrival) {
 
 
 
-public LocalDateTime getStartTime() {
+public Date getStartTime() {
 	return startTime;
 }
 
 
 
-public void setStartTime(LocalDateTime startTime) {
+public void setStartTime(Date startTime) {
 	this.startTime = startTime;
 }
 
 
 
-public LocalDateTime getArrivalTime() {
+public Date getArrivalTime() {
 	return arrivalTime;
 }
 
 
 
-public void setArrivalTime(LocalDateTime arrivalTime) {
+public void Date(Date arrivalTime) {
 	this.arrivalTime = arrivalTime;
 }
 
