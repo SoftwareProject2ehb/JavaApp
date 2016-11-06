@@ -1,16 +1,20 @@
 package data_control;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import model.Stop;
+import model.Ticket;
 
 public class StopDAO extends BaseDAO{
 	public void createStop(Stop stop)
 	{
 		PreparedStatement ps = null;
 		
-		String sql = "INSERT INTO Stop VALUES(?,?,?,?)";
+		String sql = "INSERT INTO Stops VALUES(?,?,?,?)";
 		
 		try {
 
@@ -42,7 +46,7 @@ public class StopDAO extends BaseDAO{
 	
 	public void updateStop(Stop stop) {
 		PreparedStatement ps = null;	
-		String update = "UPDATE Stop SET trainID=?, stopID=?, name=?, platform=?, WHERE stopID=?";
+		String update = "UPDATE Stops SET trainID=?, stopID=?, name=?, platform=?, WHERE stopID=?";
 		
 		try {
 		if (getCon().isClosed()) {
@@ -63,4 +67,49 @@ public class StopDAO extends BaseDAO{
 			throw new RuntimeException(e.getMessage());
 		}
 	}
+}
+
+public Stop findStopById(int id) {
+	Statement st = null;
+	Stop s = null;
+	
+	try {
+		if (getCon().isClosed()) {
+			throw new IllegalStateException("error unexpected");
+		}
+		st = (Statement) getCon().createStatement();
+		ResultSet res = st.executeQuery("SELECT * FROM Stops WHERE ID = " + id);
+
+		while (res.next()) {
+			s = new Stop(res.getInt(1), res.getInt(2),res.getString(3), res.getInt(4));
+
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+
+	return s;
+}
+
+public ArrayList<Stop> getAllStops() {
+	ArrayList<Stop> list = new ArrayList<Stop>();
+	
+	Statement st = null;
+	try {
+		if (getCon().isClosed()) {
+			throw new IllegalStateException("error unexpected");
+		}
+		st = (Statement) getCon().createStatement();
+		ResultSet res = st.executeQuery("SELECT * FROM Stops");
+
+		while (res.next()) {
+			Stop s = new Stop(res.getInt(1), res.getInt(2),res.getString(3), res.getInt(4));
+			list.add(s);
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+
+	return list;
+}
 }
