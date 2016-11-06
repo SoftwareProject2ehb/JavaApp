@@ -6,15 +6,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.Stop;
-import model.Ticket;
+import model.LogFile;
 
-public class StopDAO extends BaseDAO{
-	public void createStop(Stop stop)
+public class LogFileDAO {
+	public void createLogFile(LogFile logfile)
 	{
 		PreparedStatement ps = null;
 		
-		String sql = "INSERT INTO Stop VALUES(?,?,?,?)";
+		String sql = "INSERT INTO LogFile VALUES(?,?,?,?)";
 		
 		try {
 
@@ -23,10 +22,11 @@ public class StopDAO extends BaseDAO{
 	        }
 	        ps = getCon().prepareStatement(sql);
 	        
-	        ps.setInt(1, stop.getTrainID());
-	        ps.setInt(2, stop.getStopID());
-	        ps.setString(2, stop.getName());
-	        ps.setInt(3, stop.getPlatform());
+	        ps.setInt(1, logfile.getLogFileID());
+	        ps.setString(2, logfile.getDescription());
+	        java.sql.Date sqlTime = new java.sql.Date(logfile.getTime().getTime());
+	        ps.setDate(3, sqlTime);
+	        ps.setInt(4, logfile.getUserID());
 	        
 	        ps.executeUpdate();
 	    } catch (SQLException e) {
@@ -44,9 +44,9 @@ public class StopDAO extends BaseDAO{
 	    }
 	}
 	
-	public void updateStop(Stop stop) {
+	public void updateLogfile(LogFile logfile) {
 		PreparedStatement ps = null;	
-		String update = "UPDATE Stop SET trainID=?, stopID=?, name=?, platform=?, WHERE stopID=?";
+		String update = "UPDATE LogFile SET logFileID=?, description=?, time=?, userID=?, WHERE logFileID=?";
 		
 		try {
 		if (getCon().isClosed()) {
@@ -54,11 +54,12 @@ public class StopDAO extends BaseDAO{
 		}
 			ps = getCon().prepareStatement(update);
 		
-			ps.setInt(1, stop.getTrainID());
-			ps.setInt(2, stop.getStopID());
-			ps.setString(3, stop.getName());
-			ps.setInt(4, stop.getPlatform());
-			ps.setInt(5, stop.getStopID());
+			ps.setInt(1, logfile.getLogFileID());
+			ps.setString(2, logfile.getDescription());
+			java.sql.Date sqlTime = new java.sql.Date(logfile.getTime().getTime());
+	        ps.setDate(3, sqlTime);
+			ps.setInt(4, logfile.getUserID());
+			ps.setInt(5, logfile.getLogFileID());
 			
 			ps.executeUpdate();
 			ps.close();
@@ -67,31 +68,31 @@ public class StopDAO extends BaseDAO{
 			throw new RuntimeException(e.getMessage());
 		}
 	}
+}
 
-
-public Stop findStopById(int id) {
+	public LogFile findLogFileById(int id) {
 	Statement st = null;
-	Stop s = null;
+	LogFile l = null;
 	
 	try {
 		if (getCon().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getCon().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM Stop WHERE ID = " + id);
+		ResultSet res = st.executeQuery("SELECT * FROM LogFile WHERE logFileID = " + id);
 
 		while (res.next()) {
-			s = new Stop(res.getInt(1), res.getInt(2),res.getString(3), res.getInt(4));
+			s = new LogFile(res.getInt(1), res.getString(2),res.getDate(3), res.getInt(4));
 
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 
-	return s;
+	return l;
 }
 
-public ArrayList<Stop> getAllStops() {
+	public ArrayList<Stop> getAllStops() {
 	ArrayList<Stop> list = new ArrayList<Stop>();
 	
 	Statement st = null;
