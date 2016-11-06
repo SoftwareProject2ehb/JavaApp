@@ -67,7 +67,7 @@ public class StopDAO extends BaseDAO{
 			throw new RuntimeException(e.getMessage());
 		}
 	}
-}
+
 
 public Stop findStopById(int id) {
 	Statement st = null;

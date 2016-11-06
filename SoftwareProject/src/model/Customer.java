@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 
+import data_control.CustomerDAO;
+
 public class Customer {
 	
 	private int id = -1;
@@ -153,13 +155,18 @@ public class Customer {
 		if (id > 999999 || id < 0) {
 			return null;
 		}
+		
+		CustomerDAO cd = new CustomerDAO();
+		Customer cust = cd.findCustomerById(id);
+		//TODO Change this way of working with CustomerDAO, should be a global way
+		
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		hashmap.put("id", id);
-		hashmap.put("address", "address");
-		hashmap.put("email", "email");
-		hashmap.put("name", "name");
-		hashmap.put("phone", "phone");
-		//TODO Replace the key values with Customer-specific information, retrieved from the id parameter
+		hashmap.put("address", cust.getAddress());
+		hashmap.put("email", cust.getEmail());
+		hashmap.put("firstname", cust.getFirstName());
+		hashmap.put("lastname", cust.getLastName());
+		hashmap.put("phone", cust.getPhone());
 		
 		return null;
 	}
