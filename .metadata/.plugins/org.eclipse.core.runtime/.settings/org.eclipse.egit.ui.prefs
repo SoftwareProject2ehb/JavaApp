@@ -5,6 +5,6 @@
 //BranchProjectTracker__/Users/Runekid/git/JavaApp/.git_Onur=<?xml version\="1.0" encoding\="UTF-8"?>\n<projects branch\="Onur">\n<project>/SoftwareProject</project>\n</projects>
 //BranchProjectTracker__/Users/Runekid/git/JavaApp/.git_master=<?xml version\="1.0" encoding\="UTF-8"?>\n<projects branch\="master">\n<project>/SoftwareProject</project>\n</projects>
 CloneWizard_ImportProjects=true
-commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\n<messages>\n<message>metadata</message>\n<message>metadata&\#x0A;</message>\n<message>fefef</message>\n<message>metadata commit&\#x0A;</message>\n<message>aaaaaaaaaaaaaaaaaaaa ik kan ni uit deze branch zonder te committee &\#x0A;</message>\n<message>gemerged met masterbranch</message>\n</messages>
+commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\n<messages>\n<message>Merge branch &apos;Mohamed&apos; into Onur&\#x0A;&\#x0A;Conflicts\:&\#x0A;&\#x09;.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt&\#x0A;&\#x0A;&\#x09;&\#x0A;&\#x09;&\#x0A;&\#x09;&\#x0A;AbonnementDAO aangemaakt met een eerste toevoegfunctie&\#x0A;</message>\n<message>metadata</message>\n<message>metadata&\#x0A;</message>\n<message>fefef</message>\n<message>metadata commit&\#x0A;</message>\n<message>aaaaaaaaaaaaaaaaaaaa ik kan ni uit deze branch zonder te committee &\#x0A;</message>\n<message>gemerged met masterbranch</message>\n</messages>
 eclipse.preferences.version=1
 show_initial_config_dialog=false
