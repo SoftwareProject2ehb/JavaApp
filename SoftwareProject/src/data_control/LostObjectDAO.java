@@ -32,6 +32,7 @@ public class LostObjectDAO extends BaseDAO{
 		        ps.setInt(1, object.getUserID());
 		        ps.setString(2, object.getName());
 		        ps.setString(3, object.getPlace());
+		        // TO DO SET DATE
 		        ps.setString(4, object.getDate());
 		  
 		        
@@ -68,7 +69,7 @@ public void updateLostObect(LostObject object) {
 			ps.setString(1, object.getNameClaimed());
 			ps.setString(2, object.getDateClaimed());
 			ps.setInt(3, object.getID());
-			
+			 // TO DO SET DATE
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

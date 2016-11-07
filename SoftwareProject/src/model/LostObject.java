@@ -7,6 +7,7 @@ private int ID;
 private int userID;
 private String name;
 private String Place;
+// TO DO SET DATE
 private String date;
 private boolean claimed;
 private String nameClaimed;
@@ -93,10 +94,10 @@ public int setPlace(String place) {
 		return 200;
 	Place = place;
 	return 0;
-}
+} // TO DO SET DATE
 public String getDate() {
 	return date;
-}
+} // TO DO SET DATE
 public int setDate(String date) {
 	this.date = date;
 	return 0;
