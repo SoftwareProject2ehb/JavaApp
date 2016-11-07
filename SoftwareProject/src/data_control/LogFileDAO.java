@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.LogFile;
+import model.*;
 
-public class LogFileDAO {
+public class LogFileDAO extends BaseDAO{
 	public void createLogFile(LogFile logfile)
 	{
 		PreparedStatement ps = null;
@@ -68,7 +68,6 @@ public class LogFileDAO {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
-}
 
 	public LogFile findLogFileById(int id) {
 	Statement st = null;
@@ -82,7 +81,7 @@ public class LogFileDAO {
 		ResultSet res = st.executeQuery("SELECT * FROM LogFile WHERE logFileID = " + id);
 
 		while (res.next()) {
-			s = new LogFile(res.getInt(1), res.getString(2),res.getDate(3), res.getInt(4));
+			l = new LogFile(res.getInt(1), res.getString(2),res.getDate(3), res.getInt(4));
 
 		}
 	} catch (SQLException e) {
