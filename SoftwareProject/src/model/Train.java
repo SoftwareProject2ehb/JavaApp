@@ -1,9 +1,13 @@
 package model;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
+
 
 public class Train {
+
+
+
+
 int id;
 String start;
 String arrival;
@@ -80,6 +84,13 @@ public Date getArrivalTime() {
 
 public void Date(Date arrivalTime) {
 	this.arrivalTime = arrivalTime;
+}
+
+
+@Override
+public String toString() {
+	return "Train [id=" + id + ", start=" + start + ", arrival=" + arrival + ", startTime=" + startTime
+			+ ", arrivalTime=" + arrivalTime + "]";
 }
 
 

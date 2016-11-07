@@ -29,6 +29,7 @@ public class TrainDAO extends BaseDAO {
 	        ps.setDate(4, train.getStartTime());
 	        ps.setDate(5, train.getArrivalTime());
 	        
+	        
 	       ps.executeUpdate();
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
@@ -49,14 +50,21 @@ public class TrainDAO extends BaseDAO {
 		Train trein = null;
 		PreparedStatement ps = null;
 		String sql = "Select * from Train where ID=?";
+		
+		
 		try {
 			if (getCon().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			 ps = getCon().prepareStatement(sql);
-			 ResultSet res = ps.executeQuery("SELECT * FROM Train");
 			 
-			  trein = new Train(res.getInt(1), res.getString(2),res.getString(3), res.getDate(4), res.getDate(5));
+			 
+			ps = getCon().prepareStatement(sql);
+			ps.setInt(1,id);
+			ResultSet res = ps.executeQuery("SELECT * FROM Train");
+			 
+			if (res.next()) {
+				trein = new Train(res.getInt(1), res.getString(2),res.getString(3), res.getDate(4), res.getDate(5));
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
