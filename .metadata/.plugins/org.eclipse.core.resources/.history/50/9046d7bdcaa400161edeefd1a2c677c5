@@ -1,0 +1,27 @@
+package model;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import data_control.*;
+import model.Price;
+import model.Price.betalingsType;
+import model.Ticket;
+
+public class Main {
+
+	public static void main(String[] args) throws ParseException {
+		AbonnementDAO ad = new AbonnementDAO();
+		
+		
+		
+		ArrayList<Abonnement> lijst = ad.getAllAbos(); 
+		
+		for (int i=0;i<lijst.size();i++) {
+			System.out.println(lijst.get(i).getTicketType());
+		}
+	
+	}
+}

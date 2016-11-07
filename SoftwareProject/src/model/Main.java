@@ -8,23 +8,18 @@ import java.util.ArrayList;
 import data_control.*;
 import model.Price;
 import model.Price.betalingsType;
+import utilities.DateConverter;
 import model.Ticket;
 
 public class Main {
 
 	public static void main(String[] args) throws ParseException {
-		AbonnementDAO ad = new AbonnementDAO();
+		SubscriptionDAO ad = new SubscriptionDAO();
 		
-		String startd = "2016-09-13";
-		String endd = "2016-09-25";
-		java.util.Date utilStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(startd);
-		java.util.Date utilEndDate = new SimpleDateFormat("yyyy-MM-dd").parse(endd);
-		// because PreparedStatement#setDate(..) expects a java.sql.Date argument
-		java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
-		java.sql.Date sqlEndDate = new java.sql.Date(utilEndDate.getTime());
+		String startd = "2016-10-13 12:33:12";
+		String endd = "2016-10-25 14:33:12";
 		
-		Abonnement a = new Abonnement(2, "seniorenticket", 69, 2, "Zele", "Hel", sqlStartDate, sqlEndDate);
 		
-		ad.addUser(a);
+		Subscription a = new Subscription(3, "seniorenticket", 69, 2, "Zele", "Hel", DateConverter.convert(startd), DateConverter.convert(endd));
 	}
 }
