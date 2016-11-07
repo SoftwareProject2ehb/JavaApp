@@ -11,12 +11,12 @@ import com.mysql.jdbc.Statement;
 
 public class LostObjectDAO extends BaseDAO{
 
-	enum ZoekLostObject {ID,userid,name,place,timeFound,claimed ,nameClaimed,timeClaimed};
+	enum SearchLostObject {ID,userid,name,place,timeFound,claimed ,nameClaimed,timeClaimed};
 	
 	
 	
 	
-	public void creatLostObject (LostObject object)
+	public void createLostObject (LostObject object)
 	{
 		 PreparedStatement ps = null;
 
@@ -32,8 +32,10 @@ public class LostObjectDAO extends BaseDAO{
 		        ps.setInt(1, object.getUserID());
 		        ps.setString(2, object.getName());
 		        ps.setString(3, object.getPlace());
-		        // TO DO SET DATE
-		        ps.setString(4, object.getDate());
+		        // TODO SET DATE
+		        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+		        ps.setTimestamp(4, date);
+		        
 		  
 		        
 		       ps.executeUpdate();
@@ -56,7 +58,7 @@ public class LostObjectDAO extends BaseDAO{
 public void updateLostObect(LostObject object) {
 		
 		PreparedStatement ps = null;	
-		String update = "UPDATE LostObject SET claimed = true, nameClaimed=?, time=? WHERE ID = ?";
+		String update = "UPDATE LostObject SET claimed = true, nameClaimed=?, timeClaimed =? WHERE ID = ?";
 		
 		try {
 		if (getCon().isClosed()) {
@@ -67,9 +69,11 @@ public void updateLostObect(LostObject object) {
 	
 			
 			ps.setString(1, object.getNameClaimed());
-			ps.setString(2, object.getDateClaimed());
+			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+	        ps.setTimestamp(2, date);
+			
 			ps.setInt(3, object.getID());
-			 // TO DO SET DATE
+			 // TODO SET DATE
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -81,7 +85,7 @@ public void updateLostObect(LostObject object) {
 
 public LostObject getLostObjectFromRS(ResultSet res) throws SQLException{
 	
-	return new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getString(5), res.getBoolean(6),res.getString(7),res.getString(8));
+	return new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getTimestamp(5), res.getBoolean(6),res.getString(7),res.getTimestamp(8));
 }
 
 
@@ -96,7 +100,7 @@ public LostObject getLostObjectById(int objectID) {
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE ID = " + objectID);
 
 		while (res.next()) {
-			lost = new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getString(5), res.getBoolean(6),res.getString(7),res.getString(8));
+			lost = getLostObjectFromRS(res);
 
 		}
 	} catch (SQLException e) {
@@ -121,12 +125,13 @@ public ArrayList<LostObject> getAllLostObject() {
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject");
 
 		while (res.next()) {
-			LostObject lost = new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getString(5), res.getBoolean(6),res.getString(7),res.getString(8));
+			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
+		e.getMessage();
 	}
 
 	return lijst;
@@ -142,7 +147,7 @@ public ArrayList<LostObject> getAllLostObjectNotClaimed() {
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = false");
 
 		while (res.next()) {
-			LostObject lost = new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getString(5), res.getBoolean(6),res.getString(7),res.getString(8));
+			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
 	} catch (SQLException e) {
@@ -164,7 +169,7 @@ public ArrayList<LostObject> getAllLostObjectClaimed() {
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = true");
 
 		while (res.next()) {
-			LostObject lost = new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getString(5), res.getBoolean(6),res.getString(7),res.getString(8));
+			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
 	} catch (SQLException e) {
@@ -177,7 +182,7 @@ public ArrayList<LostObject> getAllLostObjectClaimed() {
 
 
 //ZOEK op attribuut werkt niet
-public ArrayList<LostObject> getLostObjectOpAttribut(ZoekLostObject attribuut,String zoekop) {
+public ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject attribuut,String zoekop) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	try {
@@ -188,7 +193,7 @@ public ArrayList<LostObject> getLostObjectOpAttribut(ZoekLostObject attribuut,St
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE" + attribuut +"='" + zoekop + "'");
 
 		while (res.next()) {
-			LostObject lost = new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getString(5), res.getBoolean(6),res.getString(7),res.getString(8));
+			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
 	} catch (SQLException e) {
@@ -198,18 +203,64 @@ public ArrayList<LostObject> getLostObjectOpAttribut(ZoekLostObject attribuut,St
 
 	return lijst;
 }
+public ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
+	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
+	Statement st = null;
+	try {
+		if (getCon().isClosed()) {
+			throw new IllegalStateException("error unexpected");
+		}
+		st = (Statement) getCon().createStatement();
+		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE timeFound LIKE '%" + date + "%'");
 
+		while (res.next()) {
+			LostObject lost = getLostObjectFromRS(res);
+			lijst.add(lost);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		e.getMessage();
+	}
+
+	return lijst;
+}
+public ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
+	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
+	Statement st = null;
+	try {
+		if (getCon().isClosed()) {
+			throw new IllegalStateException("error unexpected");
+		}
+		st = (Statement) getCon().createStatement();
+		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE timeClaimed LIKE '%" + date + "%'");
+
+		while (res.next()) {
+			LostObject lost = getLostObjectFromRS(res);
+			lijst.add(lost);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		e.getMessage();
+	}
+
+	return lijst;
+}
    public static void main(String[] args) {
        
 	   LostObjectDAO lost = new LostObjectDAO();
-       //LostObject u = new LostObject(1,"daoud","ehb","19/10/2001");
-       //lost.creatLostObject(u);
+       //LostObject u = new LostObject(1,"daoud","ehb");
+       LostObject dat = lost.getLostObjectById(8);
+	   
+	   //dat.setNameClaimed("daoud");
+	   
+	   //lost.updateLostObect(dat);
+      // ArrayList<LostObject> lijst = new ArrayList<LostObject>();
+      // lijst = lost.getLostObjectOpAttribut(get, zoekop);
+       //System.out.println(lijst.toString());
       
-       ArrayList<LostObject> lijst = new ArrayList<LostObject>();
-       lijst = lost.getAllLostObjectClaimed();
-       System.out.println(lijst.toString());
-      
-    
+   
    }
    
 

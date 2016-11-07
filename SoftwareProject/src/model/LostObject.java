@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class LostObject {
 private int ID;
@@ -8,15 +9,15 @@ private int userID;
 private String name;
 private String Place;
 // TO DO SET DATE
-private String date;
+private Timestamp date;
 private boolean claimed;
 private String nameClaimed;
-private String dateClaimed;
+private Timestamp dateClaimed;
 
 
 
-public LostObject(int iD, int userID, String name, String place, String date, boolean claimed, String nameClaimed,
-		String dateClaimed) {
+public LostObject(int iD, int userID, String name, String place, Timestamp date, boolean claimed, String nameClaimed,
+		Timestamp dateClaimed) {
 	super();
 	ID = iD;
 	this.userID = userID;
@@ -39,13 +40,13 @@ public String getNameClaimed() {
 public void setNameClaimed(String nameClaimed) {
 	this.nameClaimed = nameClaimed;
 }
-public String getDateClaimed() {
+public Timestamp getDateClaimed() {
 	return dateClaimed;
 }
-public void setDateClaimed(String dateClaimed) {
+public void setDateClaimed(Timestamp dateClaimed) {
 	this.dateClaimed = dateClaimed;
 }
-public LostObject(int userID, String name, String place, String date) {
+public LostObject(int userID, String name, String place) {
 	super();
 	this.userID = userID;
 	this.name = name;
@@ -94,18 +95,18 @@ public int setPlace(String place) {
 		return 200;
 	Place = place;
 	return 0;
-} // TO DO SET DATE
-public String getDate() {
+} 
+public Timestamp getDate() {
 	return date;
-} // TO DO SET DATE
-public int setDate(String date) {
+} 
+public int setDate(Timestamp date) {
 	this.date = date;
 	return 0;
 }
 @Override
 public String toString() {
 	return "LostObject [ID=" + ID + ", userID=" + userID + ", name=" + name + ", Place=" + Place + ", date=" + date
-			+ ", claimed=" + claimed + ", nameClaimed=" + nameClaimed + ", dateClaimed=" + dateClaimed + "]";
+			+ ", claimed=" + claimed + ", nameClaimed=" + nameClaimed + ", dateClaimed=" + dateClaimed + "] \n";
 }
 
 
