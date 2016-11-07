@@ -42,16 +42,18 @@ public class SystemController {
 	}
 	
 	//TODO Date still set as time
-	//public String addLostObject(int user_id, String name, String station, String time) {
+	public String addLostObject(int user_id, String name, String station, String time) {
 		//LostObject obj = new LostObject(user_id, name, station, time);
-		//LostObject
-	//}
+		//LostObjectDAO.createLostObject(obj);
+		return "Succesvol toegevoegd.";
+	}
 	
 	public String searchLostObject() {
 		return null;
 	}
 	
 	public String addUser() {
+		
 		return null;
 	}
 	
