@@ -20,10 +20,10 @@ public class UserDAO extends BaseDAO{
 
 		try {
 
-			if (conn.isClosed()) {
+			if (getCon().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			ps = conn.prepareStatement(sql);
+			ps = getCon().prepareStatement(sql);
 
 			ps.setInt(1, user.getUserID());
 			ps.setString(2, user.getFirstName());
@@ -62,10 +62,10 @@ public class UserDAO extends BaseDAO{
 		String update = "UPDATE User SET first_name=?, last_name=?, email=?, phone=?, login=?, password=? role=? active=? WHERE ID = ?";
 		
 		try {
-		if (conn.isClosed()) {
+		if (getCon().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-			ps = conn.prepareStatement(update);
+			ps = getCon().prepareStatement(update);
 		
 	
 			ps.setInt(1, user.getUserID());
@@ -92,12 +92,11 @@ public class UserDAO extends BaseDAO{
 		Statement st = null;
 		User user = null;
 		try {
-			Connection c = conn;
-			if (c == null || c.isClosed()) {
+			if (getCon() == null || getCon().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = conn.createStatement();
+			st = getCon().createStatement();
 			String SQL = "DELETE FROM User WHERE ID = " + userID;
 			st.executeUpdate(SQL);
 
@@ -112,12 +111,11 @@ public class UserDAO extends BaseDAO{
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
 		try {
-			Connection c = conn;
-			if (c == null || c.isClosed()) {
+			if (getCon() == null || getCon().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = conn.createStatement();
+			st = getCon().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM User WHERE last_name IN ('" + lastName + "') ");
 
 			while (rs.next()) {
@@ -146,12 +144,11 @@ public class UserDAO extends BaseDAO{
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
 		try {
-			Connection c = conn;
-			if (c == null || c.isClosed()) {
+			if (getCon() == null || getCon().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = conn.createStatement();
+			st = getCon().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM User");
 
 			while (rs.next()) {

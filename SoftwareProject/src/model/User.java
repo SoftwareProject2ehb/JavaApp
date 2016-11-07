@@ -131,7 +131,18 @@ public class User {
 		return 2;
 	}
 	
+	/**
+	 * 
+	 * @param password The plain text password for the user which is authenticated with
+	 * @return True if the password matches, false if not.
+	 */
+	public boolean checkPassword(String password) {
+		//TODO The password should be hashed and checked against DB password
+		return true;
+	}
+	
 	public String getPassword() {
+		//TODO This needs to be removed
 		return password;
 	}
 	
