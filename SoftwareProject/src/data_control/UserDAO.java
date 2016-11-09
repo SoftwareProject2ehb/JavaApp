@@ -12,17 +12,17 @@ import model.User.Role;
 
 public class UserDAO extends BaseDAO{
 	
-	public void addUser(User user) {
+	public static void addUser(User user) {
 		PreparedStatement ps = null;
 
 		String sql = "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?)";
 
 		try {
 
-			if (getCon().isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			ps = getCon().prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 
 			ps.setInt(1, user.getUserID());
 			ps.setString(2, user.getFirstName());
@@ -55,16 +55,16 @@ public class UserDAO extends BaseDAO{
 	}
 	
 	
-	public void updateUser(User user) {
+	public static void updateUser(User user) {
 		
 		PreparedStatement ps = null;	
 		String update = "UPDATE User SET first_name=?, last_name=?, email=?, phone=?, login=?, password=? role=? active=? WHERE ID = ?";
 		
 		try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-			ps = getCon().prepareStatement(update);
+			ps = getConnection().prepareStatement(update);
 		
 	
 			ps.setInt(1, user.getUserID());
@@ -87,15 +87,15 @@ public class UserDAO extends BaseDAO{
 		}      
 	}
 	
-	public User delUser(int userID) {
+	public static User delUser(int userID) {
 		Statement st = null;
 		User user = null;
 		try {
-			if (getCon() == null || getCon().isClosed()) {
+			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = getCon().createStatement();
+			st = getConnection().createStatement();
 			String SQL = "DELETE FROM User WHERE ID = " + userID;
 			st.executeUpdate(SQL);
 
@@ -106,15 +106,15 @@ public class UserDAO extends BaseDAO{
 		return user;
 	}
 	
-	public ArrayList<User> searchUserByLastName(String lastName ) {
+	public static ArrayList<User> searchUserByLastName(String lastName ) {
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
 		try {
-			if (getCon() == null || getCon().isClosed()) {
+			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = getCon().createStatement();
+			st = getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM User WHERE last_name IN ('" + lastName + "') ");
 
 			while (rs.next()) {
@@ -139,15 +139,15 @@ public class UserDAO extends BaseDAO{
 		return lijst;
 	}
 	
-	public ArrayList<User> getAllUsers() {
+	public static ArrayList<User> getAllUsers() {
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
 		try {
-			if (getCon() == null || getCon().isClosed()) {
+			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = getCon().createStatement();
+			st = getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM User");
 
 			while (rs.next()) {
@@ -170,20 +170,4 @@ public class UserDAO extends BaseDAO{
 
 		return lijst;
 	}
-
-	
-	
-	public static void main(String[] args) {
-		UserDAO ud = new UserDAO();
-		//User u = new User(0,"Mohamed","Helalouch","mohamed.helalouch@student.ehb.be","048981991","mohhel", "pass",Role.valueOf("ADMIN"),true); 
-		//ud.addUser(u);
-		  
-		ArrayList<User> list = ud.searchUserByLastName("Helalouch");
-			for(User bn: list){
-				System.out.println(bn.getEmail()+" , " + bn.isActive());
-		}
-		
-	  }
-	  
-
 }

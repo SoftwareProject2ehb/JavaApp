@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import model.*;
 
 public class LogFileDAO extends BaseDAO{
-	public void createLogFile(LogFile logfile)
+	public static void createLogFile(LogFile logfile)
 	{
 		PreparedStatement ps = null;
 		
@@ -17,10 +17,10 @@ public class LogFileDAO extends BaseDAO{
 		
 		try {
 
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        ps = getCon().prepareStatement(sql);
+	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setInt(1, logfile.getLogFileID());
 	        ps.setString(2, logfile.getDescription());
@@ -44,15 +44,15 @@ public class LogFileDAO extends BaseDAO{
 	    }
 	}
 	
-	public void updateLogfile(LogFile logfile) {
+	public static void updateLogfile(LogFile logfile) {
 		PreparedStatement ps = null;	
 		String update = "UPDATE LogFile SET logFileID=?, description=?, time=?, userID=?, WHERE logFileID=?";
 		
 		try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-			ps = getCon().prepareStatement(update);
+			ps = getConnection().prepareStatement(update);
 		
 			ps.setInt(1, logfile.getLogFileID());
 			ps.setString(2, logfile.getDescription());
@@ -69,15 +69,15 @@ public class LogFileDAO extends BaseDAO{
 		}
 	}
 
-	public LogFile findLogFileById(int id) {
+	public static LogFile findLogFileById(int id) {
 	Statement st = null;
 	LogFile l = null;
 	
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM LogFile WHERE logFileID = " + id);
 
 		while (res.next()) {
@@ -91,15 +91,15 @@ public class LogFileDAO extends BaseDAO{
 	return l;
 }
 
-	public ArrayList<Stop> getAllStops() {
+	public static ArrayList<Stop> getAllStops() {
 	ArrayList<Stop> list = new ArrayList<Stop>();
 	
 	Statement st = null;
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM Stop");
 
 		while (res.next()) {

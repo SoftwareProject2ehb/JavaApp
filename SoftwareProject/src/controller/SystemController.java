@@ -52,8 +52,9 @@ public class SystemController {
 		return null;
 	}
 	
-	public String addUser() {
-		
+	public String addUser(String first_name, String last_name, String email, String phone, String password, String role) {
+		String login = first_name + "_" + last_name;
+		User new_user = new User(first_name, last_name, email, phone, login, password, role);
 		return null;
 	}
 	
