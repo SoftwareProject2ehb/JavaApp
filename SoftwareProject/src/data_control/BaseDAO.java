@@ -20,6 +20,10 @@ public class BaseDAO {
 		return con;
 	}
 
+	public Connection getCon() {
+		return con;
+	}
+
 	public static void setConnection(Connection con) {
 		BaseDAO.con = con;
 	}
