@@ -242,8 +242,8 @@ public class UserDAO extends BaseDAO{
 
 	public static void main(String[] args) {
 		UserDAO ud = new UserDAO();
-		//User u = new User(0,"Mohamed","Blabla","mohamed.blabla@student.ehb.be","03812391","mohb", "test",Role.valueOf("USER"),true); 
-		//ud.addUser(u);
+		//User u = new User("Mohamed","Blabla","mohamed.blabla@student.ehb.be","03812391","mohb", "test",Role.valueOf("USER")); 
+		//ud.createUser(u);
 		  
 		ArrayList<User> list = ud.findUserByAttribute(FindUser.valueOf("role"),"USER");
 		for(User bn: list){
