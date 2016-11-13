@@ -13,42 +13,40 @@ public class Printer {
 	public static void printTicket(Ticket t) {
 		String txt = "";
 
-		txt += "Ticket nr " + t.getID() + "\n";
-		txt += "Type : " + t.getTypeTicket() + "\n";
+		txt += "Ticket nr " + t.getID() + "\t\t";
+		txt += "Prijs : €" + t.getPrice() + "\n";
+		txt += "Type : " + t.getTypeTicket() + "\t";
 		if (t.isOneWayTicket())
 			txt += "ENKEL" + "\n";
 		else
 			txt += "HEEN EN TERUG" + "\n";
-		txt += "Van : " + t.getStartStation() + "\n";
+		txt += "Van : " + t.getStartStation() + "\t\t";
 		txt += "Tot : " + t.getEndStation() + "\n";
 		txt += "Op : " + t.getDate() + "\n";
-		txt += "Prijs : €" + t.getPrice() + "\n";
 		
 		try {
-		    Files.write(Paths.get("ticket.txt"), txt.getBytes());
+		    Files.write(Paths.get("Ticket" + t.getID() + "(" + t.getDate() + ").txt"), txt.getBytes());
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
+	}
+	
+	public static void printSubscription(Subscription s) {
+		String txt = "";
+
+		txt += "Abonnement nr " + s.getId() + "\t\t";
+		txt += "Prijs : €" + s.getPrice() + "\n";
+		txt += "Type : " + s.getTicketType() + "\n";
 		
-		/*
-		try{
-		    PrintWriter writer = new PrintWriter("treinticket.txt", "UTF-8");
-		    
-			writer.println("Ticket nr " + t.getID());
-			writer.println("Type : " + t.getTypeTicket());
-			if (t.isOneWayTicket())
-				writer.println("ENKEL");
-			else
-				writer.println("HEEN EN TERUG");
-			writer.println("Van : " + t.getStartStation());
-			writer.println("Tot : " + t.getEndStation());
-			writer.println("Op : " + t.getDate());
-			writer.println("Prijs : €" + t.getPrice());
-			
-			writer.close();
-		} catch (Exception e) {
-			   // do something
-			}
-			*/
+		txt += "Van : " + s.getStartStation() + "\t\t";
+		txt += "Tot : " + s.getEndStation() + "\n";
+		txt += "Van : " + s.getStartDate() + "\t";
+		txt += "Tot : " + s.getEndDate() + "\n";
+		
+		try {
+		    Files.write(Paths.get("Abonnement" + s.getId() + "(" + s.getStartDate() + " to " + s.getEndDate() + ").txt"), txt.getBytes());
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
 	}
 }

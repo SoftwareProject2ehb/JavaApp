@@ -82,7 +82,7 @@ public class TicketDAO extends BaseDAO {
 			ResultSet res = st.executeQuery("SELECT * FROM Ticket WHERE ID = " + id);
 
 			while (res.next()) {
-				t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(6), res.getString(6), res.getDate(7));
+				t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(5), res.getString(6), res.getDate(7));
 
 			}
 		} catch (SQLException e) {
@@ -105,7 +105,7 @@ public class TicketDAO extends BaseDAO {
 			ResultSet res = st.executeQuery("SELECT * FROM Ticket");
 
 			while (res.next()) {
-				Ticket t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(6), res.getString(6), res.getDate(7));
+				Ticket t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(5), res.getString(6), res.getDate(7));
 				list.add(t);
 			}
 		} catch (SQLException e) {
