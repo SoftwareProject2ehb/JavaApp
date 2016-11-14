@@ -18,6 +18,8 @@ public class User {
 		 ADMIN,USER
 	}
 	
+	
+	
 	public User(int userID, String firstName, String lastName, String email, String phone, /*Address address,*/
 			String login, String password, Role rolen, boolean active) {
 		
@@ -51,9 +53,11 @@ public class User {
 
 	public int setPhone(String phone) {
 		if (phone == null)
-			return ErrorCode.NULL_PARAM;
+			//return ErrorCode.NULL_PARAM;
+			return 1;
 		this.phone = phone;
-		return ErrorCode.NO_ERROR;
+		//return ErrorCode.NO_ERROR;
+		return 2;
 	}
 	
 	public int getUserID() {
@@ -70,9 +74,11 @@ public class User {
 	
 	public int setFirstName(String firstName) {
 		if (firstName == null)
-			return ErrorCode.NULL_PARAM;
+			//return ErrorCode.NULL_PARAM;
+			return 1;
 		this.firstName = firstName;
-		return ErrorCode.NO_ERROR;
+		//return ErrorCode.NO_ERROR;
+		return 2;
 	}
 	
 	public String getLastName() {
@@ -81,9 +87,11 @@ public class User {
 	
 	public int setLastName(String lastName) {
 		if (lastName == null)
-			return ErrorCode.NULL_PARAM;
+			//return ErrorCode.NULL_PARAM;
+			return 1;
 		this.lastName = lastName;
-		return ErrorCode.NO_ERROR;
+		//return ErrorCode.NO_ERROR;
+		return 2;
 	}
 
 	public String getEmail() {
@@ -92,9 +100,11 @@ public class User {
 	
 	public int setEmail(String email) {
 		if (email == null)
-			return ErrorCode.NULL_PARAM;
+			//return ErrorCode.NULL_PARAM;
+			return 1;
 		this.email = email;
-		return ErrorCode.NO_ERROR;
+		//return ErrorCode.NO_ERROR;
+		return 2;
 	}
 	
 	/*public Address getAddress() {
@@ -114,20 +124,35 @@ public class User {
 	
 	public int setLogin(String login) {
 		if (login == null)
-			return ErrorCode.NULL_PARAM;
+			//return ErrorCode.NULL_PARAM;
+			return 1;
 		this.login = login;
-		return ErrorCode.NO_ERROR;
+		//return ErrorCode.NO_ERROR;
+		return 2;
+	}
+	
+	/**
+	 * 
+	 * @param password The plain text password for the user which is authenticated with
+	 * @return True if the password matches, false if not.
+	 */
+	public boolean checkPassword(String password) {
+		//TODO The password should be hashed and checked against DB password
+		return true;
 	}
 	
 	public String getPassword() {
+		//TODO This needs to be removed
 		return password;
 	}
 	
 	public int setPassword(String password) {
 		if (password == null)
-			return ErrorCode.NULL_PARAM;
+			//return ErrorCode.NULL_PARAM;
+			return 1;
 		this.password = password;
-		return ErrorCode.NO_ERROR;
+		//return ErrorCode.NO_ERROR;
+		return 2;
 	}
 	
 	public boolean isActive() {

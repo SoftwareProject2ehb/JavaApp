@@ -12,6 +12,7 @@ import model.User.Role;
 
 public class UserDAO extends BaseDAO{
 	
+	
 	public void addUser(User user) {
 		PreparedStatement ps = null;
 
@@ -173,17 +174,7 @@ public class UserDAO extends BaseDAO{
 
 	
 	
-	public static void main(String[] args) {
-		UserDAO ud = new UserDAO();
-		//User u = new User(0,"Mohamed","Helalouch","mohamed.helalouch@student.ehb.be","048981991","mohhel", "pass",Role.valueOf("ADMIN"),true); 
-		//ud.addUser(u);
-		  
-		ArrayList<User> list = ud.searchUserByLastName("Helalouch");
-			for(User bn: list){
-				System.out.println(bn.getEmail()+" , " + bn.isActive());
-		}
-		
-	  }
+	
 	  
 
 }
