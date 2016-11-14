@@ -184,6 +184,34 @@ public class UserDAO extends BaseDAO{
 		return user;
 	}
 	
+	
+	public String findUserByIdForPassword(int id) {
+		String pass = null;
+		Statement st = null;
+		try {
+	        if (getCon().isClosed()) {
+	            throw new IllegalStateException("error unexpected");
+	        }
+	        st = (Statement) getCon().createStatement();
+	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
+	        if (rs.next()) {
+	        	pass = rs.getString("password");
+	        }
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        throw new RuntimeException(e.getMessage());
+	    } finally {
+	        try {
+	            if (st != null)
+	            	st.close();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
+		return pass;
+	}
+	
 	public ArrayList<User> getAllUsers() {
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
@@ -280,8 +308,6 @@ public class UserDAO extends BaseDAO{
 	
 	
 	
-
-
 	public static void main(String[] args) {
 		UserDAO ud = new UserDAO();
 		//User u = new User("Mohamed","Blabla","mohamed.blabla@student.ehb.be","03812391","mohb",Encryptor.encrypt("test"),Role.valueOf("USER")); 
