@@ -59,12 +59,11 @@ public class SubscriptionDAO extends BaseDAO{
 		ArrayList<Subscription> lijst = new ArrayList<Subscription>();
 		Statement st = null;
 		try {
-			Connection c = conn;
-			if (c == null || c.isClosed()) {
+			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = conn.createStatement();
+			st = getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM Subscription");
 
 			while (rs.next()) {
