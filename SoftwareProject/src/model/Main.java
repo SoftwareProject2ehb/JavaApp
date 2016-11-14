@@ -16,13 +16,9 @@ import model.*;
 import data_control.*;
 
 public class Main {
-<<<<<<< HEAD
 
 	public static void main(String[] args) {
 		CustomerDAO.createCustomer(new Customer("Bernd", "Wethmar", "a@w.be", "007", "Straatnaam"));
-=======
-	public static void main(String[] args) throws ParseException {
-		LoginView.run();
->>>>>>> refs/heads/master
+
 	}
 }

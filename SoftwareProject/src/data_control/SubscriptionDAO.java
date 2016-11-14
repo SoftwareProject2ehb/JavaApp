@@ -13,17 +13,17 @@ import utilities.DateConverter;
 
 public class SubscriptionDAO extends BaseDAO{
 	
-	public void addSub(Subscription sub) {
+	public static void createSubscription(Subscription sub) {
 		PreparedStatement ps = null;
 
 		String sql = "INSERT INTO Subscription VALUES (?,?,?,?,?,?,?,?)";
 
 		try {
 
-			if (conn.isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			ps = conn.prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 
 			ps.setInt(1, sub.getId());
 			ps.setString(2, sub.getTicketType());

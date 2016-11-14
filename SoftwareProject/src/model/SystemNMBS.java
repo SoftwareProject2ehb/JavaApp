@@ -10,10 +10,12 @@ public class SystemNMBS {
 		logged_user = null;
 	}
 	
-	public int login(User user, String password) {
+	public int login(String user_login, String password) {
 		if (user == null) {
 			return ErrorCode.NULL_PARAM;
 		}
+		
+		User user = UserDAO.findUserByLogin(user_login);
 		
 		if (user.checkPassword(password)) {
 			logged_user = user;
