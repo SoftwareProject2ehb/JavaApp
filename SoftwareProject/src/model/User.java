@@ -2,7 +2,7 @@ package model;
 
 
 public class User {
-	
+
 	int userID = 0;
 	String firstName;
 	String lastName;
@@ -172,6 +172,15 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "User [userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phone=" + phone + ", login=" + login + ", password=" + password + ", rolen=" + rolen + ", active="
+				+ active + "]";
+	}
+
 	
 	
 	

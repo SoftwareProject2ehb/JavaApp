@@ -10,15 +10,12 @@ import java.util.ArrayList;
 import model.Customer;
 import model.User;
 import model.User.Role;
+import utilities.Encryptor;
 
 public class UserDAO extends BaseDAO{
 	
-<<<<<<< HEAD
 	public void createUser(User user) {
-=======
-	
-	public void addUser(User user) {
->>>>>>> refs/heads/master
+
 		PreparedStatement ps = null;
 
 		String sql = "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?)";
@@ -150,6 +147,43 @@ public class UserDAO extends BaseDAO{
 		return user;
 	}
 	
+	public User findUserByLogin(String login){
+		User user = null;
+		Statement st = null;
+		try {
+	        if (getCon().isClosed()) {
+	            throw new IllegalStateException("error unexpected");
+	        }
+	        st = (Statement) getCon().createStatement();
+	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE login LIKE '%" + login+ "%'");
+	        if (rs.next()) {
+	        	user = new User(
+						rs.getInt("ID"), 
+						rs.getString("first_name"),
+						rs.getString("last_name"), 
+						rs.getString("email"),
+						rs.getString("phone"),
+						//rs.getString("address"), 
+						rs.getString("login"),
+						rs.getString("password"), 
+						Role.valueOf(rs.getString("role")), 
+						rs.getBoolean("active"));
+			}
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        throw new RuntimeException(e.getMessage());
+	    } finally {
+	        try {
+	            if (st != null)
+	            	st.close();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
+		return user;
+	}
+	
 	public ArrayList<User> getAllUsers() {
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
@@ -244,22 +278,21 @@ public class UserDAO extends BaseDAO{
 		return lijst;
 	}
 	
-<<<<<<< HEAD
+	
+	
+
 
 	public static void main(String[] args) {
 		UserDAO ud = new UserDAO();
-		//User u = new User("Mohamed","Blabla","mohamed.blabla@student.ehb.be","03812391","mohb", "test",Role.valueOf("USER")); 
+		//User u = new User("Mohamed","Blabla","mohamed.blabla@student.ehb.be","03812391","mohb",Encryptor.encrypt("test"),Role.valueOf("USER")); 
 		//ud.createUser(u);
-		  
-		ArrayList<User> list = ud.findUserByAttribute(FindUser.valueOf("role"),"USER");
+		User u = ud.findUserByLogin("moh");
+		System.out.println(u.toString());
+		/*ArrayList<User> list = ud.findUserByAttribute(FindUser.valueOf("role"),"USER");
 		for(User bn: list){
 			System.out.println(bn.getFirstName() + " , " + bn.getLastName() + " , " + bn.getEmail() + " , " + bn.getRolen());
-		}
+		}*/
 		
-	  }
-=======
-	
->>>>>>> refs/heads/master
-	  
+	  }  
 
 }
