@@ -1,6 +1,8 @@
 package controller;
 
 import model.*;
+import model.User.Role;
+import utilities.Encryptor;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -63,9 +65,10 @@ public class SystemController {
 		return null;
 	}
 	
-	public String addUser(String first_name, String last_name, String email, String phone, String password, String role) {
+	public String addUser(String first_name, String last_name, String email, String phone, String password, Role role) {
 		String login = first_name + "_" + last_name;
-		User new_user = new User(first_name, last_name, email, phone, login, password, role);
+		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role);
+		UserDAO.createUser(new_user);
 		return null;
 	}
 	
