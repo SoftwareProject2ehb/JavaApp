@@ -17,15 +17,24 @@ public class SystemController {
 	}
 	
 	public String giveRouteInfo() {
+		//TODO Implementation
 		return null;
 	}
 	
 	public String getTicketInfo() {
+		//TODO Implementation
 		return null;
 	}
 	
 	public String getSubscriptionInfo() {
+		//TODO Implementation
 		return null;
+	}
+	
+	public String createCustomer(String first_name, String last_name, String address, String email, String phone) {
+		Customer new_customer = new Customer(first_name, last_name, email, phone, address);
+		CustomerDAO.createCustomer(new_customer);
+		return "Customer created.";
 	}
 	
 	public String buyTicket(String type_ticket, boolean is_one_way_ticket, double ticket_price, String start_station, String end_station, Date date) {
@@ -43,18 +52,20 @@ public class SystemController {
 	}
 	
 	public String getReports() {
+		//TODO Implementation
 		return null;
 	}
 	
 	public String makeTicketType() {
+		//TODO Implementation
 		return null;
 	}
 	
 	public String makeSubscriptionType() {
+		//TODO Implementation
 		return null;
 	}
 	
-	//TODO Date still set as time
 	public String addLostObject(int user_id, String name, String station, Timestamp date) {
 		LostObject obj = new LostObject(-1, user_id, name, station, date, false, -1, null, null, null);
 		LostObjectDAO.createLostObject(obj);
@@ -62,8 +73,10 @@ public class SystemController {
 	}
 	
 	public String searchLostObject() {
+		//TODO Implementation
 		return null;
 	}
+	
 	
 	public String addUser(String first_name, String last_name, String email, String phone, String password, Role role) {
 		String login = first_name + "_" + last_name;
@@ -72,7 +85,8 @@ public class SystemController {
 		return null;
 	}
 	
-	public String changePrice() {
+	public String changePrice(String measure_unit, double cost_per_unit) {
+		//TODO Implementation
 		return null;
 	}
 }
