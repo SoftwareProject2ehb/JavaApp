@@ -11,17 +11,17 @@ import com.mysql.jdbc.Statement;
 
 public class CustomerDAO extends BaseDAO {
 	
-	public void createCustomer(Customer customer) {
+	public static void createCustomer(Customer customer) {
 		PreparedStatement ps = null;
 		
 		String sql = "INSERT INTO Customer VALUES(?,?,?,?,?,?)";
 		
 		try {
 
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        ps = getCon().prepareStatement(sql);
+	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setInt(1, customer.getId());
 	        ps.setString(2, customer.getFirstName());
@@ -47,17 +47,17 @@ public class CustomerDAO extends BaseDAO {
 	    }
 	}
 	
-	public void removeCustomer(Customer customer) {
+	public static void removeCustomer(Customer customer) {
 		PreparedStatement ps = null;
 		
 		String sql = "DELETE FROM Customer WHERE id = ?";
 		
 		try {
 
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        ps = getCon().prepareStatement(sql);
+	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setInt(1, customer.getId());
 	        
@@ -78,17 +78,17 @@ public class CustomerDAO extends BaseDAO {
 	    }
 	}
 	
-	public void updateCustomer(Customer customer) {
+	public static void updateCustomer(Customer customer) {
 		PreparedStatement ps = null;
 		
 		String sql = "UPDATE Customer SET ID = ?, first_name = ?, last_name = ?, address = ?, email = ?, phone = ?";
 		
 		try {
 
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        ps = getCon().prepareStatement(sql);
+	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setInt(1, customer.getId());
 	        ps.setString(2, customer.getFirstName());
@@ -114,7 +114,7 @@ public class CustomerDAO extends BaseDAO {
 	    }
 	}
 	
-	public Customer findCustomerById(int id) {
+	public static Customer findCustomerById(int id) {
 		
 		Customer cust = null;
 		
@@ -122,11 +122,11 @@ public class CustomerDAO extends BaseDAO {
 		
 		try {
 
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        
-	        st = (Statement) getCon().createStatement();
+	        st = (Statement) getConnection().createStatement();
 	        ResultSet res = st.executeQuery("SELECT * FROM Customer WHERE ID = " + id + " LIMIT 1");
 	        
 	        if (res.next()) {

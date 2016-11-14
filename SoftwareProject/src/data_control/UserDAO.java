@@ -14,7 +14,8 @@ import utilities.Encryptor;
 
 public class UserDAO extends BaseDAO{
 	
-	public void createUser(User user) {
+
+	public static void createUser(User user) {
 
 		PreparedStatement ps = null;
 
@@ -22,10 +23,10 @@ public class UserDAO extends BaseDAO{
 
 		try {
 
-			if (getCon().isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			ps = getCon().prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 
 			ps.setInt(1, user.getUserID());
 			ps.setString(2, user.getFirstName());
@@ -58,16 +59,16 @@ public class UserDAO extends BaseDAO{
 	}
 	
 	
-	public void updateUser(User user) {
+	public static void updateUser(User user) {
 		
 		PreparedStatement ps = null;	
 		String update = "UPDATE User SET first_name=?, last_name=?, email=?, phone=?, login=?, password=?, role=?, active=? WHERE ID = ?";
 		
 		try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-			ps = getCon().prepareStatement(update);
+			ps = getConnection().prepareStatement(update);
 		
 	
 			
@@ -91,15 +92,16 @@ public class UserDAO extends BaseDAO{
 		}      
 	}
 	
-	public User removeUser(int userID) {
+	public static User removeUser(int userID) {
+
 		Statement st = null;
 		User user = null;
 		try {
-			if (getCon() == null || getCon().isClosed()) {
+			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = getCon().createStatement();
+			st = getConnection().createStatement();
 			String SQL = "DELETE FROM User WHERE ID = " + userID;
 			st.executeUpdate(SQL);
 
@@ -110,14 +112,15 @@ public class UserDAO extends BaseDAO{
 		return user;
 	}
 	
-	public User findUserById(int id) {
+
+	public static User findUserById(int id) {
 		User user = null;
 		Statement st = null;
 		try {
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        st = (Statement) getCon().createStatement();
+	        st = (Statement) getConnection().createStatement();
 	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
 	        if (rs.next()) {
 	        	user = new User(
@@ -147,14 +150,14 @@ public class UserDAO extends BaseDAO{
 		return user;
 	}
 	
-	public User findUserByLogin(String login){
+	public static User findUserByLogin(String login){
 		User user = null;
 		Statement st = null;
 		try {
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        st = (Statement) getCon().createStatement();
+	        st = (Statement) getConnection().createStatement();
 	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE login LIKE '%" + login+ "%'");
 	        if (rs.next()) {
 	        	user = new User(
@@ -184,15 +187,15 @@ public class UserDAO extends BaseDAO{
 		return user;
 	}
 	
-	public ArrayList<User> getAllUsers() {
+	public static ArrayList<User> getAllUsers() {
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
 		try {
-			if (getCon() == null || getCon().isClosed()) {
+			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = getCon().createStatement();
+			st = getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM User");
 
 			while (rs.next()) {
@@ -218,14 +221,14 @@ public class UserDAO extends BaseDAO{
 
 	enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active};
 
-	public ArrayList<User> findUserByAttribute(FindUser attribuut,String zoekop) { //Find user by attribute and string
+	public static ArrayList<User> findUserByAttribute(FindUser attribuut,String zoekop) { //Find user by attribute and string
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
 		try {
-			if (getCon().isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			st = (Statement) getCon().createStatement();
+			st = (Statement) getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " IN ('" + zoekop + "') ");
 
 			while (rs.next()) {
@@ -248,14 +251,14 @@ public class UserDAO extends BaseDAO{
 		return lijst;
 	}
 	
-	public ArrayList<User> findUserByAttribute(FindUser attribuut,int zoekop) { //Find user by attribute and integer
+	public static ArrayList<User> findUserByAttribute(FindUser attribuut,int zoekop) { //Find user by attribute and integer
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
 		try {
-			if (getCon().isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			st = (Statement) getCon().createStatement();
+			st = (Statement) getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " = " + zoekop);
 
 			while (rs.next()) {
@@ -277,22 +280,5 @@ public class UserDAO extends BaseDAO{
 		}
 		return lijst;
 	}
-	
-	
-	
-
-
-	public static void main(String[] args) {
-		UserDAO ud = new UserDAO();
-		//User u = new User("Mohamed","Blabla","mohamed.blabla@student.ehb.be","03812391","mohb",Encryptor.encrypt("test"),Role.valueOf("USER")); 
-		//ud.createUser(u);
-		User u = ud.findUserByLogin("moh");
-		System.out.println(u.toString());
-		/*ArrayList<User> list = ud.findUserByAttribute(FindUser.valueOf("role"),"USER");
-		for(User bn: list){
-			System.out.println(bn.getFirstName() + " , " + bn.getLastName() + " , " + bn.getEmail() + " , " + bn.getRolen());
-		}*/
-		
-	  }  
 
 }

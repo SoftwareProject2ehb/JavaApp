@@ -12,10 +12,14 @@ public class Ticket {
 	private Date date;
 
 	public Ticket(int ID, String type, boolean oneWayTicket, double price, String start, String end, Date date) {
+		this(type, oneWayTicket, price, start, end, date);
+		this.ID = ID;
+	}
+	
+	public Ticket(String type, boolean oneWayTicket, double price, String start, String end, Date date) {
 		if (type == null || start == null || end == null || price < 0)
 			throw new IllegalArgumentException();
 		
-		this.ID = ID;
 		this.typeTicket = type;
 		this.oneWayTicket = oneWayTicket;
 		this.price = price;
