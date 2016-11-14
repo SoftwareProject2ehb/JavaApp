@@ -75,7 +75,8 @@ public class SubscriptionDAO extends BaseDAO{
 						rs.getString("startstation"),
 						rs.getString("endstationi"),
 						rs.getDate("startdatum"),
-						rs.getDate("enddatum"));
+						rs.getDate("enddatum"),
+						rs.getInt("active"));
 				lijst.add(sb);
 			}
 		} catch (SQLException e) {
@@ -107,7 +108,8 @@ public class SubscriptionDAO extends BaseDAO{
 						rs.getString("startstation"),
 						rs.getString("endstationi"),
 						rs.getDate("startdatum"),
-						rs.getDate("enddatum"));
+						rs.getDate("enddatum"),
+						rs.getInt("active"));
 			}
 	
 		} catch (SQLException e) {

@@ -11,9 +11,10 @@ public class Subscription {
 	private int customerId;
 	private Date startDate;
 	private Date endDate;
+	private int active;
 	
 	public Subscription(int id, String ticketType, double price, int customerId, String startStation, String endStation,
-			Date startDate, Date endDate) {
+			Date startDate, Date endDate, int active) {
 		super();
 		this.id = id;
 		this.ticketType = ticketType;
@@ -23,6 +24,7 @@ public class Subscription {
 		this.customerId = customerId;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.active = active;
 	}
 
 	public int getId() {
@@ -87,6 +89,14 @@ public class Subscription {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+	
+	public int getActive() {
+		return this.active;
+	}
+
+	public void setActived(int active) {
+		this.active = active;
 	}
 	
 	
