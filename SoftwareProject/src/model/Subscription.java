@@ -12,7 +12,7 @@ public class Subscription {
 	private Date startDate;
 	private Date endDate;
 	
-	public Subscription(int id, String ticketType, double price, int customerId, String endStation, String startStation,
+	public Subscription(int id, String ticketType, double price, int customerId, String startStation, String endStation,
 			Date startDate, Date endDate) {
 		super();
 		this.id = id;
