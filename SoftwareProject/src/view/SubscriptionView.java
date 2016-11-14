@@ -20,29 +20,19 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 
 public class SubscriptionView extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private JScrollPane scrollPane;
-	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model) {
-
-		if (model.getRowCount() > 1) {
-			String col[] = {"ID","Type","Price", "Customer ID", "StartStation", "EndStation", "StartDate", "EndDate", "Active"};
-
-			model = new DefaultTableModel(col, 0);
-		}
-
-	    for (int i=0;i<subList.size();i++) {
-	    	Object[] item = {subList.get(i).getId(),subList.get(i).getTicketType(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
-	    			subList.get(i).getStartDate(), subList.get(i).getEndDate(), subList.get(i).getActive()};
-	    	model.addRow(item);
-	    }
-
-	    return model;
-
-	}
+	private JTextField textField;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
 
 
 	/**
@@ -67,14 +57,80 @@ public class SubscriptionView extends JFrame {
 		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
 		
-		JButton btnFindAll = new JButton("Find All");
+		
+		
+		
+		textField = new JTextField();
+		textField.setBounds(6, 148, 130, 26);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JRadioButton rdbtnFindById = new JRadioButton("Search By ID");
+		buttonGroup.add(rdbtnFindById);
+		rdbtnFindById.setBounds(6, 179, 141, 23);
+		contentPane.add(rdbtnFindById);
+		
+		JRadioButton rdbtnSearchByCustomer = new JRadioButton("Search By Customer ID");
+		buttonGroup.add(rdbtnSearchByCustomer);
+		rdbtnSearchByCustomer.setBounds(6, 214, 193, 23);
+		contentPane.add(rdbtnSearchByCustomer);
+		
+		JButton btnFindAll = new JButton("Find");
 		btnFindAll.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				table.setModel(buildTableModel(new SubscriptionDAO().getAllSubs(), tableModel));
+			public void mousePressed(MouseEvent e) {
+				if (textField.getText().isEmpty())
+					table.setModel(buildTableModel(new SubscriptionDAO().getAllSubs(), tableModel));
+				else if (rdbtnFindById.isSelected())
+					table.setModel(buildTableModel(new SubscriptionDAO().getAllSubs(), tableModel,Integer.parseInt(textField.getText())));
+				else if (rdbtnSearchByCustomer.isSelected())
+					table.setModel(buildTableModel(new SubscriptionDAO().getSubsByCustomerID(Integer.parseInt(textField.getText())), tableModel));
+				buttonGroup.clearSelection();
 			}
 		});
-		btnFindAll.setBounds(6, 148, 117, 29);
+		
+		btnFindAll.setBounds(6, 249, 117, 29);
 		contentPane.add(btnFindAll);
+	}
+	
+	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model) {
+
+		if (model.getRowCount() > 1) {
+			String col[] = {"ID","Type","Price", "Customer ID", "StartStation", "EndStation", "StartDate", "EndDate", "Active"};
+
+			model = new DefaultTableModel(col, 0);
+			
+		}
+
+	    for (int i=0;i<subList.size();i++) {
+	    	Object[] item = {subList.get(i).getId(),subList.get(i).getTicketType(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
+	    			subList.get(i).getStartDate(), subList.get(i).getEndDate(), subList.get(i).getActive()};
+	    	model.addRow(item);
+	    }
+
+	    return model;
+
+	}
+	
+	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model, int id) {
+
+		
+		String col[] = {"ID","Type","Price", "Customer ID", "StartStation", "EndStation", "StartDate", "EndDate", "Active"};
+
+		model = new DefaultTableModel(col, 0);
+			
+		
+		
+		subList.clear();
+		subList.add(new SubscriptionDAO().findSubById(id));
+
+	    for (int i=0;i<subList.size();i++) {
+	    	Object[] item = {subList.get(i).getId(),subList.get(i).getTicketType(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
+	    			subList.get(i).getStartDate(), subList.get(i).getEndDate(), subList.get(i).getActive()};
+	    	model.addRow(item);
+	    }
+
+	    return model;
+
 	}
 }

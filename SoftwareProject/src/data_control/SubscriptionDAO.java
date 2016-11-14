@@ -225,6 +225,38 @@ public class SubscriptionDAO extends BaseDAO{
 			}
 		}
 	}
+	
+	
+	public ArrayList<Subscription> getSubsByCustomerID(int id) {
+		ArrayList<Subscription> lijst = new ArrayList<Subscription>();
+		Statement st = null;
+		try {
+			Connection c = conn;
+			if (c == null || c.isClosed()) {
+				// afhandelen zoals je zelf wilt
+				throw new IllegalStateException("Connection onverwacht beeindigd");
+			}
+			st = conn.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM Subscription WHERE customer = " + id);
+			
+			while (rs.next()) {
+				Subscription sb = new Subscription(rs.getInt("id"), 
+						rs.getString("type"),
+						rs.getDouble("price"), 
+						rs.getInt("customer"),
+						rs.getString("startstation"),
+						rs.getString("endstationi"),
+						rs.getDate("startdatum"),
+						rs.getDate("enddatum"),
+						rs.getInt("active"));
+				lijst.add(sb);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		return lijst;
+	}
 
 }
