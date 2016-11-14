@@ -9,6 +9,7 @@ import java.sql.SQLException;
 public class BaseDAO {
 
 	private static Connection con = null;
+
 	
 	public static Connection getConnection() {
 		try {
@@ -18,14 +19,12 @@ public class BaseDAO {
 			e.printStackTrace();
 		}
 		return con;
-	}
 
-	public Connection getCon() {
-		return con;
 	}
 
 	public static void setConnection(Connection con) {
 		BaseDAO.con = con;
+
 	}
 	
 	

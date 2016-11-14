@@ -25,7 +25,7 @@ public class PriceDAO extends BaseDAO {
 	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setString(1, price.getTypeTicket());
-	        ps.setString(1, price.getTypeBetaling().toString());
+	        ps.setString(2, price.getTypeBetaling().toString());
 	        ps.setDouble(3, price.getCostPerUnit());
 	        
 	        ps.executeUpdate();

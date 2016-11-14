@@ -12,7 +12,7 @@ public class DatabaseConnect {
 	private  DatabaseConnect(){
 	        
 	            try {
-	                Class.forName("com.jdbc.mysql.Driver").newInstance();
+	                Class.forName("com.mysql.jdbc.Driver").newInstance();
 	            } catch (ClassNotFoundException e) {
 	                //System.out.println(e.getMessage());
 	            	e.printStackTrace();

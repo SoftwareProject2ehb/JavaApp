@@ -12,10 +12,8 @@ public class Subscription {
 	private Date startDate;
 	private Date endDate;
 	
-	public Subscription(int id, String ticketType, double price, int customerId, String endStation, String startStation,
+	public Subscription(String ticketType, double price, int customerId, String endStation, String startStation,
 			Date startDate, Date endDate) {
-		super();
-		this.id = id;
 		this.ticketType = ticketType;
 		this.price = price;
 		this.startStation = startStation;
@@ -23,6 +21,12 @@ public class Subscription {
 		this.customerId = customerId;
 		this.startDate = startDate;
 		this.endDate = endDate;
+	}
+	
+	public Subscription(int id, String ticketType, double price, int customerId, String endStation, String startStation,
+			Date startDate, Date endDate) {
+		this(ticketType, price, customerId, endStation, startStation, startDate, endDate);
+		this.id = id;
 	}
 
 	public int getId() {

@@ -13,17 +13,17 @@ import utilities.DateConverter;
 
 public class SubscriptionDAO extends BaseDAO{
 	
-	public void addSub(Subscription sub) {
+	public static void createSubscription(Subscription sub) {
 		PreparedStatement ps = null;
 
 		String sql = "INSERT INTO Subscription VALUES (?,?,?,?,?,?,?,?)";
 
 		try {
 
-			if (conn.isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			ps = conn.prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 
 			ps.setInt(1, sub.getId());
 			ps.setString(2, sub.getTicketType());
@@ -59,12 +59,11 @@ public class SubscriptionDAO extends BaseDAO{
 		ArrayList<Subscription> lijst = new ArrayList<Subscription>();
 		Statement st = null;
 		try {
-			Connection c = conn;
-			if (c == null || c.isClosed()) {
+			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = conn.createStatement();
+			st = getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM Subscription");
 
 			while (rs.next()) {
