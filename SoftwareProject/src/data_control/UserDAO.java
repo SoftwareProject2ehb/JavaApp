@@ -12,7 +12,12 @@ import model.User.Role;
 
 public class UserDAO extends BaseDAO{
 	
+<<<<<<< HEAD
 	public static void addUser(User user) {
+=======
+	
+	public void addUser(User user) {
+>>>>>>> refs/heads/master
 		PreparedStatement ps = null;
 
 		String sql = "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?)";
@@ -170,4 +175,13 @@ public class UserDAO extends BaseDAO{
 
 		return lijst;
 	}
+<<<<<<< HEAD
+=======
+
+	
+	
+	
+	  
+
+>>>>>>> refs/heads/master
 }

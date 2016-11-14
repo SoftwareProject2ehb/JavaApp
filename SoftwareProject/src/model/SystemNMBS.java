@@ -17,6 +17,8 @@ public class SystemNMBS {
 		
 		if (user.checkPassword(password)) {
 			logged_user = user;
+		} else {
+			return ErrorCode.INCORRECT_PARAM;
 		}
 		
 		return ErrorCode.NO_ERROR;

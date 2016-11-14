@@ -39,7 +39,7 @@ public class Price {
 	double costPerUnit;
 	
 	public Price (int id, String typeTicket, betalingsType bt, double cpu) {
-		if (typeTicket == null || typeBetaling == null || cpu < 0)
+		if (typeTicket == null || cpu < 0)
 			throw new IllegalArgumentException();
 		
 		this.id = id;
@@ -78,8 +78,8 @@ public class Price {
 	}
 
 	public int setTypeBetaling(betalingsType typeBetaling) {
-		if (typeBetaling == null)
-			return ErrorCode.NULL_PARAM;
+		/*if (typeBetaling == null)
+			return ErrorCode.NULL_PARAM;*/
 		
 		this.typeBetaling = typeBetaling;
 		return ErrorCode.NO_ERROR;

@@ -13,7 +13,7 @@ public class TicketDAO extends BaseDAO {
 	public static void createTicket(Ticket ticket) {
 		PreparedStatement ps = null;
 		
-		String sql = "INSERT INTO Ticket(type, price, startsation, endstation) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO Ticket(type, oneWayTicket, price, startsation, endstation, date) VALUES(?,?,?,?,?,?)";
 		
 		try {
 
@@ -23,9 +23,11 @@ public class TicketDAO extends BaseDAO {
 	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setString(1, ticket.getTypeTicket());
-	        ps.setDouble(2, ticket.getPrice());
-	        ps.setString(3, ticket.getStartStation());
-	        ps.setString(4, ticket.getEndStation());
+	        ps.setBoolean(2, ticket.isOneWayTicket());
+	        ps.setDouble(3, ticket.getPrice());
+	        ps.setString(4, ticket.getStartStation());
+	        ps.setString(5, ticket.getEndStation());
+	        ps.setDate(6, ticket.getDate());
 	        
 	        ps.executeUpdate();
 	    } catch (SQLException e) {
@@ -45,7 +47,7 @@ public class TicketDAO extends BaseDAO {
 	
 	public static void updateTicket(Ticket ticket) {
 		PreparedStatement ps = null;	
-		String update = "UPDATE Ticket SET type=?, price=?, startstation=?, endstation=? WHERE ID = ?";
+		String update = "UPDATE Ticket SET type=?, oneWayTicket=?, price=?, startstation=?, endstation=?, date=? WHERE ID = ?";
 		
 		try {
 		if (getConnection().isClosed()) {
@@ -54,10 +56,12 @@ public class TicketDAO extends BaseDAO {
 			ps = getConnection().prepareStatement(update);
 		
 			ps.setString(1, ticket.getTypeTicket());
-			ps.setDouble(2, ticket.getPrice());
-			ps.setString(3, ticket.getStartStation());
-			ps.setString(4, ticket.getEndStation());
-			ps.setInt(5, ticket.getID());
+			ps.setBoolean(2, ticket.isOneWayTicket());
+			ps.setDouble(3, ticket.getPrice());
+			ps.setString(4, ticket.getStartStation());
+			ps.setString(5, ticket.getEndStation());
+			ps.setDate(6, ticket.getDate());
+			ps.setInt(7, ticket.getID());
 			
 			ps.executeUpdate();
 			ps.close();
@@ -78,7 +82,7 @@ public class TicketDAO extends BaseDAO {
 			ResultSet res = st.executeQuery("SELECT * FROM Ticket WHERE ID = " + id);
 
 			while (res.next()) {
-				t = new Ticket(res.getInt(1), res.getString(2),res.getString(3), res.getString(4), res.getDouble(5));
+				t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(5), res.getString(6), res.getDate(7));
 
 			}
 		} catch (SQLException e) {
@@ -101,7 +105,7 @@ public class TicketDAO extends BaseDAO {
 			ResultSet res = st.executeQuery("SELECT * FROM Ticket");
 
 			while (res.next()) {
-				Ticket t = new Ticket(res.getInt(1), res.getString(2),res.getString(3), res.getString(4), res.getDouble(5));
+				Ticket t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(5), res.getString(6), res.getDate(7));
 				list.add(t);
 			}
 		} catch (SQLException e) {
