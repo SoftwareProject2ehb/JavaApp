@@ -20,7 +20,7 @@ public class LostObjectDAO extends BaseDAO{
 	{
 		 PreparedStatement ps = null;
 
-		    String sql = "INSERT INTO LostObject VALUES(null,?,?,?,?,false,null,null)";
+		    String sql = "INSERT INTO LostObject VALUES(null,?,?,?,?,false,null,null,null,null)";
 
 		    try {
 
@@ -55,10 +55,10 @@ public class LostObjectDAO extends BaseDAO{
 	}
 
 
-public void updateLostObect(LostObject object) {
+public void updateLostObject(LostObject object) {
 		
 		PreparedStatement ps = null;	
-		String update = "UPDATE LostObject SET claimed = true, nameClaimed=?, timeClaimed =? WHERE ID = ?";
+		String update = "UPDATE LostObject SET claimed = true, userClaimed = ?, locationClaimed = ? ,nameClaimed=?, timeClaimed =? WHERE ID = ?";
 		
 		try {
 		if (getCon().isClosed()) {
@@ -66,13 +66,13 @@ public void updateLostObect(LostObject object) {
 		}
 			ps = getCon().prepareStatement(update);
 		
-	
-			
-			ps.setString(1, object.getNameClaimed());
+			ps.setInt(1, object.getUserIDClaimed());
+			ps.setString(2, object.getLocationClaimed());
+			ps.setString(3, object.getNameClaimed());
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-	        ps.setTimestamp(2, date);
+	        ps.setTimestamp(4, date);
 			
-			ps.setInt(3, object.getID());
+			ps.setInt(5, object.getID());
 			 // TODO SET DATE
 			ps.executeUpdate();
 			ps.close();
@@ -85,7 +85,7 @@ public void updateLostObect(LostObject object) {
 
 public LostObject getLostObjectFromRS(ResultSet res) throws SQLException{
 	
-	return new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getTimestamp(5), res.getBoolean(6),res.getString(7),res.getTimestamp(8));
+	return new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getTimestamp(5), res.getBoolean(6),res.getInt(7),res.getString(8),res.getString(9),res.getTimestamp(10));
 }
 
 
@@ -259,6 +259,7 @@ public ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
       // ArrayList<LostObject> lijst = new ArrayList<LostObject>();
       // lijst = lost.getLostObjectOpAttribut(get, zoekop);
        //System.out.println(lijst.toString());
+       System.out.println(dat.toString());
       
    
    }

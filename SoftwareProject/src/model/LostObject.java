@@ -11,13 +11,16 @@ private String Place;
 // TO DO SET DATE
 private Timestamp date;
 private boolean claimed;
+private int userIDClaimed;
+private String locationClaimed;
+
 private String nameClaimed;
 private Timestamp dateClaimed;
 
 
 
-public LostObject(int iD, int userID, String name, String place, Timestamp date, boolean claimed, String nameClaimed,
-		Timestamp dateClaimed) {
+public LostObject(int iD, int userID, String name, String place, Timestamp date, boolean claimed, int userIDClaimed, String locationClaimed,String nameClaimed,
+		 Timestamp dateClaimed) {
 	super();
 	ID = iD;
 	this.userID = userID;
@@ -25,6 +28,8 @@ public LostObject(int iD, int userID, String name, String place, Timestamp date,
 	Place = place;
 	this.date = date;
 	this.claimed = claimed;
+	this.userIDClaimed = userIDClaimed;
+	this.locationClaimed = locationClaimed;
 	this.nameClaimed = nameClaimed;
 	this.dateClaimed = dateClaimed;
 }
@@ -103,10 +108,22 @@ public int setDate(Timestamp date) {
 	this.date = date;
 	return 0;
 }
+public int getUserIDClaimed() {
+	return userIDClaimed;
+}
+public void setUserIDClaimed(int userIDClaimed) {
+	this.userIDClaimed = userIDClaimed;
+}
+public String getLocationClaimed() {
+	return locationClaimed;
+}
+public void setLocationClaimed(String locationClaimed) {
+	this.locationClaimed = locationClaimed;
+}
 @Override
 public String toString() {
-	return "LostObject [ID=" + ID + ", userID=" + userID + ", name=" + name + ", Place=" + Place + ", date=" + date
-			+ ", claimed=" + claimed + ", nameClaimed=" + nameClaimed + ", dateClaimed=" + dateClaimed + "] \n";
+	return "ID=" + ID + "\n userID=" + userID + "\n name=" + name + "\n Place=" + Place + "\n date=" + date
+			+ "\n claimed=" + claimed +"\n User id that claimed = "+userIDClaimed  +  "\nlocation claimed = "+locationClaimed  +"\n nameClaimed=" + nameClaimed + "\n dateClaimed=" + dateClaimed + "\n \n";
 }
 
 
