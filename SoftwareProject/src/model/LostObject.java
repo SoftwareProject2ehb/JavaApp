@@ -33,6 +33,13 @@ public LostObject(int iD, int userID, String name, String place, Timestamp date,
 	this.nameClaimed = nameClaimed;
 	this.dateClaimed = dateClaimed;
 }
+public LostObject(String name, String place) {
+	super();
+	
+	this.name = name;
+	this.Place = place;
+	
+}
 public boolean isClaimed() {
 	return claimed;
 }
@@ -51,13 +58,7 @@ public Timestamp getDateClaimed() {
 public void setDateClaimed(Timestamp dateClaimed) {
 	this.dateClaimed = dateClaimed;
 }
-public LostObject(int userID, String name, String place) {
-	super();
-	this.userID = userID;
-	this.name = name;
-	this.Place = place;
-	this.date = date;
-}
+
 public int getID() {
 	return ID;
 }

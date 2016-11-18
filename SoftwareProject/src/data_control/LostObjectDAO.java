@@ -28,7 +28,7 @@ public class LostObjectDAO extends BaseDAO{
 		            throw new IllegalStateException("error unexpected");
 		        }
 		        ps = getCon().prepareStatement(sql);
-		        
+		       
 		        ps.setInt(1, object.getUserID());
 		        ps.setString(2, object.getName());
 		        ps.setString(3, object.getPlace());
@@ -249,9 +249,9 @@ public ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
 }
    public static void main(String[] args) {
        
-	   LostObjectDAO lost = new LostObjectDAO();
+	  // LostObjectDAO lost = new LostObjectDAO();
        //LostObject u = new LostObject(1,"daoud","ehb");
-       LostObject dat = lost.getLostObjectById(8);
+      // LostObject dat = lost.getLostObjectById(8);
 	   
 	   //dat.setNameClaimed("daoud");
 	   
@@ -259,7 +259,11 @@ public ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
       // ArrayList<LostObject> lijst = new ArrayList<LostObject>();
       // lijst = lost.getLostObjectOpAttribut(get, zoekop);
        //System.out.println(lijst.toString());
-       System.out.println(dat.toString());
+       //System.out.println(dat.toString());
+	   //SystemNMBS nmbs = new SystemNMBS();
+	   
+	   
+	   
       
    
    }
