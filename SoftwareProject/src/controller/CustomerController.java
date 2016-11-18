@@ -7,27 +7,27 @@ import javax.swing.JTextField;
 
 import view.*;
 
-public class CustomerController {
-	SystemController system_control;
+public abstract class CustomerController {
+	static SystemController system_control;
 	
-	CreateCustomerView create_customer;
-	FindCustomerView find_customer;
+	static CreateCustomerView create_customer;
+	static FindCustomerView find_customer;
 	
 	public CustomerController(SystemController system_control, CreateCustomerView create_customer, FindCustomerView find_customer) {
-		this.system_control = system_control;
-		this.create_customer = create_customer;
-		this.find_customer = find_customer;
+		CustomerController.system_control = system_control;
+		CustomerController.create_customer = create_customer;
+		CustomerController.find_customer = find_customer;
 	}
 	
-	public void switchToCreateCustomerView() {
+	public static void switchToCreateCustomerView() {
 		//TODO
 	}
 	
-	public void switchToFindCustomerView() {
+	public static void switchToFindCustomerView() {
 		//TODO
 	}
 	
-	public void createCustomer() throws InvalidParameterException{
+	public static void createCustomer() throws InvalidParameterException{
 		ArrayList<JTextField> array = create_customer.getTextFields();
 		String first_name;
 		String last_name;
