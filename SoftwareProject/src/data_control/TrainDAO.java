@@ -16,18 +16,18 @@ public class TrainDAO extends BaseDAO {
 		String sql = "INSERT INTO Train VALUES(?,?,?,?,?)";
 		try {
 
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        ps = getCon().prepareStatement(sql);
+	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setInt(1, train.getId());
 	        ps.setString(2, train.getStart());
 	        ps.setString(3, train.getArrival());
 	        
 	        //Date? 
-	        ps.setDate(4, train.getStartTime());
-	        ps.setDate(5, train.getArrivalTime());
+	        ps.setTimestamp(4, train.getStartTime());
+	        ps.setTimestamp(5, train.getArrivalTime());
 	        
 	        
 	       ps.executeUpdate();
@@ -53,12 +53,12 @@ public class TrainDAO extends BaseDAO {
 		
 		
 		try {
-			if (getCon().isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			 
 			 
-			ps = getCon().prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 			ps.setInt(1,id);
 			ResultSet res = ps.executeQuery("SELECT * FROM Train");
 			 
@@ -80,10 +80,10 @@ public class TrainDAO extends BaseDAO {
 		ArrayList<Train> lijst = new ArrayList<Train>();
 		Statement st = null;
 		try {
-			if (getCon().isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			st = (Statement) getCon().createStatement();
+			st = (Statement) getConnection().createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM Train");
 
 			while (res.next()) {
