@@ -21,7 +21,7 @@ public class Report {
 	
 	public static ArrayList<String> getMostDestinationTicket()
 	{
-		ArrayList<String> meestVerkocht= new ArrayList<String>();
+		ArrayList<String> meestVerkocht= ReportDAO.getMostDestinationTicket();
 		
 				
 		return meestVerkocht;
@@ -30,7 +30,7 @@ public class Report {
 	
 	public static String getTypeMostSoldTicket(){
 		
-		String type = null;
+		String type =ReportDAO.getTypeMostSoldTicket();
 		
 
 		
@@ -50,7 +50,7 @@ public class Report {
 	
 	public static ArrayList<String> getMostStartStationSubscription()
 	{
-		ArrayList<String> meestVerkocht= new ArrayList<String>();
+		ArrayList<String> meestVerkocht= ReportDAO.getMostStartStationSubscription();
 		
 				
 		return meestVerkocht;
@@ -60,7 +60,7 @@ public class Report {
 	
 	public static ArrayList<String> getMostDestinationSubscription()
 	{
-		ArrayList<String> meestVerkocht= new ArrayList<String>();
+		ArrayList<String> meestVerkocht= ReportDAO.getMostDestinationSubscription();
 		
 				
 		return meestVerkocht;
@@ -69,7 +69,7 @@ public class Report {
 	
 	public static String getTypeMostSoldSubscription(){
 		
-		String type = null;
+		String type = ReportDAO.getTypeMostSoldSubscription();
 		
 
 		
@@ -81,7 +81,7 @@ public class Report {
 	
 	public static int getAmountSoldSubscripton()
 	{
-		int amount = 0;
+		int amount = ReportDAO.getAmountSoldSubscripton();
 		
 
 	
