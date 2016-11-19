@@ -1,5 +1,6 @@
 package model;
 
+import utilities.Encryptor;
 
 public class User {
 
@@ -147,7 +148,7 @@ public class User {
 	 */
 	
 	public boolean checkPassword(String password) {
-		if(this.password.equals(password))
+		if(this.password.equals(Encryptor.encrypt(password)))
 			return true;
 		else 
 			return false;
