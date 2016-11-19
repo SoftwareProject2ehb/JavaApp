@@ -2,19 +2,32 @@ package controller;
 
 import model.*;
 import model.User.Role;
-import utilities.Encryptor;
+import utilities.*;
+import view.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import data_control.*;
 
 public abstract class SystemController {
-	SystemNMBS system;
+	static SystemNMBS system;
+	static CustomerController customer_controller;
 	
 	public SystemController() {
 		system = new SystemNMBS();
+	}
+	
+	public static void startUp() {
+		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
+		CustomerController.create_customer = new CreateCustomerView();
+		
+		SystemFrame frame = new SystemFrame();
+		frame.setVisible(true);
 	}
 	
 	public static String giveRouteInfo() {

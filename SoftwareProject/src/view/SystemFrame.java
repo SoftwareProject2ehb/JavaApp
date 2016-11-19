@@ -2,15 +2,21 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.CustomerController;
+import controller.SystemController;
+
 import java.awt.CardLayout;
 
 public class SystemFrame extends JFrame {
 
 	private JPanel contentPane;
+	private CardLayout card_layout = new CardLayout(0, 0);
 
 	/**
 	 * Launch the application.
@@ -37,7 +43,14 @@ public class SystemFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new CardLayout(0, 0));
+		contentPane.setLayout(card_layout);
+		
+		//TODO Hier moeten alle views toegevoegd worden aan de contentpane
+		contentPane.add(CustomerController.create_customer);
+	}
+	
+	public void switchTo(String panel_name) {
+		card_layout.show(contentPane, panel_name);
 	}
 
 }
