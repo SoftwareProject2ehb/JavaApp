@@ -2,13 +2,14 @@ package utilities;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 import java.io.*;
 import org.json.*;
 
-public class ApiAccesser {
+public abstract class ApiAccesser {
 	/*
 	 *Sites die ik gebruikt heb voor referentie:
 	 *
@@ -47,6 +48,12 @@ public class ApiAccesser {
 	  }
 	  
 	 // Ik moet hier nog een stuk code schrijven om efficiënt informatie te verkijgen van het json object.
-	 // Ook heb je een aparte json library nodig om dit te laten werken en ik zal die ook uploaden op de drive. 
+	 // Ook heb je een aparte json library nodig om dit te laten werken en ik zal die ook uploaden op de drive.
+	  
+	  
+	  // Een route tussen a en b bevat veel meer informatie dan alleen de naam van het station dus
+	  // ik ga nog een klasse moeten aanmaken die dat informatie kan opvangen 
+	  // dus het returntype zal meer iets zijn zoals ArrayList<RouteStop>
+	  public abstract ArrayList<String> opvragingRoute(String a, String b);
 
 }
