@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.*;
+import model.Subscription.subscription_type;
 import model.User.Role;
 import utilities.DateConverter;
 
@@ -68,7 +69,7 @@ public class SubscriptionDAO extends BaseDAO{
 
 			while (rs.next()) {
 				Subscription sb = new Subscription(rs.getInt("id"), 
-						rs.getString("type"),
+						subscription_type.stringToBetalingsType(rs.getString("type")),
 						rs.getDouble("price"), 
 						rs.getInt("customer"),
 						rs.getString("startstation"),

@@ -5,6 +5,30 @@ import java.time.LocalDateTime;
 public class Subscription {
 	public enum subscription_type {
 		JONGERENTICKET, SENIORENTICKET, FUNHOUR;
+		
+		@Override
+		public String toString() {
+			switch (this) {
+			case JONGERENTICKET: return "JONGERENTICKET";
+			case SENIORENTICKET: return "SENIORENTICKET";
+			case FUNHOUR: return "FUNHOUR";
+			default: throw new IllegalArgumentException();
+			}
+		}
+		
+		public static subscription_type stringToBetalingsType(String s) {
+			if (s.toUpperCase() == "JONGERENTICKET") {
+				return subscription_type.JONGERENTICKET;
+			}
+			if (s.toUpperCase() == "SENIORENTICKET") {
+				return subscription_type.SENIORENTICKET;
+			}
+			if (s.toUpperCase() == "FUNHOUR") {
+				return subscription_type.FUNHOUR;
+			}
+			
+			return null;
+		}
 	}
 	
 	private int id;
@@ -41,8 +65,8 @@ public class Subscription {
 		this.id = id;
 	}
 
-	public subscription_type getTicketType() {
-		return type;
+	public String getTicketType() {
+		return type.toString();
 	}
 
 	public void setTicketType(subscription_type type) {
