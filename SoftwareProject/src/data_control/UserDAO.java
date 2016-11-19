@@ -312,8 +312,11 @@ public class UserDAO extends BaseDAO{
 		UserDAO ud = new UserDAO();
 		//User u = new User("Mohamed","Blabla","mohamed.blabla@student.ehb.be","03812391","mohb",Encryptor.encrypt("test"),Role.valueOf("USER")); 
 		//ud.createUser(u);
-		User u = ud.findUserByLogin("moh");
-		System.out.println(u.toString());
+		
+		User u = ud.findUserByLogin("mohb");
+		System.out.println(u.checkPassword("test"));
+		
+		
 		/*ArrayList<User> list = ud.findUserByAttribute(FindUser.valueOf("role"),"USER");
 		for(User bn: list){
 			System.out.println(bn.getFirstName() + " , " + bn.getLastName() + " , " + bn.getEmail() + " , " + bn.getRolen());
