@@ -8,13 +8,10 @@ import javax.swing.JTextField;
 import view.*;
 
 public abstract class CustomerController {
-	static SystemController system_control;
-	
 	static CreateCustomerView create_customer;
 	static FindCustomerView find_customer;
 	
-	public CustomerController(SystemController system_control, CreateCustomerView create_customer, FindCustomerView find_customer) {
-		CustomerController.system_control = system_control;
+	public CustomerController(CreateCustomerView create_customer, FindCustomerView find_customer) {
 		CustomerController.create_customer = create_customer;
 		CustomerController.find_customer = find_customer;
 	}
@@ -51,6 +48,6 @@ public abstract class CustomerController {
 		postal_code = array.get(6).getText();
 		community = array.get(7).getText();
 		
-		system_control.createCustomer(first_name, last_name, street_name + ", " + postal_code + " " + community, email, phone_number);
+		SystemController.createCustomer(first_name, last_name, street_name + ", " + postal_code + " " + community, email, phone_number);
 	}
 }
