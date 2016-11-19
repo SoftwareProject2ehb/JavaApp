@@ -44,12 +44,27 @@ public abstract class SystemController {
 		return "Ticket bought.";
 	}
 
-	public static String buySubscription(String type_subscription, double subscription_price, int customer_id, String end_station, String start_station,
-			Date start_date, Date end_date) {
+	public static String buySubscription(String subscription_type, double price, int customerId, String endStation, String startStation, Timestamp startDate, Timestamp endDate) {
 		
-		Subscription new_subscription = new Subscription(type_subscription, subscription_price, customer_id, end_station, start_station, start_date, end_date);
-		SubscriptionDAO.createSubscription(new_subscription);
-		return "Subscription bought.";
+		Subscription subscription;
+		double subscription_price = Subscription.calculatePrice();
+		
+		switch (subscription_type) {
+		case "JONGERENTICKET":
+			subscription = new Subscription(Subscription.subscription_type.JONGERENTICKET, price, customerId, endStation, startStation, null, null);
+			break;
+		case "SENIORENTICKET":
+			subscription = new Subscription(Subscription.subscription_type.SENIORENTICKET, price, customerId, endStation, startStation, null, null);
+			break;
+		case "FUNHOUR":
+			subscription = new Subscription(Subscription.subscription_type.FUNHOUR, price, customerId, endStation, startStation, null, null);
+			break;
+		default:
+			throw new IllegalArgumentException();
+		}
+		
+		SubscriptionDAO.createSubscription(subscription);
+		return "Abonnement gekocht.";
 	}
 	
 	public static String getReports() {
@@ -57,13 +72,30 @@ public abstract class SystemController {
 		return null;
 	}
 	
-	public static String makeTicketType() {
-		//TODO Implementation
-		return null;
+	public static String makeTicketType(String ticket_type, String unit, double cost_per_unit) throws IllegalArgumentException{
+		Price type;
+		switch (unit) {
+		case "uur":
+			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			break;
+		case "station":
+			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			break;
+		case "km":
+			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			break;
+		case "zone":
+			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			break;
+		default:
+			throw new IllegalArgumentException();
+		}
+		PriceDAO.createPrice(type);
+		return "Tickettype succesvol aangemaakt.";
 	}
 	
 	public static String makeSubscriptionType() {
-		//TODO Implementation
+		//TODO
 		return null;
 	}
 	

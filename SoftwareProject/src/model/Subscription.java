@@ -3,8 +3,12 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Subscription {
+	public enum subscription_type {
+		JONGERENTICKET, SENIORENTICKET, FUNHOUR;
+	}
+	
 	private int id;
-	private String ticketType;
+	private subscription_type type;
 	private double price;
 	private String startStation;
 	private String endStation;
@@ -12,9 +16,9 @@ public class Subscription {
 	private Date startDate;
 	private Date endDate;
 	
-	public Subscription(String ticketType, double price, int customerId, String endStation, String startStation,
+	public Subscription(subscription_type type, double price, int customerId, String endStation, String startStation,
 			Date startDate, Date endDate) {
-		this.ticketType = ticketType;
+		this.type = type;
 		this.price = price;
 		this.startStation = startStation;
 		this.endStation = endStation;
@@ -23,9 +27,9 @@ public class Subscription {
 		this.endDate = endDate;
 	}
 	
-	public Subscription(int id, String ticketType, double price, int customerId, String endStation, String startStation,
+	public Subscription(int id, subscription_type type, double price, int customerId, String endStation, String startStation,
 			Date startDate, Date endDate) {
-		this(ticketType, price, customerId, endStation, startStation, startDate, endDate);
+		this(type, price, customerId, endStation, startStation, startDate, endDate);
 		this.id = id;
 	}
 
@@ -37,12 +41,12 @@ public class Subscription {
 		this.id = id;
 	}
 
-	public String getTicketType() {
-		return ticketType;
+	public subscription_type getTicketType() {
+		return type;
 	}
 
-	public void setTicketType(String ticketType) {
-		this.ticketType = ticketType;
+	public void setTicketType(subscription_type type) {
+		this.type = type;
 	}
 
 	public double getPrice() {
@@ -93,5 +97,8 @@ public class Subscription {
 		this.endDate = endDate;
 	}
 	
+	public static double calculatePrice() {
+		return 0.0;
+	}
 	
 }
