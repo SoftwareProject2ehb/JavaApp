@@ -6,6 +6,7 @@ import utilities.Encryptor;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import data_control.*;
 
@@ -72,9 +73,9 @@ public abstract class SystemController {
 		return "Succesvol toegevoegd.";
 	}
 	
-	public static String searchLostObject() {
-		//TODO Implementation
-		return null;
+	public static ArrayList<LostObject> searchLostObject(String name_finder, String place_found, Timestamp time_found, Boolean claimed) {
+		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_finder, place_found, time_found, claimed);
+		return object_array;
 	}
 	
 	
