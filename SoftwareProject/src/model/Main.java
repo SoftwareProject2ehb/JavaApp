@@ -5,14 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import controller.SystemController;
-import data_control.*;
-import model.Price;
-import model.Price.betalingsType;
-import utilities.DateConverter;
-import view.LoginView;
-import model.Ticket;
-
+import controller.*;
 import model.*;
 import data_control.*;
 

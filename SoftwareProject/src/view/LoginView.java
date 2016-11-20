@@ -2,8 +2,13 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.*;
+
+import controller.CustomerController;
+import controller.LoginController;
+import controller.SystemController;
 
 public class LoginView extends JPanel {
 	private final JLabel lblUsername = new JLabel("Gebruikersnaam");
@@ -55,8 +60,13 @@ public class LoginView extends JPanel {
         btnOk.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	lblStatus.setForeground(Color.RED);
-                lblStatus.setText("Ongeldige combinatie.");
+            	if (LoginController.login()) {
+            		//TODO Test view, should be changed to ActionMenu
+            		CustomerController.switchToCreateCustomerView();
+            	} else {
+            		lblStatus.setForeground(Color.RED);
+                    lblStatus.setText("Ongeldige combinatie.");
+            	}
             }
         });
         
@@ -67,18 +77,12 @@ public class LoginView extends JPanel {
             }
         });
     }
+    
+    public ArrayList<JTextField> getTextFields() {
+		ArrayList<JTextField> array = new ArrayList<JTextField>();
+		array.add(txtUsername);
+		array.add(txtPassword);
+		
+		return array;
+	}
 }
-
- // Deze deel is nodig om de view op zichzelf zichtbaar te maken
-//    public static void run() {
-//        JPanel p = new LoginView();
-//        
-//         
-//        JFrame f = new JFrame();
-//        f.getContentPane().add(p);
-//        f.setVisible(true);
-//        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        f.setSize(600, 300);
-//        f.setMinimumSize(new Dimension(300, 150));
-//        f.setLocationRelativeTo(null);
-//    }

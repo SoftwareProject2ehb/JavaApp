@@ -5,6 +5,7 @@ import model.User.Role;
 import utilities.*;
 import view.*;
 
+import java.security.InvalidParameterException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -15,14 +16,10 @@ import javax.swing.JPanel;
 import data_control.*;
 
 public abstract class SystemController {
-	static SystemNMBS system;
+	static SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
 	static SystemFrame frame;
-	
-	public SystemController() {
-		system = new SystemNMBS();
-	}
-	
+		
 	public static void startUp() {
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
@@ -30,6 +27,13 @@ public abstract class SystemController {
 		
 		frame = new SystemFrame();
 		frame.setVisible(true);
+	}
+	
+	public static boolean login(String user_login, String password) {
+		if (system.login(user_login, password) == ErrorCode.NO_ERROR) {
+			return true;
+		}
+		return false;
 	}
 	
 	public static String giveRouteInfo() {
