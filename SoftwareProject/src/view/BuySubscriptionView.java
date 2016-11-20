@@ -12,6 +12,11 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
+import controller.ActionMenuController;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class BuySubscriptionView extends JPanel {
 	private JTextField txtPrijs;
 	private JTextField textField_1;
@@ -110,6 +115,16 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, comboBox_3, 0, SpringLayout.SOUTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox_3, 106, SpringLayout.EAST, lblGeldigheid);
 		add(comboBox_3);
+		
+		JButton button = new JButton("<<  Terug");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ActionMenuController.switchToActionMenuView();
+			}
+		});
+		sl_contentPane.putConstraint(SpringLayout.NORTH, button, 5, SpringLayout.SOUTH, btnKoopTicket);
+		sl_contentPane.putConstraint(SpringLayout.WEST, button, 10, SpringLayout.WEST, this);
+		add(button);
 	}
 
 }
