@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.*;
 
+import controller.ActionMenuController;
 import controller.CustomerController;
 import controller.LoginController;
 import controller.SystemController;
@@ -61,8 +62,7 @@ public class LoginView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
             	if (LoginController.login()) {
-            		//TODO Test view, should be changed to ActionMenu
-            		CustomerController.switchToCreateCustomerView();
+            		ActionMenuController.switchToActionMenuView();
             	} else {
             		lblStatus.setForeground(Color.RED);
                     lblStatus.setText("Ongeldige combinatie.");

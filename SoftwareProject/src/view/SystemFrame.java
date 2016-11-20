@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.ActionMenuController;
 import controller.CustomerController;
 import controller.LoginController;
 import controller.SystemController;
@@ -50,10 +51,12 @@ public class SystemFrame extends JFrame {
 		contentPane.add(CustomerController.create_customer);
 		contentPane.add(CustomerController.find_customer);
 		contentPane.add(LoginController.login);
+		contentPane.add(ActionMenuController.action_menu);
 		
 		card_layout.addLayoutComponent(CustomerController.create_customer, "CREATE_CUSTOMER");
 		card_layout.addLayoutComponent(CustomerController.find_customer, "FIND_CUSTOMER");
 		card_layout.addLayoutComponent(LoginController.login, "LOGIN");
+		card_layout.addLayoutComponent(ActionMenuController.action_menu, "ACTION_MENU");
 		
 		card_layout.show(contentPane, "LOGIN");
 		
