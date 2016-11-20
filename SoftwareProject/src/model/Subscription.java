@@ -3,8 +3,36 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Subscription {
+	public enum subscription_type {
+		JONGERENTICKET, SENIORENTICKET, FUNHOUR;
+		
+		@Override
+		public String toString() {
+			switch (this) {
+			case JONGERENTICKET: return "JONGERENTICKET";
+			case SENIORENTICKET: return "SENIORENTICKET";
+			case FUNHOUR: return "FUNHOUR";
+			default: throw new IllegalArgumentException();
+			}
+		}
+		
+		public static subscription_type stringToBetalingsType(String s) {
+			if (s.toUpperCase() == "JONGERENTICKET") {
+				return subscription_type.JONGERENTICKET;
+			}
+			if (s.toUpperCase() == "SENIORENTICKET") {
+				return subscription_type.SENIORENTICKET;
+			}
+			if (s.toUpperCase() == "FUNHOUR") {
+				return subscription_type.FUNHOUR;
+			}
+			
+			return null;
+		}
+	}
+	
 	private int id;
-	private String ticketType;
+	private subscription_type type;
 	private double price;
 	private String startStation;
 	private String endStation;
@@ -13,11 +41,10 @@ public class Subscription {
 	private Date endDate;
 	private int active;
 	
-	public Subscription(int id, String ticketType, double price, int customerId, String startStation, String endStation,
-			Date startDate, Date endDate, int active) {
-		super();
-		this.id = id;
-		this.ticketType = ticketType;
+
+	public Subscription(subscription_type type, double price, int customerId, String endStation, String startStation,
+			Date startDate, Date endDate) {
+		this.type = type;
 		this.price = price;
 		this.startStation = startStation;
 		this.endStation = endStation;
@@ -25,6 +52,12 @@ public class Subscription {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.active = active;
+	}
+	
+	public Subscription(int id, subscription_type type, double price, int customerId, String endStation, String startStation,
+			Date startDate, Date endDate) {
+		this(type, price, customerId, endStation, startStation, startDate, endDate);
+		this.id = id;
 	}
 
 	public int getId() {
@@ -36,11 +69,11 @@ public class Subscription {
 	}
 
 	public String getTicketType() {
-		return ticketType;
+		return type.toString();
 	}
 
-	public void setTicketType(String ticketType) {
-		this.ticketType = ticketType;
+	public void setTicketType(subscription_type type) {
+		this.type = type;
 	}
 
 	public double getPrice() {
@@ -99,5 +132,8 @@ public class Subscription {
 		this.active = active;
 	}
 	
+	public static double calculatePrice() {
+		return 0.0;
+	}
 	
 }

@@ -38,14 +38,18 @@ public class Price {
 	betalingsType typeBetaling;
 	double costPerUnit;
 	
-	public Price (int id, String typeTicket, betalingsType bt, double cpu) {
+	public Price (String typeTicket, betalingsType bt, double cpu) throws IllegalArgumentException {
 		if (typeTicket == null || cpu < 0)
 			throw new IllegalArgumentException();
 		
-		this.id = id;
 		this.typeTicket = typeTicket;
 		this.typeBetaling = bt;
 		this.costPerUnit = cpu;
+	}
+	
+	public Price (int id, String typeTicket, betalingsType bt, double cpu) throws IllegalArgumentException {
+		this(typeTicket,bt,cpu);
+		this.id = id;
 	}
 
 	public int getId() {

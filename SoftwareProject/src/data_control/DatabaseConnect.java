@@ -9,7 +9,7 @@ public class DatabaseConnect {
 
 	private static DatabaseConnect ref;
 	private Connection connect;
-	public  DatabaseConnect(){
+	private  DatabaseConnect(){
 	        
 	            try {
 	                Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -22,13 +22,15 @@ public class DatabaseConnect {
 	                //System.out.println(e.getMessage());
 	            }
 	        
-	    }
-	    public static DatabaseConnect getInstance(){
+	}
+	
+	public static DatabaseConnect getInstance(){
 	        if(ref == null)
 	            ref = new DatabaseConnect();
 	        return ref;
-	    }
-	    public Connection getConnection() throws SQLException{
+	}
+	
+	public Connection getConnection() throws SQLException{
 	        Connection conn = null;
 	        if (connect == null || connect.isClosed()) {
 	        	try {
@@ -42,6 +44,6 @@ public class DatabaseConnect {
 	        }
 	        }
 	        return conn;
-	    }
+	 }
 	    
 	}

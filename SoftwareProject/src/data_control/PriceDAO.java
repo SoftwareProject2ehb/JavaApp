@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PriceDAO extends BaseDAO {
-	public void createPrice(Price price) {
+	public static void createPrice(Price price) {
 		
 		PreparedStatement ps = null;
 
@@ -19,10 +19,10 @@ public class PriceDAO extends BaseDAO {
 		
 		try {
 
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        ps = getCon().prepareStatement(sql);
+	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setString(1, price.getTypeTicket());
 	        ps.setString(2, price.getTypeBetaling().toString());
@@ -44,15 +44,15 @@ public class PriceDAO extends BaseDAO {
 	    }
 	}
 	
-	public void removePrice(int id) {
+	public static void removePrice(int id) {
 		PreparedStatement ps = null;	
 		String update = "DELETE FROM Price WHERE ID = ?";
 		
 		try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-			ps = getCon().prepareStatement(update);
+			ps = getConnection().prepareStatement(update);
 		
 			ps.setInt(1, id);
 			
@@ -64,15 +64,15 @@ public class PriceDAO extends BaseDAO {
 		}
 	}
 	
-	public void updatePrice(Price price) {
+	public static void updatePrice(Price price) {
 		PreparedStatement ps = null;	
 		String update = "UPDATE Price SET typeTicket=?, typeBetaling=?, costPerUnit=? WHERE ID = ?";
 		
 		try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-			ps = getCon().prepareStatement(update);
+			ps = getConnection().prepareStatement(update);
 		
 			ps.setString(1, price.getTypeTicket());
 			ps.setString(2, price.getTypeBetaling().toString());
@@ -87,14 +87,14 @@ public class PriceDAO extends BaseDAO {
 		}
 	}
 	
-	public Price findPriceById(int id) {
+	public static Price findPriceById(int id) {
 		Statement st = null;
 		Price p = null;
 		try {
-			if (getCon().isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			st = (Statement) getCon().createStatement();
+			st = (Statement) getConnection().createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM Price WHERE ID = " + id);
 
 			while (res.next()) {
