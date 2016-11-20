@@ -19,8 +19,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class BuyTicketView extends JPanel {
-	private JTextField textField;
-	private JTextField txtPrijs;
+	public JTextField textField;
+	public JTextField txtPrijs;
+	public JComboBox cbbBeginstation;
+	public JComboBox cbbEindstation;
+	public JComboBox cbbType;
+	public JCheckBox checkBox;
 	
 	/**
 	 * Create the panel.
@@ -46,19 +50,19 @@ public class BuyTicketView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblEindstation, 0, SpringLayout.EAST, lblBeginstation);
 		add(lblEindstation);
 		
-		JComboBox comboBox = new JComboBox();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, comboBox, -3, SpringLayout.NORTH, lblBeginstation);
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblBeginstation);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox, 106, SpringLayout.EAST, lblBeginstation);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
-		add(comboBox);
+		cbbBeginstation = new JComboBox();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbBeginstation, -3, SpringLayout.NORTH, lblBeginstation);
+		sl_contentPane.putConstraint(SpringLayout.WEST, cbbBeginstation, 6, SpringLayout.EAST, lblBeginstation);
+		sl_contentPane.putConstraint(SpringLayout.EAST, cbbBeginstation, 106, SpringLayout.EAST, lblBeginstation);
+		cbbBeginstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		add(cbbBeginstation);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, comboBox_1, -3, SpringLayout.NORTH, lblEindstation);
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox_1, 6, SpringLayout.EAST, lblEindstation);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox_1, 106, SpringLayout.EAST, lblEindstation);
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
-		add(comboBox_1);
+		cbbEindstation = new JComboBox();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbEindstation, -3, SpringLayout.NORTH, lblEindstation);
+		sl_contentPane.putConstraint(SpringLayout.WEST, cbbEindstation, 6, SpringLayout.EAST, lblEindstation);
+		sl_contentPane.putConstraint(SpringLayout.EAST, cbbEindstation, 106, SpringLayout.EAST, lblEindstation);
+		cbbEindstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		add(cbbEindstation);
 		
 		JLabel lblDatum = new JLabel("Datum");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblDatum, 0, SpringLayout.NORTH, lblEindstation);
@@ -73,12 +77,12 @@ public class BuyTicketView extends JPanel {
 		
 		JLabel lblHeenenterugreis = new JLabel("Heen-en-terugreis");
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblDatum, 0, SpringLayout.WEST, lblHeenenterugreis);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblHeenenterugreis, 30, SpringLayout.EAST, comboBox);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblHeenenterugreis, 30, SpringLayout.EAST, cbbBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblHeenenterugreis, 0, SpringLayout.SOUTH, lblBeginstation);
 		add(lblHeenenterugreis);
 		
-		JCheckBox checkBox = new JCheckBox("");
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, checkBox, 0, SpringLayout.SOUTH, comboBox);
+		checkBox = new JCheckBox("");
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, checkBox, 0, SpringLayout.SOUTH, cbbBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, checkBox, 0, SpringLayout.EAST, textField);
 		add(checkBox);
 		
@@ -87,21 +91,21 @@ public class BuyTicketView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblTypeTicket, 0, SpringLayout.EAST, lblBeginstation);
 		add(lblTypeTicket);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Type 1"}));
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox_2, 0, SpringLayout.WEST, comboBox);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, comboBox_2, 0, SpringLayout.SOUTH, lblTypeTicket);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox_2, 106, SpringLayout.EAST, lblTypeTicket);
-		add(comboBox_2);
+		cbbType = new JComboBox();
+		cbbType.setModel(new DefaultComboBoxModel(new String[] {"STANDARD", "WEEKEND"}));
+		sl_contentPane.putConstraint(SpringLayout.WEST, cbbType, 0, SpringLayout.WEST, cbbBeginstation);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, cbbType, 0, SpringLayout.SOUTH, lblTypeTicket);
+		sl_contentPane.putConstraint(SpringLayout.EAST, cbbType, 106, SpringLayout.EAST, lblTypeTicket);
+		add(cbbType);
 		
 		JButton btnOfferte = new JButton("Offerte");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnOfferte, 51, SpringLayout.SOUTH, comboBox_2);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnOfferte, 0, SpringLayout.EAST, comboBox);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnOfferte, 51, SpringLayout.SOUTH, cbbType);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnOfferte, 0, SpringLayout.EAST, cbbBeginstation);
 		add(btnOfferte);
 		
 		JButton btnKoopTicket = new JButton("Koop Ticket");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnKoopTicket, 13, SpringLayout.SOUTH, btnOfferte);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnKoopTicket, 0, SpringLayout.EAST, comboBox);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnKoopTicket, 0, SpringLayout.EAST, cbbBeginstation);
 		add(btnKoopTicket);
 		
 		txtPrijs = new JTextField();

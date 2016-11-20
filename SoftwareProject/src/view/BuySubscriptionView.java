@@ -13,13 +13,18 @@ import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
 import controller.ActionMenuController;
+import controller.SubscriptionController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class BuySubscriptionView extends JPanel {
-	private JTextField txtPrijs;
-	private JTextField textField_1;
+	public JTextField txtPrijs;
+	public JTextField textField_1;
+	public JComboBox cbbBeginstation;
+	public JComboBox cbbEindstation;
+	public JComboBox cbbType;
+	public JComboBox cbbGeldigheid;
 	
 	/**
 	 * Create the panel.
@@ -45,23 +50,23 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblEindstation, 0, SpringLayout.EAST, lblBeginstation);
 		add(lblEindstation);
 		
-		JComboBox comboBox = new JComboBox();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, comboBox, -3, SpringLayout.NORTH, lblBeginstation);
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblBeginstation);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox, 106, SpringLayout.EAST, lblBeginstation);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
-		add(comboBox);
+		cbbBeginstation = new JComboBox();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbBeginstation, -3, SpringLayout.NORTH, lblBeginstation);
+		sl_contentPane.putConstraint(SpringLayout.WEST, cbbBeginstation, 6, SpringLayout.EAST, lblBeginstation);
+		sl_contentPane.putConstraint(SpringLayout.EAST, cbbBeginstation, 106, SpringLayout.EAST, lblBeginstation);
+		cbbBeginstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		add(cbbBeginstation);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, comboBox_1, -3, SpringLayout.NORTH, lblEindstation);
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox_1, 6, SpringLayout.EAST, lblEindstation);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox_1, 106, SpringLayout.EAST, lblEindstation);
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
-		add(comboBox_1);
+		cbbEindstation = new JComboBox();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbEindstation, -3, SpringLayout.NORTH, lblEindstation);
+		sl_contentPane.putConstraint(SpringLayout.WEST, cbbEindstation, 6, SpringLayout.EAST, lblEindstation);
+		sl_contentPane.putConstraint(SpringLayout.EAST, cbbEindstation, 106, SpringLayout.EAST, lblEindstation);
+		cbbEindstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		add(cbbEindstation);
 		
 		JLabel lblGeldigheid = new JLabel("Geldigheid");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblGeldigheid, 0, SpringLayout.NORTH, lblEindstation);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblGeldigheid, 30, SpringLayout.EAST, comboBox_1);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblGeldigheid, 30, SpringLayout.EAST, cbbEindstation);
 		add(lblGeldigheid);
 		
 		JLabel lblTypeAbonnement = new JLabel("Type abon.");
@@ -69,21 +74,26 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblTypeAbonnement, 0, SpringLayout.EAST, lblBeginstation);
 		add(lblTypeAbonnement);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Type 1"}));
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox_2, 0, SpringLayout.WEST, comboBox);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, comboBox_2, 0, SpringLayout.SOUTH, lblTypeAbonnement);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox_2, 106, SpringLayout.EAST, lblTypeAbonnement);
-		add(comboBox_2);
+		cbbType = new JComboBox();
+		cbbType.setModel(new DefaultComboBoxModel(new String[] {"Type 1"}));
+		sl_contentPane.putConstraint(SpringLayout.WEST, cbbType, 0, SpringLayout.WEST, cbbBeginstation);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, cbbType, 0, SpringLayout.SOUTH, lblTypeAbonnement);
+		sl_contentPane.putConstraint(SpringLayout.EAST, cbbType, 106, SpringLayout.EAST, lblTypeAbonnement);
+		add(cbbType);
 		
 		JButton btnOfferte = new JButton("Offerte");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnOfferte, 51, SpringLayout.SOUTH, comboBox_2);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnOfferte, 0, SpringLayout.EAST, comboBox);
+		btnOfferte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SubscriptionController.calculatePrice();
+			}
+		});
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnOfferte, 51, SpringLayout.SOUTH, cbbType);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnOfferte, 0, SpringLayout.EAST, cbbBeginstation);
 		add(btnOfferte);
 		
 		JButton btnKoopTicket = new JButton("Koop Abonnement");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnKoopTicket, 13, SpringLayout.SOUTH, btnOfferte);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnKoopTicket, 0, SpringLayout.EAST, comboBox);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnKoopTicket, 0, SpringLayout.EAST, cbbBeginstation);
 		add(btnKoopTicket);
 		
 		txtPrijs = new JTextField();
@@ -109,12 +119,12 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblBegindatum, 0, SpringLayout.EAST, lblGeldigheid);
 		add(lblBegindatum);
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"1 maand", "2 maanden", "3 maanden", "6 maanden", "1 jaar"}));
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox_3, 6, SpringLayout.EAST, lblGeldigheid);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, comboBox_3, 0, SpringLayout.SOUTH, lblEindstation);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox_3, 106, SpringLayout.EAST, lblGeldigheid);
-		add(comboBox_3);
+		cbbGeldigheid = new JComboBox();
+		cbbGeldigheid.setModel(new DefaultComboBoxModel(new String[] {"1 maand", "2 maanden", "3 maanden", "6 maanden", "1 jaar"}));
+		sl_contentPane.putConstraint(SpringLayout.WEST, cbbGeldigheid, 6, SpringLayout.EAST, lblGeldigheid);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, cbbGeldigheid, 0, SpringLayout.SOUTH, lblEindstation);
+		sl_contentPane.putConstraint(SpringLayout.EAST, cbbGeldigheid, 106, SpringLayout.EAST, lblGeldigheid);
+		add(cbbGeldigheid);
 		
 		JButton button = new JButton("<<  Terug");
 		button.addActionListener(new ActionListener() {

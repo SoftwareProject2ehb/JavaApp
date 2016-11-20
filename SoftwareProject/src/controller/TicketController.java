@@ -1,5 +1,6 @@
 package controller;
 
+import model.Ticket;
 import view.BuyTicketView;
 
 public class TicketController {
@@ -16,5 +17,15 @@ public class TicketController {
 	
 	public static void switchToBuyTicketView() {
 		SystemController.frame.switchTo("BUY_TICKET");
+	}
+	
+	public static void calculatePrice() {
+		String start_station = buy_ticket.cbbBeginstation.getSelectedItem().toString();
+		String end_station = buy_ticket.cbbEindstation.getSelectedItem().toString();
+		String type = buy_ticket.cbbType.getSelectedItem().toString();
+		boolean one_way = buy_ticket.checkBox.isSelected();
+		
+		double price = Ticket.calculatePrice(type, !one_way, start_station, end_station);
+		buy_ticket.txtPrijs.setText(String.valueOf(price));
 	}
 }

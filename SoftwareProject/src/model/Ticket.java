@@ -2,6 +2,8 @@ package model;
 
 import java.sql.Date;
 
+import data_control.PriceDAO;
+
 public class Ticket {
 	private int ID;
 	private String typeTicket;
@@ -108,5 +110,10 @@ public class Ticket {
 	public int setOneWayTicket(boolean oneWayTicket) {
 		this.oneWayTicket = oneWayTicket;
 		return ErrorCode.NO_ERROR;
+	}
+	
+	public static double calculatePrice(String ticket_type, boolean one_way, String start_station, String end_station) {
+		//TODO add PriceDAO method findbytype
+		return 0;
 	}
 }
