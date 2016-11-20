@@ -65,23 +65,9 @@ public abstract class SystemController {
 	public static String buySubscription(String subscription_type, int customerId, String endStation, String startStation, Timestamp startDate, Timestamp endDate) {
 		
 		Subscription subscription;
-		double subscription_price = Subscription.calculatePrice();
 		
-		switch (subscription_type) {
-		case "JONGERENTICKET":
-			subscription = new Subscription(Subscription.subscription_type.JONGERENTICKET, subscription_price, customerId, endStation, startStation, null, null);
-			break;
-		case "SENIORENTICKET":
-			subscription = new Subscription(Subscription.subscription_type.SENIORENTICKET, subscription_price, customerId, endStation, startStation, null, null);
-			break;
-		case "FUNHOUR":
-			subscription = new Subscription(Subscription.subscription_type.FUNHOUR, subscription_price, customerId, endStation, startStation, null, null);
-			break;
-		default:
-			throw new IllegalArgumentException();
-		}
 		
-		SubscriptionDAO.createSubscription(subscription);
+		//SubscriptionDAO.createSubscription(subscription);
 		return "Abonnement gekocht.";
 	}
 	
