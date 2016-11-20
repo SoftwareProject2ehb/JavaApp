@@ -49,6 +49,10 @@ public class SystemFrame extends JFrame {
 		contentPane.add(CustomerController.create_customer);
 		contentPane.add(CustomerController.find_customer);
 		
+		card_layout.addLayoutComponent(CustomerController.create_customer, "CREATE_CUSTOMER");
+		card_layout.addLayoutComponent(CustomerController.find_customer, "FIND_CUSTOMER");
+		//card_layout.show(contentPane, "FIND_CUSTOMER");
+		
 	}
 	
 	public void switchTo(String panel_name) {
