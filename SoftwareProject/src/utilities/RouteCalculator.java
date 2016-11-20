@@ -1,6 +1,8 @@
 package utilities;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,7 +13,7 @@ public final class RouteCalculator {
 	}
 	
 	public static void main(String[] args) {
-		calculateDistance("Leuven", "Brugge");
+		System.out.println(calculateTime("Leuven", "Brugge"));
 	}
 	
 	public static double calculateDistance(String station_1, String station_2) {
@@ -46,7 +48,28 @@ public final class RouteCalculator {
 	}
 	
 	public static int calculateStations(String station_1, String station_2) {
-		return 0;
+		int station_1_index = -1, station_2_index = -1;
+		try {
+			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2);
+			JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
+			
+			for (int i = 0; i < stations.length() ; i++) {
+				if (station_1.equals(stations.getJSONObject(i).getString("Name"))) {
+					station_1_index = i;
+				} else if (station_2.equals(stations.getJSONObject(i).getString("Name"))) {
+					station_2_index = i;
+				}
+			}
+			
+			if (station_1_index == -1 || station_2_index == -1) {
+				return 0;
+			} else {
+				return (station_1_index > station_2_index) ? (station_1_index - station_2_index) : (station_2_index - station_1_index);
+			}
+			
+		} catch (IOException e) {
+			return 0;
+		}
 	}
 	
 	/**
@@ -54,6 +77,34 @@ public final class RouteCalculator {
 	 * @return The value in hours, with minutes and seconds as a fraction of hours
 	 */
 	public static double calculateTime(String station_1, String station_2) {
-		return 0;
+		Timestamp station_1_time = null, station_2_time = null;
+		try {
+			//JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2);
+			JSONObject json_data = ApiAccesser.readJsonFromUrl("http://dtsl.ehb.be/~bernd.wethmar/sp2.json");
+			JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
+			
+			for (int i = 0; i < stations.length() ; i++) {
+				if (station_1.equals(stations.getJSONObject(i).getString("Name"))) {
+					station_1_time = StringFunctions.parseJSONTimestamp(stations.getJSONObject(i).getJSONObject("Time").getString("Departure"));
+				} else if (station_2.equals(stations.getJSONObject(i).getString("Name"))) {
+					station_2_time = StringFunctions.parseJSONTimestamp(stations.getJSONObject(i).getJSONObject("Time").getString("Arrival"));
+				}
+			}
+			
+			if (station_1_time == null || station_2_time == null) {
+				return 0;
+			} else {
+				long total_time = station_2_time.getTime() - station_1_time.getTime();
+				
+				Date date = new Date ();
+				date.setTime(total_time);
+				
+				//TODO Remove deprecated use of Date
+				return (date.getHours() + (date.getMinutes() / 60.0) + (date.getSeconds() / 3600.0));
+			}
+			
+		} catch (IOException e) {
+			return 0;
+		}
 	}
 }

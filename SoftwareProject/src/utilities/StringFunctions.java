@@ -1,5 +1,8 @@
 package utilities;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+
 public final class StringFunctions {
 
 	private StringFunctions() {}
@@ -21,5 +24,21 @@ public final class StringFunctions {
 		
 		return return_array;
 		
+	}
+	
+	public static Timestamp parseJSONTimestamp(String timestamp) {
+		int year = Integer.parseInt(timestamp.substring(0,4));
+		int month = Integer.parseInt(timestamp.substring(5,7));
+		int day = Integer.parseInt(timestamp.substring(8,10));
+		
+		int hours = Integer.parseInt(timestamp.substring(11,13));
+		int minutes = Integer.parseInt(timestamp.substring(14,16));
+		int seconds = Integer.parseInt(timestamp.substring(17,19));
+		
+		try {
+			return DateConverter.timestampConverter(year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds);
+		} catch (ParseException e) {
+			return null;
+		}
 	}
 }
