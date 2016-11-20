@@ -189,10 +189,10 @@ public class UserDAO extends BaseDAO{
 		String pass = null;
 		Statement st = null;
 		try {
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        st = (Statement) getCon().createStatement();
+	        st = (Statement) getConnection().createStatement();
 	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
 	        if (rs.next()) {
 	        	pass = rs.getString("password");
