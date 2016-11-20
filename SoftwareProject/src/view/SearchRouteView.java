@@ -2,6 +2,9 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+
+import utilities.DateConverter;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
@@ -9,13 +12,15 @@ import javax.swing.JRadioButton;
 import java.awt.Dimension;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 
 public class SearchRouteView extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
+	//private JTextField textField;
+	//private JTextField textField_1;
 
 	/**
 	 * Create the panel.
@@ -28,32 +33,35 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, lblVan, 10, SpringLayout.WEST, this);
 		add(lblVan);
 		
-		textField = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, textField, 61, SpringLayout.NORTH, this);
-		springLayout.putConstraint(SpringLayout.WEST, textField, 27, SpringLayout.EAST, lblVan);
-		springLayout.putConstraint(SpringLayout.NORTH, lblVan, 5, SpringLayout.NORTH, textField);
-		add(textField);
-		textField.setColumns(10);
+		//textField = new JTextField();
+		JComboBox comboBox_1 = new JComboBox();
+		springLayout.putConstraint(SpringLayout.NORTH, comboBox_1, 61, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, comboBox_1, 27, SpringLayout.EAST, lblVan);
+		springLayout.putConstraint(SpringLayout.NORTH, lblVan, 5, SpringLayout.NORTH, comboBox_1);
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		add(comboBox_1);
+		//textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, textField_1, 104, SpringLayout.NORTH, this);
-		springLayout.putConstraint(SpringLayout.WEST, textField_1, 0, SpringLayout.WEST, textField);
-		add(textField_1);
-		textField_1.setColumns(10);
+		//textField_1 = new JTextField();
+		JComboBox comboBox_2 = new JComboBox();
+		springLayout.putConstraint(SpringLayout.NORTH, comboBox_2, 104, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, comboBox_2, 0, SpringLayout.WEST, comboBox_1);
+		add(comboBox_2);
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		//textField_1.setColumns(10);
 		
 		JLabel lblTot = new JLabel("Tot");
-		springLayout.putConstraint(SpringLayout.NORTH, lblTot, 5, SpringLayout.NORTH, textField_1);
+		springLayout.putConstraint(SpringLayout.NORTH, lblTot, 5, SpringLayout.NORTH, comboBox_2);
 		springLayout.putConstraint(SpringLayout.WEST, lblTot, 0, SpringLayout.WEST, lblVan);
 		add(lblTot);
 		
 		JRadioButton rdbtnEnkel = new JRadioButton("Enkel");
-		springLayout.putConstraint(SpringLayout.WEST, rdbtnEnkel, 72, SpringLayout.EAST, textField);
-		springLayout.putConstraint(SpringLayout.EAST, rdbtnEnkel, -222, SpringLayout.EAST, this);
+		springLayout.putConstraint(SpringLayout.WEST, rdbtnEnkel, 72, SpringLayout.EAST, comboBox_1);
 		add(rdbtnEnkel);
 		rdbtnEnkel.setSelected(true);
 		
 		JRadioButton rdbtnHeenEnTerug = new JRadioButton("Heen en terug");
-		springLayout.putConstraint(SpringLayout.NORTH, rdbtnHeenEnTerug, 1, SpringLayout.NORTH, textField_1);
+		springLayout.putConstraint(SpringLayout.NORTH, rdbtnHeenEnTerug, 1, SpringLayout.NORTH, comboBox_2);
 		springLayout.putConstraint(SpringLayout.WEST, rdbtnHeenEnTerug, 0, SpringLayout.WEST, rdbtnEnkel);
 		add(rdbtnHeenEnTerug);
 		
@@ -63,7 +71,7 @@ public class SearchRouteView extends JPanel {
 		
 		JLabel lblDatum = new JLabel("Datum (dd/mm/jjjj)");
 		springLayout.putConstraint(SpringLayout.WEST, lblDatum, 10, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.NORTH, lblDatum, 31, SpringLayout.SOUTH, textField_1);
+		springLayout.putConstraint(SpringLayout.NORTH, lblDatum, 31, SpringLayout.SOUTH, comboBox_2);
 		add(lblDatum);
 		
 		JLabel lblUur = new JLabel("Uur");
@@ -101,13 +109,13 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, frmtdtxtfldUur, 28, SpringLayout.EAST, lblUur);
 		springLayout.putConstraint(SpringLayout.SOUTH, frmtdtxtfldUur, -20, SpringLayout.NORTH, btnTerug);
 		springLayout.putConstraint(SpringLayout.WEST, rdbtnVertrek, 30, SpringLayout.EAST, frmtdtxtfldUur);
-		frmtdtxtfldUur.setText("12:30");
+		frmtdtxtfldUur.setText(DateConverter.getTime());
 		add(frmtdtxtfldUur);
 		
 		JFormattedTextField formattedTextField = new JFormattedTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, formattedTextField, -5, SpringLayout.NORTH, lblDatum);
 		springLayout.putConstraint(SpringLayout.WEST, formattedTextField, 41, SpringLayout.EAST, lblDatum);
-		formattedTextField.setText("21/09/2016");
+		formattedTextField.setText(DateConverter.getDate());
 		add(formattedTextField);
 		
 		JLabel lblZoekEenRoute = new JLabel("Zoek een route");
@@ -124,8 +132,8 @@ public class SearchRouteView extends JPanel {
       f.getContentPane().add(p);
       f.setVisible(true);
       f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      f.setSize(550, 300);
-      f.setMinimumSize(new Dimension(550, 300));
+      f.setSize(450, 300);
+      f.setResizable(false);
       f.setLocationRelativeTo(null);
   }
 }
