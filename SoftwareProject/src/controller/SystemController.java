@@ -5,13 +5,9 @@ import model.User.Role;
 import utilities.*;
 import view.*;
 
-import java.security.InvalidParameterException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import data_control.*;
 
@@ -25,6 +21,8 @@ public abstract class SystemController {
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
 		LoginController.initialize(new LoginView());
 		ActionMenuController.initialize(new ActionMenuView());
+		SubscriptionController.initialize(new BuySubscriptionView());
+		TicketController.initialize(new BuyTicketView());
 		
 		frame = new SystemFrame();
 		frame.setVisible(true);

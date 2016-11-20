@@ -148,7 +148,7 @@ public class User {
 	 */
 	
 	public boolean checkPassword(String password) {
-		if(this.password.equals(Encryptor.encrypt(password)))
+		if(this.password.equals(password))
 			return true;
 		else 
 			return false;

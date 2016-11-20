@@ -11,7 +11,9 @@ import javax.swing.border.EmptyBorder;
 import controller.ActionMenuController;
 import controller.CustomerController;
 import controller.LoginController;
+import controller.SubscriptionController;
 import controller.SystemController;
+import controller.TicketController;
 
 import java.awt.CardLayout;
 
@@ -41,7 +43,7 @@ public class SystemFrame extends JFrame {
 	 */
 	public SystemFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -52,11 +54,15 @@ public class SystemFrame extends JFrame {
 		contentPane.add(CustomerController.find_customer);
 		contentPane.add(LoginController.login);
 		contentPane.add(ActionMenuController.action_menu);
+		contentPane.add(SubscriptionController.buy_subscription);
+		contentPane.add(TicketController.buy_ticket);
 		
 		card_layout.addLayoutComponent(CustomerController.create_customer, "CREATE_CUSTOMER");
 		card_layout.addLayoutComponent(CustomerController.find_customer, "FIND_CUSTOMER");
 		card_layout.addLayoutComponent(LoginController.login, "LOGIN");
 		card_layout.addLayoutComponent(ActionMenuController.action_menu, "ACTION_MENU");
+		card_layout.addLayoutComponent(SubscriptionController.buy_subscription, "BUY_SUBSCRIPTION");
+		card_layout.addLayoutComponent(TicketController.buy_ticket, "BUY_TICKET");
 		
 		card_layout.show(contentPane, "LOGIN");
 		
