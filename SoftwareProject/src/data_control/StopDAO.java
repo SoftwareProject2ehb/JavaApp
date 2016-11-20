@@ -10,7 +10,7 @@ import model.Stop;
 import model.Ticket;
 
 public class StopDAO extends BaseDAO{
-	public void createStop(Stop stop)
+	public static void createStop(Stop stop)
 	{
 		PreparedStatement ps = null;
 		
@@ -18,10 +18,10 @@ public class StopDAO extends BaseDAO{
 		
 		try {
 
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        ps = getCon().prepareStatement(sql);
+	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setInt(1, stop.getTrainID());
 	        ps.setInt(2, stop.getStopID());
@@ -44,15 +44,15 @@ public class StopDAO extends BaseDAO{
 	    }
 	}
 	
-	public void updateStop(Stop stop) {
+	public static void updateStop(Stop stop) {
 		PreparedStatement ps = null;	
 		String update = "UPDATE Stop SET trainID=?, stopID=?, name=?, platform=?, WHERE stopID=?";
 		
 		try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-			ps = getCon().prepareStatement(update);
+			ps = getConnection().prepareStatement(update);
 		
 			ps.setInt(1, stop.getTrainID());
 			ps.setInt(2, stop.getStopID());
@@ -69,15 +69,15 @@ public class StopDAO extends BaseDAO{
 	}
 
 
-public Stop findStopById(int id) {
+public static Stop findStopById(int id) {
 	Statement st = null;
 	Stop s = null;
 	
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM Stop WHERE ID = " + id);
 
 		while (res.next()) {
@@ -91,15 +91,15 @@ public Stop findStopById(int id) {
 	return s;
 }
 
-public ArrayList<Stop> getAllStops() {
+public static ArrayList<Stop> getAllStops() {
 	ArrayList<Stop> list = new ArrayList<Stop>();
 	
 	Statement st = null;
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM Stop");
 
 		while (res.next()) {

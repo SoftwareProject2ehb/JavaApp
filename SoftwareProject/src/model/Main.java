@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import controller.SystemController;
 import data_control.*;
 import model.Price;
 import model.Price.betalingsType;
@@ -16,7 +17,8 @@ import model.*;
 import data_control.*;
 
 public class Main {
-	public static void main(String[] args) throws ParseException {
-		LoginView.run();
+
+	public static void main(String[] args) {
+
 	}
 }

@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import com.mysql.jdbc.Statement;
 
 public class TicketDAO extends BaseDAO {
-	public void createTicket(Ticket ticket) {
+	public static void createTicket(Ticket ticket) {
 		PreparedStatement ps = null;
 		
 		String sql = "INSERT INTO Ticket(type, oneWayTicket, price, startsation, endstation, date) VALUES(?,?,?,?,?,?)";
 		
 		try {
 
-	        if (getCon().isClosed()) {
+	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        ps = getCon().prepareStatement(sql);
+	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setString(1, ticket.getTypeTicket());
 	        ps.setBoolean(2, ticket.isOneWayTicket());
@@ -45,15 +45,15 @@ public class TicketDAO extends BaseDAO {
 	    }
 	}
 	
-	public void updateTicket(Ticket ticket) {
+	public static void updateTicket(Ticket ticket) {
 		PreparedStatement ps = null;	
 		String update = "UPDATE Ticket SET type=?, oneWayTicket=?, price=?, startstation=?, endstation=?, date=? WHERE ID = ?";
 		
 		try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-			ps = getCon().prepareStatement(update);
+			ps = getConnection().prepareStatement(update);
 		
 			ps.setString(1, ticket.getTypeTicket());
 			ps.setBoolean(2, ticket.isOneWayTicket());
@@ -71,14 +71,14 @@ public class TicketDAO extends BaseDAO {
 		}
 	}
 	
-	public Ticket findTicketById(int id) {
+	public static Ticket findTicketById(int id) {
 		Statement st = null;
 		Ticket t = null;
 		try {
-			if (getCon().isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			st = (Statement) getCon().createStatement();
+			st = (Statement) getConnection().createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM Ticket WHERE ID = " + id);
 
 			while (res.next()) {
@@ -93,15 +93,15 @@ public class TicketDAO extends BaseDAO {
 		return t;
 	}
 	
-	public ArrayList<Ticket> getAllTickets() {
+	public static ArrayList<Ticket> getAllTickets() {
 		ArrayList<Ticket> list = new ArrayList<Ticket>();
 		
 		Statement st = null;
 		try {
-			if (getCon().isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			st = (Statement) getCon().createStatement();
+			st = (Statement) getConnection().createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM Ticket");
 
 			while (res.next()) {
