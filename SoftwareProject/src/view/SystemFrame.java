@@ -47,6 +47,8 @@ public class SystemFrame extends JFrame {
 		
 		//TODO Hier moeten alle views toegevoegd worden aan de contentpane
 		contentPane.add(CustomerController.create_customer);
+		contentPane.add(CustomerController.find_customer);
+		
 	}
 	
 	public void switchTo(String panel_name) {

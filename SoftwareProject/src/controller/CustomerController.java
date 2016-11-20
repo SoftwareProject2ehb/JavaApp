@@ -11,7 +11,7 @@ public abstract class CustomerController {
 	public static CreateCustomerView create_customer;
 	public static FindCustomerView find_customer;
 	
-	public CustomerController(CreateCustomerView create_customer, FindCustomerView find_customer) {
+	public static void initialize(CreateCustomerView create_customer, FindCustomerView find_customer) {
 		CustomerController.create_customer = create_customer;
 		CustomerController.find_customer = find_customer;
 	}

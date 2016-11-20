@@ -24,7 +24,7 @@ public abstract class SystemController {
 	
 	public static void startUp() {
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
-		CustomerController.create_customer = new CreateCustomerView();
+		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
 		
 		SystemFrame frame = new SystemFrame();
 		frame.setVisible(true);
