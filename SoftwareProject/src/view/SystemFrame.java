@@ -12,6 +12,7 @@ import controller.CustomerController;
 import controller.SystemController;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 
 public class SystemFrame extends JFrame {
 
@@ -39,14 +40,19 @@ public class SystemFrame extends JFrame {
 	 */
 	public SystemFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 900, 600);
+		setMaximumSize(getSize());
+		setMinimumSize(new Dimension(600,300));
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(card_layout);
 		
+		
+		
 		//TODO Hier moeten alle views toegevoegd worden aan de contentpane
-		contentPane.add(CustomerController.create_customer);
+		//contentPane.add();
+		
 	}
 	
 	public void switchTo(String panel_name) {

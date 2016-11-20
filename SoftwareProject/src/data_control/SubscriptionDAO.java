@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.*;
-import model.Subscription.subscription_type;
 import model.User.Role;
 import utilities.DateConverter;
 
@@ -27,7 +26,7 @@ public class SubscriptionDAO extends BaseDAO{
 			ps = getConnection().prepareStatement(sql);
 
 			ps.setInt(1, sub.getId());
-			ps.setString(2, sub.getTicketType());
+			ps.setInt(2, sub.getTicketType());
 			ps.setDouble(3, sub.getPrice());
 			ps.setInt(4, sub.getCustomerId());
 			ps.setString(5, sub.getStartStation());
@@ -56,7 +55,7 @@ public class SubscriptionDAO extends BaseDAO{
 
 	}
 	
-	public ArrayList<Subscription> getAllSubs() {
+	public static ArrayList<Subscription> getAllSubs() {
 		ArrayList<Subscription> lijst = new ArrayList<Subscription>();
 		Statement st = null;
 		try {
@@ -69,7 +68,7 @@ public class SubscriptionDAO extends BaseDAO{
 
 			while (rs.next()) {
 				Subscription sb = new Subscription(rs.getInt("id"), 
-						subscription_type.stringToBetalingsType(rs.getString("type")),
+						rs.getInt("type"),
 						rs.getDouble("price"), 
 						rs.getInt("customer"),
 						rs.getString("startstation"),
@@ -87,22 +86,22 @@ public class SubscriptionDAO extends BaseDAO{
 		return lijst;
 	}
 	
-	public Subscription findSubById(int id) {
+	public static Subscription findSubById(int id) {
 		Statement st = null;
 		Subscription sb = null;
 		try {
-			Connection c = conn;
-			if (c == null || c.isClosed()) {
+			
+			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = conn.createStatement();
+			st = getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM Subscription where id=" + id);
 			
 	
 			while (rs.next()) {
 				sb = new Subscription(rs.getInt("id"), 
-						rs.getString("type"),
+						rs.getInt("type"),
 						rs.getDouble("price"), 
 						rs.getInt("customer"),
 						rs.getString("startstation"),
@@ -120,19 +119,19 @@ public class SubscriptionDAO extends BaseDAO{
 
 	}
 	
-	public void updateSub(Subscription sub) {
+	public static void updateSub(Subscription sub) {
 		PreparedStatement ps = null;
 
 		String sql = "UPDATE Subscription SET type=?, price=?, customer=?, startstation=?, endstationi=?, startdatum=?, enddatum = ? WHERE id = ?";
 
 		try {
 
-			if (conn.isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			ps = conn.prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 
-			ps.setString(1, sub.getTicketType());
+			ps.setInt(1, sub.getTicketType());
 			ps.setDouble(2, sub.getPrice());
 			ps.setInt(3, sub.getCustomerId());
 			ps.setString(4, sub.getStartStation());
@@ -160,17 +159,17 @@ public class SubscriptionDAO extends BaseDAO{
 		}
 	}
 	
-	public void setInactive(Subscription sub) {
+	public static void setInactive(Subscription sub) {
 		PreparedStatement ps = null;
 
 		String sql = "UPDATE Subscription SET active = ? WHERE id = ?";
 
 		try {
 
-			if (conn.isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			ps = conn.prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 
 	
 			ps.setInt(1, 0);
@@ -193,17 +192,17 @@ public class SubscriptionDAO extends BaseDAO{
 		}
 	}
 	
-	public void setActive(Subscription sub) {
+	public static void setActive(Subscription sub) {
 		PreparedStatement ps = null;
 
 		String sql = "UPDATE Subscription SET active = ? WHERE id = ?";
 
 		try {
 
-			if (conn.isClosed()) {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			ps = conn.prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 
 	
 			ps.setInt(1, 1);
@@ -227,21 +226,21 @@ public class SubscriptionDAO extends BaseDAO{
 	}
 	
 	
-	public ArrayList<Subscription> getSubsByCustomerID(int id) {
+	public static ArrayList<Subscription> getSubsByCustomerID(int id) {
 		ArrayList<Subscription> lijst = new ArrayList<Subscription>();
 		Statement st = null;
 		try {
-			Connection c = conn;
-			if (c == null || c.isClosed()) {
+			
+			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = conn.createStatement();
+			st = getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM Subscription WHERE customer = " + id);
 			
 			while (rs.next()) {
 				Subscription sb = new Subscription(rs.getInt("id"), 
-						rs.getString("type"),
+						rs.getInt("type"),
 						rs.getDouble("price"), 
 						rs.getInt("customer"),
 						rs.getString("startstation"),

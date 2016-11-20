@@ -11,7 +11,6 @@ import model.Price;
 import model.Price.betalingsType;
 import utilities.DateConverter;
 import view.LoginView;
-import view.SubscriptionView;
 import model.Ticket;
 
 import model.*;
@@ -19,7 +18,7 @@ import data_control.*;
 
 public class Main {
 	public static void main(String[] args) throws ParseException {
-		EventQueue.invokeLater(new Runnable() {
+		/*EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					
@@ -30,6 +29,8 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
-		});
+		});*/
+		
+		System.out.println(SubscriptionTypeDAO.findSubTypeById(1).getName());
 	}
 }
