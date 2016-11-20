@@ -17,6 +17,7 @@ import data_control.*;
 public abstract class SystemController {
 	static SystemNMBS system;
 	static CustomerController customer_controller;
+	static SystemFrame frame;
 	
 	public SystemController() {
 		system = new SystemNMBS();
@@ -25,8 +26,9 @@ public abstract class SystemController {
 	public static void startUp() {
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
+		LoginController.initialize(new LoginView());
 		
-		SystemFrame frame = new SystemFrame();
+		frame = new SystemFrame();
 		frame.setVisible(true);
 	}
 	

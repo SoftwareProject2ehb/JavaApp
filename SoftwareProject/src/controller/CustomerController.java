@@ -17,11 +17,11 @@ public abstract class CustomerController {
 	}
 	
 	public static void switchToCreateCustomerView() {
-		//TODO
+		SystemController.frame.switchTo("CREATE_CUSTOMER");
 	}
 	
 	public static void switchToFindCustomerView() {
-		//TODO
+		SystemController.frame.switchTo("FIND_CUSTOMER");
 	}
 	
 	public static void createCustomer() throws InvalidParameterException{
