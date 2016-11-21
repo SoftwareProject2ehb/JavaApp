@@ -21,7 +21,7 @@ public class Customer {
 	 * @param address The address of the created customer
 	 */
 	public Customer(String first_name, String last_name, String email, String phone, String address) {
-		this.id = -1;	//TODO
+		this.id = CustomerDAO.findNextId();
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.email = email;

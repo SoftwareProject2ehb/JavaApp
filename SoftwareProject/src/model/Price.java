@@ -3,6 +3,8 @@ package model;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
+import data_control.PriceDAO;
+
 public class Price {
 	public enum betalingsType {
 		PER_STATION, PER_KM, PER_HOUR, PER_ZONE;
@@ -65,6 +67,7 @@ public class Price {
 		this.typeTicket = typeTicket;
 		this.typeBetaling = bt;
 		this.costPerUnit = cpu;
+		this.id = PriceDAO.findNextId();
 	}
 	
 	public Price (int id, String typeTicket, betalingsType bt, double cpu) throws IllegalArgumentException {

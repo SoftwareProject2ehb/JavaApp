@@ -5,6 +5,7 @@ import java.sql.Date;
 import com.sun.org.apache.bcel.internal.generic.GOTO;
 
 import data_control.PriceDAO;
+import data_control.TicketDAO;
 import utilities.RouteCalculator;
 
 public class Ticket {
@@ -25,6 +26,7 @@ public class Ticket {
 		if (type == null || start == null || end == null || price < 0)
 			throw new IllegalArgumentException();
 		
+		this.ID = TicketDAO.findNextId();
 		this.typeTicket = type;
 		this.oneWayTicket = oneWayTicket;
 		this.price = price;
