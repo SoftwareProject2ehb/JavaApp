@@ -1,6 +1,7 @@
 package model;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 
 public class Price {
 	public enum betalingsType {
@@ -29,6 +30,26 @@ public class Price {
 			} else {
 				throw new InvalidParameterException();
 			}
+		}
+		
+		public static ArrayList<betalingsType> getAll() {
+			ArrayList<betalingsType> list = new ArrayList<betalingsType>();
+			
+			for (betalingsType bt : betalingsType.values()) {
+				list.add(bt);
+			}
+			
+			return list;
+		}
+		
+		public static ArrayList<String> getAllAsString() {
+			ArrayList<String> list = new ArrayList<String>();
+			
+			for (betalingsType bt : betalingsType.values()) {
+				list.add(bt.toString());
+			}
+			
+			return list;
 		}
 	};
 	
