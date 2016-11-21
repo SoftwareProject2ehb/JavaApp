@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import controller.ConfigurationController;
 import controller.LoginController;
+import controller.LostObjectController;
 import controller.RouteController;
 import controller.SubscriptionController;
 import controller.SystemController;
@@ -68,6 +69,8 @@ public class ActionMenuView extends JPanel {
 		add(btnNewButton_2);
 		
 		JButton btnAbonnementOpzoeken = new JButton("Abonnement Opzoeken");
+		springLayout.putConstraint(SpringLayout.NORTH, btnAbonnementOpzoeken, 65, SpringLayout.SOUTH, btnRoutevinder);
+		springLayout.putConstraint(SpringLayout.WEST, btnAbonnementOpzoeken, 0, SpringLayout.WEST, lblKeuzemenu);
 		btnAbonnementOpzoeken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SubscriptionController.switchToFindSubscriptionView();
@@ -76,10 +79,8 @@ public class ActionMenuView extends JPanel {
 		add(btnAbonnementOpzoeken);
 		
 		JButton btnNewButton_4 = new JButton("Configuratie");
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_4, 65, SpringLayout.SOUTH, btwTicketKopen);
-		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_4, 251, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.NORTH, btnAbonnementOpzoeken, 0, SpringLayout.NORTH, btnNewButton_4);
-		springLayout.putConstraint(SpringLayout.EAST, btnAbonnementOpzoeken, -38, SpringLayout.WEST, btnNewButton_4);
+		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_4, 0, SpringLayout.NORTH, btnAbonnementOpzoeken);
+		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_4, 0, SpringLayout.WEST, btwTicketKopen);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToConfigurationView();
@@ -97,6 +98,16 @@ public class ActionMenuView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, btnAfmelden, 0, SpringLayout.WEST, lblKeuzemenu);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnAfmelden, -10, SpringLayout.SOUTH, this);
 		add(btnAfmelden);
+		
+		JButton btnVerlorenVoorwerpen = new JButton("Verloren Voorwerpen");
+		btnVerlorenVoorwerpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LostObjectController.switchToFindLostObjectView();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.WEST, btnVerlorenVoorwerpen, 0, SpringLayout.WEST, btnNewButton_2);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnVerlorenVoorwerpen, 0, SpringLayout.SOUTH, btnAbonnementOpzoeken);
+		add(btnVerlorenVoorwerpen);
 
 	}
 

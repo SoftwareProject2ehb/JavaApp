@@ -147,6 +147,33 @@ public class UserDAO extends BaseDAO{
 		return user;
 	}
 	
+	public static ArrayList<String> findAllLogins() {
+		ArrayList<String> result = new ArrayList<String>();
+		Statement st = null;
+		try {
+	        if (getConnection().isClosed()) {
+	            throw new IllegalStateException("error unexpected");
+	        }
+	        st = (Statement) getConnection().createStatement();
+	        ResultSet rs = st.executeQuery("SELECT login FROM User");
+	        while (rs.next()) {
+	        	result.add(rs.getString("login"));
+			}
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        throw new RuntimeException(e.getMessage());
+	    } finally {
+	        try {
+	            if (st != null)
+	            	st.close();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
+		return result;
+	}
+	
 	public static User findUserByLogin(String login){
 		User user = null;
 		Statement st = null;

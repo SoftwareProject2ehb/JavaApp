@@ -26,6 +26,7 @@ public abstract class SystemController {
 		TicketController.initialize(new BuyTicketView());
 		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
+		LostObjectController.initialize(new FindLostObjectView());
 		
 		frame = new SystemFrame();
 		frame.setVisible(true);
@@ -43,15 +44,15 @@ public abstract class SystemController {
 	}
 	
 	public static String giveRouteInfo(String start_station, String end_station, Timestamp datetime) {
-		String[] stops = RouteCalculator.pathRoute(start_station, start_station);
+		String[] stops = RouteCalculator.pathRoute(start_station, end_station);
+		String result = "Er is een route gevonden met de volgende haltes: ";
 		if (stops != null) {
-			String result = "Er is een route gevonden met de volgende haltes: ";
 			for (String string : stops) {
 				result = result.concat(string + " - ");
 			}
 			result = result.concat("- TERMINUS");
 		}
-		return null;
+		return result;
 	}
 	
 	public static String getTicketInfo() {
@@ -123,8 +124,8 @@ public abstract class SystemController {
 		return "Succesvol toegevoegd.";
 	}
 	
-	public static ArrayList<LostObject> searchLostObject(String name_finder, String place_found, Timestamp time_found, Boolean claimed) {
-		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_finder, place_found, time_found, claimed);
+	public static ArrayList<LostObject> searchLostObject(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
+		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_user, place_found, time_found, claimed);
 		return object_array;
 	}
 	
