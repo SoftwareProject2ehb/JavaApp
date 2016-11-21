@@ -1,14 +1,22 @@
 package model;
 
+import data_control.SubscriptionPriceDAO;
+
 public class SubscriptionPrice {
 	private int id;
 	private double lengthInMonths;
 	private double price;
-	public SubscriptionPrice(int id, double lengthInMonths, double price) {
+	
+	public SubscriptionPrice(double lengthInMonths, double price) {
 		super();
-		this.id = id;
+		this.id = SubscriptionPriceDAO.findNextId();
 		this.lengthInMonths = lengthInMonths;
 		this.price = price;
+	}
+	
+	public SubscriptionPrice(int id, double lengthInMonths, double price) {
+		this(lengthInMonths, price);
+		this.id = id;
 	}
 	public int getId() {
 		return id;

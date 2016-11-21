@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 
+import controller.ConfigurationController;
 import data_control.UserDAO;
 import model.User;
 import model.User.Role;
@@ -110,6 +111,11 @@ public class CreateUserView extends JPanel {
 		add(txtPhone);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.switchToFindUserView();
+			}
+		});
 		springLayout.putConstraint(SpringLayout.NORTH, btnBack, 253, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, btnBack, 25, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, btnBack, 115, SpringLayout.WEST, this);

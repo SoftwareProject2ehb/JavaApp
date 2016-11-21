@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SpringLayout;
 
+import controller.ConfigurationController;
 import data_control.PriceDAO;
 import model.Price;
 import model.Price.betalingsType;
@@ -18,6 +19,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PriceConfigView extends JPanel {
 	private JTextField txtNaam;
@@ -52,7 +55,12 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, btnVoegToe, -10, SpringLayout.EAST, this);
 		add(btnVoegToe);
 		
-		JButton btnTerug = new JButton("Terug");
+		JButton btnTerug = new JButton("<<  Terug");
+		btnTerug.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.switchToConfigurationView();
+			}
+		});
 		springLayout.putConstraint(SpringLayout.WEST, btnTerug, 0, SpringLayout.WEST, lblNieuwSoortBiljet);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnTerug, -10, SpringLayout.SOUTH, this);
 		add(btnTerug);

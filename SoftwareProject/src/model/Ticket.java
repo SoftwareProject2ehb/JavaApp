@@ -2,6 +2,12 @@ package model;
 
 import java.sql.Date;
 
+import com.sun.org.apache.bcel.internal.generic.GOTO;
+
+import data_control.PriceDAO;
+import data_control.TicketDAO;
+import utilities.RouteCalculator;
+
 public class Ticket {
 	private int id;
 	private String typeTicket;
@@ -20,6 +26,7 @@ public class Ticket {
 		if (type == null || start == null || end == null || price < 0)
 			throw new IllegalArgumentException();
 		
+		this.ID = TicketDAO.findNextId();
 		this.typeTicket = type;
 		this.oneWayTicket = oneWayTicket;
 		this.price = price;
@@ -108,5 +115,33 @@ public class Ticket {
 	public int setOneWayTicket(boolean oneWayTicket) {
 		this.oneWayTicket = oneWayTicket;
 		return ErrorCode.NO_ERROR;
+	}
+	
+	public static double calculatePrice(String ticket_type, boolean one_way, String start_station, String end_station) {
+		Price type = PriceDAO.findPriceByType(ticket_type);
+		double price;
+		
+			switch (type.typeBetaling) {
+			case PER_HOUR:
+				price = type.costPerUnit * RouteCalculator.calculateTime(start_station, end_station); 
+				break;
+				
+			case PER_KM:
+				price = type.costPerUnit * RouteCalculator.calculateDistance(start_station, end_station); 
+				break;
+				
+			case PER_STATION:
+				price = type.costPerUnit * RouteCalculator.calculateStations(start_station, end_station); 
+				break;
+			default:
+				price = 0;
+				break;
+			}
+			
+			if (!one_way) {
+				price = price * 2;
+			}
+			
+			return price;
 	}
 }
