@@ -9,7 +9,7 @@ import data_control.TicketDAO;
 import utilities.RouteCalculator;
 
 public class Ticket {
-	private int ID;
+	private int id;
 	private String typeTicket;
 	private boolean oneWayTicket;
 	private double price;
@@ -17,9 +17,9 @@ public class Ticket {
 	private String endStation;
 	private Date date;
 
-	public Ticket(int ID, String type, boolean oneWayTicket, double price, String start, String end, Date date) {
+	public Ticket(int id, String type, boolean oneWayTicket, double price, String start, String end, Date date) {
 		this(type, oneWayTicket, price, start, end, date);
-		this.ID = ID;
+		this.id = id;
 	}
 	
 	public Ticket(String type, boolean oneWayTicket, double price, String start, String end, Date date) {
@@ -35,12 +35,12 @@ public class Ticket {
 		this.date = date;
 	}
 	
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
 
-	public int setID(int iD) {
-		ID = iD;
+	public int setId(int id) {
+		this.id = id;
 		return ErrorCode.NO_ERROR;
 	}
 

@@ -61,7 +61,7 @@ public class TicketDAO extends BaseDAO {
 			ps.setString(4, ticket.getStartStation());
 			ps.setString(5, ticket.getEndStation());
 			ps.setDate(6, ticket.getDate());
-			ps.setInt(7, ticket.getID());
+			ps.setInt(7, ticket.getId());
 			
 			ps.executeUpdate();
 			ps.close();
