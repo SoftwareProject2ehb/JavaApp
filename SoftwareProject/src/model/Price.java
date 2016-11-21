@@ -1,5 +1,7 @@
 package model;
 
+import java.security.InvalidParameterException;
+
 public class Price {
 	public enum betalingsType {
 		PER_STATION, PER_KM, PER_HOUR, PER_ZONE;
@@ -15,21 +17,18 @@ public class Price {
 			}
 		}
 		
-		public static betalingsType stringToBetalingsType(String s) {
-			if (s.toUpperCase() == "PER_STATION") {
+		public static betalingsType stringToBetalingsType(String s) throws InvalidParameterException{
+			if (s.toUpperCase().equals("PER_STATION")) {
 				return betalingsType.PER_STATION;
-			}
-			if (s.toUpperCase() == "PER_KM") {
+			} else if (s.toUpperCase().equals("PER_KM")) {
 				return betalingsType.PER_KM;
-			}
-			if (s.toUpperCase() == "PER_HOUR") {
+			} else if (s.toUpperCase().equals("PER_HOUR")) {
 				return betalingsType.PER_HOUR;
-			}
-			if (s.toUpperCase() == "PER_ZONE") {
+			} else if (s.toUpperCase().equals("PER_ZONE")) {
 				return betalingsType.PER_ZONE;
+			} else {
+				throw new InvalidParameterException();
 			}
-			
-			return null;
 		}
 	};
 	

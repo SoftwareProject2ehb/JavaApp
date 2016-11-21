@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
 import model.Ticket;
 import view.BuyTicketView;
 
@@ -26,6 +28,10 @@ public class TicketController {
 		boolean one_way = buy_ticket.checkBox.isSelected();
 		
 		double price = Ticket.calculatePrice(type, !one_way, start_station, end_station);
-		buy_ticket.txtPrijs.setText(String.valueOf(price));
+		if (price == 0) {
+			JOptionPane.showMessageDialog(null, "Geen route gevonden tussen deze twee stations");
+		} else {
+			buy_ticket.txtPrijs.setText(String.valueOf(price).substring(0, 4));
+		}
 	}
 }

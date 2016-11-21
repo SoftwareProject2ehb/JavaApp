@@ -8,6 +8,7 @@ import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
 import controller.ActionMenuController;
+import controller.TicketController;
 
 import javax.swing.JList;
 import javax.swing.JComboBox;
@@ -99,6 +100,11 @@ public class BuyTicketView extends JPanel {
 		add(cbbType);
 		
 		JButton btnOfferte = new JButton("Offerte");
+		btnOfferte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TicketController.calculatePrice();
+			}
+		});
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnOfferte, 51, SpringLayout.SOUTH, cbbType);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnOfferte, 0, SpringLayout.EAST, cbbBeginstation);
 		add(btnOfferte);

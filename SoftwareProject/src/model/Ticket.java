@@ -2,7 +2,10 @@ package model;
 
 import java.sql.Date;
 
+import com.sun.org.apache.bcel.internal.generic.GOTO;
+
 import data_control.PriceDAO;
+import utilities.RouteCalculator;
 
 public class Ticket {
 	private int ID;
@@ -113,7 +116,30 @@ public class Ticket {
 	}
 	
 	public static double calculatePrice(String ticket_type, boolean one_way, String start_station, String end_station) {
-		//TODO add PriceDAO method findbytype
-		return 0;
+		Price type = PriceDAO.findPriceByType(ticket_type);
+		double price;
+		
+			switch (type.typeBetaling) {
+			case PER_HOUR:
+				price = type.costPerUnit * RouteCalculator.calculateTime(start_station, end_station); 
+				break;
+				
+			case PER_KM:
+				price = type.costPerUnit * RouteCalculator.calculateDistance(start_station, end_station); 
+				break;
+				
+			case PER_STATION:
+				price = type.costPerUnit * RouteCalculator.calculateStations(start_station, end_station); 
+				break;
+			default:
+				price = 0;
+				break;
+			}
+			
+			if (!one_way) {
+				price = price * 2;
+			}
+			
+			return price;
 	}
 }

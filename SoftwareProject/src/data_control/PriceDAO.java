@@ -107,4 +107,26 @@ public class PriceDAO extends BaseDAO {
 
 		return p;
 	}
+	
+	public static Price findPriceByType(String type) {
+		Statement st = null;
+		Price p = null;
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("error unexpected");
+			}
+			st = (Statement) getConnection().createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM Price WHERE typeTicket LIKE '" + type + "'");
+
+			while (res.next()) {
+				p = new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return p;
+	}
+	
 }
