@@ -30,6 +30,7 @@ public abstract class SystemController {
 		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
 		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView());
+		ReportController.initialize(new ReportView());
 		
 		frame = new SystemFrame();
 		
