@@ -14,6 +14,25 @@ public final class RouteCalculator {
 	
 	//TODO Alle onderstaande methodes werken nog enkel bij een reis zonder overstappen. Deze moet nog worden aangepast om te kunnen werken met overstappen.
 	
+	public static String[] pathRoute(String station_1, String station_2) {
+		String[] stops;
+		
+		try {
+			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2);
+			JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
+			stops = new String[stations.length()];
+			
+			for (int i = 0; i < stations.length() ; i++) {
+				stops[i] = stations.getJSONObject(i).getString("Name");
+			}
+			
+			return stops;
+			
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
 	public static double calculateDistance(String station_1, String station_2) {
 		double distance = 0;
 		String station_1_coordinates = "";

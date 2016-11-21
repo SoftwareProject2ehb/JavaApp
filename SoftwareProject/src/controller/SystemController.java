@@ -8,6 +8,7 @@ import view.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import data_control.*;
 
@@ -41,8 +42,15 @@ public abstract class SystemController {
 		system.meldAf();
 	}
 	
-	public static String giveRouteInfo() {
-		//TODO Implementation
+	public static String giveRouteInfo(String start_station, String end_station, Timestamp datetime) {
+		String[] stops = RouteCalculator.pathRoute(start_station, start_station);
+		if (stops != null) {
+			String result = "Er is een route gevonden met de volgende haltes: ";
+			for (String string : stops) {
+				result = result.concat(string + " - ");
+			}
+			result = result.concat("- TERMINUS");
+		}
 		return null;
 	}
 	
