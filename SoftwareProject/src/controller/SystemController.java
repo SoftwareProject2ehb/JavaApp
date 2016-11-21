@@ -27,6 +27,7 @@ public abstract class SystemController {
 		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
 		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView());
+		UserController.initialize(new CreateUserView());
 		
 		frame = new SystemFrame();
 		frame.setVisible(true);

@@ -24,14 +24,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CreateUserView extends JPanel {
-	private JTextField txtVoornaam;
-	private JTextField txtAchternaam;
-	private JTextField txtEmail;
-	private JTextField txtPhone;
-	private JPasswordField txtPassword;
-	private JPasswordField txtPassword1;
-	UserDAO ua = new UserDAO();
-	User u = null;
+	public JTextField txtVoornaam;
+	public JTextField txtAchternaam;
+	public JTextField txtEmail;
+	public JTextField txtPhone;
+	public JPasswordField txtPassword;
+	public JPasswordField txtPassword1;
 
 	/**
 	 * Create the panel.
@@ -159,18 +157,6 @@ public class CreateUserView extends JPanel {
 				String passText = new String(txtPassword.getPassword());
 				String passText1 = new String(txtPassword1.getPassword());
 				
-				if (txtVoornaam.getText().isEmpty() || txtAchternaam.getText().isEmpty() || txtEmail.getText().isEmpty() ||txtPhone.getText().isEmpty()){
-					JOptionPane.showMessageDialog(null, "Field(s) missing");
-				}
-				
-				if(txtPassword.getPassword().length <=  4 && txtPassword.getPassword().length <=  4) {
-					JOptionPane.showMessageDialog(null, "Password is too short or empty");
-				}
-				
-				if(!passText.equals(passText1)){
-					JOptionPane.showMessageDialog(null, "Passwords don't match");
-				}
-				
 				try {
 					String rol = null;
 					Object chosenRole = role.getSelectedItem();
@@ -181,9 +167,6 @@ public class CreateUserView extends JPanel {
 						rol = "ADMIN";
 					}
 					
-					String login = txtVoornaam.getText() + "_" + txtAchternaam.getText();
-					u = new User(txtVoornaam.getText(), txtAchternaam.getText(),txtEmail.getText(),txtPhone.getText(),login,Encryptor.encrypt(passText),Role.valueOf(rol));
-					ua.createUser(u);
 				} catch (Exception e1) {
 					// TODO: handle exception
 					
