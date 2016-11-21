@@ -17,6 +17,16 @@ public class LogFile {
 		this.time = time;
 		this.userID = userID;
 	}
+	
+	public LogFile(String description, Date time, int userID)
+	{
+		if(logFileID < 0 || description == null || time == null || userID < 0)
+			throw new IllegalArgumentException();
+		this.logFileID = -1;
+		this.description = description;
+		this.time = time;
+		this.userID = userID;
+	}
 
 	public int getLogFileID() {
 		return logFileID;

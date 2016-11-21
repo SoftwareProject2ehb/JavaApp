@@ -19,10 +19,13 @@ import model.Ticket;
 import model.*;
 import data_control.*;
 import controller.*;
+import view.BuySubscriptionView;
+import view.FindSubscriptionView;
 
 public class Main {
 
 	public static void main(String[] args) {
 		SystemController.startUp();
+		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 	}
 }
