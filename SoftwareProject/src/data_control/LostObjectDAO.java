@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.Statement;
@@ -16,7 +17,7 @@ public class LostObjectDAO extends BaseDAO{
 	
 	
 	
-	public void createLostObject (LostObject object)
+	public static void createLostObject (LostObject object)
 	{
 		 PreparedStatement ps = null;
 
@@ -24,11 +25,11 @@ public class LostObjectDAO extends BaseDAO{
 
 		    try {
 
-		        if (getCon().isClosed()) {
+		        if (getConnection().isClosed()) {
 		            throw new IllegalStateException("error unexpected");
 		        }
-		        ps = getCon().prepareStatement(sql);
-		       
+		        ps = getConnection().prepareStatement(sql);
+		        
 		        ps.setInt(1, object.getUserID());
 		        ps.setString(2, object.getName());
 		        ps.setString(3, object.getPlace());
@@ -55,16 +56,16 @@ public class LostObjectDAO extends BaseDAO{
 	}
 
 
-public void updateLostObject(LostObject object) {
+public static void updateLostObject(LostObject object) {
 		
 		PreparedStatement ps = null;	
 		String update = "UPDATE LostObject SET claimed = true, userClaimed = ?, locationClaimed = ? ,nameClaimed=?, timeClaimed =? WHERE ID = ?";
 		
 		try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-			ps = getCon().prepareStatement(update);
+			ps = getConnection().prepareStatement(update);
 		
 			ps.setInt(1, object.getUserIDClaimed());
 			ps.setString(2, object.getLocationClaimed());
@@ -83,20 +84,20 @@ public void updateLostObject(LostObject object) {
 		}      
 	}
 
-public LostObject getLostObjectFromRS(ResultSet res) throws SQLException{
+public static LostObject getLostObjectFromRS(ResultSet res) throws SQLException{
 	
 	return new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getTimestamp(5), res.getBoolean(6),res.getInt(7),res.getString(8),res.getString(9),res.getTimestamp(10));
 }
 
 
-public LostObject getLostObjectById(int objectID) {
+public static LostObject getLostObjectById(int objectID) {
 	Statement st = null;
 	LostObject lost = null;
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE ID = " + objectID);
 
 		while (res.next()) {
@@ -118,10 +119,10 @@ public ArrayList<LostObject> getAllLostObject(int from , int to) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject where timeFound  BETWEEN NOW() - INTERVAL "+from +" MONTH AND NOW() - INTERVAL "+ to +" MONTH");
 
 		while (res.next()) {
@@ -136,14 +137,14 @@ public ArrayList<LostObject> getAllLostObject(int from , int to) {
 
 	return lijst;
 }
-public ArrayList<LostObject> getAllLostObjectNotClaimed() {
+public static ArrayList<LostObject> getAllLostObjectNotClaimed() {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = false");
 
 		while (res.next()) {
@@ -158,14 +159,14 @@ public ArrayList<LostObject> getAllLostObjectNotClaimed() {
 	return lijst;
 }
 
-public ArrayList<LostObject> getAllLostObjectClaimed() {
+public static ArrayList<LostObject> getAllLostObjectClaimed() {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = true");
 
 		while (res.next()) {
@@ -182,14 +183,14 @@ public ArrayList<LostObject> getAllLostObjectClaimed() {
 
 
 //ZOEK op attribuut werkt niet
-public ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject attribuut,String zoekop) {
+public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject attribuut,String zoekop) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE " + attribuut +" =  '" + zoekop + "';");
 
 		while (res.next()) {
@@ -203,14 +204,14 @@ public ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject attribuut,
 
 	return lijst;
 }
-public ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
+public static ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE timeFound LIKE '%" + date + "%'");
 
 		while (res.next()) {
@@ -225,14 +226,14 @@ public ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
 
 	return lijst;
 }
-public ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
+public static ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	try {
-		if (getCon().isClosed()) {
+		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getCon().createStatement();
+		st = (Statement) getConnection().createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE timeClaimed LIKE '%" + date + "%'");
 
 		while (res.next()) {
@@ -267,6 +268,246 @@ public ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
       
    
    }
+
+public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
+	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
+	
+	if (name_user == null && place_found == null && time_found == null && claimed == false) {
+		return lijst;
+	}
+	
+	Statement st = null;
+	try {
+		if (getConnection().isClosed()) {
+			throw new IllegalStateException("error unexpected");
+		}
+		st = (Statement) getConnection().createStatement();
+		
+		String sql_syntax = "SELECT * FROM LostObject WHERE ";
+		
+		if (name_user != null && !name_user.equals("")) {
+			sql_syntax = sql_syntax.concat("userid = '" + UserDAO.findUserByLogin(name_user).getUserID() + "' AND ");
+		}
+		
+		if (place_found != null && !place_found.equals("")) {
+			sql_syntax = sql_syntax.concat("place = '" + place_found + "' AND ");
+		}
+		
+		if (time_found != null) {
+			sql_syntax = sql_syntax.concat("timeFound = '" + time_found + "' AND ");
+		}
+		
+		sql_syntax = sql_syntax.concat("userClaimed = " + (claimed ? 1 : 0));
+		
+		ResultSet res = st.executeQuery(sql_syntax);
+
+		while (res.next()) {
+			LostObject lost = getLostObjectFromRS(res);
+			lijst.add(lost);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		e.getMessage();
+	}
+
+	return lijst;
+}
+
+public static int findNextId() {
+	int id = 0;
+	Statement st = null;
+	
+	try {
+
+        if (getConnection().isClosed()) {
+            throw new IllegalStateException("error unexpected");
+        }
+        
+        st = (Statement) getConnection().createStatement();
+        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM LostObject");
+        
+        if (res.next()) {
+        	id = res.getInt(1);
+
+		}
+        
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        throw new RuntimeException(e.getMessage());
+    } finally {
+        try {
+            if (st != null)
+            	st.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
+	
+	return id + 1;
+}
+
+public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
+	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
+	
+	if (name_user == null && place_found == null && time_found == null && claimed == false) {
+		return lijst;
+	}
+	
+	Statement st = null;
+	try {
+		if (getConnection().isClosed()) {
+			throw new IllegalStateException("error unexpected");
+		}
+		st = (Statement) getConnection().createStatement();
+		
+		String sql_syntax = "SELECT * FROM LostObject WHERE ";
+		
+		if (name_user != null && !name_user.equals("")) {
+			sql_syntax = sql_syntax.concat("userid = '" + UserDAO.findUserByLogin(name_user).getUserID() + "' AND ");
+		}
+		
+		if (place_found != null && !place_found.equals("")) {
+			sql_syntax = sql_syntax.concat("place = '" + place_found + "' AND ");
+		}
+		
+		if (time_found != null) {
+			sql_syntax = sql_syntax.concat("timeFound = '" + time_found + "' AND ");
+		}
+		
+		sql_syntax = sql_syntax.concat("userClaimed = " + (claimed ? 1 : 0));
+		
+		ResultSet res = st.executeQuery(sql_syntax);
+
+		while (res.next()) {
+			LostObject lost = getLostObjectFromRS(res);
+			lijst.add(lost);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		e.getMessage();
+	}
+
+	return lijst;
+}
+
+public static int findNextId() {
+	int id = 0;
+	Statement st = null;
+	
+	try {
+
+        if (getConnection().isClosed()) {
+            throw new IllegalStateException("error unexpected");
+        }
+        
+        st = (Statement) getConnection().createStatement();
+        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM LostObject");
+        
+        if (res.next()) {
+        	id = res.getInt(1);
+
+		}
+        
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        throw new RuntimeException(e.getMessage());
+    } finally {
+        try {
+            if (st != null)
+            	st.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
+	
+	return id + 1;
+}
+
+public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
+	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
+	
+	if (name_user == null && place_found == null && time_found == null && claimed == false) {
+		return lijst;
+	}
+	
+	Statement st = null;
+	try {
+		if (getConnection().isClosed()) {
+			throw new IllegalStateException("error unexpected");
+		}
+		st = (Statement) getConnection().createStatement();
+		
+		String sql_syntax = "SELECT * FROM LostObject WHERE ";
+		
+		if (name_user != null && !name_user.equals("")) {
+			sql_syntax = sql_syntax.concat("userid = '" + UserDAO.findUserByLogin(name_user).getUserID() + "' AND ");
+		}
+		
+		if (place_found != null && !place_found.equals("")) {
+			sql_syntax = sql_syntax.concat("place = '" + place_found + "' AND ");
+		}
+		
+		if (time_found != null) {
+			sql_syntax = sql_syntax.concat("timeFound = '" + time_found + "' AND ");
+		}
+		
+		sql_syntax = sql_syntax.concat("userClaimed = " + (claimed ? 1 : 0));
+		
+		ResultSet res = st.executeQuery(sql_syntax);
+
+		while (res.next()) {
+			LostObject lost = getLostObjectFromRS(res);
+			lijst.add(lost);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		e.getMessage();
+	}
+
+	return lijst;
+}
+
+public static int findNextId() {
+	int id = 0;
+	Statement st = null;
+	
+	try {
+
+        if (getConnection().isClosed()) {
+            throw new IllegalStateException("error unexpected");
+        }
+        
+        st = (Statement) getConnection().createStatement();
+        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM LostObject");
+        
+        if (res.next()) {
+        	id = res.getInt(1);
+
+		}
+        
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        throw new RuntimeException(e.getMessage());
+    } finally {
+        try {
+            if (st != null)
+            	st.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
+	
+	return id + 1;
+}
    
 
 }
