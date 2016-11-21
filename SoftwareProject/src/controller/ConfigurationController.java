@@ -29,6 +29,7 @@ public class ConfigurationController {
 	}
 	
 	public static void switchToFindUserView() {
+		find_user.refreshTable(find_user.tableModel);
 		SystemController.frame.switchTo("FIND_USER");
 	}
 	
