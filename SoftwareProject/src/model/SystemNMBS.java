@@ -5,7 +5,7 @@ import utilities.Encryptor;
 import data_control.*;
 
 public class SystemNMBS {
-	User logged_user;
+	public User logged_user;
 	
 	public SystemNMBS() {
 		logged_user = null;

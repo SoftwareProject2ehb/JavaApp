@@ -73,6 +73,11 @@ public class FindLostObjectView extends JPanel {
 		add(cbbGevonden);
 		
 		JButton btnNieuwVoorwerp = new JButton("Nieuw Voorwerp");
+		btnNieuwVoorwerp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LostObjectController.switchToCreateLostObjectView();
+			}
+		});
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnNieuwVoorwerp, 0, SpringLayout.SOUTH, btnTerug);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnNieuwVoorwerp, -10, SpringLayout.EAST, this);
 		add(btnNieuwVoorwerp);

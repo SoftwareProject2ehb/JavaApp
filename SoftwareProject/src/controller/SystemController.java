@@ -26,7 +26,7 @@ public abstract class SystemController {
 		TicketController.initialize(new BuyTicketView());
 		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
-		LostObjectController.initialize(new FindLostObjectView());
+		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView());
 		
 		frame = new SystemFrame();
 		frame.setVisible(true);
@@ -118,8 +118,8 @@ public abstract class SystemController {
 		return null;
 	}
 	
-	public static String addLostObject(int user_id, String name, String station, Timestamp date) {
-		LostObject obj = new LostObject(user_id, name, station, date, false, -1, null, null, null);
+	public static String addLostObject(String name, String station, Timestamp date) {
+		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station, date, false, -1, null, null, null);
 		LostObjectDAO.createLostObject(obj);
 		return "Succesvol toegevoegd.";
 	}
