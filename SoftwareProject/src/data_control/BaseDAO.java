@@ -8,24 +8,23 @@ import java.sql.SQLException;
 
 public class BaseDAO {
 
-	protected Connection conn;
+	private static Connection con = null;
+
 	
-	public BaseDAO()
-	{
+	public static Connection getConnection() {
 		try {
-			conn = DatabaseConnect.getInstance().getConnection();
+			con = DatabaseConnect.getInstance().getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return con;
+
 	}
 
-	public Connection getCon() {
-		return conn;
-	}
+	public static void setConnection(Connection con) {
+		BaseDAO.con = con;
 
-	public void setCon(Connection con) {
-		this.conn = con;
 	}
 	
 	

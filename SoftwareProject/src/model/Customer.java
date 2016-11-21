@@ -21,7 +21,7 @@ public class Customer {
 	 * @param address The address of the created customer
 	 */
 	public Customer(String first_name, String last_name, String email, String phone, String address) {
-		this.id = -1;	//TODO
+		this.id = CustomerDAO.findNextId();
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.email = email;
@@ -73,7 +73,7 @@ public class Customer {
 	 */
 	public int setId(int id) {
 		if (id > 999999 || id < 0) {
-			return 100;
+			return ErrorCode.INCORRECT_PARAM;
 		}
 		this.id = id;
 		return 0;
@@ -87,10 +87,10 @@ public class Customer {
 	 */
 	public int setName(String first_name, String last_name) {
 		if (first_name == null || last_name == null) {
-			return 200;
+			return ErrorCode.NULL_PARAM;
 		}
 		if (first_name.length() < 1 || first_name.length() >= 100 || last_name.length() < 1 || last_name.length() >= 100) {
-			return 100;
+			return ErrorCode.INCORRECT_PARAM;
 		}
 		this.first_name = first_name;
 		this.last_name = last_name;
@@ -104,10 +104,10 @@ public class Customer {
 	 */
 	public int setEmail(String email) {
 		if (email == null) {
-			return 200;
+			return ErrorCode.NULL_PARAM;
 		}
 		if (email.length() < 1 || email.length() >= 100) {
-			return 100;
+			return ErrorCode.INCORRECT_PARAM;
 		}
 		this.email = email;
 		return 0;
@@ -120,10 +120,10 @@ public class Customer {
 	 */
 	public int setPhone(String phone) {
 		if (phone == null) {
-			return 200;
+			return ErrorCode.NULL_PARAM;
 		}
 		if (phone.length() < 1 || phone.length() >= 20) {
-			return 100;
+			return ErrorCode.INCORRECT_PARAM;
 		}
 		this.phone = phone;
 		return 0;
@@ -136,10 +136,10 @@ public class Customer {
 	 */
 	public int setAddress(String address) {
 		if (address == null) {
-			return 200;
+			return ErrorCode.NULL_PARAM;
 		}
 		if (address.length() < 1 || address.length() >= 200) {
-			return 100;
+			return ErrorCode.INCORRECT_PARAM;
 		}
 		this.address = address;
 		return 0;

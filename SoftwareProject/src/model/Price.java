@@ -1,5 +1,10 @@
 package model;
 
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+
+import data_control.PriceDAO;
+
 public class Price {
 	public enum betalingsType {
 		PER_STATION, PER_KM, PER_HOUR, PER_ZONE;
@@ -15,21 +20,38 @@ public class Price {
 			}
 		}
 		
-		public static betalingsType stringToBetalingsType(String s) {
-			if (s.toUpperCase() == "PER_STATION") {
+		public static betalingsType stringToBetalingsType(String s) throws InvalidParameterException{
+			if (s.toUpperCase().equals("PER_STATION")) {
 				return betalingsType.PER_STATION;
-			}
-			if (s.toUpperCase() == "PER_KM") {
+			} else if (s.toUpperCase().equals("PER_KM")) {
 				return betalingsType.PER_KM;
-			}
-			if (s.toUpperCase() == "PER_HOUR") {
+			} else if (s.toUpperCase().equals("PER_HOUR")) {
 				return betalingsType.PER_HOUR;
-			}
-			if (s.toUpperCase() == "PER_ZONE") {
+			} else if (s.toUpperCase().equals("PER_ZONE")) {
 				return betalingsType.PER_ZONE;
+			} else {
+				throw new InvalidParameterException();
+			}
+		}
+		
+		public static ArrayList<betalingsType> getAll() {
+			ArrayList<betalingsType> list = new ArrayList<betalingsType>();
+			
+			for (betalingsType bt : betalingsType.values()) {
+				list.add(bt);
 			}
 			
-			return null;
+			return list;
+		}
+		
+		public static ArrayList<String> getAllAsString() {
+			ArrayList<String> list = new ArrayList<String>();
+			
+			for (betalingsType bt : betalingsType.values()) {
+				list.add(bt.toString());
+			}
+			
+			return list;
 		}
 	};
 	
@@ -38,14 +60,19 @@ public class Price {
 	betalingsType typeBetaling;
 	double costPerUnit;
 	
-	public Price (int id, String typeTicket, betalingsType bt, double cpu) {
+	public Price (String typeTicket, betalingsType bt, double cpu) throws IllegalArgumentException {
 		if (typeTicket == null || cpu < 0)
 			throw new IllegalArgumentException();
 		
-		this.id = id;
 		this.typeTicket = typeTicket;
 		this.typeBetaling = bt;
 		this.costPerUnit = cpu;
+		this.id = PriceDAO.findNextId();
+	}
+	
+	public Price (int id, String typeTicket, betalingsType bt, double cpu) throws IllegalArgumentException {
+		this(typeTicket,bt,cpu);
+		this.id = id;
 	}
 
 	public int getId() {

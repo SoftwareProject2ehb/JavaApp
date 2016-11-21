@@ -1,8 +1,10 @@
 package model;
 
+import data_control.UserDAO;
+import utilities.Encryptor;
 
 public class User {
-	
+
 	int userID = 0;
 	String firstName;
 	String lastName;
@@ -17,8 +19,6 @@ public class User {
 	public enum Role{
 		 ADMIN,USER
 	}
-	
-	
 	
 	public User(int userID, String firstName, String lastName, String email, String phone, /*Address address,*/
 			String login, String password, Role rolen, boolean active) {
@@ -39,6 +39,22 @@ public class User {
 		this.active = active;
 	}
 	
+	public User(){
+		
+	}
+	
+	public User(String firstName, String lastName, String email, String phone, String login, String password, Role rolen) {
+		this.userID = UserDAO.findNextId();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phone = phone;
+		this.login = login;
+		this.password = password;
+		this.rolen = rolen;
+		this.active = true;
+	}
+
 	public String getRolen() {
 		return this.rolen.name();
 	}
@@ -136,9 +152,12 @@ public class User {
 	 * @param password The plain text password for the user which is authenticated with
 	 * @return True if the password matches, false if not.
 	 */
+	
 	public boolean checkPassword(String password) {
-		//TODO The password should be hashed and checked against DB password
-		return true;
+		if(this.password.equals(password))
+			return true;
+		else 
+			return false;
 	}
 	
 	public String getPassword() {
@@ -162,6 +181,14 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	@Override
+	public String toString() {
+		return "User [userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phone=" + phone + ", login=" + login + ", password=" + password + ", rolen=" + rolen + ", active="
+				+ active + "]";
+	}
+
 	
 	
 	

@@ -3,35 +3,47 @@ package model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import data_control.LostObjectDAO;
+
 public class LostObject {
-private int ID;
-private int userID;
+private int id;
+private int user_id;
 private String name;
-private String Place;
+private String place;
 // TO DO SET DATE
 private Timestamp date;
 private boolean claimed;
-private int userIDClaimed;
-private String locationClaimed;
+private int user_id_claimed;
+private String location_claimed;
 
-private String nameClaimed;
-private Timestamp dateClaimed;
+private String name_claimed;
+private Timestamp date_claimed;
 
-
-
-public LostObject(int iD, int userID, String name, String place, Timestamp date, boolean claimed, int userIDClaimed, String locationClaimed,String nameClaimed,
-		 Timestamp dateClaimed) {
+public LostObject(int user_id, String name, String place, Timestamp date) {
 	super();
-	ID = iD;
-	this.userID = userID;
+	this.user_id = user_id;
 	this.name = name;
-	Place = place;
+	this.place = place;
 	this.date = date;
+	this.id = LostObjectDAO.findNextId();
+}
+
+public LostObject(int userID, String name, String place, Timestamp date, boolean claimed, int user_id_claimed, String location_claimed,String name_claimed,
+		 Timestamp date_claimed) {
+	this(userID, name, place, date);
 	this.claimed = claimed;
-	this.userIDClaimed = userIDClaimed;
-	this.locationClaimed = locationClaimed;
-	this.nameClaimed = nameClaimed;
-	this.dateClaimed = dateClaimed;
+	this.user_id_claimed = user_id_claimed;
+	this.location_claimed = location_claimed;
+	this.name_claimed = name_claimed;
+	this.date_claimed = date_claimed;
+	this.id = LostObjectDAO.findNextId();
+}
+
+
+
+public LostObject(int id, int user_id, String name, String place, Timestamp date, boolean claimed, int user_id_claimed, String location_claimed,String name_claimed, Timestamp date_claimed) {
+	this(user_id, name, place, date, claimed, user_id_claimed, location_claimed, name_claimed, date_claimed);
+	this.id = id;
 }
 public LostObject(String name, String place) {
 	super();
@@ -50,39 +62,36 @@ public void setClaimed(boolean claimed) {
 	this.claimed = claimed;
 }
 public String getNameClaimed() {
-	return nameClaimed;
+	return name_claimed;
 }
 public void setNameClaimed(String nameClaimed) {
-	this.nameClaimed = nameClaimed;
+	this.name_claimed = nameClaimed;
 }
 public Timestamp getDateClaimed() {
-	return dateClaimed;
+	return date_claimed;
 }
-public void setDateClaimed(Timestamp dateClaimed) {
-	this.dateClaimed = dateClaimed;
+public void setDateClaimed(Timestamp date_claimed) {
+	this.date_claimed = date_claimed;
 }
 
 public int getID() {
-	return ID;
+	return id;
 }
-public int setID(int iD) {
-	if (iD == 0)
-		return 200;
+public int setID(int id) {
+	if (id == 0)
+		return ErrorCode.INCORRECT_PARAM;
 	
-	
-	
-	
-	this.ID = iD;
+	this.id = id;
 	return 0;
 }
 public int getUserID() {
-	return userID;
+	return user_id;
 }
-public int setUserID(int userID) {
-	if (userID == 0)
-		return 200;
+public int setUserID(int user_id) {
+	if (user_id == 0)
+		return ErrorCode.INCORRECT_PARAM;
 	
-	this.userID = userID;
+	this.user_id = user_id;
 	return 0;
 }
 public String getName() {
@@ -90,19 +99,18 @@ public String getName() {
 }
 public int setName(String name) {
 	if ( name == null)
-		return 200;
-	
+		return ErrorCode.NULL_PARAM;
 	
 	this.name = name;
 	return 0;
 }
 public String getPlace() {
-	return Place;
+	return place;
 }
 public int setPlace(String place) {
 	if ( place == null)
 		return 200;
-	Place = place;
+	place = place;
 	return 0;
 } 
 public Timestamp getDate() {
@@ -113,21 +121,21 @@ public int setDate(Timestamp date) {
 	return 0;
 }
 public int getUserIDClaimed() {
-	return userIDClaimed;
+	return user_id_claimed;
 }
-public void setUserIDClaimed(int userIDClaimed) {
-	this.userIDClaimed = userIDClaimed;
+public void setUserIDClaimed(int user_id_claimed) {
+	this.user_id_claimed = user_id_claimed;
 }
 public String getLocationClaimed() {
-	return locationClaimed;
+	return location_claimed;
 }
-public void setLocationClaimed(String locationClaimed) {
-	this.locationClaimed = locationClaimed;
+public void setLocationClaimed(String location_claimed) {
+	this.location_claimed = location_claimed;
 }
 @Override
 public String toString() {
-	return "ID=" + ID + "\n userID=" + userID + "\n name=" + name + "\n Place=" + Place + "\n date=" + date
-			+ "\n claimed=" + claimed +"\n User id that claimed = "+userIDClaimed  +  "\nlocation claimed = "+locationClaimed  +"\n nameClaimed=" + nameClaimed + "\n dateClaimed=" + dateClaimed + "\n \n";
+	return "ID=" + id + "\n userID=" + user_id + "\n name=" + name + "\n Place=" + place + "\n date=" + date
+			+ "\n claimed=" + claimed +"\n User id that claimed = "+ user_id_claimed  +  "\nlocation claimed = "+ location_claimed  +"\n nameClaimed=" + name_claimed + "\n dateClaimed=" + date_claimed + "\n \n";
 }
 
 
