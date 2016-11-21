@@ -2,10 +2,13 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DateFormatter;
 
 import controller.ActionMenuController;
 import controller.RouteController;
 import utilities.DateConverter;
+import utilities.PatternFilter;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -21,6 +24,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 
@@ -30,8 +35,8 @@ public class SearchRouteView extends JPanel {
 	public JCheckBox chckbxHeenterug;
 	public JRadioButton rdbtnVertrek;
 	public JRadioButton rdbtnAankomst;
-	public JFormattedTextField txtUur;
-	public JFormattedTextField txtDatum;
+	public JTextField txtUur;
+	public JTextField txtDatum;
 	
 	
 	
@@ -120,17 +125,19 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnZoek, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(btnZoek);
 		
-		txtUur = new JFormattedTextField();
+		txtUur = new JTextField();
 		springLayout.putConstraint(SpringLayout.WEST, txtUur, 28, SpringLayout.EAST, lblUur);
 		springLayout.putConstraint(SpringLayout.SOUTH, txtUur, -20, SpringLayout.NORTH, btnTerug);
 		springLayout.putConstraint(SpringLayout.WEST, rdbtnVertrek, 30, SpringLayout.EAST, txtUur);
 		txtUur.setText(DateConverter.getTime());
+		((AbstractDocument) txtUur.getDocument()).setDocumentFilter(PatternFilter.uurFilter);
 		add(txtUur);
 		
-		txtDatum = new JFormattedTextField();
+		txtDatum = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, txtDatum, -5, SpringLayout.NORTH, lblDatum);
 		springLayout.putConstraint(SpringLayout.WEST, txtDatum, 41, SpringLayout.EAST, lblDatum);
 		txtDatum.setText(DateConverter.getDate());
+		((AbstractDocument) txtDatum.getDocument()).setDocumentFilter(PatternFilter.datumFilter);
 		add(txtDatum);
 		
 		chckbxHeenterug = new JCheckBox("Heen-terug");
