@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="/Users/lukasr/Desktop/Documenten/EHB/Software Project II/workspace/SoftwareProject/lib/mysql-connector-java-5.1.40-bin.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/lukasr/Desktop/Documenten/EHB/Software Project II/workspace/SoftwareProject/lib/json-20160810.jar"/>
+	<classpathentry kind="lib" path="lib/json-20160810.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.40-bin.jar"/>
+	<classpathentry kind="lib" path="lib/pdfbox-app-2.0.3.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry exported="true" kind="lib" path="/Users/lukasr/Desktop/Documenten/EHB/Software Project II/workspace/SoftwareProject/lib/pdfbox-app-2.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
