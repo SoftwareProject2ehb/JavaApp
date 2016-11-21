@@ -2,6 +2,7 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.*;
@@ -10,6 +11,7 @@ import controller.ActionMenuController;
 import controller.CustomerController;
 import controller.LoginController;
 import controller.SystemController;
+import data_control.BaseDAO;
 
 public class LoginView extends JPanel {
 	private final JLabel lblUsername = new JLabel("Gebruikersnaam");
@@ -73,6 +75,12 @@ public class LoginView extends JPanel {
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	try {
+					BaseDAO.getConnection().close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             	System.exit(0);
             }
         });
