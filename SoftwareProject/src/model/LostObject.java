@@ -49,7 +49,7 @@ public LostObject(String name, String place) {
 	super();
 	
 	this.name = name;
-	this.Place = place;
+	this.place = place;
 	
 }
 public LostObject() {
