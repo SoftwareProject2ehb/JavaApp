@@ -30,6 +30,7 @@ public class CreateUserView extends JPanel {
 	public JTextField txtPhone;
 	public JPasswordField txtPassword;
 	public JPasswordField txtPassword1;
+	public JComboBox role;
 
 	/**
 	 * Create the panel.
@@ -140,7 +141,7 @@ public class CreateUserView extends JPanel {
 		lblConfirmPassword.setHorizontalAlignment(SwingConstants.LEFT);
 		add(lblConfirmPassword);
 		
-		JComboBox role = new JComboBox();
+		role = new JComboBox();
 		springLayout.putConstraint(SpringLayout.NORTH, role, 227, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, role, 212, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, role, 348, SpringLayout.WEST, this);
@@ -154,23 +155,7 @@ public class CreateUserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, btnCreate, 348, SpringLayout.WEST, this);
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String passText = new String(txtPassword.getPassword());
-				String passText1 = new String(txtPassword1.getPassword());
-				
-				try {
-					String rol = null;
-					Object chosenRole = role.getSelectedItem();
-					if (chosenRole == "USER") {
-						rol = "USER";
-					}
-					if (chosenRole == "ADMIN") {
-						rol = "ADMIN";
-					}
-					
-				} catch (Exception e1) {
-					// TODO: handle exception
-					
-				}
+				ConfigurationController.createUser();
 			}
 		});
 		add(btnCreate);
