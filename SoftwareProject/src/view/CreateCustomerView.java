@@ -3,6 +3,7 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.CustomerController;
 import event_handlers.CreateCustomer_CreatePressed;
 
 import javax.swing.SpringLayout;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CreateCustomerView extends JPanel {
 
@@ -129,14 +132,23 @@ public class CreateCustomerView extends JPanel {
 		this.add(lblGemeente);
 		
 		JButton button = new JButton("<<  Terug");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CustomerController.switchToFindCustomerView();
+			}
+		});
 		sl_contentPane.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, lblKlantMaken);
 		this.add(button);
 		
 		JButton btnKlantAanmaken = new JButton("Klant Aanmaken");
+		btnKlantAanmaken.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
 		sl_contentPane.putConstraint(SpringLayout.NORTH, button, 0, SpringLayout.NORTH, btnKlantAanmaken);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnKlantAanmaken, -10, SpringLayout.SOUTH, this);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnKlantAanmaken, 0, SpringLayout.EAST, txtVoornaam);
-		btnKlantAanmaken.addActionListener(new CreateCustomer_CreatePressed());
 		this.add(btnKlantAanmaken);
 	}
 	

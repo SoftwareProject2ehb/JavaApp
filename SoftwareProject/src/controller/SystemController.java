@@ -23,7 +23,7 @@ public abstract class SystemController {
 		ActionMenuController.initialize(new ActionMenuView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
 		
 		frame = new SystemFrame();
@@ -35,6 +35,10 @@ public abstract class SystemController {
 			return true;
 		}
 		return false;
+	}
+	
+	public static void meldAf() {
+		system.meldAf();
 	}
 	
 	public static String giveRouteInfo() {

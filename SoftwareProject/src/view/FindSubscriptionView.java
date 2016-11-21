@@ -3,11 +3,16 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SpringLayout;
+
+import controller.ActionMenuController;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.ButtonGroup;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FindSubscriptionView extends JPanel {
 	private JTable table;
@@ -52,6 +57,11 @@ public class FindSubscriptionView extends JPanel {
 		add(btnFind);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ActionMenuController.switchToActionMenuView();
+			}
+		});
 		springLayout.putConstraint(SpringLayout.SOUTH, btnCancel, 0, SpringLayout.SOUTH, btnFind);
 		springLayout.putConstraint(SpringLayout.EAST, btnCancel, -10, SpringLayout.EAST, this);
 		add(btnCancel);

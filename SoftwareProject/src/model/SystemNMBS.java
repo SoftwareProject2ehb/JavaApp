@@ -26,4 +26,8 @@ public class SystemNMBS {
 		
 		return ErrorCode.NO_ERROR;
 	}
+	
+	public void meldAf() {
+		logged_user = null;
+	}
 }

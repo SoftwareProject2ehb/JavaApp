@@ -3,6 +3,7 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import controller.ActionMenuController;
 import utilities.DateConverter;
 
 import javax.swing.JLabel;
@@ -17,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SearchRouteView extends JPanel {
 	//private JTextField textField;
@@ -93,6 +96,11 @@ public class SearchRouteView extends JPanel {
 	    groupAankomstVertrek.add(rdbtnAankomst);
 		
 		JButton btnTerug = new JButton("Terug");
+		btnTerug.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ActionMenuController.switchToActionMenuView();
+			}
+		});
 		springLayout.putConstraint(SpringLayout.WEST, btnTerug, 10, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, rdbtnAankomst, -22, SpringLayout.NORTH, btnTerug);
 		springLayout.putConstraint(SpringLayout.SOUTH, rdbtnVertrek, -22, SpringLayout.NORTH, btnTerug);

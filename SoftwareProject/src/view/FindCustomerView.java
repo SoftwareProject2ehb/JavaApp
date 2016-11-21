@@ -10,6 +10,12 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
+import controller.CustomerController;
+import controller.SubscriptionController;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class FindCustomerView extends JPanel {
 
 	private JTextField txtVoornaam;
@@ -120,6 +126,11 @@ public class FindCustomerView extends JPanel {
 		this.add(lblGemeente);
 		
 		JButton button = new JButton("<<  Terug");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SubscriptionController.switchToBuySubscriptionView();
+			}
+		});
 		sl_contentPane.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, lblKlantZoeken);
 		this.add(button);
 		
@@ -140,6 +151,16 @@ public class FindCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblGevondenKlanten, 0, SpringLayout.WEST, list);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblGevondenKlanten, -6, SpringLayout.NORTH, list);
 		this.add(lblGevondenKlanten);
+		
+		JButton btnMaakNieuweKlant = new JButton("Maak Nieuwe Klant");
+		btnMaakNieuweKlant.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CustomerController.switchToCreateCustomerView();
+			}
+		});
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnMaakNieuweKlant, 0, SpringLayout.NORTH, button);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnMaakNieuweKlant, 0, SpringLayout.EAST, txtVoornaam);
+		add(btnMaakNieuweKlant);
 	}
 
 }

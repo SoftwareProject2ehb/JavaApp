@@ -13,18 +13,22 @@ import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
 import controller.ActionMenuController;
+import controller.CustomerController;
 import controller.SubscriptionController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class BuySubscriptionView extends JPanel {
 	public JTextField txtPrijs;
-	public JTextField textField_1;
+	public JTextField txtBegindatum;
 	public JComboBox cbbBeginstation;
 	public JComboBox cbbEindstation;
 	public JComboBox cbbType;
 	public JComboBox cbbGeldigheid;
+	private JTextField txtGebruiker;
 	
 	/**
 	 * Create the panel.
@@ -107,14 +111,14 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPrijs, -6, SpringLayout.NORTH, txtPrijs);
 		add(lblPrijs);
 		
-		textField_1 = new JTextField();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, textField_1, -3, SpringLayout.NORTH, lblBeginstation);
-		sl_contentPane.putConstraint(SpringLayout.EAST, textField_1, -69, SpringLayout.EAST, this);
-		add(textField_1);
-		textField_1.setColumns(10);
+		txtBegindatum = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, txtBegindatum, -3, SpringLayout.NORTH, lblBeginstation);
+		sl_contentPane.putConstraint(SpringLayout.EAST, txtBegindatum, -69, SpringLayout.EAST, this);
+		add(txtBegindatum);
+		txtBegindatum.setColumns(10);
 		
 		JLabel lblBegindatum = new JLabel("Begindatum");
-		sl_contentPane.putConstraint(SpringLayout.WEST, textField_1, 6, SpringLayout.EAST, lblBegindatum);
+		sl_contentPane.putConstraint(SpringLayout.WEST, txtBegindatum, 6, SpringLayout.EAST, lblBegindatum);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblBegindatum, 0, SpringLayout.SOUTH, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblBegindatum, 0, SpringLayout.EAST, lblGeldigheid);
 		add(lblBegindatum);
@@ -135,6 +139,24 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, button, 5, SpringLayout.SOUTH, btnKoopTicket);
 		sl_contentPane.putConstraint(SpringLayout.WEST, button, 10, SpringLayout.WEST, this);
 		add(button);
+		
+		JLabel lblGebruiker = new JLabel("Gebruiker");
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblGebruiker, 0, SpringLayout.SOUTH, lblTypeAbonnement);
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblGebruiker, 0, SpringLayout.EAST, lblGeldigheid);
+		add(lblGebruiker);
+		
+		txtGebruiker = new JTextField();
+		txtGebruiker.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				CustomerController.switchToFindCustomerView();
+			}
+		});
+		sl_contentPane.putConstraint(SpringLayout.WEST, txtGebruiker, 0, SpringLayout.WEST, txtBegindatum);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtGebruiker, 0, SpringLayout.SOUTH, lblTypeAbonnement);
+		sl_contentPane.putConstraint(SpringLayout.EAST, txtGebruiker, 0, SpringLayout.EAST, txtBegindatum);
+		add(txtGebruiker);
+		txtGebruiker.setColumns(10);
 	}
 
 }
