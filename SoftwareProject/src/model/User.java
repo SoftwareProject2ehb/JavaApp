@@ -38,6 +38,10 @@ public class User {
 		this.active = active;
 	}
 	
+	public User(){
+		
+	}
+	
 	public User(String firstName, String lastName, String email, String phone, String login, String password, Role rolen) {
 		this.firstName = firstName;
 		this.lastName = lastName;
