@@ -1,5 +1,6 @@
 package model;
 
+import utilities.Encryptor;
 
 public class User {
 
@@ -17,8 +18,6 @@ public class User {
 	public enum Role{
 		 ADMIN,USER
 	}
-	
-	
 	
 	public User(int userID, String firstName, String lastName, String email, String phone, /*Address address,*/
 			String login, String password, Role rolen, boolean active) {
@@ -47,6 +46,7 @@ public class User {
 		this.login = login;
 		this.password = password;
 		this.rolen = rolen;
+		this.active = true;
 	}
 
 	public String getRolen() {
@@ -146,9 +146,12 @@ public class User {
 	 * @param password The plain text password for the user which is authenticated with
 	 * @return True if the password matches, false if not.
 	 */
+	
 	public boolean checkPassword(String password) {
-		//TODO The password should be hashed and checked against DB password
-		return true;
+		if(this.password.equals(Encryptor.encrypt(password)))
+			return true;
+		else 
+			return false;
 	}
 	
 	public String getPassword() {
@@ -172,7 +175,6 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
 	
 	@Override
 	public String toString() {
