@@ -294,22 +294,40 @@ public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user
 	return lijst;
 }
 
-   public static void main(String[] args) {
-       
-	   LostObjectDAO lost = new LostObjectDAO();
-       //LostObject u = new LostObject(1,"daoud","ehb");
-       LostObject dat = lost.getLostObjectById(8);
-	   
-	   //dat.setNameClaimed("daoud");
-	   
-	   //lost.updateLostObect(dat);
-      // ArrayList<LostObject> lijst = new ArrayList<LostObject>();
-      // lijst = lost.getLostObjectOpAttribut(get, zoekop);
-       //System.out.println(lijst.toString());
-       System.out.println(dat.toString());
-      
-   
-   }
+public static int findNextId() {
+	int id = 0;
+	Statement st = null;
+	
+	try {
+
+        if (getConnection().isClosed()) {
+            throw new IllegalStateException("error unexpected");
+        }
+        
+        st = (Statement) getConnection().createStatement();
+        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM LostObject");
+        
+        if (res.next()) {
+        	id = res.getInt(0);
+
+		}
+        
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        throw new RuntimeException(e.getMessage());
+    } finally {
+        try {
+            if (st != null)
+            	st.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
+	
+	return id + 1;
+}
    
 
 }

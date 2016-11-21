@@ -257,5 +257,40 @@ public class SubscriptionDAO extends BaseDAO{
 
 		return lijst;
 	}
+	
+	public static int findNextId() {
+		int id = 0;
+		Statement st = null;
+		
+		try {
+
+	        if (getConnection().isClosed()) {
+	            throw new IllegalStateException("error unexpected");
+	        }
+	        
+	        st = (Statement) getConnection().createStatement();
+	        ResultSet res = st.executeQuery("SELECT MAX(id) FROM Subscription");
+	        
+	        if (res.next()) {
+	        	id = res.getInt(0);
+
+			}
+	        
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        throw new RuntimeException(e.getMessage());
+	    } finally {
+	        try {
+	            if (st != null)
+	            	st.close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
+		
+		return id + 1;
+	}
 
 }
