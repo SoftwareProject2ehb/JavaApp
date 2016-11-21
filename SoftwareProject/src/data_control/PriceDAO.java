@@ -188,7 +188,7 @@ public class PriceDAO extends BaseDAO {
 	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Price");
 	        
 	        if (res.next()) {
-	        	id = res.getInt(0);
+	        	id = res.getInt(1);
 
 			}
 	        

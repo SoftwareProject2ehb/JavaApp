@@ -308,7 +308,7 @@ public static int findNextId() {
         ResultSet res = st.executeQuery("SELECT MAX(ID) FROM LostObject");
         
         if (res.next()) {
-        	id = res.getInt(0);
+        	id = res.getInt(1);
 
 		}
         

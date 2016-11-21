@@ -130,7 +130,7 @@ public class TicketDAO extends BaseDAO {
 	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Ticket");
 	        
 	        if (res.next()) {
-	        	id = res.getInt(0);
+	        	id = res.getInt(1);
 
 			}
 	        

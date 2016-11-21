@@ -347,7 +347,7 @@ public class UserDAO extends BaseDAO{
 	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM User");
 	        
 	        if (res.next()) {
-	        	id = res.getInt(0);
+	        	id = res.getInt(1);
 
 			}
 	        

@@ -147,7 +147,7 @@ public class SubscriptionPriceDAO extends BaseDAO{
 	        ResultSet res = st.executeQuery("SELECT MAX(id) FROM SubscriptionPrice");
 	        
 	        if (res.next()) {
-	        	id = res.getInt(0);
+	        	id = res.getInt(1);
 
 			}
 	        

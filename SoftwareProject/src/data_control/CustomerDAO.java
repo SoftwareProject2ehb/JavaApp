@@ -165,7 +165,7 @@ public class CustomerDAO extends BaseDAO {
 	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Customer");
 	        
 	        if (res.next()) {
-	        	id = res.getInt(0);
+	        	id = res.getInt(1);
 
 			}
 	        
