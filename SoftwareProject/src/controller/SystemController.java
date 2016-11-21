@@ -119,7 +119,7 @@ public abstract class SystemController {
 	}
 	
 	public static String addLostObject(int user_id, String name, String station, Timestamp date) {
-		LostObject obj = new LostObject(-1, user_id, name, station, date, false, -1, null, null, null);
+		LostObject obj = new LostObject(user_id, name, station, date, false, -1, null, null, null);
 		LostObjectDAO.createLostObject(obj);
 		return "Succesvol toegevoegd.";
 	}
