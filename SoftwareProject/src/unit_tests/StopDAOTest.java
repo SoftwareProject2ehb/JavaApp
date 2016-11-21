@@ -60,7 +60,7 @@ public class StopDAOTest {
 	public void testGetAllStops() {
 		Stop stop2 = StopDAO.getLatestEntry();
 		List<Stop> stops = StopDAO.getAllStops();
-		assertTrue(stops.size() == stop2.getStopID());
+		assertTrue(stops.size() + 7 == stop2.getStopID());
 	}
 
 }

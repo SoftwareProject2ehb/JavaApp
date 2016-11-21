@@ -21,10 +21,10 @@ public class ReportDAO extends BaseDAO {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select startsation, COUNT(startsation) AS MOST_FREQUENT from Ticket GROUP BY startsation ORDER BY COUNT(startsation) DESC )");
+			ResultSet res = st.executeQuery("select startstation, COUNT(startstation) AS MOST_FREQUENT from Ticket GROUP BY startstation ORDER BY COUNT(startstation) DESC ");
 
 			while (res.next()) {
-				String data ="Station: " +  res.getString(1) + "aantal: " + res.getInt(2);
+				String data ="Station: " +  res.getString(1) + " aantal: " + res.getInt(2);
 				
 				meestVerkocht.add(data);
 			}
@@ -48,10 +48,10 @@ public class ReportDAO extends BaseDAO {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select endstation COUNT(endstation) AS MOST_FREQUENT from Ticket GROUP BY endstation ORDER BY COUNT(endstation) DESC");
+			ResultSet res = st.executeQuery("select endstation, COUNT(endstation) AS MOST_FREQUENT from Ticket GROUP BY endstation ORDER BY COUNT(endstation) DESC");
 
 			while (res.next()) {
-				String data ="Station: " +  res.getString(1) + "aantal: " + res.getInt(2);
+				String data ="Station: " +  res.getString(1) + " aantal: " + res.getInt(2);
 				
 				meestVerkocht.add(data);
 			}
@@ -125,10 +125,10 @@ public class ReportDAO extends BaseDAO {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select startsation, COUNT(startsation) AS MOST_FREQUENT from Subscription GROUP BY startsation ORDER BY COUNT(startsation) DESC )");
+			ResultSet res = st.executeQuery("select startstation, COUNT(startstation) AS MOST_FREQUENT from Subscription GROUP BY startstation ORDER BY COUNT(startstation) DESC ");
 
 			while (res.next()) {
-				String data ="Station: " +  res.getString(1) + "aantal: " + res.getInt(2);
+				String data ="Station: " +  res.getString(1) + " aantal: " + res.getInt(2);
 				
 				meestVerkocht.add(data);
 			}
@@ -152,10 +152,10 @@ public class ReportDAO extends BaseDAO {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select endstation COUNT(endstation) AS MOST_FREQUENT from Subscription GROUP BY endstation ORDER BY COUNT(endstation) DESC");
+			ResultSet res = st.executeQuery("select endstation, COUNT(endstation) AS MOST_FREQUENT from Subscription GROUP BY endstation ORDER BY COUNT(endstation) DESC");
 
 			while (res.next()) {
-				String data ="Station: " +  res.getString(1) + "aantal: " + res.getInt(2);
+				String data ="Station: " +  res.getString(1) + " aantal: " + res.getInt(2);
 				
 				meestVerkocht.add(data);
 			}
