@@ -21,8 +21,10 @@ public abstract class SystemController {
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
 		LoginController.initialize(new LoginView());
 		ActionMenuController.initialize(new ActionMenuView());
-		SubscriptionController.initialize(new BuySubscriptionView());
+		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView());
+		RouteController.initialize(new SearchRouteView());
 		
 		frame = new SystemFrame();
 		frame.setVisible(true);

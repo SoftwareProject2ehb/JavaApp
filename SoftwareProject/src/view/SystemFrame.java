@@ -1,19 +1,11 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controller.ActionMenuController;
-import controller.CustomerController;
-import controller.LoginController;
-import controller.SubscriptionController;
-import controller.SystemController;
-import controller.TicketController;
+import controller.*;
 
 import java.awt.CardLayout;
 
@@ -55,14 +47,26 @@ public class SystemFrame extends JFrame {
 		contentPane.add(LoginController.login);
 		contentPane.add(ActionMenuController.action_menu);
 		contentPane.add(SubscriptionController.buy_subscription);
+		contentPane.add(SubscriptionController.find_subscription);
 		contentPane.add(TicketController.buy_ticket);
+		contentPane.add(ConfigurationController.create_user);
+		contentPane.add(ConfigurationController.find_user);
+		contentPane.add(ConfigurationController.price_config);
+		contentPane.add(ConfigurationController.report);
+		contentPane.add(RouteController.search_route);
 		
 		card_layout.addLayoutComponent(CustomerController.create_customer, "CREATE_CUSTOMER");
 		card_layout.addLayoutComponent(CustomerController.find_customer, "FIND_CUSTOMER");
 		card_layout.addLayoutComponent(LoginController.login, "LOGIN");
 		card_layout.addLayoutComponent(ActionMenuController.action_menu, "ACTION_MENU");
 		card_layout.addLayoutComponent(SubscriptionController.buy_subscription, "BUY_SUBSCRIPTION");
+		card_layout.addLayoutComponent(SubscriptionController.find_subscription, "FIND_SUBSCRIPTION");
 		card_layout.addLayoutComponent(TicketController.buy_ticket, "BUY_TICKET");
+		card_layout.addLayoutComponent(ConfigurationController.create_user, "CREATE_USER");
+		card_layout.addLayoutComponent(ConfigurationController.find_user, "FIND_USER");
+		card_layout.addLayoutComponent(ConfigurationController.price_config, "PRICE_CONFIG");
+		card_layout.addLayoutComponent(ConfigurationController.report, "REPORT");
+		card_layout.addLayoutComponent(RouteController.search_route, "SEARCH_ROUTE");
 		
 		card_layout.show(contentPane, "LOGIN");
 		

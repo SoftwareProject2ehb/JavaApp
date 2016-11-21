@@ -9,7 +9,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.ButtonGroup;
 
-public class FindSubView extends JPanel {
+public class FindSubscriptionView extends JPanel {
 	private JTable table;
 	private JTextField textField;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -17,7 +17,7 @@ public class FindSubView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public FindSubView() {
+	public FindSubscriptionView() {
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 		
