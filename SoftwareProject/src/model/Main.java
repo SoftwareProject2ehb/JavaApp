@@ -8,9 +8,8 @@ import view.FindSubscriptionView;
 public class Main {
 
 	public static void main(String[] args) {
-		//SystemController.startUp();
-		Customer cust = new Customer("Bernd", "Wethmar", "b@w.Be", "0000", "Straat");
-		cust.setId(CustomerDAO.createCustomer(cust));
+		SystemController.startUp();
+		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		
 	}
 }

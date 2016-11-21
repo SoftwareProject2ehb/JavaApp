@@ -35,6 +35,8 @@ public class LogFileDAO extends BaseDAO{
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (!getConnection().isClosed())
+	            	getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -61,10 +63,22 @@ public class LogFileDAO extends BaseDAO{
 			ps.setInt(5, logfile.getLogFileID());
 			
 			ps.executeUpdate();
-			ps.close();
+			
+			
+			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -87,6 +101,16 @@ public class LogFileDAO extends BaseDAO{
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
+	} finally {
+		try {
+			if (st != null)
+				st.close();
+			if (!getConnection().isClosed())
+				getConnection().close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	return l;
@@ -111,6 +135,16 @@ public class LogFileDAO extends BaseDAO{
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
+	} finally {
+		try {
+			if (st != null)
+				st.close();
+			if (!getConnection().isClosed())
+				getConnection().close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	return list;
@@ -141,6 +175,8 @@ public static int findNextId() {
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -170,6 +206,15 @@ public static int findNextId() {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+	            	st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
 		}
 
 		return l;

@@ -36,6 +36,8 @@ public class PriceDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -61,7 +63,18 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
-		}
+		} finally {
+	        try {
+	            if (ps != null)
+	                ps.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 	}
 	
 	public static void updatePrice(Price price) {
@@ -84,7 +97,18 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
-		}
+		} finally {
+	        try {
+	            if (ps != null)
+	                ps.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 	}
 	
 	public static Price findPriceById(int id) {
@@ -103,7 +127,18 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (st != null)
+	                st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 
 		return p;
 	}
@@ -124,7 +159,18 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (st != null)
+	                st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 
 		return p;
 	}
@@ -147,7 +193,18 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (st != null)
+	                st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 		
 		return list;
 	}
@@ -169,7 +226,18 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (st != null)
+	                st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 		
 		return list;
 	}
@@ -199,6 +267,8 @@ public class PriceDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());

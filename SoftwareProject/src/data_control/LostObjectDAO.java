@@ -47,6 +47,8 @@ public class LostObjectDAO extends BaseDAO{
 		        try {
 		            if (ps != null)
 		                ps.close();
+		            if (!getConnection().isClosed())
+						getConnection().close();
 
 		        } catch (SQLException e) {
 		            System.out.println(e.getMessage());
@@ -79,9 +81,19 @@ public static void updateLostObject(LostObject object) {
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			
 			throw new RuntimeException(e.getMessage());
-		}      
+		} finally {
+	        try {
+	            if (ps != null)
+	                ps.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }      
 	}
 
 public static LostObject getLostObjectFromRS(ResultSet res) throws SQLException{
@@ -107,7 +119,18 @@ public static LostObject getLostObjectById(int objectID) {
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
+	} finally {
+        try {
+            if (st != null)
+                st.close();
+            if (!getConnection().isClosed())
+				getConnection().close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
 
 
 	return lost;
@@ -133,7 +156,18 @@ public ArrayList<LostObject> getAllLostObject(int from , int to) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		e.getMessage();
-	}
+	} finally {
+        try {
+            if (st != null)
+                st.close();
+            if (!getConnection().isClosed())
+				getConnection().close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
 
 	return lijst;
 }
@@ -154,7 +188,18 @@ public static ArrayList<LostObject> getAllLostObjectNotClaimed() {
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
+	} finally {
+        try {
+            if (st != null)
+                st.close();
+            if (!getConnection().isClosed())
+				getConnection().close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
 
 	return lijst;
 }
@@ -176,7 +221,18 @@ public static ArrayList<LostObject> getAllLostObjectClaimed() {
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
+	} finally {
+        try {
+            if (st != null)
+                st.close();
+            if (!getConnection().isClosed())
+				getConnection().close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
 
 	return lijst;
 }
@@ -200,7 +256,18 @@ public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject att
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
+	} finally {
+        try {
+            if (st != null)
+                st.close();
+            if (!getConnection().isClosed())
+				getConnection().close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
 
 	return lijst;
 }
@@ -222,7 +289,18 @@ public static ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		e.getMessage();
-	}
+	} finally {
+        try {
+            if (st != null)
+                st.close();
+            if (!getConnection().isClosed())
+				getConnection().close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
 
 	return lijst;
 }
@@ -244,30 +322,21 @@ public static ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		e.getMessage();
-	}
+	} finally {
+        try {
+            if (st != null)
+                st.close();
+            if (!getConnection().isClosed())
+				getConnection().close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
 
 	return lijst;
 }
-   public static void main(String[] args) {
-       
-	  // LostObjectDAO lost = new LostObjectDAO();
-       //LostObject u = new LostObject(1,"daoud","ehb");
-      // LostObject dat = lost.getLostObjectById(8);
-	   
-	   //dat.setNameClaimed("daoud");
-	   
-	   //lost.updateLostObect(dat);
-      // ArrayList<LostObject> lijst = new ArrayList<LostObject>();
-      // lijst = lost.getLostObjectOpAttribut(get, zoekop);
-       //System.out.println(lijst.toString());
-       //System.out.println(dat.toString());
-	   //SystemNMBS nmbs = new SystemNMBS();
-	   
-	   
-	   
-      
-   
-   }
 
 public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
@@ -309,7 +378,18 @@ public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		e.getMessage();
-	}
+	} finally {
+        try {
+            if (st != null)
+                st.close();
+            if (!getConnection().isClosed())
+				getConnection().close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("error.unexpected");
+        }
+    }
 
 	return lijst;
 }
@@ -339,6 +419,8 @@ public static int findNextId() {
         try {
             if (st != null)
             	st.close();
+            if (!getConnection().isClosed())
+				getConnection().close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
