@@ -1,6 +1,7 @@
 package data_control;
 
 import model.*;
+import controller.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,9 +23,8 @@ public class LostObjectDAO extends BaseDAO{
 		 PreparedStatement ps = null;
 
 		    String sql = "INSERT INTO LostObject VALUES(null,?,?,?,?,false,null,null,null,null)";
-
-		    try {
-
+		  try{
+		    		
 		        if (getConnection().isClosed()) {
 		            throw new IllegalStateException("error unexpected");
 		        }
@@ -40,6 +40,9 @@ public class LostObjectDAO extends BaseDAO{
 		  
 		        
 		       ps.executeUpdate();
+		      
+			    LogFile log = new LogFile("Een lost object werdt toegevoed door user",date,2);
+			    LogFileDAO.createLogFile(log);
 		    } catch (SQLException e) {
 		        System.out.println(e.getMessage());
 		        throw new RuntimeException(e.getMessage());
