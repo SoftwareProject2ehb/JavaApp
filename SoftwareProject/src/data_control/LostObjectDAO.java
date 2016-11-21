@@ -12,7 +12,7 @@ import com.mysql.jdbc.Statement;
 
 public class LostObjectDAO extends BaseDAO{
 
-	enum SearchLostObject {ID,userid,name,place,timeFound,claimed ,nameClaimed,timeClaimed};
+	public enum SearchLostObject {ID,userid,name,place,timeFound,claimed,userClaimed ,nameClaimed,LocationClaimed,timeClaimed,description};
 	
 	
 	
@@ -115,7 +115,7 @@ public static LostObject getLostObjectById(int objectID) {
 
 
 
-public static ArrayList<LostObject> getAllLostObject() {
+public ArrayList<LostObject> getAllLostObject(int from , int to) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	try {
@@ -123,7 +123,7 @@ public static ArrayList<LostObject> getAllLostObject() {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject");
+		ResultSet res = st.executeQuery("SELECT * FROM LostObject where timeFound  BETWEEN NOW() - INTERVAL "+from +" MONTH AND NOW() - INTERVAL "+ to +" MONTH");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
@@ -191,7 +191,7 @@ public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject att
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE" + attribuut +"='" + zoekop + "'");
+		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE " + attribuut +" =  '" + zoekop + "';");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
@@ -248,6 +248,26 @@ public static ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
 
 	return lijst;
 }
+   public static void main(String[] args) {
+       
+	  // LostObjectDAO lost = new LostObjectDAO();
+       //LostObject u = new LostObject(1,"daoud","ehb");
+      // LostObject dat = lost.getLostObjectById(8);
+	   
+	   //dat.setNameClaimed("daoud");
+	   
+	   //lost.updateLostObect(dat);
+      // ArrayList<LostObject> lijst = new ArrayList<LostObject>();
+      // lijst = lost.getLostObjectOpAttribut(get, zoekop);
+       //System.out.println(lijst.toString());
+       //System.out.println(dat.toString());
+	   //SystemNMBS nmbs = new SystemNMBS();
+	   
+	   
+	   
+      
+   
+   }
 
 public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
@@ -328,6 +348,7 @@ public static int findNextId() {
 	
 	return id + 1;
 }
-   
+
+
 
 }

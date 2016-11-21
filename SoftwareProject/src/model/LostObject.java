@@ -45,6 +45,16 @@ public LostObject(int id, int user_id, String name, String place, Timestamp date
 	this(user_id, name, place, date, claimed, user_id_claimed, location_claimed, name_claimed, date_claimed);
 	this.id = id;
 }
+public LostObject(String name, String place) {
+	super();
+	
+	this.name = name;
+	this.place = place;
+	
+}
+public LostObject() {
+	// TODO Auto-generated constructor stub
+}
 public boolean isClaimed() {
 	return claimed;
 }
