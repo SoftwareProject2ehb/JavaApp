@@ -72,7 +72,7 @@ public class SubscriptionDAO extends BaseDAO{
 						rs.getDouble("price"), 
 						rs.getInt("customer"),
 						rs.getString("startstation"),
-						rs.getString("endstationi"),
+						rs.getString("endstation"),
 						rs.getDate("startdatum"),
 						rs.getDate("enddatum"),
 						rs.getInt("active"));
@@ -105,7 +105,7 @@ public class SubscriptionDAO extends BaseDAO{
 						rs.getDouble("price"), 
 						rs.getInt("customer"),
 						rs.getString("startstation"),
-						rs.getString("endstationi"),
+						rs.getString("endstation"),
 						rs.getDate("startdatum"),
 						rs.getDate("enddatum"),
 						rs.getInt("active"));
@@ -244,7 +244,7 @@ public class SubscriptionDAO extends BaseDAO{
 						rs.getDouble("price"), 
 						rs.getInt("customer"),
 						rs.getString("startstation"),
-						rs.getString("endstationi"),
+						rs.getString("endstation"),
 						rs.getDate("startdatum"),
 						rs.getDate("enddatum"),
 						rs.getInt("active"));
