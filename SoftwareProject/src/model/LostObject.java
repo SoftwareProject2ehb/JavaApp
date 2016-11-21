@@ -40,6 +40,9 @@ public LostObject(String name, String place) {
 	this.Place = place;
 	
 }
+public LostObject() {
+	// TODO Auto-generated constructor stub
+}
 public boolean isClaimed() {
 	return claimed;
 }

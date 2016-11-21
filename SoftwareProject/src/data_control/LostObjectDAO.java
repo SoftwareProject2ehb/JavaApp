@@ -11,7 +11,7 @@ import com.mysql.jdbc.Statement;
 
 public class LostObjectDAO extends BaseDAO{
 
-	enum SearchLostObject {ID,userid,name,place,timeFound,claimed ,nameClaimed,timeClaimed};
+	public enum SearchLostObject {ID,userid,name,place,timeFound,claimed,userClaimed ,nameClaimed,LocationClaimed,timeClaimed,description};
 	
 	
 	
@@ -114,7 +114,7 @@ public LostObject getLostObjectById(int objectID) {
 
 
 
-public ArrayList<LostObject> getAllLostObject() {
+public ArrayList<LostObject> getAllLostObject(int from , int to) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	try {
@@ -122,7 +122,7 @@ public ArrayList<LostObject> getAllLostObject() {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getCon().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject");
+		ResultSet res = st.executeQuery("SELECT * FROM LostObject where timeFound  BETWEEN NOW() - INTERVAL "+from +" MONTH AND NOW() - INTERVAL "+ to +" MONTH");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
@@ -190,7 +190,7 @@ public ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject attribuut,
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getCon().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE" + attribuut +"='" + zoekop + "'");
+		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE " + attribuut +" =  '" + zoekop + "';");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
