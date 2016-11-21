@@ -115,4 +115,39 @@ public class TicketDAO extends BaseDAO {
 
 		return list;
 	}
+	
+	public static int findNextId() {
+		int id = 0;
+		Statement st = null;
+		
+		try {
+
+	        if (getConnection().isClosed()) {
+	            throw new IllegalStateException("error unexpected");
+	        }
+	        
+	        st = (Statement) getConnection().createStatement();
+	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Ticket");
+	        
+	        if (res.next()) {
+	        	id = res.getInt(1);
+
+			}
+	        
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        throw new RuntimeException(e.getMessage());
+	    } finally {
+	        try {
+	            if (st != null)
+	            	st.close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
+		
+		return id + 1;
+	}
 }

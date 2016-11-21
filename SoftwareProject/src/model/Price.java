@@ -1,6 +1,9 @@
 package model;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
+
+import data_control.PriceDAO;
 
 public class Price {
 	public enum betalingsType {
@@ -17,21 +20,18 @@ public class Price {
 			}
 		}
 		
-		public static betalingsType stringToBetalingsType(String s) {
+		public static betalingsType stringToBetalingsType(String s) throws InvalidParameterException{
 			if (s.toUpperCase().equals("PER_STATION")) {
 				return betalingsType.PER_STATION;
-			}
-			if (s.toUpperCase().equals("PER_KM")) {
+			} else if (s.toUpperCase().equals("PER_KM")) {
 				return betalingsType.PER_KM;
-			}
-			if (s.toUpperCase().equals("PER_HOUR")) {
+			} else if (s.toUpperCase().equals("PER_HOUR")) {
 				return betalingsType.PER_HOUR;
-			}
-			if (s.toUpperCase().equals("PER_ZONE")) {
+			} else if (s.toUpperCase().equals("PER_ZONE")) {
 				return betalingsType.PER_ZONE;
+			} else {
+				throw new InvalidParameterException();
 			}
-			
-			return null;
 		}
 		
 		public static ArrayList<betalingsType> getAll() {
@@ -67,6 +67,7 @@ public class Price {
 		this.typeTicket = typeTicket;
 		this.typeBetaling = bt;
 		this.costPerUnit = cpu;
+		this.id = PriceDAO.findNextId();
 	}
 	
 	public Price (int id, String typeTicket, betalingsType bt, double cpu) throws IllegalArgumentException {

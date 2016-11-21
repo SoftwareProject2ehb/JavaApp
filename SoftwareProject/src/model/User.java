@@ -1,5 +1,6 @@
 package model;
 
+import data_control.UserDAO;
 import utilities.Encryptor;
 
 public class User {
@@ -38,7 +39,12 @@ public class User {
 		this.active = active;
 	}
 	
+	public User(){
+		
+	}
+	
 	public User(String firstName, String lastName, String email, String phone, String login, String password, Role rolen) {
+		this.userID = UserDAO.findNextId();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -148,7 +154,7 @@ public class User {
 	 */
 	
 	public boolean checkPassword(String password) {
-		if(this.password.equals(Encryptor.encrypt(password)))
+		if(this.password.equals(password))
 			return true;
 		else 
 			return false;

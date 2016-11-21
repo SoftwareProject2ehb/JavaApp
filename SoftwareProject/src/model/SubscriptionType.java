@@ -1,15 +1,22 @@
 package model;
 
+import data_control.SubscriptionTypeDAO;
+
 public class SubscriptionType {
 	private int id;
 	private String name;
 	private double factor;
 	
-	public SubscriptionType(int id, String name, double factor) {
+	public SubscriptionType(String name, double factor) {
 		super();
-		this.id = id;
+		this.id = SubscriptionTypeDAO.findNextId();
 		this.name = name;
 		this.factor = factor;
+	}
+	
+	public SubscriptionType(int id, String name, double factor) {
+		this(name, factor);
+		this.id = id;
 	}
 
 	public int getId() {
