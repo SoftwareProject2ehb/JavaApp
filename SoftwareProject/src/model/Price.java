@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Price {
 	public enum betalingsType {
 		PER_STATION, PER_KM, PER_HOUR, PER_ZONE;
@@ -16,20 +18,40 @@ public class Price {
 		}
 		
 		public static betalingsType stringToBetalingsType(String s) {
-			if (s.toUpperCase() == "PER_STATION") {
+			if (s.toUpperCase().equals("PER_STATION")) {
 				return betalingsType.PER_STATION;
 			}
-			if (s.toUpperCase() == "PER_KM") {
+			if (s.toUpperCase().equals("PER_KM")) {
 				return betalingsType.PER_KM;
 			}
-			if (s.toUpperCase() == "PER_HOUR") {
+			if (s.toUpperCase().equals("PER_HOUR")) {
 				return betalingsType.PER_HOUR;
 			}
-			if (s.toUpperCase() == "PER_ZONE") {
+			if (s.toUpperCase().equals("PER_ZONE")) {
 				return betalingsType.PER_ZONE;
 			}
 			
 			return null;
+		}
+		
+		public static ArrayList<betalingsType> getAll() {
+			ArrayList<betalingsType> list = new ArrayList<betalingsType>();
+			
+			for (betalingsType bt : betalingsType.values()) {
+				list.add(bt);
+			}
+			
+			return list;
+		}
+		
+		public static ArrayList<String> getAllAsString() {
+			ArrayList<String> list = new ArrayList<String>();
+			
+			for (betalingsType bt : betalingsType.values()) {
+				list.add(bt.toString());
+			}
+			
+			return list;
 		}
 	};
 	

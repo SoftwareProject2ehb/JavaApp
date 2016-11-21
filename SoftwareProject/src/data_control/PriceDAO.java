@@ -4,7 +4,6 @@ import model.*;
 import model.Price.betalingsType;
 
 import com.mysql.jdbc.Statement;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -106,5 +105,49 @@ public class PriceDAO extends BaseDAO {
 		}
 
 		return p;
+	}
+	
+	public static ArrayList<String> getAllTicketTypes() {
+		ArrayList<String> list = new ArrayList<String>();
+		
+		Statement st = null;
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("error unexpected");
+			}
+			st = (Statement) getConnection().createStatement();
+			ResultSet res = st.executeQuery("SELECT typeTicket FROM Price");
+
+			while (res.next()) {
+				list.add(res.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	public static ArrayList<Price> getAll() {
+		ArrayList<Price> list = new ArrayList<Price>();
+		
+		Statement st = null;
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("error unexpected");
+			}
+			st = (Statement) getConnection().createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM Price");
+
+			while (res.next()) {
+				list.add(new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }

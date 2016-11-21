@@ -11,6 +11,8 @@ import model.Price;
 import model.Price.betalingsType;
 import utilities.DateConverter;
 import view.LoginView;
+import view.PriceConfigView;
+import view.SearchRouteView;
 import model.Ticket;
 
 import model.*;
