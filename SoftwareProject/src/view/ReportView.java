@@ -3,6 +3,7 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import controller.ConfigurationController;
 import data_control.ReportDAO;
 
 import javax.swing.JLabel;
@@ -45,9 +46,19 @@ public class ReportView extends JPanel {
 		JTextArea output = new JTextArea();
 		springLayout.putConstraint(SpringLayout.NORTH, output, 4, SpringLayout.SOUTH, zoekBtn);
 		springLayout.putConstraint(SpringLayout.WEST, output, 20, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, output, 227, SpringLayout.SOUTH, zoekBtn);
+		springLayout.putConstraint(SpringLayout.SOUTH, output, 200, SpringLayout.SOUTH, zoekBtn);
 		springLayout.putConstraint(SpringLayout.EAST, output, 105, SpringLayout.EAST, zoekBtn);
 		add(output);
+		
+		JButton button = new JButton("<<  Terug");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.switchToConfigurationView();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.NORTH, button, 4, SpringLayout.SOUTH, output);
+		springLayout.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, cboxRaport);
+		add(button);
 
 		
 		

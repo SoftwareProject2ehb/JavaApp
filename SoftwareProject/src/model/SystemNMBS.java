@@ -5,7 +5,7 @@ import utilities.Encryptor;
 import data_control.*;
 
 public class SystemNMBS {
-	User logged_user;
+	public User logged_user;
 	
 	public SystemNMBS() {
 		logged_user = null;
@@ -25,5 +25,9 @@ public class SystemNMBS {
 		}
 		
 		return ErrorCode.NO_ERROR;
+	}
+	
+	public void meldAf() {
+		logged_user = null;
 	}
 }

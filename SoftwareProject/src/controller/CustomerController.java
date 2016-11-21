@@ -11,17 +11,17 @@ public abstract class CustomerController {
 	public static CreateCustomerView create_customer;
 	public static FindCustomerView find_customer;
 	
-	public CustomerController(CreateCustomerView create_customer, FindCustomerView find_customer) {
+	public static void initialize(CreateCustomerView create_customer, FindCustomerView find_customer) {
 		CustomerController.create_customer = create_customer;
 		CustomerController.find_customer = find_customer;
 	}
 	
 	public static void switchToCreateCustomerView() {
-		//TODO
+		SystemController.frame.switchTo("CREATE_CUSTOMER");
 	}
 	
 	public static void switchToFindCustomerView() {
-		//TODO
+		SystemController.frame.switchTo("FIND_CUSTOMER");
 	}
 	
 	public static void createCustomer() throws InvalidParameterException{

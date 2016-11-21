@@ -2,6 +2,8 @@ package model;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
+import data_control.SubscriptionDAO;
+
 public class Subscription {
 	
 	
@@ -16,9 +18,9 @@ public class Subscription {
 	private int active;
 	
 
-	public Subscription(int id, int typeId, double price, int customerId, String endStation, String startStation,
-			Date startDate, Date endDate, int active) {
-		this.id = id;
+	public Subscription(int typeId, double price, int customerId, String endStation, String startStation,
+			Date startDate, Date endDate) {
+		this.id = SubscriptionDAO.findNextId();
 		this.typeId = typeId;
 		this.price = price;
 		this.startStation = startStation;
@@ -26,7 +28,20 @@ public class Subscription {
 		this.customerId = customerId;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.active = 1;
+	}
+	
+	public Subscription(int typeId, double price, int customerId, String endStation, String startStation,
+			Date startDate, Date endDate, int active) {
+		this(typeId, price, customerId, endStation, startStation, startDate, endDate);
+		this.id = SubscriptionDAO.findNextId();
 		this.active = active;
+	}
+	
+	public Subscription(int id, int typeId, double price, int customerId, String endStation, String startStation,
+			Date startDate, Date endDate, int active) {
+		this(typeId, price, customerId, endStation, startStation, startDate, endDate, active);
+		this.id = id;
 	}
 	
 

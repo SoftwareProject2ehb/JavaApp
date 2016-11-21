@@ -8,31 +8,51 @@ import view.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.util.Iterator;
 
 import data_control.*;
 
 public abstract class SystemController {
-	static SystemNMBS system;
+	static SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
-	
-	public SystemController() {
-		system = new SystemNMBS();
-	}
-	
+	static SystemFrame frame;
+		
 	public static void startUp() {
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
-		CustomerController.create_customer = new CreateCustomerView();
+		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
+		LoginController.initialize(new LoginView());
+		ActionMenuController.initialize(new ActionMenuView());
+		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
+		TicketController.initialize(new BuyTicketView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
+		RouteController.initialize(new SearchRouteView());
+		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView());
 		
-		SystemFrame frame = new SystemFrame();
+		frame = new SystemFrame();
 		frame.setVisible(true);
 	}
 	
-	public static String giveRouteInfo() {
-		//TODO Implementation
-		return null;
+	public static boolean login(String user_login, String password) {
+		if (system.login(user_login, password) == ErrorCode.NO_ERROR) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static void meldAf() {
+		system.meldAf();
+	}
+	
+	public static String giveRouteInfo(String start_station, String end_station, Timestamp datetime) {
+		String[] stops = RouteCalculator.pathRoute(start_station, end_station);
+		String result = "Er is een route gevonden met de volgende haltes: ";
+		if (stops != null) {
+			for (String string : stops) {
+				result = result.concat(string + " - ");
+			}
+			result = result.concat("- TERMINUS");
+		}
+		return result;
 	}
 	
 	public static String getTicketInfo() {
@@ -98,14 +118,14 @@ public abstract class SystemController {
 		return null;
 	}
 	
-	public static String addLostObject(int user_id, String name, String station, Timestamp date) {
-		LostObject obj = new LostObject(-1, user_id, name, station, date, false, -1, null, null, null);
+	public static String addLostObject(String name, String station, Timestamp date) {
+		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station, date, false, -1, null, null, null);
 		LostObjectDAO.createLostObject(obj);
 		return "Succesvol toegevoegd.";
 	}
 	
-	public static ArrayList<LostObject> searchLostObject(String name_finder, String place_found, Timestamp time_found, Boolean claimed) {
-		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_finder, place_found, time_found, claimed);
+	public static ArrayList<LostObject> searchLostObject(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
+		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_user, place_found, time_found, claimed);
 		return object_array;
 	}
 	

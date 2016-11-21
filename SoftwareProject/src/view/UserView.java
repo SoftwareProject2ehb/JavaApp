@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import controller.ConfigurationController;
 import data_control.UserDAO;
 import model.User;
 
@@ -85,7 +86,7 @@ public class UserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, table, -6, SpringLayout.NORTH, btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Show CreateUserView JPanel
+				ConfigurationController.switchToCreateUserView();
 			}
 		});
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton, -10, SpringLayout.SOUTH, this);
@@ -103,8 +104,18 @@ public class UserView extends JPanel {
 		
 		JButton btnRefresh = new JButton("Refresh");
 		springLayout.putConstraint(SpringLayout.NORTH, btnRefresh, 0, SpringLayout.NORTH, btnNewButton);
-		springLayout.putConstraint(SpringLayout.WEST, btnRefresh, 10, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, btnRefresh, -6, SpringLayout.WEST, btnNewButton_2);
 		add(btnRefresh);
+		
+		JButton button = new JButton("<<  Terug");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.switchToConfigurationView();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, table);
+		springLayout.putConstraint(SpringLayout.SOUTH, button, 0, SpringLayout.SOUTH, btnNewButton);
+		add(button);
 	}
 
 }
