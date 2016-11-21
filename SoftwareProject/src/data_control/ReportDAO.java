@@ -111,7 +111,7 @@ public class ReportDAO extends BaseDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-				
+			
 		return amount;
 	}
 	
@@ -183,7 +183,9 @@ public class ReportDAO extends BaseDAO {
 			ResultSet res = st.executeQuery("select type, COUNT(type) AS MOST_FREQUENT from Subscription GROUP BY type ORDER BY COUNT(type) DESC LIMIT 1");
 
 			res.next();
-			type = res.getString(1);
+			ResultSet res2 = st.executeQuery("SELECT name FROM `SubscriptionType` WHERE id =" + res.getString(1));
+			res2.next();
+			type = res2.getString(1);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
