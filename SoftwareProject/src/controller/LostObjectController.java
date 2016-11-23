@@ -18,7 +18,7 @@ import utilities.DateConverter;
 import view.*;
 
 public abstract class LostObjectController {
-	public static LostObjectView lost_object;
+	public static LostObjectViewbug lost_object;
 	public static FindLostObjectView find_lost_object;
 	public static CreateLostObjectView create_lost_object;
 
