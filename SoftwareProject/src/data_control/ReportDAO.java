@@ -31,6 +31,17 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return meestVerkocht;
@@ -58,6 +69,17 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return meestVerkocht;
@@ -84,6 +106,17 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return type;
@@ -110,6 +143,17 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return amount;
@@ -135,6 +179,17 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return meestVerkocht;
@@ -162,6 +217,17 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return meestVerkocht;
@@ -188,6 +254,17 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return type;
@@ -215,6 +292,17 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return amount;

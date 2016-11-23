@@ -37,6 +37,8 @@ public class TicketDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -68,7 +70,18 @@ public class TicketDAO extends BaseDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
-		}
+		} finally {
+	        try {
+	            if (ps != null)
+	                ps.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 	}
 	
 	public static Ticket findTicketById(int id) {
@@ -88,7 +101,18 @@ public class TicketDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (st != null)
+	                st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 
 		return t;
 	}
@@ -111,7 +135,18 @@ public class TicketDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (st != null)
+	                st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 
 		return list;
 	}
@@ -141,6 +176,8 @@ public class TicketDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());

@@ -32,6 +32,19 @@ public class SubscriptionTypeDAO extends BaseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				
+				throw new RuntimeException(e.getMessage());
+			}
+		
 		}
 		return sbt;
 
@@ -63,6 +76,8 @@ public class SubscriptionTypeDAO extends BaseDAO{
 			try {
 				if (ps != null)
 					ps.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
 
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -96,6 +111,18 @@ public class SubscriptionTypeDAO extends BaseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 
 		return lijst;
@@ -124,6 +151,8 @@ public class SubscriptionTypeDAO extends BaseDAO{
 			try {
 				if (ps != null)
 					ps.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
 
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -158,6 +187,8 @@ public class SubscriptionTypeDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());

@@ -10,13 +10,13 @@ public class BaseDAO {
 
 	private static Connection con = null;
 
-	public static Connection getConnection() {
+	public static Connection getRawConnection() {
 		return con;
 	}
 	
-	public static Connection getOpenConnection() {
+	public static Connection getConnection() {
 		try {
-			if (getConnection() == null || getConnection().isClosed()) {
+			if (con == null || con.isClosed()) {
 				con = DatabaseConnect.getInstance().getConnection();
 			}
 			
