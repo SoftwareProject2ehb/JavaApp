@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class DatabaseConnect {
 
+
 	private static DatabaseConnect ref;
 	private Connection connect;
 	private  DatabaseConnect(){
@@ -31,10 +32,12 @@ public class DatabaseConnect {
 	}
 	
 	public Connection getConnection() throws SQLException{
-	        Connection conn = null;
-	        if (connect == null || connect.isClosed()) {
+		
+	        if (connect == null || connect.isClosed()) 
+	        {
+	        	
 	        	try {
-	        		conn = DriverManager.getConnection("jdbc:mysql://dt5.ehb.be/SP2GR2", 
+	        		connect = DriverManager.getConnection("jdbc:mysql://dt5.ehb.be/SP2GR2", 
 	        				DatabaseConnectProperties.USER, 
 	        				DatabaseConnectProperties.PSW);
 	        	} catch (SQLException e) {
@@ -43,7 +46,7 @@ public class DatabaseConnect {
 					System.out.println("VendorError: " + e.getErrorCode());
 	        }
 	        }
-	        return conn;
+	        return connect;
 	 }
 	    
 	}

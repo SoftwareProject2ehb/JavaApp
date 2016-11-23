@@ -19,6 +19,7 @@ private String location_claimed;
 private String name_claimed;
 private Timestamp date_claimed;
 
+//Constructor voor het maken van een found object
 public LostObject(int user_id, String name, String place, Timestamp date) {
 	super();
 	this.user_id = user_id;
@@ -27,7 +28,7 @@ public LostObject(int user_id, String name, String place, Timestamp date) {
 	this.date = date;
 	this.id = LostObjectDAO.findNextId();
 }
-
+//Constructor voor het updaten van een bestaand object
 public LostObject(int userID, String name, String place, Timestamp date, boolean claimed, int user_id_claimed, String location_claimed,String name_claimed,
 		 Timestamp date_claimed) {
 	this(userID, name, place, date);
@@ -38,13 +39,26 @@ public LostObject(int userID, String name, String place, Timestamp date, boolean
 	this.date_claimed = date_claimed;
 	this.id = LostObjectDAO.findNextId();
 }
+//Constructor for the whole ost object
 
-
-
+public LostObject(int id, int userid, String name, String place, Timestamp timefound, boolean claimed, int userclaimed,
+		String location, String nameclaimed, Timestamp timeclaimed) {
+	this.id = id;
+	this.user_id = userid;
+	this.name = name;
+	this.place = place;
+	this.date = timefound;
+	this.claimed = claimed;
+	this.user_id_claimed = userclaimed;
+	this.location_claimed = location;
+	this.name_claimed = nameclaimed;
+	this.date_claimed = timeclaimed;
+}
+/*
 public LostObject(int id, int user_id, String name, String place, Timestamp date, boolean claimed, int user_id_claimed, String location_claimed,String name_claimed, Timestamp date_claimed) {
 	this(user_id, name, place, date, claimed, user_id_claimed, location_claimed, name_claimed, date_claimed);
 	this.id = id;
-}
+}*/
 public LostObject(String name, String place) {
 	super();
 	
