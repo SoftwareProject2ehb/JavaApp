@@ -21,7 +21,7 @@ public class LostObjectDAO extends BaseDAO {
 		PreparedStatement ps = null;
 
 		String sql = "INSERT INTO LostObject VALUES(null,?,?,?,?,false,null,null,null,null)";
-		getOpenConnection();
+		//getOpenConnection();
 		
 		try {
 			if (getConnection().isClosed()|| getConnection() == null) {
@@ -68,7 +68,7 @@ public class LostObjectDAO extends BaseDAO {
 		PreparedStatement ps = null;
 		String update = "UPDATE LostObject SET claimed = true, userClaimed = ?, locationClaimed = ? ,nameClaimed=?, timeClaimed =? WHERE ID = ?";
 
-		getOpenConnection();
+		//getOpenConnection();
 		
 		try {
 			if (getConnection().isClosed()|| getConnection() == null) {
@@ -166,7 +166,7 @@ public class LostObjectDAO extends BaseDAO {
 
 	public ArrayList<LostObject> getAllLostObject(int from, int to) {
 		ArrayList<LostObject> lijst = new ArrayList<LostObject>();
-		getOpenConnection();
+		//getOpenConnection();
 		Statement st = null;
 		try {
 			if (getConnection().isClosed()|| getConnection() == null) {
@@ -500,7 +500,7 @@ public class LostObjectDAO extends BaseDAO {
 		int id = 0;
 		Statement st = null;
 
-		getOpenConnection();
+		//getOpenConnection();
 		
 		try {
 			if (getConnection().isClosed()|| getConnection() == null) {

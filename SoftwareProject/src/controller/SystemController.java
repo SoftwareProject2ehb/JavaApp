@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import data_control.*;
 
 public abstract class SystemController {
-	static SystemNMBS system = new SystemNMBS();
+	static public SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
 	static SystemFrame frame;
 		

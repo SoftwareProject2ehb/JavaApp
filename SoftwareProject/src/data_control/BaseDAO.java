@@ -1,38 +1,64 @@
 
-
 package data_control;
-
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class BaseDAO {
+public class BaseDAO {    private static Connection con = null;    
 
-private static Connection con = null;
+public static Connection getConnection() {
 
-	
-	public static Connection getConnection() {
-		
-		return con;
+    try {
 
-	}
+        if (con == null || con.isClosed()) {
 
-	public static void setConnection(Connection con) {
-		BaseDAO.con = con;
+            con = DatabaseConnect.getInstance().getConnection();
 
-	}
-	
-	public static Connection getOpenConnection() 
-	{
-		try {
-			con =DatabaseConnect.getInstance().getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return con;
-	}
-	
-	
-	
+        }
+
+    } catch (SQLException e) {
+
+        // TODO Auto-generated catch block
+
+        e.printStackTrace();
+
+    }
+
+    return con;    }    public static void setConnection(Connection con) {
+
+    BaseDAO.con = con;    }
+
+
+
+
+
+
+
+
+
 }
+
+/*
+ * public class BaseDAO {
+ * 
+ * private static Connection con = null;
+ * 
+ * 
+ * public static Connection getConnection() {
+ * 
+ * return con;
+ * 
+ * }
+ * 
+ * public static void setConnection(Connection con) { BaseDAO.con = con;
+ * 
+ * }
+ * 
+ * public static Connection getOpenConnection() { try { con
+ * =DatabaseConnect.getInstance().getConnection(); } catch (SQLException e) { //
+ * TODO Auto-generated catch block e.printStackTrace(); } return con; }
+ * 
+ * 
+ * 
+ * }
+ */
