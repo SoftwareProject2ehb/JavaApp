@@ -2,14 +2,18 @@ package utilities;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
+
+import java.util.*;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 import java.io.*;
 import org.json.*;
 
+import model.RouteStation;
+
 public abstract class ApiAccesser {
+	static ArrayList<RouteStation> stops;
 	/*
 	 *Sites die ik gebruikt heb voor referentie:
 	 *
@@ -54,6 +58,28 @@ public abstract class ApiAccesser {
 	  // Een route tussen a en b bevat veel meer informatie dan alleen de naam van het station dus
 	  // ik ga nog een klasse moeten aanmaken die dat informatie kan opvangen 
 	  // dus het returntype zal meer iets zijn zoals ArrayList<RouteStop>
-	  public abstract ArrayList<String> opvragingRoute(String a, String b);
+	  public static ArrayList<RouteStation> opvragingRoute(String a, String b) throws JSONException, IOException {
+		  stops = new ArrayList<RouteStation>();
+		  
+		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
+			JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
+			
+			
+			for (int i = 1; i < stations.length()-1; i++) {
+				RouteStation rs = new RouteStation (
+						stations.getJSONObject(i).getString("Name"),
+						stations.getJSONObject(i).getString("Coordinates"),
+						stations.getJSONObject(i).getJSONObject("Time").getString("Arrival"),
+						stations.getJSONObject(i).getJSONObject("Time").getString("Departure"),
+						Integer.parseInt(stations.getJSONObject(i).getString("ArrivalPlatform")),
+						Integer.parseInt(stations.getJSONObject(i).getString("DeparturePlatform"))
+						);
+				stops.add(rs);
+				
+			}
+		  
+		  
+		  return stops;
+	  }
 
 }
