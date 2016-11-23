@@ -9,7 +9,9 @@ import view.FindSubscriptionView;
 public class Main {
 
 	public static void main(String[] args) {
-		SystemController.startUp();
-		
+		//SystemController.startUp();
+		Customer bernd = new Customer("Bernd", "Wethmar", "b@w.be", "0123", "Straatnaam");
+		int bernd_id = CustomerDAO.createCustomer(bernd);
+		bernd.setId(bernd_id);
 	}
 }

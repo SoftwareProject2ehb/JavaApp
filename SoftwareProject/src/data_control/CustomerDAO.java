@@ -5,16 +5,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-
-import com.mysql.jdbc.Statement;
 
 public class CustomerDAO extends BaseDAO {
 	
-	public static void createCustomer(Customer customer) {
+	public static int createCustomer(Customer customer) {
 		PreparedStatement ps = null;
+		Statement st = null;
+		int id = -1;
 		
-		String sql = "INSERT INTO Customer VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO Customer (first_name, last_name, address, email, phone) VALUES(?,?,?,?,?)";
 		
 		try {
 
@@ -23,15 +24,20 @@ public class CustomerDAO extends BaseDAO {
 	        }
 	        ps = getConnection().prepareStatement(sql);
 	        
-	        ps.setInt(1, customer.getId());
-	        ps.setString(2, customer.getFirstName());
-	        ps.setString(3, customer.getLastName());
-	        ps.setString(4, customer.getAddress());
-	        ps.setString(5, customer.getEmail());
-	        ps.setString(6, customer.getPhone());
+	        ps.setString(1, customer.getFirstName());
+	        ps.setString(2, customer.getLastName());
+	        ps.setString(3, customer.getAddress());
+	        ps.setString(4, customer.getEmail());
+	        ps.setString(5, customer.getPhone());
 	  
-	        
 	       ps.executeUpdate();
+	       
+	       st = getConnection().createStatement();
+	       ResultSet res = st.executeQuery("SELECT ID FROM Customer ORDER BY ID DESC LIMIT 1");
+	       if (res.next()) {
+	        	id = res.getInt(1);
+			}
+	       
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -47,6 +53,7 @@ public class CustomerDAO extends BaseDAO {
 	            throw new RuntimeException("error.unexpected");
 	        }
 	    }
+		return id;
 	}
 	
 	public static void removeCustomer(Customer customer) {
