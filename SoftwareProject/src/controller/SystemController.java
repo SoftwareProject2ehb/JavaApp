@@ -6,9 +6,12 @@ import utilities.*;
 import view.*;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.swing.JOptionPane;
 
 import data_control.*;
 
@@ -27,8 +30,21 @@ public abstract class SystemController {
 		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
 		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView());
+		ReportController.initialize(new ReportView());
 		
 		frame = new SystemFrame();
+		
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        try {
+					BaseDAO.getConnection().close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		});
 		frame.setVisible(true);
 	}
 	
