@@ -2,7 +2,8 @@ package utilities;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.*;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
@@ -13,6 +14,7 @@ import org.json.*;
 import model.RouteStation;
 
 public abstract class ApiAccesser {
+	static ArrayList<ArrayList<RouteStation>> routes;
 	static ArrayList<RouteStation> stops;
 	/*
 	 *Sites die ik gebruikt heb voor referentie:
@@ -58,28 +60,69 @@ public abstract class ApiAccesser {
 	  // Een route tussen a en b bevat veel meer informatie dan alleen de naam van het station dus
 	  // ik ga nog een klasse moeten aanmaken die dat informatie kan opvangen 
 	  // dus het returntype zal meer iets zijn zoals ArrayList<RouteStop>
-	  public static ArrayList<RouteStation> opvragingRoute(String a, String b) throws JSONException, IOException {
-		  stops = new ArrayList<RouteStation>();
+	  public static ArrayList<ArrayList<RouteStation>> opvragingRoute(String a, String b, String time) throws JSONException, IOException, ParseException {
+		  routes = new ArrayList<ArrayList<RouteStation>>();
 		  
 		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
-			JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
+		  
+		  
+			String localTime = DateConverter.getDateOther() + " " + time + ":00";
 			
+			Timestamp ts = DateConverter.timestampConverter(localTime);
+			for (int k=0;k<json_data.getJSONArray("Routes").length();k++) {
+				stops = new ArrayList<RouteStation>();
+				if (json_data.getJSONArray("Routes").getJSONObject(k).getJSONArray("Trains").length() < 1) {
+					break;
+				}
 			
-			for (int i = 1; i < stations.length()-1; i++) {
-				RouteStation rs = new RouteStation (
-						stations.getJSONObject(i).getString("Name"),
-						stations.getJSONObject(i).getString("Coordinates"),
-						stations.getJSONObject(i).getJSONObject("Time").getString("Arrival"),
-						stations.getJSONObject(i).getJSONObject("Time").getString("Departure"),
-						Integer.parseInt(stations.getJSONObject(i).getString("ArrivalPlatform")),
-						Integer.parseInt(stations.getJSONObject(i).getString("DeparturePlatform"))
-						);
-				stops.add(rs);
+				JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(k).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
+					  
+				  
+				
+				
+				boolean foundRoute = false;
+				for (int i = 0; i < stations.length(); i++) {
+					if (stations.getJSONObject(i).getString("Name").toLowerCase().contains(a.toLowerCase()) && ts.before(DateConverter.timestampConverter(((stations.getJSONObject(i).getJSONObject("Time").getString("Departure")).replaceAll("T", " ")))) && !foundRoute) {
+						foundRoute = true; 
+					}
+					
+					if (stations.getJSONObject(i).getString("Name").toLowerCase().contains(b.toLowerCase()) && foundRoute) {
+						RouteStation rs = new RouteStation (
+								stations.getJSONObject(i).getString("Name"),
+								stations.getJSONObject(i).getString("Coordinates"),
+								stations.getJSONObject(i).getJSONObject("Time").getString("Arrival"),
+								null,
+								Integer.parseInt(stations.getJSONObject(i).getString("ArrivalPlatform")),
+								0
+								);
+						
+						stops.add(rs);
+						routes.add(stops);
+						stops = null;
+						break;
+						
+					} else if (foundRoute && i < stations.length()-1) {
+						RouteStation rs = new RouteStation (
+								stations.getJSONObject(i).getString("Name"),
+								stations.getJSONObject(i).getString("Coordinates"),
+								stations.getJSONObject(i).getJSONObject("Time").getString("Arrival"),
+								stations.getJSONObject(i).getJSONObject("Time").getString("Departure"),
+								Integer.parseInt(stations.getJSONObject(i).getString("ArrivalPlatform")),
+								Integer.parseInt(stations.getJSONObject(i).getString("DeparturePlatform"))
+								);
+						
+						stops.add(rs);
+					}
+					
+				}
 				
 			}
+
+			
+			
 		  
 		  
-		  return stops;
+		  return routes;
 	  }
 
 }
