@@ -11,16 +11,17 @@ import model.SubscriptionType;
 
 public class SubscriptionPriceDAO extends BaseDAO{
 	public static SubscriptionPrice findSubPriceById(int id) {
-		Statement st = null;
+		PreparedStatement st = null;
 		SubscriptionPrice sbp = null;
+		String sql = "SELECT * FROM SubscriptionPrice where id=" + id;
 		try {
 			
 			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM SubscriptionPrice where id=" + id);
+			st = getConnection().prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
 			
 	
 			while (rs.next()) {
@@ -77,14 +78,15 @@ public class SubscriptionPriceDAO extends BaseDAO{
 	
 	public static ArrayList<SubscriptionPrice> getAllSubPrices() {
 		ArrayList<SubscriptionPrice> lijst = new ArrayList<SubscriptionPrice>();
-		Statement st = null;
+		PreparedStatement st = null;
+		String sql = "SELECT * FROM SubscriptionType";
 		try {
 			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM SubscriptionType");
+			st = getConnection().prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
 				SubscriptionPrice sbp = new SubscriptionPrice(rs.getInt("id"), 

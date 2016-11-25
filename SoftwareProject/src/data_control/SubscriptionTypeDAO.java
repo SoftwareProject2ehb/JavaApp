@@ -11,16 +11,17 @@ import model.SubscriptionType;
 
 public class SubscriptionTypeDAO extends BaseDAO{
 	public static SubscriptionType findSubTypeById(int id) {
-		Statement st = null;
+		PreparedStatement st = null;
 		SubscriptionType sbt = null;
+		String sql = "SELECT * FROM SubscriptionType where id=" + id;
 		try {
 			
 			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM SubscriptionType where id=" + id);
+			st = getConnection().prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
 			
 	
 			while (rs.next()) {
@@ -77,14 +78,15 @@ public class SubscriptionTypeDAO extends BaseDAO{
 	
 	public static ArrayList<SubscriptionType> getAllSubTypes() {
 		ArrayList<SubscriptionType> lijst = new ArrayList<SubscriptionType>();
-		Statement st = null;
+		PreparedStatement st = null;
+		String sql = "SELECT * FROM SubscriptionType";
 		try {
 			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
-			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM SubscriptionType");
+			st = getConnection().prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
 				SubscriptionType sb = new SubscriptionType(rs.getInt("id"), 
