@@ -1,6 +1,7 @@
 package data_control;
 
 import model.*;
+import controller.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +38,6 @@ public class CustomerDAO extends BaseDAO {
 	       if (res.next()) {
 	        	id = res.getInt(1);
 			}
-	       
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
