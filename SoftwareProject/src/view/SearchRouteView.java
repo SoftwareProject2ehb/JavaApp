@@ -102,7 +102,7 @@ public class SearchRouteView extends JPanel {
 	    groupAankomstVertrek.add(rdbtnVertrek);
 	    groupAankomstVertrek.add(rdbtnAankomst);
 		
-		JButton btnTerug = new JButton("Terug");
+		JButton btnTerug = new JButton("<< Terug");
 		btnTerug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();
@@ -125,7 +125,7 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnZoek, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(btnZoek);
 		
-		txtUur = new JTextField();
+		txtUur = new JTextField(4);
 		springLayout.putConstraint(SpringLayout.WEST, txtUur, 28, SpringLayout.EAST, lblUur);
 		springLayout.putConstraint(SpringLayout.SOUTH, txtUur, -20, SpringLayout.NORTH, btnTerug);
 		springLayout.putConstraint(SpringLayout.WEST, rdbtnVertrek, 30, SpringLayout.EAST, txtUur);
@@ -133,7 +133,7 @@ public class SearchRouteView extends JPanel {
 		((AbstractDocument) txtUur.getDocument()).setDocumentFilter(PatternFilter.uurFilter);
 		add(txtUur);
 		
-		txtDatum = new JTextField();
+		txtDatum = new JTextField(7);
 		springLayout.putConstraint(SpringLayout.NORTH, txtDatum, -5, SpringLayout.NORTH, lblDatum);
 		springLayout.putConstraint(SpringLayout.WEST, txtDatum, 41, SpringLayout.EAST, lblDatum);
 		txtDatum.setText(DateConverter.getDate());

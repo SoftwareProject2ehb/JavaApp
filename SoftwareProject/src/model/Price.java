@@ -91,6 +91,11 @@ public class Price {
 	public String getTypeTicket() {
 		return typeTicket;
 	}
+	
+	@Override
+	public String toString() {
+		return typeTicket;
+	}
 
 	public int setTypeTicket(String typeTicket) {
 		if (typeTicket == null)
