@@ -84,6 +84,41 @@ public class LoginView extends JPanel {
             	System.exit(0);
             }
         });
+        
+        txtUsername.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					txtPassword.requestFocusInWindow();
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+        });
+        
+        txtPassword.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (LoginController.login()) {
+	            		ActionMenuController.switchToActionMenuView();
+	            	} else {
+	            		lblStatus.setForeground(Color.RED);
+	                    lblStatus.setText("Ongeldige combinatie.");
+	            	}
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+        });
     }
     
     public ArrayList<JTextField> getTextFields() {
@@ -93,4 +128,12 @@ public class LoginView extends JPanel {
 		
 		return array;
 	}
+    
+    public void reset() {
+    	txtUsername.setText("");
+    	txtPassword.setText("");
+    	lblStatus.setText("Vul uw gebruikersgegevens in.");
+    	lblStatus.setForeground(Color.BLACK);
+    	txtUsername.requestFocusInWindow();
+    }
 }
