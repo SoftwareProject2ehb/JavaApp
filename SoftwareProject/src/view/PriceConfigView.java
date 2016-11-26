@@ -6,11 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
+import javax.swing.text.AbstractDocument;
 
 import controller.ConfigurationController;
 import data_control.PriceDAO;
 import model.Price;
 import model.Price.betalingsType;
+import utilities.PatternFilter;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -128,6 +130,7 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, txtPrijs, 6, SpringLayout.EAST, lblEuro);
 		txtPrijs.setText(Double.toString(priceList.get(index).getCostPerUnit()));
 		txtPrijs.setColumns(4);
+		((AbstractDocument) txtPrijs.getDocument()).setDocumentFilter(PatternFilter.prijsFilter);
 		add(txtPrijs);
 		
 		JLabel lblPer = new JLabel("per");
