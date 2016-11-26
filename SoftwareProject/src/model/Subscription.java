@@ -58,8 +58,8 @@ public class Subscription {
 		return typeId;
 	}
 
-	public void setTicketType(int type) {
-		this.typeId = type;
+	public void setTicketType(String type) {
+		this.typeId = typeId;
 	}
 
 	public double getPrice() {
