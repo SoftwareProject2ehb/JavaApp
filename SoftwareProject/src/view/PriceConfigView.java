@@ -24,21 +24,26 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 public class PriceConfigView extends JPanel {
-	private JTextField txtNaam;
+	private JTextField txtSoort;
 	private JTextField txtPrijs;
-	public int index;
+	private int index;
+	private ArrayList<Price> priceList;
+	private String defaultTxt = "Naam van het nieuw soort biljet";
+	private JComboBox comboBox_type;
+	private JComboBox comboBox_soort;
 
 	/**
 	 * Create the panel.
 	 */
 	public PriceConfigView() {
-		ArrayList<Price> priceList = PriceDAO.getAll();
-		DecimalFormat df = new DecimalFormat("00.00"); 
+		priceList = PriceDAO.getAll();
 		
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
@@ -53,37 +58,36 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, lblNieuwSoortBiljet, 10, SpringLayout.WEST, this);
 		add(lblNieuwSoortBiljet);
 		
-		txtNaam = new JTextField();
-		String defaultTxt = "Vul de soort van het biljet in.";
-		txtNaam.setText(defaultTxt);
-		txtNaam.setForeground(Color.LIGHT_GRAY);
-		txtNaam.addFocusListener(new FocusListener() {
+		txtSoort = new JTextField();
+		txtSoort.setText(defaultTxt);
+		txtSoort.setForeground(Color.LIGHT_GRAY);
+		txtSoort.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtNaam.getText().equals(defaultTxt))
+				if (txtSoort.getText().equals(defaultTxt))
 				{
-					txtNaam.setText("");
-					txtNaam.setForeground(null);
+					txtSoort.setText("");
+					txtSoort.setForeground(null);
 				}
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtNaam.getText().equals(""))
+				if (txtSoort.getText().equals(""))
 				{
-					txtNaam.setForeground(Color.LIGHT_GRAY);
-					txtNaam.setText(defaultTxt);
+					txtSoort.setForeground(Color.LIGHT_GRAY);
+					txtSoort.setText(defaultTxt);
 				}
 			}
 		});
 
-		springLayout.putConstraint(SpringLayout.NORTH, txtNaam, 12, SpringLayout.SOUTH, lblPrijsConfiguratie);
-		springLayout.putConstraint(SpringLayout.WEST, txtNaam, 14, SpringLayout.EAST, lblNieuwSoortBiljet);
-		add(txtNaam);
-		txtNaam.setColumns(10);
+		springLayout.putConstraint(SpringLayout.NORTH, txtSoort, 12, SpringLayout.SOUTH, lblPrijsConfiguratie);
+		springLayout.putConstraint(SpringLayout.WEST, txtSoort, 14, SpringLayout.EAST, lblNieuwSoortBiljet);
+		add(txtSoort);
+		txtSoort.setColumns(10);
 		
 		JButton btnVoegToe = new JButton("Voeg toe");
-		springLayout.putConstraint(SpringLayout.EAST, txtNaam, -6, SpringLayout.WEST, btnVoegToe);
+		springLayout.putConstraint(SpringLayout.EAST, txtSoort, -6, SpringLayout.WEST, btnVoegToe);
 		springLayout.putConstraint(SpringLayout.NORTH, btnVoegToe, -5, SpringLayout.NORTH, lblNieuwSoortBiljet);
 		springLayout.putConstraint(SpringLayout.EAST, btnVoegToe, -10, SpringLayout.EAST, this);
 		add(btnVoegToe);
@@ -103,7 +107,7 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnOk, 0, SpringLayout.SOUTH, btnTerug);
 		add(btnOk);
 		
-		JComboBox comboBox_soort = new JComboBox();
+		comboBox_soort = new JComboBox();
 		springLayout.putConstraint(SpringLayout.WEST, comboBox_soort, 0, SpringLayout.WEST, lblNieuwSoortBiljet);
 		springLayout.putConstraint(SpringLayout.SOUTH, comboBox_soort, 107, SpringLayout.NORTH, lblNieuwSoortBiljet);
 		comboBox_soort.setModel(new DefaultComboBoxModel(priceList.toArray()));
@@ -118,7 +122,8 @@ public class PriceConfigView extends JPanel {
 		txtPrijs = new JTextField();
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, txtPrijs, 0, SpringLayout.VERTICAL_CENTER, comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, txtPrijs, 6, SpringLayout.EAST, lblEuro);
-		txtPrijs.setText(df.format(priceList.get(index).getCostPerUnit()));
+		txtPrijs.setText(Double.toString(priceList.get(index).getCostPerUnit()));
+		txtPrijs.setColumns(4);
 		add(txtPrijs);
 		
 		JLabel lblPer = new JLabel("per");
@@ -126,12 +131,17 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, lblPer, 6, SpringLayout.EAST, txtPrijs);
 		add(lblPer);
 		
-		JComboBox comboBox_type = new JComboBox();
+		comboBox_type = new JComboBox();
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, comboBox_type, 0, SpringLayout.VERTICAL_CENTER, comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, comboBox_type, 6, SpringLayout.EAST, lblPer);
 		comboBox_type.setModel(new DefaultComboBoxModel(betalingsType.values()));
 		comboBox_type.setSelectedItem(priceList.get(index).getTypeBetaling());
 		add(comboBox_type);
+		
+		JLabel lblInfo = new JLabel("");
+		springLayout.putConstraint(SpringLayout.NORTH, lblInfo, 65, SpringLayout.SOUTH, comboBox_soort);
+		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblInfo, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		add(lblInfo);
 		
 		comboBox_soort.addItemListener(new ItemListener() {
 			@Override
@@ -139,10 +149,70 @@ public class PriceConfigView extends JPanel {
 				if (event.getStateChange() == ItemEvent.SELECTED) {
 					index = priceList.indexOf(event.getItem());
 					comboBox_soort.setSelectedItem(priceList.get(index));
-					txtPrijs.setText(df.format(priceList.get(index).getCostPerUnit()));
+					txtPrijs.setText(Double.toString(priceList.get(index).getCostPerUnit()));
 					comboBox_type.setSelectedItem(priceList.get(index).getTypeBetaling());
 				}
 			}
 		});
+		
+		btnVoegToe.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				lblInfo.setText("Even geduld ...");
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				ConfigurationController.createPrice();
+				txtSoort.setForeground(Color.LIGHT_GRAY);
+				txtSoort.setText(defaultTxt);
+				updatePriceList(-1);
+				lblInfo.setText("Ticket soort toegevoegd");
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+		});
+		
+		btnOk.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				lblInfo.setText("Even geduld ...");
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				ConfigurationController.updatePrice();
+				updatePriceList(index);
+				lblInfo.setText("Prijs gewijzigd");
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+		});
+	}
+	
+	/**
+	 * Updates the array PriceList and shows the new info of price at index i (takes the latest index if i < 0)
+	 */
+	public void updatePriceList(int i) {
+		priceList = PriceDAO.getAll(); // Refresh the list
+		comboBox_soort.setModel(new DefaultComboBoxModel(priceList.toArray())); // Refresh the combobox
+		index = (i < 0)?(priceList.size() - 1):i; // put index on latest item
+		comboBox_soort.setSelectedItem(priceList.get(index));
+		txtPrijs.setText(Double.toString(priceList.get(index).getCostPerUnit()));
+		comboBox_type.setSelectedItem(priceList.get(index).getTypeBetaling());
+	}
+	
+	public String getTxtSoort() {
+		return txtSoort.getText();
+	}
+	
+	public Price getPrice() {
+		return new Price(priceList.get(index).getId(), priceList.get(index).getTypeTicket(), betalingsType.stringToBetalingsType(comboBox_type.getSelectedItem().toString()), Double.valueOf(txtPrijs.getText()));
 	}
 }

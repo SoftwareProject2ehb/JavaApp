@@ -1,3 +1,6 @@
+/**
+ * To write this class I used the pdfbox documentation (https://pdfbox.apache.org/1.8/cookbook/documentcreation.html) and some advices from stackoverflow
+ */
 package model;
 
 import java.awt.image.BufferedImage;

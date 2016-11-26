@@ -1,5 +1,5 @@
 /***
- * This is completely taken from : http://www.jroller.com/dpmihai/entry/documentfilter
+ * This is taken from : http://www.jroller.com/dpmihai/entry/documentfilter
  */
 
 package utilities;
