@@ -47,4 +47,8 @@ public class ConfigurationController {
 	public static void updatePrice() {
 		SystemController.updateTicketType(price_config.getPrice());
 	}
+	
+	public static void deletePrice() {
+		SystemController.deleteTicketType(price_config.getPrice());
+	}
 }

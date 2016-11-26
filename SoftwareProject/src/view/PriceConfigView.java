@@ -3,7 +3,9 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SpringLayout;
+import javax.swing.UIManager;
 
 import controller.ConfigurationController;
 import data_control.PriceDAO;
@@ -14,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -38,6 +41,7 @@ public class PriceConfigView extends JPanel {
 	private String defaultTxt = "Naam van het nieuw soort biljet";
 	private JComboBox comboBox_type;
 	private JComboBox comboBox_soort;
+	private JButton btnDelete;
 
 	/**
 	 * Create the panel.
@@ -138,10 +142,33 @@ public class PriceConfigView extends JPanel {
 		comboBox_type.setSelectedItem(priceList.get(index).getTypeBetaling());
 		add(comboBox_type);
 		
+		btnDelete = new JButton("DELETE");
+		btnDelete.setForeground(Color.RED);
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, btnDelete, 0, SpringLayout.VERTICAL_CENTER, comboBox_soort);
+		springLayout.putConstraint(SpringLayout.WEST, btnDelete, 6, SpringLayout.EAST, comboBox_type);
+		add(btnDelete);
+		
 		JLabel lblInfo = new JLabel("");
 		springLayout.putConstraint(SpringLayout.NORTH, lblInfo, 65, SpringLayout.SOUTH, comboBox_soort);
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblInfo, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(lblInfo);
+		
+		btnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> options = new ArrayList<String>();
+			    options.add("JA"); // 0
+			    options.add("NEE"); // 1
+				int choice = JOptionPane.showOptionDialog(null, "Bent u zeker dat u de prijs " + priceList.get(index).getTypeTicket() + " wilt verwijderen?", "Prijs verwijderen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options.toArray(), "NEE");
+				if (choice == 0) {
+					ConfigurationController.deletePrice();
+					updatePriceList(0);
+					lblInfo.setText("Prijs verwijderd");
+				}
+				else 
+					lblInfo.setText("");
+			}
+		});
 		
 		comboBox_soort.addItemListener(new ItemListener() {
 			@Override
