@@ -20,6 +20,7 @@ public class LoginController {
 	
 	public static void switchToLoginView() {
 		SystemController.frame.switchTo("LOGIN");
+		login.reset();
 	}
 	
 	public static boolean login() {
