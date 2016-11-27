@@ -5,10 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
-import com.mysql.jdbc.Statement;
 
 public class LostObjectDAO extends BaseDAO{
 
@@ -17,9 +16,12 @@ public class LostObjectDAO extends BaseDAO{
 	
 	
 	
-	public static void createLostObject (LostObject object)
+	public static int createLostObject (LostObject object)
 	{
 		 PreparedStatement ps = null;
+		 Statement st = null;
+		 ResultSet res = null;
+		 int id = -1;
 
 		    String sql = "INSERT INTO LostObject VALUES(null,?,?,?,?,false,null,null,null,null)";
 
@@ -37,9 +39,13 @@ public class LostObjectDAO extends BaseDAO{
 		        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 		        ps.setTimestamp(4, date);
 		        
-		  
+		        ps.executeUpdate();
 		        
-		       ps.executeUpdate();
+		        st = getConnection().createStatement();
+		        res = st.executeQuery("SELECT ID FROM LostObject ORDER BY ID DESC LIMIT 1");
+		        if (res.next()) {
+		        	id = res.getInt(1);
+		        }
 		    } catch (SQLException e) {
 		        System.out.println(e.getMessage());
 		        throw new RuntimeException(e.getMessage());
@@ -47,6 +53,10 @@ public class LostObjectDAO extends BaseDAO{
 		        try {
 		            if (ps != null)
 		                ps.close();
+		            if (res != null)
+		                res.close();
+		            if (st != null)
+		                st.close();
 		            if (!getConnection().isClosed())
 						getConnection().close();
 
@@ -55,6 +65,7 @@ public class LostObjectDAO extends BaseDAO{
 		            throw new RuntimeException("error.unexpected");
 		        }
 		    }
+		    return id;
 	}
 
 
@@ -392,45 +403,5 @@ public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user
     }
 
 	return lijst;
-}
-
-public static int findNextId() {
-	int id = 0;
-	Statement st = null;
-	
-	try {
-
-        if (getConnection().isClosed()) {
-            throw new IllegalStateException("error unexpected");
-        }
-        
-        st = (Statement) getConnection().createStatement();
-        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM LostObject");
-        
-        if (res.next()) {
-        	id = res.getInt(1);
-
-		}
-        
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-        throw new RuntimeException(e.getMessage());
-    } finally {
-        try {
-            if (st != null)
-            	st.close();
-            if (!getConnection().isClosed())
-				getConnection().close();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException("error.unexpected");
-        }
-    }
-	
-	return id + 1;
-}
-
-
-
+	}
 }

@@ -77,7 +77,7 @@ public class Price {
 		this.typeTicket = typeTicket;
 		this.typeBetaling = bt;
 		this.costPerUnit = cpu;
-		this.id = PriceDAO.findNextId();
+		this.id = -1;
 	}
 	
 	public Price (int id, String typeTicket, betalingsType bt, double cpu) throws IllegalArgumentException {

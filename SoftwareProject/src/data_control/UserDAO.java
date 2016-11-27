@@ -12,9 +12,12 @@ import model.User.Role;
 public class UserDAO extends BaseDAO{
 	
 
-	public static void createUser(User user) {
+	public static int createUser(User user) {
 
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 
 		String sql = "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?)";
 
@@ -37,14 +40,23 @@ public class UserDAO extends BaseDAO{
 			ps.setBoolean(9, user.isActive());
 
 			ps.executeUpdate();
+			
+	        st = getConnection().createStatement();
+	        res = st.executeQuery("SELECT ID FROM Price ORDER BY ID DESC LIMIT 1");
+	        if (res.next()) {
+	        	id = res.getInt(1);
+	        }
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			;
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {
-				if (ps != null)
-					ps.close();
+	            if (ps != null)
+	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
 				if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -54,7 +66,7 @@ public class UserDAO extends BaseDAO{
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-
+		return id;
 	}
 	
 	
@@ -396,42 +408,4 @@ public class UserDAO extends BaseDAO{
 	    }
 		return lijst;
 	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM User");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(1);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
-	        try {
-	            if (st != null)
-	            	st.close();
-	            if (!getConnection().isClosed())
-					getConnection().close();
-
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            throw new RuntimeException("error.unexpected");
-	        }
-	    }
-		
-		return id + 1;
-	}
-	
 }

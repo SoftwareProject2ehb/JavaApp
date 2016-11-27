@@ -25,7 +25,7 @@ public LostObject(int user_id, String name, String place, Timestamp date) {
 	this.name = name;
 	this.place = place;
 	this.date = date;
-	this.id = LostObjectDAO.findNextId();
+	this.id = -1;
 }
 
 public LostObject(int userID, String name, String place, Timestamp date, boolean claimed, int user_id_claimed, String location_claimed,String name_claimed,
@@ -36,7 +36,7 @@ public LostObject(int userID, String name, String place, Timestamp date, boolean
 	this.location_claimed = location_claimed;
 	this.name_claimed = name_claimed;
 	this.date_claimed = date_claimed;
-	this.id = LostObjectDAO.findNextId();
+	this.id = -1;
 }
 
 

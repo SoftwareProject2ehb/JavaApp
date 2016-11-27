@@ -50,8 +50,11 @@ public class SubscriptionTypeDAO extends BaseDAO{
 
 	}
 	
-	public static void createSubscriptionType(SubscriptionType subType) {
+	public static int createSubscriptionType(SubscriptionType subType) {
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 
 		String sql = "INSERT INTO SubscriptionType VALUES (?,?,?)";
 
@@ -66,16 +69,25 @@ public class SubscriptionTypeDAO extends BaseDAO{
 			ps.setString(2, subType.getName());
 			ps.setDouble(3, subType.getFactor());
 
-
 			ps.executeUpdate();
+			
+	        st = getConnection().createStatement();
+	        res = st.executeQuery("SELECT id FROM SubscriptionType ORDER BY id DESC LIMIT 1");
+	        if (res.next()) {
+	        	id = res.getInt(1);
+	        }
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			;
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {
-				if (ps != null)
-					ps.close();
+	            if (ps != null)
+	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
 				if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -85,7 +97,7 @@ public class SubscriptionTypeDAO extends BaseDAO{
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-
+		return id;
 	}
 	
 	
@@ -161,42 +173,4 @@ public class SubscriptionTypeDAO extends BaseDAO{
 			}
 		}
 	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(id) FROM SubscriptionType");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(1);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
-	        try {
-	            if (st != null)
-	            	st.close();
-	            if (!getConnection().isClosed())
-					getConnection().close();
-
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            throw new RuntimeException("error.unexpected");
-	        }
-	    }
-		
-		return id + 1;
-	}
-	
 }

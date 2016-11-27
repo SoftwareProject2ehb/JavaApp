@@ -9,7 +9,7 @@ public class SubscriptionType {
 	
 	public SubscriptionType(String name, double factor) {
 		super();
-		this.id = SubscriptionTypeDAO.findNextId();
+		this.id = -1;
 		this.name = name;
 		this.factor = factor;
 	}

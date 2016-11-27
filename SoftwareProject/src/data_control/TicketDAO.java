@@ -5,13 +5,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.Statement;
-
 public class TicketDAO extends BaseDAO {
-	public static void createTicket(Ticket ticket) {
+	public static int createTicket(Ticket ticket) {
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 		
 		String sql = "INSERT INTO Ticket(type, oneWayTicket, price, startsation, endstation, date) VALUES(?,?,?,?,?,?)";
 		
@@ -30,6 +32,12 @@ public class TicketDAO extends BaseDAO {
 	        ps.setDate(6, ticket.getDate());
 	        
 	        ps.executeUpdate();
+	        
+	        st = getConnection().createStatement();
+	        res = st.executeQuery("SELECT ID FROM Price ORDER BY ID DESC LIMIT 1");
+	        if (res.next()) {
+	        	id = res.getInt(1);
+	        }
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -37,6 +45,10 @@ public class TicketDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -45,6 +57,7 @@ public class TicketDAO extends BaseDAO {
 	            throw new RuntimeException("error.unexpected");
 	        }
 	    }
+		return id;
 	}
 	
 	public static void updateTicket(Ticket ticket) {
@@ -149,42 +162,5 @@ public class TicketDAO extends BaseDAO {
 	    }
 
 		return list;
-	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Ticket");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(1);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
-	        try {
-	            if (st != null)
-	            	st.close();
-	            if (!getConnection().isClosed())
-					getConnection().close();
-
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            throw new RuntimeException("error.unexpected");
-	        }
-	    }
-		
-		return id + 1;
 	}
 }

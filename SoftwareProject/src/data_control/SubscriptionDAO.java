@@ -13,8 +13,11 @@ import utilities.DateConverter;
 
 public class SubscriptionDAO extends BaseDAO{
 	
-	public static void createSubscription(Subscription sub) {
+	public static int createSubscription(Subscription sub) {
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 
 		String sql = "INSERT INTO Subscription VALUES (?,?,?,?,?,?,?,?,1)";
 
@@ -31,20 +34,27 @@ public class SubscriptionDAO extends BaseDAO{
 			ps.setInt(4, sub.getCustomerId());
 			ps.setString(5, sub.getStartStation());
 			ps.setString(6, sub.getEndStation());
-			
-			
 			ps.setDate(7, sub.getStartDate());
 			ps.setDate(8, sub.getEndDate());
 
 			ps.executeUpdate();
+			
+	        st = getConnection().createStatement();
+	        res = st.executeQuery("SELECT id FROM Subscription ORDER BY id DESC LIMIT 1");
+	        if (res.next()) {
+	        	id = res.getInt(1);
+	        }
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			;
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {
-				if (ps != null)
-					ps.close();
+	            if (ps != null)
+	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
 				if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -54,7 +64,7 @@ public class SubscriptionDAO extends BaseDAO{
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-
+		return id;
 	}
 	
 	public static ArrayList<Subscription> getAllSubs() {
@@ -301,42 +311,4 @@ public class SubscriptionDAO extends BaseDAO{
 
 		return lijst;
 	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(id) FROM Subscription");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(1);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
-	        try {
-	            if (st != null)
-	            	st.close();
-	            if (!getConnection().isClosed())
-					getConnection().close();
-
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            throw new RuntimeException("error.unexpected");
-	        }
-	    }
-		
-		return id + 1;
-	}
-
 }

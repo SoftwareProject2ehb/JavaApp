@@ -9,10 +9,16 @@ import java.util.ArrayList;
 import model.*;
 
 public class LogFileDAO extends BaseDAO{
-	public static void createLogFile(LogFile logfile)
+	/**
+	 * @param customer The object of type LogFile that should be created in the database.
+	 * @return The ID of the record containing the created LogFile. This ID should be used to set the ID of the LogFile object locally.
+	 */
+	public static int createLogFile(LogFile logfile)
 	{
 		PreparedStatement ps = null;
-		
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 		String sql = "INSERT INTO LogFile VALUES(null,?,?,?)";
 		
 		try {
@@ -28,6 +34,12 @@ public class LogFileDAO extends BaseDAO{
 	        ps.setInt(3, logfile.getUserID());
 	        
 	        ps.executeUpdate();
+	        
+	        st = getConnection().createStatement();
+		    res = st.executeQuery("SELECT logfileID FROM LogFile ORDER BY logfileID DESC LIMIT 1");
+		    if (res.next()) {
+		        id = res.getInt(1);
+		    }
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -35,6 +47,10 @@ public class LogFileDAO extends BaseDAO{
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 	            	getConnection().close();
 
@@ -43,6 +59,7 @@ public class LogFileDAO extends BaseDAO{
 	            throw new RuntimeException("error.unexpected");
 	        }
 	    }
+		return id;
 	}
 	
 	public static void updateLogfile(LogFile logfile) {

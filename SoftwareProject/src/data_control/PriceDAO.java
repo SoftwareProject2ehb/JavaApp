@@ -3,17 +3,18 @@ package data_control;
 import model.*;
 import model.Price.betalingsType;
 
-import com.mysql.jdbc.Statement;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-
 public class PriceDAO extends BaseDAO {
-	public static void createPrice(Price price) {
+	public static int createPrice(Price price) {
 		
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 
 		String sql = "INSERT INTO Price(typeTicket, typeBetaling, costPerUnit) VALUES(?,?,?)";
 		
@@ -29,6 +30,12 @@ public class PriceDAO extends BaseDAO {
 	        ps.setDouble(3, price.getCostPerUnit());
 	        
 	        ps.executeUpdate();
+	        
+	        st = getConnection().createStatement();
+	        res = st.executeQuery("SELECT ID FROM Price ORDER BY ID DESC LIMIT 1");
+	        if (res.next()) {
+	        	id = res.getInt(1);
+	        }
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -36,6 +43,10 @@ public class PriceDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -44,6 +55,7 @@ public class PriceDAO extends BaseDAO {
 	            throw new RuntimeException("error.unexpected");
 	        }
 	    }
+		return id;
 	}
 	
 	public static void removePrice(int id) {
@@ -164,8 +176,8 @@ public class PriceDAO extends BaseDAO {
 			e.printStackTrace();
 		} finally {
 	        try {
-	            if (st != null)
-	                st.close();
+	            if (ps != null)
+	            	ps.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -243,42 +255,5 @@ public class PriceDAO extends BaseDAO {
 	    }
 		
 		return list;
-	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Price");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(1);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
-	        try {
-	            if (st != null)
-	            	st.close();
-	            if (!getConnection().isClosed())
-					getConnection().close();
-
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            throw new RuntimeException("error.unexpected");
-	        }
-	    }
-		
-		return id + 1;
 	}
 }
