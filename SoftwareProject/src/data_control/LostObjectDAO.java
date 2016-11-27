@@ -1,6 +1,7 @@
 package data_control;
 
 import model.*;
+import controller.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,12 +12,11 @@ import java.util.ArrayList;
 
 public class LostObjectDAO extends BaseDAO{
 
-	public enum SearchLostObject {ID,userid,name,place,timeFound,claimed,userClaimed ,nameClaimed,LocationClaimed,timeClaimed,description};
+	public enum SearchLostObject {
+		ID, userid, name, place, timeFound, claimed, userClaimed, nameClaimed, LocationClaimed, timeClaimed, description
+	};
 	
-	
-	
-	
-	public static int createLostObject (LostObject object)
+		public static int createLostObject (LostObject object)
 	{
 		 PreparedStatement ps = null;
 		 Statement st = null;
@@ -40,6 +40,14 @@ public class LostObjectDAO extends BaseDAO{
 		        ps.setTimestamp(4, date);
 		        
 		        ps.executeUpdate();
+		        
+		        // Maken van de logfile met text
+				String s = "Een lost object werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
+				+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+				LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+				LogFileDAO.createLogFile(log);
+			
+				// Eind maken van logfile
 		        
 		        st = getConnection().createStatement();
 		        res = st.executeQuery("SELECT ID FROM LostObject ORDER BY ID DESC LIMIT 1");
@@ -89,7 +97,14 @@ public static void updateLostObject(LostObject object) {
 			ps.setInt(5, object.getID());
 			 // TODO SET DATE
 			ps.executeUpdate();
-			ps.close();
+			
+			// Maken van de logfile met text
+				String s = "Een lost object werdt gewijzigd door user " + SystemController.system.logged_user.getFirstName()
+				+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+				LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+				LogFileDAO.createLogFile(log);
+			// Eind maken van logfile
+			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -128,6 +143,15 @@ public static LostObject getLostObjectById(int objectID) {
 			lost = getLostObjectFromRS(res);
 
 		}
+		
+		// Maken van de logfile met text
+			String s = "Een lost object werdt gezocht op id door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+			
+			// Eind maken van logfile
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -151,7 +175,7 @@ public static LostObject getLostObjectById(int objectID) {
 
 
 
-public ArrayList<LostObject> getAllLostObject(int from , int to) {
+public static ArrayList<LostObject> getAllLostObject(int from , int to) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
 	ResultSet res  = null;
@@ -166,6 +190,14 @@ public ArrayList<LostObject> getAllLostObject(int from , int to) {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		
+		// Maken van de logfile met text
+			String s = "Alle lost object not claimed werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+			
+		// Eind maken van logfile
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -202,6 +234,13 @@ public static ArrayList<LostObject> getAllLostObjectNotClaimed() {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		// Maken van de logfile met text
+			String s = "Alle lost object not claimed werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+			
+			// Eind maken van logfile
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -238,6 +277,13 @@ public static ArrayList<LostObject> getAllLostObjectClaimed() {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		// Maken van de logfile met text
+			String s = "Alle lost object claimed werdt gezocht door " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+			
+			// Eind maken van logfile
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -276,6 +322,14 @@ public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject att
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		
+		// Maken van de logfile met text
+			String s = "Een lost object werdt gezocht met attribuut : "+ attribuut+" en value : "+ zoekop+"door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+			
+			// Eind maken van logfile
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -311,6 +365,12 @@ public static ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		// Maken van de logfile met text
+						String s = "Alle lost object op datum found : "+ datum +" werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -347,6 +407,12 @@ public static ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		// Maken van de logfile met text
+			String s = "Alle lost object op datum claimed : "+ datum +" werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+			// Eind maken van logfile
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

@@ -28,7 +28,7 @@ public abstract class SystemController {
 		TicketController.initialize(new BuyTicketView());
 		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
-		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView());
+		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView(), new LostObjectView());
 		ReportController.initialize(new ReportView());
 		
 		FrameController.getFrame().addWindowListener(new java.awt.event.WindowAdapter() {
@@ -140,14 +140,96 @@ public abstract class SystemController {
 		LostObjectDAO.createLostObject(obj);
 		return "Succesvol toegevoegd.";
 	}
-	
+
+	/*
+	 * public static ArrayList<LostObject> searchLostObject(String name_user,
+	 * String place_found, Timestamp time_found, Boolean claimed) {
+	 * ArrayList<LostObject> object_array =
+	 * LostObjectDAO.getLostObjectByMultipleArgs(name_user, place_found,
+	 * time_found, claimed); return object_array; }
+	 */
+public static ArrayList<LostObject> findAllLostObjects(int select_view,int select_from_date ,int select_to_date )
+{
+	ArrayList<LostObject> lijstLostobject =new ArrayList<LostObject>();
+	switch (select_view) {
+	case 0:
+		lijstLostobject = LostObjectDAO.getAllLostObject(select_from_date + 1, select_to_date);
+		break;
+	case 1:
+		lijstLostobject =  LostObjectDAO.getAllLostObjectClaimed();
+		
+		break;
+	case 2:
+		lijstLostobject = LostObjectDAO.getAllLostObjectNotClaimed();
+		
+		break;
+	}
+	return lijstLostobject;
+}	
 	public static ArrayList<LostObject> searchLostObject(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
 		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_user, place_found, time_found, claimed);
 		return object_array;
 	}
 	
-	
-	public static String addUser(String first_name, String last_name, String email, String phone, String password, Role role) {
+	public static ArrayList<LostObject> findLostObjects(int index, String value) {
+		ArrayList<LostObject> lijstLostobject =new ArrayList<LostObject>();
+		switch (index) {
+		case 0:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.userid,
+					value);
+			break;
+		case 1:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.name,
+					value);
+			break;
+		case 2:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.place,
+					value);
+			
+
+			break;
+		case 3:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.description,
+					value);
+			
+
+			break;
+		case 4:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.timeFound,
+					value);
+		
+
+			break;
+		case 5:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.userClaimed,
+					value);
+			
+
+			break;
+		case 6:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.nameClaimed,
+					value);
+			
+			break;
+		case 7:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(
+					LostObjectDAO.SearchLostObject.LocationClaimed, value);
+			
+
+			break;
+		case 8:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.timeClaimed,
+					value);
+			
+
+			break;
+
+		}
+		return lijstLostobject;
+	}
+
+	public static String addUser(String first_name, String last_name, String email, String phone, String password,
+			Role role) {
 		String login = first_name + "_" + last_name;
 		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role);
 		UserDAO.createUser(new_user);

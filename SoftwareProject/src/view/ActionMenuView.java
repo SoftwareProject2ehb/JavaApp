@@ -115,7 +115,7 @@ public class ActionMenuView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, btnVerlorenVoorwerpen, -4, SpringLayout.EAST, this);
 		btnVerlorenVoorwerpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LostObjectController.switchToFindLostObjectView();
+				LostObjectController.switchToLostObjectView();
 			}
 		});
 		springLayout.putConstraint(SpringLayout.SOUTH, btnVerlorenVoorwerpen, -31, SpringLayout.NORTH, panel);

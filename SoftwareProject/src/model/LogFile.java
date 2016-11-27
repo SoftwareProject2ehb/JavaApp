@@ -1,14 +1,15 @@
 package model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class LogFile {
 	private int logFileID;
 	private String description;
-	private Date time;
+	private Timestamp time;
 	private int userID;
 	
-	public LogFile(int logFileID, String description, Date time, int userID)
+	public LogFile(int logFileID, String description, Timestamp time, int userID)
 	{
 		if(logFileID < 0 || description == null || time == null || userID < 0)
 			throw new IllegalArgumentException();
@@ -18,13 +19,22 @@ public class LogFile {
 		this.userID = userID;
 	}
 	
-	public LogFile(String description, Date time, int userID)
+	public LogFile(String description, Timestamp time, int userID)
 	{
 		if(logFileID < 0 || description == null || time == null || userID < 0)
 			throw new IllegalArgumentException();
 		this.logFileID = -1;
 		this.description = description;
 		this.time = time;
+		this.userID = userID;
+	}
+	
+	public LogFile(String description, int userID)
+	{
+		
+		this.logFileID = -1;
+		this.description = description;
+		this.time = new java.sql.Timestamp(new java.util.Date().getTime());
 		this.userID = userID;
 	}
 
@@ -50,11 +60,11 @@ public class LogFile {
 		return ErrorCode.NO_ERROR;
 	}
 
-	public Date getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
 
-	public int setTime(Date time) {
+	public int setTime(Timestamp time) {
 		if(time == null)
 			return ErrorCode.NULL_PARAM;
 		this.time = time;
