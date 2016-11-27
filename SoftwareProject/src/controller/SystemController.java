@@ -80,21 +80,20 @@ public abstract class SystemController {
 	
 	public static String createCustomer(String first_name, String last_name, String address, String email, String phone) {
 		Customer new_customer = new Customer(first_name, last_name, email, phone, address);
-		CustomerDAO.createCustomer(new_customer);
+		int customer_id = CustomerDAO.createCustomer(new_customer);
+		new_customer.setId(customer_id);
 		return "Customer created.";
 	}
 	
 	public static String buyTicket(String type_ticket, boolean is_one_way_ticket, double ticket_price, String start_station, String end_station, Date date) {
 		Ticket new_ticket = new Ticket(type_ticket, is_one_way_ticket, ticket_price, start_station, end_station, date);
-		TicketDAO.createTicket(new_ticket);
+		int ticket_id = TicketDAO.createTicket(new_ticket);
+		new_ticket.setId(ticket_id);
 		return "Ticket bought.";
 	}
 
 	public static String buySubscription(String subscription_type, int customerId, String endStation, String startStation, Timestamp startDate, Timestamp endDate) {
-		
 		Subscription subscription;
-		
-		
 		//SubscriptionDAO.createSubscription(subscription);
 		return "Abonnement gekocht.";
 	}
@@ -122,7 +121,8 @@ public abstract class SystemController {
 		default:
 			throw new IllegalArgumentException();
 		}
-		PriceDAO.createPrice(type);
+		int pricetype_id = PriceDAO.createPrice(type);
+		type.setId(pricetype_id);
 		return "Tickettype succesvol aangemaakt.";
 	}
 	
@@ -137,7 +137,8 @@ public abstract class SystemController {
 	
 	public static String addLostObject(String name, String station, Timestamp date) {
 		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station, date, false, -1, null, null, null);
-		LostObjectDAO.createLostObject(obj);
+		int lost_object_id = LostObjectDAO.createLostObject(obj);
+		obj.setID(lost_object_id);
 		return "Succesvol toegevoegd.";
 	}
 
@@ -232,7 +233,8 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 			Role role) {
 		String login = first_name + "_" + last_name;
 		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role);
-		UserDAO.createUser(new_user);
+		int user_id = UserDAO.createUser(new_user);
+		new_user.setUserID(user_id);
 		return null;
 	}
 	
