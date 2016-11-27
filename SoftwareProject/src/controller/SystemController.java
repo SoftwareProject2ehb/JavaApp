@@ -110,23 +110,27 @@ public abstract class SystemController {
 	public static String makeTicketType(String ticket_type, String unit, double cost_per_unit) throws IllegalArgumentException{
 		Price type;
 		switch (unit) {
-		case "uur":
+		case "hour":
 			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
 			break;
 		case "station":
-			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			type = new Price(ticket_type, Price.betalingsType.PER_STATION, cost_per_unit);
 			break;
 		case "km":
-			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			type = new Price(ticket_type, Price.betalingsType.PER_KM, cost_per_unit);
 			break;
 		case "zone":
-			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			type = new Price(ticket_type, Price.betalingsType.PER_ZONE, cost_per_unit);
 			break;
 		default:
 			throw new IllegalArgumentException();
 		}
 		PriceDAO.createPrice(type);
 		return "Tickettype succesvol aangemaakt.";
+	}
+	
+	public static void updateTicketType(Price p) {
+		PriceDAO.updatePrice(p);
 	}
 	
 	public static String makeSubscriptionType() {
