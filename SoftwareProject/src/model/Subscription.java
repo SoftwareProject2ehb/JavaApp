@@ -20,7 +20,7 @@ public class Subscription {
 
 	public Subscription(int typeId, double price, int customerId, String endStation, String startStation,
 			Date startDate, Date endDate) {
-		this.id = SubscriptionDAO.findNextId();
+		this.id = -1;
 		this.typeId = typeId;
 		this.price = price;
 		this.startStation = startStation;
@@ -34,7 +34,6 @@ public class Subscription {
 	public Subscription(int typeId, double price, int customerId, String endStation, String startStation,
 			Date startDate, Date endDate, int active) {
 		this(typeId, price, customerId, endStation, startStation, startDate, endDate);
-		this.id = SubscriptionDAO.findNextId();
 		this.active = active;
 	}
 	

@@ -37,15 +37,16 @@ public abstract class LostObjectController {
 	}
 	
 	public static void switchToFindLostObjectView() {
-		SystemController.frame.switchTo("FIND_LOST_OBJECT");
+		FrameController.getFrame().switchTo("FIND_LOST_OBJECT");
 	}
 	
 	public static void switchToCreateLostObjectView() {
-		SystemController.frame.switchTo("CREATE_LOST_OBJECT");
+		FrameController.getFrame().switchTo("CREATE_LOST_OBJECT");
 	}
 	public static void switchToLostObjectView() 
 	{
-		SystemController.frame.switchTo("LOST_OBJECT");
+		FrameController.getFrame().switchTo("LOST_OBJECT");
+		FrameController.changeSize(1300, 700);
 	}
 	public static void findLostObjects(DefaultTableModel tableModel) {
 		ArrayList<LostObject> lijstLostobject =new ArrayList<LostObject>();

@@ -13,6 +13,7 @@ public class SubscriptionTypeDAO extends BaseDAO{
 	public static SubscriptionType findSubTypeById(int id) {
 		Statement st = null;
 		SubscriptionType sbt = null;
+		ResultSet res = null;
 		try {
 			
 			if (getConnection() == null || getConnection().isClosed()) {
@@ -20,25 +21,43 @@ public class SubscriptionTypeDAO extends BaseDAO{
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM SubscriptionType where id=" + id);
+			res = st.executeQuery("SELECT * FROM SubscriptionType where id=" + id);
 			
 	
-			while (rs.next()) {
-				sbt = new SubscriptionType(rs.getInt("id"), 
-						rs.getString("name"),
-						rs.getDouble("factor"));
+			while (res.next()) {
+				sbt = new SubscriptionType(res.getInt("id"), 
+						res.getString("name"),
+						res.getDouble("factor"));
 			}
 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				if (res != null)
+					res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				
+				throw new RuntimeException(e.getMessage());
+			}
+		
 		}
 		return sbt;
 
 	}
 	
-	public static void createSubscriptionType(SubscriptionType subType) {
+	public static int createSubscriptionType(SubscriptionType subType) {
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 
 		String sql = "INSERT INTO SubscriptionType VALUES (?,?,?)";
 
@@ -53,16 +72,69 @@ public class SubscriptionTypeDAO extends BaseDAO{
 			ps.setString(2, subType.getName());
 			ps.setDouble(3, subType.getFactor());
 
-
 			ps.executeUpdate();
+			
+	        st = getConnection().createStatement();
+	        res = st.executeQuery("SELECT id FROM SubscriptionType ORDER BY id DESC LIMIT 1");
+	        if (res.next()) {
+	        	id = res.getInt(1);
+	        }
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			;
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {
-				if (ps != null)
-					ps.close();
+	            if (ps != null)
+	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		return id;
+	}
+	
+	
+	
+	public static ArrayList<SubscriptionType> getAllSubTypes() {
+		ArrayList<SubscriptionType> lijst = new ArrayList<SubscriptionType>();
+		Statement st = null;
+		ResultSet res = null;
+		try {
+			if (getConnection() == null || getConnection().isClosed()) {
+				// afhandelen zoals je zelf wilt
+				throw new IllegalStateException("Connection onverwacht beeindigd");
+			}
+			st = getConnection().createStatement();
+			res = st.executeQuery("SELECT * FROM SubscriptionType");
+
+			while (res.next()) {
+				SubscriptionType sb = new SubscriptionType(res.getInt("id"), 
+						res.getString("name"),
+						res.getDouble("price") 
+						);
+				lijst.add(sb);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				if (res != null)
+					res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
 
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -71,39 +143,11 @@ public class SubscriptionTypeDAO extends BaseDAO{
 			}
 		}
 
-	}
-	
-	
-	
-	public static ArrayList<SubscriptionType> getAllSubTypes() {
-		ArrayList<SubscriptionType> lijst = new ArrayList<SubscriptionType>();
-		Statement st = null;
-		try {
-			if (getConnection() == null || getConnection().isClosed()) {
-				// afhandelen zoals je zelf wilt
-				throw new IllegalStateException("Connection onverwacht beeindigd");
-			}
-			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM SubscriptionType");
-
-			while (rs.next()) {
-				SubscriptionType sb = new SubscriptionType(rs.getInt("id"), 
-						rs.getString("name"),
-						rs.getDouble("price") 
-						);
-				lijst.add(sb);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		return lijst;
 	}
 	
 	public static void updateSubType(SubscriptionType subType) {
 		PreparedStatement ps = null;
-
 		String sql = "UPDATE SubscriptionType SET name=?, factor=? WHERE id = " + subType.getId();
 
 		try {
@@ -118,54 +162,18 @@ public class SubscriptionTypeDAO extends BaseDAO{
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			;
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {
 				if (ps != null)
 					ps.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
 
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
-				
 				throw new RuntimeException(e.getMessage());
 			}
 		}
 	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(id) FROM SubscriptionType");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(1);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
-	        try {
-	            if (st != null)
-	            	st.close();
-
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            throw new RuntimeException("error.unexpected");
-	        }
-	    }
-		
-		return id + 1;
-	}
-	
 }

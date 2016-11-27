@@ -25,9 +25,11 @@ public LostObject(int user_id, String name, String place) {
 	this.user_id = user_id;
 	this.name = name;
 	this.place = place;
+	this.id = -1;
 	this.date = new java.sql.Timestamp(new java.util.Date().getTime());
 	
 }
+
 //Constructor voor het updaten van een bestaand object
 public LostObject(int userID, String name, String place, Timestamp date, boolean claimed, int user_id_claimed, String location_claimed,String name_claimed,
 		 Timestamp date_claimed) {
@@ -37,10 +39,10 @@ public LostObject(int userID, String name, String place, Timestamp date, boolean
 	this.location_claimed = location_claimed;
 	this.name_claimed = name_claimed;
 	this.date_claimed = date_claimed;
-	this.id = LostObjectDAO.findNextId();
+	this.id = -1;
 }
-//Constructor for the whole ost object
 
+//Constructor for the whole ost object
 public LostObject(int id, int userid, String name, String place, Timestamp timefound, boolean claimed, int userclaimed,
 		String location, String nameclaimed, Timestamp timeclaimed) {
 	this.id = id;

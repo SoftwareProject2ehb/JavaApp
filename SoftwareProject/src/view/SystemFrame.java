@@ -8,10 +8,11 @@ import javax.swing.border.EmptyBorder;
 import controller.*;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 
 public class SystemFrame extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel contentPane = null;
 	private CardLayout card_layout = new CardLayout(0, 0);
 
 	/**
@@ -37,8 +38,8 @@ public class SystemFrame extends JFrame {
 	public SystemFrame() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 550, 400);
-		contentPane = new JPanel();
+		getContentpane();
+		contentPane.setPreferredSize(new Dimension(450, 300));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(card_layout);
@@ -82,6 +83,14 @@ public class SystemFrame extends JFrame {
 		
 		card_layout.show(contentPane, "LOGIN");
 		
+		this.pack();
+	}
+	
+	public JPanel getContentpane() {
+		if (contentPane == null) {
+			contentPane = new JPanel();
+		}
+		return contentPane;
 	}
 	
 	public void switchTo(String panel_name) {

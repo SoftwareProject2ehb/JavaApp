@@ -16,13 +16,11 @@ import javax.swing.JOptionPane;
 import data_control.*;
 
 public abstract class SystemController {
-	static public SystemNMBS system = new SystemNMBS();
+	public static SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
-	static SystemFrame frame;
-
+		
 	public static void startUp() {
-		// TODO Hier worden alle views aangemaakt en opgeslagen in hun
-		// Controllers
+		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
 		LoginController.initialize(new LoginView());
 		ActionMenuController.initialize(new ActionMenuView());
@@ -33,9 +31,7 @@ public abstract class SystemController {
 		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView(), new LostObjectView());
 		ReportController.initialize(new ReportView());
 		
-		frame = new SystemFrame();
-
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		FrameController.getFrame().addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		        try {
@@ -46,7 +42,7 @@ public abstract class SystemController {
 				}
 		    }
 		});
-		frame.setVisible(true);
+		FrameController.getFrame().setVisible(true);
 	}
 	
 	public static boolean login(String user_login, String password) {
@@ -81,32 +77,30 @@ public abstract class SystemController {
 		//TODO Implementation
 		return null;
 	}
-
-	public static String createCustomer(String first_name, String last_name, String address, String email,
-			String phone) {
+	
+	public static String createCustomer(String first_name, String last_name, String address, String email, String phone) {
 		Customer new_customer = new Customer(first_name, last_name, email, phone, address);
 		CustomerDAO.createCustomer(new_customer);
 		return "Customer created.";
 	}
-
-	public static String buyTicket(String type_ticket, boolean is_one_way_ticket, double ticket_price,
-			String start_station, String end_station, Date date) {
+	
+	public static String buyTicket(String type_ticket, boolean is_one_way_ticket, double ticket_price, String start_station, String end_station, Date date) {
 		Ticket new_ticket = new Ticket(type_ticket, is_one_way_ticket, ticket_price, start_station, end_station, date);
 		TicketDAO.createTicket(new_ticket);
 		return "Ticket bought.";
 	}
 
-	public static String buySubscription(String subscription_type, int customerId, String endStation,
-			String startStation, Timestamp startDate, Timestamp endDate) {
-
+	public static String buySubscription(String subscription_type, int customerId, String endStation, String startStation, Timestamp startDate, Timestamp endDate) {
+		
 		Subscription subscription;
-
-		// SubscriptionDAO.createSubscription(subscription);
+		
+		
+		//SubscriptionDAO.createSubscription(subscription);
 		return "Abonnement gekocht.";
 	}
-
+	
 	public static String getReports() {
-		// TODO Implementation
+		//TODO Implementation
 		return null;
 	}
 	
@@ -131,7 +125,7 @@ public abstract class SystemController {
 		PriceDAO.createPrice(type);
 		return "Tickettype succesvol aangemaakt.";
 	}
-
+	
 	public static void updateTicketType(Price p) {
 		PriceDAO.updatePrice(p);
 	}
@@ -169,15 +163,14 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		lijstLostobject = LostObjectDAO.getAllLostObjectNotClaimed();
 		
 		break;
-
-	
 	}
 	return lijstLostobject;
+}	
+	public static ArrayList<LostObject> searchLostObject(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
+		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_user, place_found, time_found, claimed);
+		return object_array;
 	}
-
-
-
-
+	
 	public static ArrayList<LostObject> findLostObjects(int index, String value) {
 		ArrayList<LostObject> lijstLostobject =new ArrayList<LostObject>();
 		switch (index) {
@@ -242,9 +235,9 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		UserDAO.createUser(new_user);
 		return null;
 	}
-
+	
 	public static String changePrice(String measure_unit, double cost_per_unit) {
-		// TODO Implementation
+		//TODO Implementation
 		return null;
 	}
 }

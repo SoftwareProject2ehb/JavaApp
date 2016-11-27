@@ -45,8 +45,7 @@ public class UserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, table, 10, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, table, 440, SpringLayout.WEST, this);
 		add(table);
-		UserDAO ud = new UserDAO();
-		ArrayList<User> users = ud.getAllUsers();
+		ArrayList<User> users = UserDAO.getAllUsers();
 		
 		for (int i = 0; i < users.size(); i++){
 			int id = users.get(i).getUserID();

@@ -9,7 +9,7 @@ public class SubscriptionPrice {
 	
 	public SubscriptionPrice(double lengthInMonths, double price) {
 		super();
-		this.id = SubscriptionPriceDAO.findNextId();
+		this.id = -1;
 		this.lengthInMonths = lengthInMonths;
 		this.price = price;
 	}

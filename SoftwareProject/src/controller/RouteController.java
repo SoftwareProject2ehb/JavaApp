@@ -12,7 +12,7 @@ public static SearchRouteView search_route;
 	}
 	
 	public static void switchToSearchRouteView() {
-		SystemController.frame.switchTo("SEARCH_ROUTE");
+		FrameController.getFrame().switchTo("SEARCH_ROUTE");
 	}
 	
 	public static void findRoute() {

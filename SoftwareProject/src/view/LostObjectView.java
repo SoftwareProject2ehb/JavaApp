@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 
+import controller.ActionMenuController;
 import controller.LostObjectController;
 
 import javax.swing.SpringLayout;
@@ -292,6 +293,17 @@ public class LostObjectView extends JPanel {
 		sl_pnlFind.putConstraint(SpringLayout.SOUTH, btnFind, -10, SpringLayout.SOUTH, pnlFind);
 		sl_pnlFind.putConstraint(SpringLayout.EAST, btnFind, -10, SpringLayout.EAST, pnlFind);
 		pnlFind.add(btnFind);
+		
+		JButton btnBack = new JButton("Back to Menu");
+		springLayout.putConstraint(SpringLayout.NORTH, btnBack, -33, SpringLayout.SOUTH, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnBack, 0, SpringLayout.SOUTH, btnSearch);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ActionMenuController.switchToActionMenuView();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.WEST, btnBack, 0, SpringLayout.WEST, panel);
+		add(btnBack);
 		//END EVERYTHING ABOUT PANEL FIND
 		
 		
