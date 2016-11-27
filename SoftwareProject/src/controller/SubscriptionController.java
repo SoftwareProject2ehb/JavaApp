@@ -23,11 +23,11 @@ public static FindSubscriptionView find_subscription;
 	}
 	
 	public static void switchToBuySubscriptionView() {
-		SystemController.frame.switchTo("BUY_SUBSCRIPTION");
+		FrameController.getFrame().switchTo("BUY_SUBSCRIPTION");
 	}
 	
 	public static void switchToFindSubscriptionView() {
-		SystemController.frame.switchTo("FIND_SUBSCRIPTION");
+		FrameController.getFrame().switchTo("FIND_SUBSCRIPTION");
 	}
 	
 	public static void calculatePrice() {

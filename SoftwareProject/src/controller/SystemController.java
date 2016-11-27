@@ -18,7 +18,6 @@ import data_control.*;
 public abstract class SystemController {
 	public static SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
-	static SystemFrame frame;
 		
 	public static void startUp() {
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
@@ -32,9 +31,7 @@ public abstract class SystemController {
 		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView());
 		ReportController.initialize(new ReportView());
 		
-		frame = new SystemFrame();
-		
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		FrameController.getFrame().addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		        try {
@@ -45,7 +42,7 @@ public abstract class SystemController {
 				}
 		    }
 		});
-		frame.setVisible(true);
+		FrameController.getFrame().setVisible(true);
 	}
 	
 	public static boolean login(String user_login, String password) {
