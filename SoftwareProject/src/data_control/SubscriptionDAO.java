@@ -70,24 +70,25 @@ public class SubscriptionDAO extends BaseDAO{
 	public static ArrayList<Subscription> getAllSubs() {
 		ArrayList<Subscription> lijst = new ArrayList<Subscription>();
 		Statement st = null;
+		ResultSet res = null;
 		try {
 			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM Subscription");
+			res = st.executeQuery("SELECT * FROM Subscription");
 
-			while (rs.next()) {
-				Subscription sb = new Subscription(rs.getInt("id"), 
-						rs.getInt("type"),
-						rs.getDouble("price"), 
-						rs.getInt("customer"),
-						rs.getString("startstation"),
-						rs.getString("endstation"),
-						rs.getDate("startdatum"),
-						rs.getDate("enddatum"),
-						rs.getInt("active"));
+			while (res.next()) {
+				Subscription sb = new Subscription(res.getInt("id"), 
+						res.getInt("type"),
+						res.getDouble("price"), 
+						res.getInt("customer"),
+						res.getString("startstation"),
+						res.getString("endstation"),
+						res.getDate("startdatum"),
+						res.getDate("enddatum"),
+						res.getInt("active"));
 				lijst.add(sb);
 			}
 		} catch (SQLException e) {
@@ -97,6 +98,8 @@ public class SubscriptionDAO extends BaseDAO{
 			try {
 				if (st != null)
 					st.close();
+				if (res != null)
+					res.close();
 				if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -113,6 +116,7 @@ public class SubscriptionDAO extends BaseDAO{
 	public static Subscription findSubById(int id) {
 		Statement st = null;
 		Subscription sb = null;
+		ResultSet res = null;
 		try {
 			
 			if (getConnection() == null || getConnection().isClosed()) {
@@ -120,19 +124,19 @@ public class SubscriptionDAO extends BaseDAO{
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM Subscription where id=" + id);
+			res = st.executeQuery("SELECT * FROM Subscription where id=" + id);
 			
 	
-			while (rs.next()) {
-				sb = new Subscription(rs.getInt("id"), 
-						rs.getInt("type"),
-						rs.getDouble("price"), 
-						rs.getInt("customer"),
-						rs.getString("startstation"),
-						rs.getString("endstation"),
-						rs.getDate("startdatum"),
-						rs.getDate("enddatum"),
-						rs.getInt("active"));
+			while (res.next()) {
+				sb = new Subscription(res.getInt("id"), 
+						res.getInt("type"),
+						res.getDouble("price"), 
+						res.getInt("customer"),
+						res.getString("startstation"),
+						res.getString("endstation"),
+						res.getDate("startdatum"),
+						res.getDate("enddatum"),
+						res.getInt("active"));
 			}
 	
 		} catch (SQLException e) {
@@ -142,6 +146,8 @@ public class SubscriptionDAO extends BaseDAO{
 			try {
 				if (st != null)
 					st.close();
+				if (res != null)
+					res.close();
 				if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -173,11 +179,10 @@ public class SubscriptionDAO extends BaseDAO{
 			ps.setInt(3, sub.getCustomerId());
 			ps.setString(4, sub.getStartStation());
 			ps.setString(5, sub.getEndStation());
-			
-			
 			ps.setDate(6, sub.getStartDate());
 			ps.setDate(7, sub.getEndDate());
 			ps.setInt(8,sub.getId());
+			
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -210,13 +215,11 @@ public class SubscriptionDAO extends BaseDAO{
 			}
 			ps = getConnection().prepareStatement(sql);
 
-	
 			ps.setInt(1, 0);
 			ps.setInt(2,sub.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			;
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {
@@ -271,6 +274,7 @@ public class SubscriptionDAO extends BaseDAO{
 	public static ArrayList<Subscription> getSubsByCustomerID(int id) {
 		ArrayList<Subscription> lijst = new ArrayList<Subscription>();
 		Statement st = null;
+		ResultSet res = null;
 		try {
 			
 			if (getConnection() == null || getConnection().isClosed()) {
@@ -278,18 +282,18 @@ public class SubscriptionDAO extends BaseDAO{
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM Subscription WHERE customer = " + id);
+			res = st.executeQuery("SELECT * FROM Subscription WHERE customer = " + id);
 			
-			while (rs.next()) {
-				Subscription sb = new Subscription(rs.getInt("id"), 
-						rs.getInt("type"),
-						rs.getDouble("price"), 
-						rs.getInt("customer"),
-						rs.getString("startstation"),
-						rs.getString("endstation"),
-						rs.getDate("startdatum"),
-						rs.getDate("enddatum"),
-						rs.getInt("active"));
+			while (res.next()) {
+				Subscription sb = new Subscription(res.getInt("id"), 
+						res.getInt("type"),
+						res.getDouble("price"), 
+						res.getInt("customer"),
+						res.getString("startstation"),
+						res.getString("endstation"),
+						res.getDate("startdatum"),
+						res.getDate("enddatum"),
+						res.getInt("active"));
 				lijst.add(sb);
 			}
 		} catch (SQLException e) {
@@ -299,6 +303,8 @@ public class SubscriptionDAO extends BaseDAO{
 			try {
 				if (st != null)
 					st.close();
+				if (res != null)
+					res.close();
 				if (!getConnection().isClosed())
 					getConnection().close();
 

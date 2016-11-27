@@ -100,12 +100,14 @@ public class TicketDAO extends BaseDAO {
 	public static Ticket findTicketById(int id) {
 		Statement st = null;
 		Ticket t = null;
+		ResultSet res = null;
+		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Ticket WHERE ID = " + id);
+			res = st.executeQuery("SELECT * FROM Ticket WHERE ID = " + id);
 
 			while (res.next()) {
 				t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(5), res.getString(6), res.getDate(7));
@@ -118,6 +120,8 @@ public class TicketDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	                st.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -132,14 +136,14 @@ public class TicketDAO extends BaseDAO {
 	
 	public static ArrayList<Ticket> getAllTickets() {
 		ArrayList<Ticket> list = new ArrayList<Ticket>();
-		
+		ResultSet res = null;
 		Statement st = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Ticket");
+			res = st.executeQuery("SELECT * FROM Ticket");
 
 			while (res.next()) {
 				Ticket t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(5), res.getString(6), res.getDate(7));
@@ -152,6 +156,8 @@ public class TicketDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	                st.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 

@@ -81,8 +81,6 @@ public class UserDAO extends BaseDAO{
 		}
 			ps = getConnection().prepareStatement(update);
 		
-	
-			
 			ps.setString(1, user.getFirstName());
 			ps.setString(2, user.getLastName());
 			ps.setString(3, user.getEmail());
@@ -151,24 +149,25 @@ public class UserDAO extends BaseDAO{
 	public static User findUserById(int id) {
 		User user = null;
 		Statement st = null;
+		ResultSet res = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
-	        if (rs.next()) {
+	        res = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
+	        if (res.next()) {
 	        	user = new User(
-						rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
+						res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
 						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 			}
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
@@ -177,6 +176,8 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 	        } catch (SQLException e) {
@@ -189,16 +190,16 @@ public class UserDAO extends BaseDAO{
 	
 	public static ArrayList<String> findAllLogins() {
 		ArrayList<String> result = new ArrayList<String>();
-		ResultSet rs = null;
+		ResultSet res = null;
 		Statement st = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        st = (Statement) getConnection().createStatement();
-	        rs = st.executeQuery("SELECT login FROM User");
-	        while (rs.next()) {
-	        	result.add(rs.getString("login"));
+	        res = st.executeQuery("SELECT login FROM User");
+	        while (res.next()) {
+	        	result.add(res.getString("login"));
 			}
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
@@ -207,8 +208,8 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
-	            if (rs != null)
-	            	rs.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 	        } catch (SQLException e) {
@@ -265,14 +266,15 @@ public class UserDAO extends BaseDAO{
 	public String findUserByIdForPassword(int id) {
 		String pass = null;
 		Statement st = null;
+		ResultSet res = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
-	        if (rs.next()) {
-	        	pass = rs.getString("password");
+	        res = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
+	        if (res.next()) {
+	        	pass = res.getString("password");
 	        }
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
@@ -281,6 +283,8 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 	        } catch (SQLException e) {
@@ -293,7 +297,7 @@ public class UserDAO extends BaseDAO{
 	
 	public static ArrayList<User> getAllUsers() {
 		ArrayList<User> lijst = new ArrayList<User>();
-		ResultSet rs = null;
+		ResultSet res = null;
 		Statement st = null;
 		try {
 			if (getConnection() == null || getConnection().isClosed()) {
@@ -301,19 +305,19 @@ public class UserDAO extends BaseDAO{
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			rs = st.executeQuery("SELECT * FROM User");
+			res = st.executeQuery("SELECT * FROM User");
 
-			while (rs.next()) {
-				User u = new User(rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
-						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+			while (res.next()) {
+				User u = new User(res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
+						//res.getString("address"), 
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 				lijst.add(u);
 			}
 		} catch (SQLException e) {
@@ -323,8 +327,8 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
-	            if (rs != null)
-	            	rs.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 	        } catch (SQLException e) {
@@ -341,24 +345,25 @@ public class UserDAO extends BaseDAO{
 	public static ArrayList<User> findUserByAttribute(FindUser attribuut,String zoekop) { //Find user by attribute and string
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
+		ResultSet res = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " IN ('" + zoekop + "') ");
+			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " IN ('" + zoekop + "') ");
 
-			while (rs.next()) {
-				User u = new User(rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
-						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+			while (res.next()) {
+				User u = new User(res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
+						//res.getString("address"), 
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 				lijst.add(u);
 			}
 		} catch (SQLException e) {
@@ -368,6 +373,8 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 	        } catch (SQLException e) {
@@ -381,24 +388,25 @@ public class UserDAO extends BaseDAO{
 	public static ArrayList<User> findUserByAttribute(FindUser attribuut,int zoekop) { //Find user by attribute and integer
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
+		ResultSet res = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " = " + zoekop);
+			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " = " + zoekop);
 
-			while (rs.next()) {
-				User u = new User(rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
-						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+			while (res.next()) {
+				User u = new User(res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
+						//res.getString("address"), 
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 				lijst.add(u);
 			}
 		} catch (SQLException e) {
@@ -408,6 +416,8 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 	        } catch (SQLException e) {

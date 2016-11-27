@@ -175,6 +175,7 @@ public class LogFileDAO extends BaseDAO{
 public static int findNextId() {
 		int id = 0;
 		Statement st = null;
+		ResultSet res = null;
 		
 		try {
 
@@ -183,7 +184,7 @@ public static int findNextId() {
 	        }
 	        
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Logfile");
+	        res = st.executeQuery("SELECT MAX(ID) FROM Logfile");
 	        
 	        if (res.next()) {
 	        	id = res.getInt(0);
@@ -197,6 +198,8 @@ public static int findNextId() {
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -212,13 +215,14 @@ public static int findNextId() {
 	public static LogFile getLatestEntry() {
 		Statement st = null;
 		LogFile l = null;
+		ResultSet res = null;
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM LogFile ORDER BY logfileID DESC LIMIT 1");
+			res = st.executeQuery("SELECT * FROM LogFile ORDER BY logfileID DESC LIMIT 1");
 
 			while (res.next()) {
 				java.sql.Date sqlDate = res.getDate(3);
@@ -232,6 +236,8 @@ public static int findNextId() {
 			try {
 				if (st != null)
 	            	st.close();
+				if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 			} catch (Exception e2) {

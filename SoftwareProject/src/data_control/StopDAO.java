@@ -84,13 +84,14 @@ public class StopDAO extends BaseDAO{
 public static Stop findStopById(int id) {
 	Statement st = null;
 	Stop s = null;
+	ResultSet res = null;
 	
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM Stop WHERE stopID = " + id);
+		res = st.executeQuery("SELECT * FROM Stop WHERE stopID = " + id);
 
 		while (res.next()) {
 			s = new Stop(res.getInt(2), res.getInt(1),res.getString(3), res.getInt(4));
@@ -102,6 +103,8 @@ public static Stop findStopById(int id) {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -116,14 +119,14 @@ public static Stop findStopById(int id) {
 
 public static ArrayList<Stop> getAllStopsByTrainID(int id) {
 	ArrayList<Stop> list = new ArrayList<Stop>();
-	
+	ResultSet res = null;
 	Statement st = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM Stop WHERE trainID = " + id);
+		res = st.executeQuery("SELECT * FROM Stop WHERE trainID = " + id);
 
 		while (res.next()) {
 			Stop s = new Stop(res.getInt(2), res.getInt(1),res.getString(3), res.getInt(4));
@@ -135,6 +138,8 @@ public static ArrayList<Stop> getAllStopsByTrainID(int id) {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -149,14 +154,14 @@ public static ArrayList<Stop> getAllStopsByTrainID(int id) {
 
 public static ArrayList<Stop> getAllStops() {
 	ArrayList<Stop> list = new ArrayList<Stop>();
-	
+	ResultSet res = null;
 	Statement st = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM Stop");
+		res = st.executeQuery("SELECT * FROM Stop");
 
 		while (res.next()) {
 			Stop s = new Stop(res.getInt(2), res.getInt(1),res.getString(3), res.getInt(4));
@@ -168,6 +173,8 @@ public static ArrayList<Stop> getAllStops() {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -183,17 +190,16 @@ public static ArrayList<Stop> getAllStops() {
 public static Stop getLatestEntry() {
 	Statement st = null;
 	Stop s = null;
-	
+	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM Stop ORDER BY stopID DESC LIMIT 1");
+		res = st.executeQuery("SELECT * FROM Stop ORDER BY stopID DESC LIMIT 1");
 
 		while (res.next()) {
 			s = new Stop(res.getInt(2), res.getInt(1),res.getString(3), res.getInt(4));
-
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
@@ -201,6 +207,8 @@ public static Stop getLatestEntry() {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 

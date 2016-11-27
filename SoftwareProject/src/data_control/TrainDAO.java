@@ -51,6 +51,7 @@ public class TrainDAO extends BaseDAO {
 	public Train getTrainById(int id){
 		Train trein = null;
 		PreparedStatement ps = null;
+		ResultSet res = null;
 		String sql = "Select * from Train where ID=?";
 		
 		
@@ -62,7 +63,7 @@ public class TrainDAO extends BaseDAO {
 			 
 			ps = getConnection().prepareStatement(sql);
 			ps.setInt(1,id);
-			ResultSet res = ps.executeQuery("SELECT * FROM Train");
+			res = ps.executeQuery("SELECT * FROM Train");
 			 
 			if (res.next()) {
 				trein = new Train(res.getInt(1), res.getString(2),res.getString(3), res.getTimestamp(4), res.getTimestamp(5));
@@ -75,6 +76,8 @@ public class TrainDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -92,12 +95,13 @@ public class TrainDAO extends BaseDAO {
 		
 		ArrayList<Train> lijst = new ArrayList<Train>();
 		Statement st = null;
+		ResultSet res = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Train");
+			res = st.executeQuery("SELECT * FROM Train");
 
 			while (res.next()) {
 				Train trein = new Train(res.getInt(1), res.getString(2),res.getString(3), res.getTimestamp(4), res.getTimestamp(5));
@@ -110,6 +114,8 @@ public class TrainDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	                st.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -121,42 +127,5 @@ public class TrainDAO extends BaseDAO {
 
 		return lijst;
 		
-	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Train");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(0);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
-	        try {
-	            if (st != null)
-	            	st.close();
-	            if (!getConnection().isClosed())
-					getConnection().close();
-
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            throw new RuntimeException("error.unexpected");
-	        }
-	    }
-		
-		return id + 1;
 	}
 }

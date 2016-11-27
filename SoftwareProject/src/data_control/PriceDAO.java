@@ -126,12 +126,13 @@ public class PriceDAO extends BaseDAO {
 	public static Price findPriceById(int id) {
 		Statement st = null;
 		Price p = null;
+		ResultSet res = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Price WHERE ID = " + id);
+			res = st.executeQuery("SELECT * FROM Price WHERE ID = " + id);
 
 			while (res.next()) {
 				p = new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4));
@@ -143,6 +144,8 @@ public class PriceDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	                st.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -196,14 +199,14 @@ public class PriceDAO extends BaseDAO {
 		
 	public static ArrayList<String> getAllTicketTypes() {
 		ArrayList<String> list = new ArrayList<String>();
-		
+		ResultSet res = null;
 		Statement st = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT typeTicket FROM Price");
+			res = st.executeQuery("SELECT typeTicket FROM Price");
 
 			while (res.next()) {
 				list.add(res.getString(1));
@@ -215,6 +218,8 @@ public class PriceDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	                st.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 

@@ -116,12 +116,13 @@ public static LostObject getLostObjectFromRS(ResultSet res) throws SQLException{
 public static LostObject getLostObjectById(int objectID) {
 	Statement st = null;
 	LostObject lost = null;
+	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE ID = " + objectID);
+		res = st.executeQuery("SELECT * FROM LostObject WHERE ID = " + objectID);
 
 		while (res.next()) {
 			lost = getLostObjectFromRS(res);
@@ -134,6 +135,8 @@ public static LostObject getLostObjectById(int objectID) {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -142,8 +145,7 @@ public static LostObject getLostObjectById(int objectID) {
             throw new RuntimeException("error.unexpected");
         }
     }
-
-
+	
 	return lost;
 }
 
@@ -152,12 +154,13 @@ public static LostObject getLostObjectById(int objectID) {
 public ArrayList<LostObject> getAllLostObject(int from , int to) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
+	ResultSet res  = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject where timeFound  BETWEEN NOW() - INTERVAL "+from +" MONTH AND NOW() - INTERVAL "+ to +" MONTH");
+		res = st.executeQuery("SELECT * FROM LostObject where timeFound  BETWEEN NOW() - INTERVAL "+from +" MONTH AND NOW() - INTERVAL "+ to +" MONTH");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
@@ -171,6 +174,8 @@ public ArrayList<LostObject> getAllLostObject(int from , int to) {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -185,12 +190,13 @@ public ArrayList<LostObject> getAllLostObject(int from , int to) {
 public static ArrayList<LostObject> getAllLostObjectNotClaimed() {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
+	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = false");
+		res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = false");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
@@ -203,6 +209,8 @@ public static ArrayList<LostObject> getAllLostObjectNotClaimed() {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -218,12 +226,13 @@ public static ArrayList<LostObject> getAllLostObjectNotClaimed() {
 public static ArrayList<LostObject> getAllLostObjectClaimed() {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
+	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = true");
+		res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = true");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
@@ -236,6 +245,8 @@ public static ArrayList<LostObject> getAllLostObjectClaimed() {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -253,12 +264,13 @@ public static ArrayList<LostObject> getAllLostObjectClaimed() {
 public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject attribuut,String zoekop) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
+	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE " + attribuut +" =  '" + zoekop + "';");
+		res = st.executeQuery("SELECT * FROM LostObject WHERE " + attribuut +" =  '" + zoekop + "';");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
@@ -271,6 +283,8 @@ public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject att
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -285,12 +299,13 @@ public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject att
 public static ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
+	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE timeFound LIKE '%" + date + "%'");
+		res = st.executeQuery("SELECT * FROM LostObject WHERE timeFound LIKE '%" + date + "%'");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
@@ -304,6 +319,8 @@ public static ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -318,12 +335,13 @@ public static ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
 public static ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
 	Statement st = null;
+	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LostObject WHERE timeClaimed LIKE '%" + date + "%'");
+		res = st.executeQuery("SELECT * FROM LostObject WHERE timeClaimed LIKE '%" + date + "%'");
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
@@ -337,6 +355,8 @@ public static ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
         try {
             if (st != null)
                 st.close();
+            if (res != null)
+                res.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 

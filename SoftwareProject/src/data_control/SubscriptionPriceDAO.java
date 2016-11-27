@@ -13,6 +13,7 @@ public class SubscriptionPriceDAO extends BaseDAO{
 	public static SubscriptionPrice findSubPriceById(int id) {
 		Statement st = null;
 		SubscriptionPrice sbp = null;
+		ResultSet res = null;
 		try {
 			
 			if (getConnection() == null || getConnection().isClosed()) {
@@ -20,13 +21,12 @@ public class SubscriptionPriceDAO extends BaseDAO{
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM SubscriptionPrice where id=" + id);
+			res = st.executeQuery("SELECT * FROM SubscriptionPrice where id=" + id);
 			
-	
-			while (rs.next()) {
-				sbp = new SubscriptionPrice(rs.getInt("id"), 
-						rs.getDouble("lengthInMonths"),
-						rs.getDouble("price"));
+			while (res.next()) {
+				sbp = new SubscriptionPrice(res.getInt("id"), 
+						res.getDouble("lengthInMonths"),
+						res.getDouble("price"));
 			}
 	
 		} catch (SQLException e) {
@@ -36,6 +36,8 @@ public class SubscriptionPriceDAO extends BaseDAO{
 			try {
 				if (st != null)
 					st.close();
+				if (res != null)
+					res.close();
 				if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -92,7 +94,6 @@ public class SubscriptionPriceDAO extends BaseDAO{
 
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
-				
 				throw new RuntimeException(e.getMessage());
 			}
 		}
@@ -104,18 +105,19 @@ public class SubscriptionPriceDAO extends BaseDAO{
 	public static ArrayList<SubscriptionPrice> getAllSubPrices() {
 		ArrayList<SubscriptionPrice> lijst = new ArrayList<SubscriptionPrice>();
 		Statement st = null;
+		ResultSet res = null;
 		try {
 			if (getConnection() == null || getConnection().isClosed()) {
 				// afhandelen zoals je zelf wilt
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM SubscriptionType");
+			res = st.executeQuery("SELECT * FROM SubscriptionType");
 
-			while (rs.next()) {
-				SubscriptionPrice sbp = new SubscriptionPrice(rs.getInt("id"), 
-						rs.getDouble("lengthInMonths"),
-						rs.getDouble("price") 
+			while (res.next()) {
+				SubscriptionPrice sbp = new SubscriptionPrice(res.getInt("id"), 
+						res.getDouble("lengthInMonths"),
+						res.getDouble("price") 
 						);
 				lijst.add(sbp);
 			}
@@ -126,6 +128,8 @@ public class SubscriptionPriceDAO extends BaseDAO{
 			try {
 				if (st != null)
 					st.close();
+				if (res != null)
+					res.close();
 				if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -141,7 +145,6 @@ public class SubscriptionPriceDAO extends BaseDAO{
 	
 	public static void updateSubType(SubscriptionPrice subPrice) {
 		PreparedStatement ps = null;
-
 		String sql = "UPDATE SubscriptionPrice SET lengthInMonths=?, price=? WHERE id = " + subPrice.getId();
 
 		try {
@@ -156,7 +159,6 @@ public class SubscriptionPriceDAO extends BaseDAO{
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			;
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {
