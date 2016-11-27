@@ -366,7 +366,7 @@ public static ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
 			lijst.add(lost);
 		}
 		// Maken van de logfile met text
-						String s = "Alle lost object op datum found : "+ datum +" werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
+						String s = "Alle lost object op datum found : "+ date +" werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
 						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
 						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
 						LogFileDAO.createLogFile(log);
@@ -408,7 +408,7 @@ public static ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
 			lijst.add(lost);
 		}
 		// Maken van de logfile met text
-			String s = "Alle lost object op datum claimed : "+ datum +" werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
+			String s = "Alle lost object op datum claimed : "+ date +" werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
 			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
 			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
 			LogFileDAO.createLogFile(log);
