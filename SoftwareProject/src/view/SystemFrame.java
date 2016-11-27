@@ -58,6 +58,7 @@ public class SystemFrame extends JFrame {
 		contentPane.add(RouteController.search_route);
 		contentPane.add(LostObjectController.find_lost_object);
 		contentPane.add(LostObjectController.create_lost_object);
+		contentPane.add(LostObjectController.lost_object);
 		contentPane.add(ReportController.report);
 		
 		card_layout.addLayoutComponent(CustomerController.create_customer, "CREATE_CUSTOMER");
@@ -75,6 +76,7 @@ public class SystemFrame extends JFrame {
 		card_layout.addLayoutComponent(RouteController.search_route, "SEARCH_ROUTE");
 		card_layout.addLayoutComponent(LostObjectController.find_lost_object, "FIND_LOST_OBJECT");
 		card_layout.addLayoutComponent(LostObjectController.create_lost_object, "CREATE_LOST_OBJECT");
+		card_layout.addLayoutComponent(LostObjectController.lost_object, "LOST_OBJECT");
 		card_layout.addLayoutComponent(ReportController.report,"RAPORTEN" );
 		
 		card_layout.show(contentPane, "LOGIN");

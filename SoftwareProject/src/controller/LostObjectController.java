@@ -18,7 +18,7 @@ import utilities.DateConverter;
 import view.*;
 
 public abstract class LostObjectController {
-	public static LostObjectViewbug lost_object;
+	public static LostObjectView lost_object;
 	public static FindLostObjectView find_lost_object;
 	public static CreateLostObjectView create_lost_object;
 
@@ -29,9 +29,10 @@ public abstract class LostObjectController {
 		
 	}
 	
-	public static void initialize(FindLostObjectView find_lost_object, CreateLostObjectView create_lost_object) {
+	public static void initialize(FindLostObjectView find_lost_object, CreateLostObjectView create_lost_object,LostObjectView lost_object) {
 		LostObjectController.find_lost_object = find_lost_object;
 		LostObjectController.create_lost_object = create_lost_object;
+		LostObjectController.lost_object = lost_object;
 	}
 	
 	public static void switchToFindLostObjectView() {
@@ -46,127 +47,14 @@ public abstract class LostObjectController {
 		SystemController.frame.switchTo("LOST_OBJECT");
 	}
 	public static void findLostObjects(DefaultTableModel tableModel) {
-		LostObject lostObject;
-		LostObjectDAO lostObjectDao  = new LostObjectDAO();
 		ArrayList<LostObject> lijstLostobject =new ArrayList<LostObject>();
 		
-		int select_find = lost_object.cmbFind.getSelectedIndex();
-		switch (select_find) {
-		case 0:
-			lijstLostobject = lostObjectDao.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.userid,
-					lost_object.txtValue.getText());
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-			break;
-		case 1:
-			lijstLostobject = lostObjectDao.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.name,
-					lost_object.txtValue.getText());
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-			break;
-		case 2:
-			lijstLostobject = lostObjectDao.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.place,
-					lost_object.txtValue.getText());
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-
-			break;
-		case 3:
-			lijstLostobject = lostObjectDao.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.description,
-					lost_object.txtValue.getText());
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-
-			break;
-		case 4:
-			lijstLostobject = lostObjectDao.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.timeFound,
-					lost_object.txtValue.getText());
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-
-			break;
-		case 5:
-			lijstLostobject = lostObjectDao.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.userClaimed,
-					lost_object.txtValue.getText());
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-
-			break;
-		case 6:
-			lijstLostobject = lostObjectDao.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.nameClaimed,
-					lost_object.txtValue.getText());
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-			break;
-		case 7:
-			lijstLostobject = lostObjectDao.getLostObjectOpAttribut(
-					LostObjectDAO.SearchLostObject.LocationClaimed, lost_object.txtValue.getText());
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-
-			break;
-		case 8:
-			lijstLostobject = lostObjectDao.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.timeClaimed,
-					lost_object.txtValue.getText());
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-
-			break;
-
+		int select_find = lost_object.cbbFind.getSelectedIndex();
+		lijstLostobject = SystemController.findLostObjects(select_find, lost_object.txtValue.getText());
+		
+		for (int x = 0; x < lijstLostobject.size(); x++) {
+			
+			tableModel.addRow(lijstLostobject.get(x).toArray());
 		}
 		
 		
@@ -191,8 +79,6 @@ public abstract class LostObjectController {
 	
 		
 		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-		
-		
 		SystemController.addLostObject(name_finder, place, date);
 	
 		lost_object.txtNameFound.setText(null);
@@ -267,45 +153,18 @@ public abstract class LostObjectController {
 		// RESET THE TABLE
 		lost_object.table.clearSelection();
 		tableModel.setRowCount(0);
-		int select_view =  lost_object.cmbSort.getSelectedIndex();
-		int select_from_date =  lost_object.cmbFrom.getSelectedIndex();
-		int select_to_date =  lost_object.cmbTo.getSelectedIndex();
-		switch (select_view) {
-		case 0:
-			lijstLostobject = lostObjectDao.getAllLostObject(select_from_date + 1, select_to_date);
-
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-			break;
-		case 1:
-			lijstLostobject = lostObjectDao.getAllLostObjectClaimed();
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-			break;
-		case 2:
-			lijstLostobject = lostObjectDao.getAllLostObjectNotClaimed();
-			for (int x = 0; x < lijstLostobject.size(); x++) {
-				Object object[] = { lijstLostobject.get(x).getID(), lijstLostobject.get(x).getUserID(),
-						lijstLostobject.get(x).getName(), lijstLostobject.get(x).getPlace(),
-						lijstLostobject.get(x).getDate(), lijstLostobject.get(x).isClaimed(),
-						lijstLostobject.get(x).getUserIDClaimed(), lijstLostobject.get(x).getLocationClaimed(),
-						lijstLostobject.get(x).getNameClaimed(), lijstLostobject.get(x).getDateClaimed() };
-				tableModel.addRow(object);
-			}
-			break;
-
+		
+		
+		
+		
+		int select_view =  lost_object.cbbSort.getSelectedIndex();
+		int select_from_date =  lost_object.cbbFrom.getSelectedIndex();
+		int select_to_date =  lost_object.cbbTo.getSelectedIndex();
+		
+		
+		lijstLostobject = SystemController.findAllLostObjects(select_view,select_from_date + 1, select_to_date);
+		for (int x = 0; x < lijstLostobject.size(); x++) {
+			tableModel.addRow(lijstLostobject.get(x).toArray());
 		}
 
 		// JOptionPane.showMessageDialog(null,
@@ -314,5 +173,6 @@ public abstract class LostObjectController {
 
 		lost_object.table.setModel(tableModel);
 	}
+	
 	
 }

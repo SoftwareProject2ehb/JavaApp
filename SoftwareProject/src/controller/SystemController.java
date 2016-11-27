@@ -19,46 +19,48 @@ public abstract class SystemController {
 	static public SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
 	static SystemFrame frame;
-		
+
 	public static void startUp() {
-		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
+		// TODO Hier worden alle views aangemaakt en opgeslagen in hun
+		// Controllers
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
 		LoginController.initialize(new LoginView());
 		ActionMenuController.initialize(new ActionMenuView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),
+				new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
-		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView());
+		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView(), new LostObjectView());
 		ReportController.initialize(new ReportView());
-		
+
 		frame = new SystemFrame();
-		
+
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        try {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				try {
 					BaseDAO.getConnection().close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		    }
+			}
 		});
 		frame.setVisible(true);
 	}
-	
+
 	public static boolean login(String user_login, String password) {
 		if (system.login(user_login, password) == ErrorCode.NO_ERROR) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public static void meldAf() {
 		system.meldAf();
 	}
-	
+
 	public static String giveRouteInfo(String start_station, String end_station, Timestamp datetime) {
 		String[] stops = RouteCalculator.pathRoute(start_station, end_station);
 		String result = "Er is een route gevonden met de volgende haltes: ";
@@ -70,44 +72,47 @@ public abstract class SystemController {
 		}
 		return result;
 	}
-	
+
 	public static String getTicketInfo() {
-		//TODO Implementation
+		// TODO Implementation
 		return null;
 	}
-	
+
 	public static String getSubscriptionInfo() {
-		//TODO Implementation
+		// TODO Implementation
 		return null;
 	}
-	
-	public static String createCustomer(String first_name, String last_name, String address, String email, String phone) {
+
+	public static String createCustomer(String first_name, String last_name, String address, String email,
+			String phone) {
 		Customer new_customer = new Customer(first_name, last_name, email, phone, address);
 		CustomerDAO.createCustomer(new_customer);
 		return "Customer created.";
 	}
-	
-	public static String buyTicket(String type_ticket, boolean is_one_way_ticket, double ticket_price, String start_station, String end_station, Date date) {
+
+	public static String buyTicket(String type_ticket, boolean is_one_way_ticket, double ticket_price,
+			String start_station, String end_station, Date date) {
 		Ticket new_ticket = new Ticket(type_ticket, is_one_way_ticket, ticket_price, start_station, end_station, date);
 		TicketDAO.createTicket(new_ticket);
 		return "Ticket bought.";
 	}
 
-	public static String buySubscription(String subscription_type, int customerId, String endStation, String startStation, Timestamp startDate, Timestamp endDate) {
-		
+	public static String buySubscription(String subscription_type, int customerId, String endStation,
+			String startStation, Timestamp startDate, Timestamp endDate) {
+
 		Subscription subscription;
-		
-		
-		//SubscriptionDAO.createSubscription(subscription);
+
+		// SubscriptionDAO.createSubscription(subscription);
 		return "Abonnement gekocht.";
 	}
-	
+
 	public static String getReports() {
-		//TODO Implementation
+		// TODO Implementation
 		return null;
 	}
-	
-	public static String makeTicketType(String ticket_type, String unit, double cost_per_unit) throws IllegalArgumentException{
+
+	public static String makeTicketType(String ticket_type, String unit, double cost_per_unit)
+			throws IllegalArgumentException {
 		Price type;
 		switch (unit) {
 		case "uur":
@@ -128,33 +133,116 @@ public abstract class SystemController {
 		PriceDAO.createPrice(type);
 		return "Tickettype succesvol aangemaakt.";
 	}
-	
+
 	public static String makeSubscriptionType() {
-		//TODO
+		// TODO
 		return null;
 	}
-	
+
 	public static String addLostObject(String name, String station, Timestamp date) {
-		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station, date, false, -1, null, null, null);
+		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station, date, false, -1, null, null,null);
 		LostObjectDAO.createLostObject(obj);
 		return "Succesvol toegevoegd.";
 	}
+
+	/*
+	 * public static ArrayList<LostObject> searchLostObject(String name_user,
+	 * String place_found, Timestamp time_found, Boolean claimed) {
+	 * ArrayList<LostObject> object_array =
+	 * LostObjectDAO.getLostObjectByMultipleArgs(name_user, place_found,
+	 * time_found, claimed); return object_array; }
+	 */
+public static ArrayList<LostObject> findAllLostObjects(int select_view,int select_from_date ,int select_to_date )
+{
+	ArrayList<LostObject> lijstLostobject =new ArrayList<LostObject>();
+	switch (select_view) {
+	case 0:
+		lijstLostobject = LostObjectDAO.getAllLostObject(select_from_date + 1, select_to_date);
+		break;
+	case 1:
+		lijstLostobject =  LostObjectDAO.getAllLostObjectClaimed();
+		
+		break;
+	case 2:
+		lijstLostobject = LostObjectDAO.getAllLostObjectNotClaimed();
+		
+		break;
+
 	
-	public static ArrayList<LostObject> searchLostObject(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
-		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_user, place_found, time_found, claimed);
-		return object_array;
 	}
-	
-	
-	public static String addUser(String first_name, String last_name, String email, String phone, String password, Role role) {
+	return lijstLostobject;
+	}
+
+
+
+
+	public static ArrayList<LostObject> findLostObjects(int index, String value) {
+		ArrayList<LostObject> lijstLostobject =new ArrayList<LostObject>();
+		switch (index) {
+		case 0:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.userid,
+					value);
+			break;
+		case 1:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.name,
+					value);
+			break;
+		case 2:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.place,
+					value);
+			
+
+			break;
+		case 3:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.description,
+					value);
+			
+
+			break;
+		case 4:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.timeFound,
+					value);
+		
+
+			break;
+		case 5:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.userClaimed,
+					value);
+			
+
+			break;
+		case 6:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.nameClaimed,
+					value);
+			
+			break;
+		case 7:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(
+					LostObjectDAO.SearchLostObject.LocationClaimed, value);
+			
+
+			break;
+		case 8:
+			lijstLostobject = LostObjectDAO.getLostObjectOpAttribut(LostObjectDAO.SearchLostObject.timeClaimed,
+					value);
+			
+
+			break;
+
+		}
+		return lijstLostobject;
+	}
+
+	public static String addUser(String first_name, String last_name, String email, String phone, String password,
+			Role role) {
 		String login = first_name + "_" + last_name;
 		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role);
 		UserDAO.createUser(new_user);
 		return null;
 	}
-	
+
 	public static String changePrice(String measure_unit, double cost_per_unit) {
-		//TODO Implementation
+		// TODO Implementation
 		return null;
 	}
 }

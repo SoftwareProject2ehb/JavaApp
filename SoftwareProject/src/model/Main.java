@@ -13,6 +13,5 @@ public class Main {
 	public static void main(String[] args) throws SQLException {
 		
 		SystemController.startUp();
-		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 	}
 }
