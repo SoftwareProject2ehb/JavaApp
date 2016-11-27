@@ -189,13 +189,14 @@ public class UserDAO extends BaseDAO{
 	
 	public static ArrayList<String> findAllLogins() {
 		ArrayList<String> result = new ArrayList<String>();
+		ResultSet rs = null;
 		Statement st = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet rs = st.executeQuery("SELECT login FROM User");
+	        rs = st.executeQuery("SELECT login FROM User");
 	        while (rs.next()) {
 	        	result.add(rs.getString("login"));
 			}
@@ -206,6 +207,8 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (rs != null)
+	            	rs.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 	        } catch (SQLException e) {
@@ -219,24 +222,25 @@ public class UserDAO extends BaseDAO{
 	public static User findUserByLogin(String login){
 		User user = null;
 		Statement st = null;
+		ResultSet res = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE login LIKE '%" + login+ "%'");
-	        if (rs.next()) {
+	        res = st.executeQuery("SELECT * FROM User WHERE login LIKE '%" + login+ "%'");
+	        if (res.next()) {
 	        	user = new User(
-						rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
+						res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
 						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 			}
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
@@ -245,6 +249,8 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 	        } catch (SQLException e) {
@@ -287,6 +293,7 @@ public class UserDAO extends BaseDAO{
 	
 	public static ArrayList<User> getAllUsers() {
 		ArrayList<User> lijst = new ArrayList<User>();
+		ResultSet rs = null;
 		Statement st = null;
 		try {
 			if (getConnection() == null || getConnection().isClosed()) {
@@ -294,7 +301,7 @@ public class UserDAO extends BaseDAO{
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM User");
+			rs = st.executeQuery("SELECT * FROM User");
 
 			while (rs.next()) {
 				User u = new User(rs.getInt("ID"), 
@@ -316,6 +323,8 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (rs != null)
+	            	rs.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 	        } catch (SQLException e) {

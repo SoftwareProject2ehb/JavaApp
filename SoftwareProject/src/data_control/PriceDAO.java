@@ -158,15 +158,16 @@ public class PriceDAO extends BaseDAO {
 	public static Price findPriceByType(String type) {
 		PreparedStatement ps = null;
 		Price p = null;
+		ResultSet res = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			ps = getConnection().prepareStatement("SELECT * FROM Price WHERE typeTicket LIKE '?'");
+			ps = getConnection().prepareStatement("SELECT * FROM Price WHERE typeTicket LIKE ?");
 			
 			ps.setString(1, type);
 			
-			ResultSet res = ps.executeQuery();
+			res = ps.executeQuery();
 
 			while (res.next()) {
 				p = new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4));
@@ -178,6 +179,8 @@ public class PriceDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	            	ps.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 
@@ -226,6 +229,7 @@ public class PriceDAO extends BaseDAO {
 	
 	public static ArrayList<Price> getAll() {
 		ArrayList<Price> list = new ArrayList<Price>();
+		ResultSet res = null;
 		
 		Statement st = null;
 		try {
@@ -233,7 +237,7 @@ public class PriceDAO extends BaseDAO {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Price");
+			res = st.executeQuery("SELECT * FROM Price");
 
 			while (res.next()) {
 				list.add(new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4)));
@@ -245,6 +249,8 @@ public class PriceDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	                st.close();
+	            if (res != null)
+	                res.close();
 	            if (!getConnection().isClosed())
 					getConnection().close();
 

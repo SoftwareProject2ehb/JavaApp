@@ -101,6 +101,7 @@ public class LogFileDAO extends BaseDAO{
 
 	public static LogFile findLogFileById(int id) {
 	Statement st = null;
+	ResultSet res = null;
 	LogFile l = null;
 	
 	try {
@@ -108,13 +109,12 @@ public class LogFileDAO extends BaseDAO{
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LogFile WHERE logfileID = " + id);
+		res = st.executeQuery("SELECT * FROM LogFile WHERE logfileID = " + id);
 
 		while (res.next()) {
 			java.sql.Date sqlDate = res.getDate(3);
 			java.util.Date date = new java.util.Date(sqlDate.getTime());
 			l = new LogFile(res.getInt(1), res.getString(2), date, res.getInt(4));
-
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
@@ -122,6 +122,8 @@ public class LogFileDAO extends BaseDAO{
 		try {
 			if (st != null)
 				st.close();
+			if (res != null)
+				res.close();
 			if (!getConnection().isClosed())
 				getConnection().close();
 		} catch (SQLException e) {
@@ -137,12 +139,13 @@ public class LogFileDAO extends BaseDAO{
 	ArrayList<LogFile> list = new ArrayList<LogFile>();
 	
 	Statement st = null;
+	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
 		st = (Statement) getConnection().createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM LogFile");
+		res = st.executeQuery("SELECT * FROM LogFile");
 
 		while (res.next()) {
 			java.sql.Date sqlDate = res.getDate(3);
@@ -156,6 +159,8 @@ public class LogFileDAO extends BaseDAO{
 		try {
 			if (st != null)
 				st.close();
+			if (res != null)
+				res.close();
 			if (!getConnection().isClosed())
 				getConnection().close();
 		} catch (SQLException e) {

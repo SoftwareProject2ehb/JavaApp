@@ -138,7 +138,7 @@ public class CustomerDAO extends BaseDAO {
 	public static Customer findCustomerById(int id) {
 		
 		Customer cust = null;
-		
+		ResultSet res = null;
 		Statement st = null;
 		
 		try {
@@ -148,7 +148,7 @@ public class CustomerDAO extends BaseDAO {
 	        }
 	        
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT * FROM Customer WHERE ID = " + id + " LIMIT 1");
+	        res = st.executeQuery("SELECT * FROM Customer WHERE ID = " + id + " LIMIT 1");
 	        
 	        if (res.next()) {
 	        	cust = new Customer(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
@@ -162,6 +162,8 @@ public class CustomerDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
 	            if (!getConnection().isClosed())
 	            	getConnection().close();
 

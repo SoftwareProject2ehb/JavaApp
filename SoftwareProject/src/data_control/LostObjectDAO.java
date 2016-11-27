@@ -361,8 +361,6 @@ public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getConnection().createStatement();
-		
 		String sql_syntax = "SELECT * FROM LostObject WHERE ";
 		
 		if (name_user != null && !name_user.equals("")) {
@@ -379,11 +377,23 @@ public static ArrayList<LostObject> getLostObjectByMultipleArgs(String name_user
 		
 		sql_syntax = sql_syntax.concat("userClaimed = " + (claimed ? 1 : 0));
 		
-		ResultSet res = st.executeQuery(sql_syntax);
-
-		while (res.next()) {
-			LostObject lost = getLostObjectFromRS(res);
-			lijst.add(lost);
+		ResultSet res = null;
+		try {
+			st = (Statement) getConnection().createStatement();
+			res = st.executeQuery(sql_syntax);
+			while (res.next()) {
+				LostObject lost = getLostObjectFromRS(res);
+				lijst.add(lost);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			e.getMessage();
+		} finally {
+			if (res != null)
+                res.close();
+			if (st != null)
+                st.close();
 		}
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
