@@ -23,8 +23,8 @@ public class LogFileDAO extends BaseDAO{
 	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setString(1, logfile.getDescription());
-	        java.sql.Date sqlTime = new java.sql.Date(logfile.getTime().getTime());
-	        ps.setDate(2, sqlTime);
+	        //java.sql.Date sqlTime = new java.sql.Date(logfile.getTime().getTime());
+	        ps.setTimestamp(2, logfile.getTime());
 	        ps.setInt(3, logfile.getUserID());
 	        
 	        ps.executeUpdate();
@@ -81,7 +81,7 @@ public class LogFileDAO extends BaseDAO{
 
 		while (res.next()) {
 			java.sql.Date sqlDate = res.getDate(3);
-			java.util.Date date = new java.util.Date(sqlDate.getTime());
+			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			l = new LogFile(res.getInt(1), res.getString(2), date, res.getInt(4));
 
 		}
@@ -105,7 +105,7 @@ public class LogFileDAO extends BaseDAO{
 
 		while (res.next()) {
 			java.sql.Date sqlDate = res.getDate(3);
-			java.util.Date date = new java.util.Date(sqlDate.getTime());
+			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			LogFile l = new LogFile(res.getInt(1), res.getString(2), date, res.getInt(4));
 			list.add(l);
 		}
@@ -164,7 +164,7 @@ public static int findNextId() {
 
 			while (res.next()) {
 				java.sql.Date sqlDate = res.getDate(3);
-				java.util.Date date = new java.util.Date(sqlDate.getTime());
+				java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 				l = new LogFile(res.getInt(1), res.getString(2), date, res.getInt(4));
 
 			}

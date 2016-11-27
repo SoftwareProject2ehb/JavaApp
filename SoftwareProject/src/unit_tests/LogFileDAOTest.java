@@ -2,6 +2,7 @@ package unit_tests;
 
 import static org.junit.Assert.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class LogFileDAOTest {
 
 	@Test
 	public void testCreateLogFile() {
-		Date date = new Date();
+		Timestamp date = new Timestamp(new Date().getTime());
 		log = new LogFile("aanmaken ticket", date, 15);
 		LogFileDAO.createLogFile(log);
 		LogFile log2 = LogFileDAO.getLatestEntry();
@@ -41,7 +42,7 @@ public class LogFileDAOTest {
 	@Test
 	public void testUpdateStop() {
 		LogFile log2 = LogFileDAO.getLatestEntry();
-		Date date = new Date();
+		Timestamp date = new Timestamp(new Date().getTime());
 		log = new LogFile(log2.getLogFileID(),"aanmaken user", date, 17);
 		LogFileDAO.updateLogfile(log);
 		log2 = LogFileDAO.getLatestEntry();
