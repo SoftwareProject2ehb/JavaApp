@@ -30,6 +30,7 @@ public class SystemFrame extends JFrame {
 		});
 	}
 
+	
 	/**
 	 * Create the frame.
 	 */
