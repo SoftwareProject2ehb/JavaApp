@@ -1,5 +1,8 @@
 package controller;
 
+import java.security.InvalidParameterException;
+
+import model.Price.betalingsType;
 import view.*;
 
 public class ConfigurationController {
@@ -35,5 +38,13 @@ public class ConfigurationController {
 	
 	public static void switchToConfigurationView() {
 		SystemController.frame.switchTo("CONFIGURATION");
+	}
+	
+	public static void createPrice() {
+		SystemController.makeTicketType(price_config.getTxtSoort(), betalingsType.PER_HOUR.toString(), 1);
+	}
+	
+	public static void updatePrice() {
+		SystemController.updateTicketType(price_config.getPrice());
 	}
 }

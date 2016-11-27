@@ -28,39 +28,38 @@ public abstract class SystemController {
 		ActionMenuController.initialize(new ActionMenuView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),
-				new CreateUserView(), new ConfigurationView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
 		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView(), new LostObjectView());
 		ReportController.initialize(new ReportView());
-
+		
 		frame = new SystemFrame();
 
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
-			@Override
-			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				try {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        try {
 					BaseDAO.getConnection().close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
+		    }
 		});
 		frame.setVisible(true);
 	}
-
+	
 	public static boolean login(String user_login, String password) {
 		if (system.login(user_login, password) == ErrorCode.NO_ERROR) {
 			return true;
 		}
 		return false;
 	}
-
+	
 	public static void meldAf() {
 		system.meldAf();
 	}
-
+	
 	public static String giveRouteInfo(String start_station, String end_station, Timestamp datetime) {
 		String[] stops = RouteCalculator.pathRoute(start_station, end_station);
 		String result = "Er is een route gevonden met de volgende haltes: ";
@@ -72,14 +71,14 @@ public abstract class SystemController {
 		}
 		return result;
 	}
-
+	
 	public static String getTicketInfo() {
-		// TODO Implementation
+		//TODO Implementation
 		return null;
 	}
-
+	
 	public static String getSubscriptionInfo() {
-		// TODO Implementation
+		//TODO Implementation
 		return null;
 	}
 
@@ -110,22 +109,21 @@ public abstract class SystemController {
 		// TODO Implementation
 		return null;
 	}
-
-	public static String makeTicketType(String ticket_type, String unit, double cost_per_unit)
-			throws IllegalArgumentException {
+	
+	public static String makeTicketType(String ticket_type, String unit, double cost_per_unit) throws IllegalArgumentException{
 		Price type;
 		switch (unit) {
-		case "uur":
+		case "hour":
 			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
 			break;
 		case "station":
-			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			type = new Price(ticket_type, Price.betalingsType.PER_STATION, cost_per_unit);
 			break;
 		case "km":
-			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			type = new Price(ticket_type, Price.betalingsType.PER_KM, cost_per_unit);
 			break;
 		case "zone":
-			type = new Price(ticket_type, Price.betalingsType.PER_HOUR, cost_per_unit);
+			type = new Price(ticket_type, Price.betalingsType.PER_ZONE, cost_per_unit);
 			break;
 		default:
 			throw new IllegalArgumentException();
@@ -134,13 +132,17 @@ public abstract class SystemController {
 		return "Tickettype succesvol aangemaakt.";
 	}
 
+	public static void updateTicketType(Price p) {
+		PriceDAO.updatePrice(p);
+	}
+	
 	public static String makeSubscriptionType() {
-		// TODO
+		//TODO
 		return null;
 	}
-
+	
 	public static String addLostObject(String name, String station, Timestamp date) {
-		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station, date, false, -1, null, null,null);
+		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station, date, false, -1, null, null, null);
 		LostObjectDAO.createLostObject(obj);
 		return "Succesvol toegevoegd.";
 	}
