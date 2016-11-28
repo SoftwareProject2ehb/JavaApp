@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 
 public class UserView extends JPanel {
 	public JTable table;
-	public JTextField textField;
+	public JTextField txtSearch;
 	public JComboBox searchAtt;
 	public DefaultTableModel tableModel;
 	
@@ -43,24 +43,35 @@ public class UserView extends JPanel {
 		table = new JTable(tableModel);
 		springLayout.putConstraint(SpringLayout.NORTH, table, 36, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, table, 10, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.EAST, table, 440, SpringLayout.WEST, this);
 		add(table);
 		
-		textField = new JTextField();
-		springLayout.putConstraint(SpringLayout.WEST, textField, 10, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, textField, -6, SpringLayout.NORTH, table);
-		springLayout.putConstraint(SpringLayout.EAST, textField, -195, SpringLayout.EAST, this);
-		add(textField);
-		textField.setColumns(10);
+		txtSearch = new JTextField();
+		springLayout.putConstraint(SpringLayout.WEST, txtSearch, 10, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, txtSearch, -6, SpringLayout.NORTH, table);
+		springLayout.putConstraint(SpringLayout.EAST, txtSearch, -195, SpringLayout.EAST, this);
+		add(txtSearch);
+		txtSearch.setColumns(10);
 		
 		searchAtt = new JComboBox();
-		springLayout.putConstraint(SpringLayout.WEST, searchAtt, 6, SpringLayout.EAST, textField);
+		springLayout.putConstraint(SpringLayout.WEST, searchAtt, 6, SpringLayout.EAST, txtSearch);
 		springLayout.putConstraint(SpringLayout.SOUTH, searchAtt, -6, SpringLayout.NORTH, table);
+		searchAtt.addItem("ID");
+		searchAtt.addItem("FIRSTNAME");
+		searchAtt.addItem("LASTNAME");
+		searchAtt.addItem("EMAIL");
+		searchAtt.addItem("PHONE");
+		searchAtt.addItem("USERNAME");
 		add(searchAtt);
 		
 		JButton btnSearch = new JButton("Search");
-		springLayout.putConstraint(SpringLayout.EAST, searchAtt, -12, SpringLayout.WEST, btnSearch);
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.findUser();
+			}
+		});
 		springLayout.putConstraint(SpringLayout.SOUTH, btnSearch, -6, SpringLayout.NORTH, table);
+		springLayout.putConstraint(SpringLayout.EAST, table, 0, SpringLayout.EAST, btnSearch);
+		springLayout.putConstraint(SpringLayout.EAST, searchAtt, -12, SpringLayout.WEST, btnSearch);
 		springLayout.putConstraint(SpringLayout.EAST, btnSearch, -10, SpringLayout.EAST, this);
 		add(btnSearch);
 		
@@ -102,12 +113,12 @@ public class UserView extends JPanel {
 		add(btnRefresh);
 		
 		JButton button = new JButton("<<  Terug");
+		springLayout.putConstraint(SpringLayout.WEST, button, 10, SpringLayout.WEST, this);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToConfigurationView();
 			}
 		});
-		springLayout.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, table);
 		springLayout.putConstraint(SpringLayout.SOUTH, button, 0, SpringLayout.SOUTH, btnNewButton);
 		add(button);
 	}
