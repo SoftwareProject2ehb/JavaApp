@@ -2,6 +2,7 @@ package unit_tests;
 
 import static org.junit.Assert.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.junit.After;
@@ -24,7 +25,7 @@ public class LogFileTest {
 
 	@Test
 	public void testConstructor() {
-		Date date = new Date();
+		Timestamp date = new Timestamp(new Date().getTime());
 		log = new LogFile("aanmaken ticket", date, 1);
 		assertTrue(log.getDescription().equals("aanmaken ticket"));
 		assertTrue(log.getTime().equals(date));
@@ -34,14 +35,14 @@ public class LogFileTest {
 	
 	@Test 
 	public void testGettersAndSetters() {
-		Date date = new Date();
+		Timestamp date = new Timestamp(new Date().getTime());
 		log = new LogFile("aanmaken ticket", date, 1);
 		log.setDescription("aanmaken user");
 		assertTrue(log.getDescription().equals("aanmaken user"));
 		
 		long time = 7000000000000L;
 		Date date2 = new Date(time);
-		log.setTime(date2);
+		//log.setTime(date2);
 		assertTrue(log.getTime().equals(date2));
 		
 		log.setLogFileID(100);

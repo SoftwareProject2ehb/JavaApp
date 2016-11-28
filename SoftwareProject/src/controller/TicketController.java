@@ -21,7 +21,7 @@ public class TicketController {
 	}
 	
 	public static void switchToBuyTicketView() {
-		SystemController.frame.switchTo("BUY_TICKET");
+		FrameController.getFrame().switchTo("BUY_TICKET");
 	}
 	
 	public static double calculatePrice() {
