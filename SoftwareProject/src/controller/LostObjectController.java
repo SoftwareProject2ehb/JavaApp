@@ -19,7 +19,7 @@ import view.*;
 
 public abstract class LostObjectController {
 	public static LostObjectView lost_object;
-	
+	static ArrayList<LostObject> lijstLostobject;
 
 	
 	
@@ -82,7 +82,7 @@ public abstract class LostObjectController {
 	public static void updateLostObject() {
 		LostObject lostObject;
 		LostObjectDAO lostObjectDao  = new LostObjectDAO();
-		ArrayList<LostObject> lijstLostobject =new ArrayList<LostObject>();
+		
 		lostObject = lijstLostobject.get(lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()));
 		lostObject.setNameClaimed(lost_object.txtNameClaimed.getText());
 		lostObject.setLocationClaimed(lost_object.txtPlaceClaimed.getText());
@@ -143,7 +143,7 @@ public abstract class LostObjectController {
 	public static void findAllLostObjects(DefaultTableModel tableModel){
 		LostObject lostObject;
 		LostObjectDAO lostObjectDao  = new LostObjectDAO();
-		ArrayList<LostObject> lijstLostobject;
+		
 		// RESET THE TABLE
 		lost_object.table.clearSelection();
 		tableModel.setRowCount(0);
