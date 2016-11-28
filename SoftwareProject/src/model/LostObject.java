@@ -3,6 +3,7 @@ package model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import controller.SystemController;
 import data_control.LostObjectDAO;
 
 public class LostObject {
@@ -35,10 +36,10 @@ public LostObject(int userID, String name, String place, Timestamp date, boolean
 		 Timestamp date_claimed) {
 	this(userID, name, place);
 	this.claimed = claimed;
-	this.user_id_claimed = user_id_claimed;
+	this.user_id_claimed = SystemController.system.logged_user.getUserID();
 	this.location_claimed = location_claimed;
 	this.name_claimed = name_claimed;
-	this.date_claimed = date_claimed;
+	this.date_claimed = new java.sql.Timestamp(new java.util.Date().getTime());
 	this.id = -1;
 }
 

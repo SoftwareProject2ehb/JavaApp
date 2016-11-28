@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import controller.SystemController;
+import model.LogFile;
 import model.User;
 import model.User.Role;
 
@@ -46,6 +48,15 @@ public class UserDAO extends BaseDAO{
 	        if (res.next()) {
 	        	id = res.getInt(1);
 	        }
+	        ps.close();
+	        res.close();
+	        // Maken van de logfile met text
+			String s = "Een user met id : "+ id+ " werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		
+			// Eind maken van logfile
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -94,6 +105,12 @@ public class UserDAO extends BaseDAO{
 		
 			ps.executeUpdate();
 			ps.close();
+			// Maken van de logfile met text
+			String s = "Een user met id : "+  user.getUserID() + " werdt gewijzigd door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			
@@ -125,7 +142,13 @@ public class UserDAO extends BaseDAO{
 			st = getConnection().createStatement();
 			String SQL = "DELETE FROM User WHERE ID = " + userID;
 			st.executeUpdate(SQL);
-
+			st.close();
+			// Maken van de logfile met text
+			String s = "Een user met id : "+ userID + " werdt verwijderd door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -169,6 +192,15 @@ public class UserDAO extends BaseDAO{
 						Role.valueOf(res.getString("role")), 
 						res.getBoolean("active"));
 			}
+	        
+	        res.close();
+	        st.close();
+			// Maken van de logfile met text
+			String s = "Een user met id : "+  id + " werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -201,6 +233,15 @@ public class UserDAO extends BaseDAO{
 	        while (res.next()) {
 	        	result.add(res.getString("login"));
 			}
+	        
+	        res.close();
+	        st.close();
+			// Maken van de logfile met text
+			String s = "Alle users logins werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -243,6 +284,14 @@ public class UserDAO extends BaseDAO{
 						Role.valueOf(res.getString("role")), 
 						res.getBoolean("active"));
 			}
+	        
+	        res.close();
+	        st.close();
+	     // Maken van de logfile met text
+	     			String s = "Een gebruiker met id " + user.getUserID() + " probeert in te loggen";
+	     			LogFile log = new LogFile(s, user.getUserID());
+	     			LogFileDAO.createLogFile(log);
+	     		// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -320,6 +369,10 @@ public class UserDAO extends BaseDAO{
 						res.getBoolean("active"));
 				lijst.add(u);
 			}
+			   res.close();
+		        st.close();
+		  
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -366,6 +419,14 @@ public class UserDAO extends BaseDAO{
 						res.getBoolean("active"));
 				lijst.add(u);
 			}
+			st.close();
+			res.close();
+			// Maken van de logfile met text
+						String s = "Alle users logins werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+					// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -409,6 +470,14 @@ public class UserDAO extends BaseDAO{
 						res.getBoolean("active"));
 				lijst.add(u);
 			}
+			st.close();
+			res.close();
+			// Maken van de logfile met text
+						String s = "Alle users logins werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+					// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

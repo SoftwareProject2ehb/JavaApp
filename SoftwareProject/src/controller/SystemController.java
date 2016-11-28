@@ -135,13 +135,23 @@ public abstract class SystemController {
 		return null;
 	}
 	
-	public static String addLostObject(String name, String station, Timestamp date) {
-		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station, date, false, -1, null, null, null);
+	public static LostObject addLostObject(String name, String station) {
+		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station);
 		int lost_object_id = LostObjectDAO.createLostObject(obj);
 		obj.setID(lost_object_id);
-		return "Succesvol toegevoegd.";
+		return obj;
 	}
-
+	public static LostObject updateLostObject(String name, String place,LostObject obj)
+	{
+		
+		
+		obj.setNameClaimed(name);
+		obj.setLocationClaimed(place);
+		obj.setDateClaimed(new java.sql.Timestamp(new java.util.Date().getTime()));
+		obj.setUserIDClaimed(SystemController.system.logged_user.getUserID());
+		LostObjectDAO.updateLostObject(obj);
+		return obj;
+	}
 	/*
 	 * public static ArrayList<LostObject> searchLostObject(String name_user,
 	 * String place_found, Timestamp time_found, Boolean claimed) {
@@ -167,6 +177,9 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 	}
 	return lijstLostobject;
 }	
+
+
+
 	public static ArrayList<LostObject> searchLostObject(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
 		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_user, place_found, time_found, claimed);
 		return object_array;

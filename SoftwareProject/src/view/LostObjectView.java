@@ -208,7 +208,7 @@ public class LostObjectView extends JPanel {
 		JButton btnAdd = new JButton("Add object");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LostObjectController.addLostObject();
+				LostObjectController.addLostObject(tableModel);
 			}
 		});
 		sl_pnlAdd.putConstraint(SpringLayout.SOUTH, btnAdd, -10, SpringLayout.SOUTH, pnlAdd);

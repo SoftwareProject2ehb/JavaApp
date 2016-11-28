@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -41,7 +43,6 @@ public abstract class LostObjectController {
 		FrameController.changeSize(1300, 700);
 	}
 	public static void findLostObjects(DefaultTableModel tableModel) {
-		ArrayList<LostObject> lijstLostobject =new ArrayList<LostObject>();
 		
 		int select_find = lost_object.cbbFind.getSelectedIndex();
 		lijstLostobject = SystemController.findLostObjects(select_find, lost_object.txtValue.getText());
@@ -67,35 +68,51 @@ public abstract class LostObjectController {
 		*/
 	}
 
-	public static void addLostObject() {
+	public static void addLostObject(DefaultTableModel tableModel) {
+		LostObject lostObject;
 		String name_finder = lost_object.txtNameFound.getText();
 		String place =lost_object.txtPlaceFound.getText();
-	
+		
 		
 		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-		SystemController.addLostObject(name_finder, place, date);
-	
+		lostObject = SystemController.addLostObject(name_finder, place);
+		tableModel.addRow(lostObject.toArray());
+		 lost_object.table.setModel(tableModel);
+		 tableModel.fireTableDataChanged();
+		 
+		 lijstLostobject.add(lostObject);
 		lost_object.txtNameFound.setText(null);
 		lost_object.txtPlaceFound.setText(null);
+		
 		
 	}
 	public static void updateLostObject() {
 		LostObject lostObject;
-		LostObjectDAO lostObjectDao  = new LostObjectDAO();
+		
 		
 		lostObject = lijstLostobject.get(lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()));
-		lostObject.setNameClaimed(lost_object.txtNameClaimed.getText());
-		lostObject.setLocationClaimed(lost_object.txtPlaceClaimed.getText());
-		lostObjectDao.updateLostObject(lostObject);
-		//TODO add update to controller
-		
-		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-		
-		
-			//SystemController.addLostObject(name_finder, place, date);
-	
+		if (lostObject.isClaimed() == true)
+		{
+			//TODO error message
+		}
+		else
+		{
+			String name = lost_object.txtNameClaimed.getText();
+			String place = lost_object.txtPlaceClaimed.getText();
+			lostObject =SystemController.updateLostObject(name, place, lostObject);
+			
 			lost_object.txtNameClaimed.setText(null);
 			lost_object.txtPlaceClaimed.setText(null);
+			
+			lost_object.table.setValueAt(lostObject.isClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 5);
+			lost_object.table.setValueAt(lostObject.getUserIDClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 6);
+			lost_object.table.setValueAt(lostObject.getLocationClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 7);
+			lost_object.table.setValueAt(lostObject.getNameClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 8);
+			lost_object.table.setValueAt(lostObject.getDateClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 9);
+			//TODO DESCRIPTION
+			//lost_object.table.setValueAt(lostObject.isClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 5);
+		}
+		
 			
 		
 	}
@@ -154,12 +171,24 @@ public abstract class LostObjectController {
 		int select_view =  lost_object.cbbSort.getSelectedIndex();
 		int select_from_date =  lost_object.cbbFrom.getSelectedIndex();
 		int select_to_date =  lost_object.cbbTo.getSelectedIndex();
-		
-		
-		lijstLostobject = SystemController.findAllLostObjects(select_view,select_from_date + 1, select_to_date);
-		for (int x = 0; x < lijstLostobject.size(); x++) {
-			tableModel.addRow(lijstLostobject.get(x).toArray());
+	
+		if(select_from_date >= select_to_date)
+		{
+			lijstLostobject = SystemController.findAllLostObjects(select_view,select_from_date + 1, select_to_date);
+			for (int x = 0; x < lijstLostobject.size(); x++) {
+				tableModel.addRow(lijstLostobject.get(x).toArray());
+			}
 		}
+		else
+			
+		{
+			JFrame frame = new JFrame();
+			JOptionPane.showMessageDialog(frame,
+				    "From date must be earlier then to date",
+				    "Something happened",
+				    JOptionPane.ERROR_MESSAGE);
+		}
+		
 
 		// JOptionPane.showMessageDialog(null,
 		// lstLostObject.getSelectedIndex());

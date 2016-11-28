@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import controller.SystemController;
+
 public class TicketDAO extends BaseDAO {
 	public static int createTicket(Ticket ticket) {
 		PreparedStatement ps = null;
@@ -38,6 +40,15 @@ public class TicketDAO extends BaseDAO {
 	        if (res.next()) {
 	        	id = res.getInt(1);
 	        }
+	        ps.close();
+	        res.close();
+	        // Maken van de logfile met text
+			String s = "Een ticket  met id : "+ id+ " werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		
+			// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
