@@ -70,13 +70,13 @@ public class CreateUserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_3, 150, SpringLayout.WEST, this);
 		add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_4 = new JLabel("Password: ");
+		JLabel lblNewLabel_4 = new JLabel("Wachtwoord:");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_4, 167, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_4, 24, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_4, 148, SpringLayout.WEST, this);
 		add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_5 = new JLabel("Role: ");
+		JLabel lblNewLabel_5 = new JLabel("Functie:");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_5, 227, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_5, 24, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_5, 148, SpringLayout.WEST, this);
@@ -110,7 +110,8 @@ public class CreateUserView extends JPanel {
 		txtPhone.setColumns(10);
 		add(txtPhone);
 		
-		JButton btnBack = new JButton("Back");
+		JButton btnBack = new JButton("Terug naar Menu");
+		springLayout.putConstraint(SpringLayout.EAST, btnBack, 0, SpringLayout.EAST, lblNewLabel);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToFindUserView();
@@ -118,7 +119,6 @@ public class CreateUserView extends JPanel {
 		});
 		springLayout.putConstraint(SpringLayout.NORTH, btnBack, 253, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, btnBack, 25, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.EAST, btnBack, 115, SpringLayout.WEST, this);
 		add(btnBack);
 		
 		
@@ -135,7 +135,7 @@ public class CreateUserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, txtPassword1, 348, SpringLayout.WEST, this);
 		add(txtPassword1);
 		
-		JLabel lblConfirmPassword = new JLabel("Confirm Password: ");
+		JLabel lblConfirmPassword = new JLabel("Bevestig wachtwoord:");
 		springLayout.putConstraint(SpringLayout.NORTH, lblConfirmPassword, 202, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblConfirmPassword, 24, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, lblConfirmPassword, 148, SpringLayout.WEST, this);
@@ -150,9 +150,9 @@ public class CreateUserView extends JPanel {
 		role.addItem("ADMIN");
 		add(role);
 		
-		JButton btnCreate = new JButton("Create");
+		JButton btnCreate = new JButton("Maak gebruiker");
 		springLayout.putConstraint(SpringLayout.NORTH, btnCreate, 253, SpringLayout.NORTH, this);
-		springLayout.putConstraint(SpringLayout.WEST, btnCreate, 264, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.WEST, btnCreate, 10, SpringLayout.WEST, role);
 		springLayout.putConstraint(SpringLayout.EAST, btnCreate, 348, SpringLayout.WEST, this);
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

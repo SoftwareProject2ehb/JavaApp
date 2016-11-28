@@ -131,15 +131,15 @@ public class BuyTicketView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPrijs, -6, SpringLayout.NORTH, txtPrijs);
 		add(lblPrijs);
 		
-		JButton button = new JButton("<<  Terug");
-		button.addActionListener(new ActionListener() {
+		JButton btnTerugNaarMenu = new JButton("Terug naar Menu");
+		btnTerugNaarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.WEST, button, 10, SpringLayout.WEST, this);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, button, -10, SpringLayout.SOUTH, this);
-		add(button);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 10, SpringLayout.WEST, this);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnTerugNaarMenu, -10, SpringLayout.SOUTH, this);
+		add(btnTerugNaarMenu);
 
 	}
 }
