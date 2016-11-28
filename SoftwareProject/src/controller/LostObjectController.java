@@ -19,8 +19,7 @@ import view.*;
 
 public abstract class LostObjectController {
 	public static LostObjectView lost_object;
-	public static FindLostObjectView find_lost_object;
-	public static CreateLostObjectView create_lost_object;
+	
 
 	
 	
@@ -30,19 +29,12 @@ public abstract class LostObjectController {
 		
 	}
 	
-	public static void initialize(FindLostObjectView find_lost_object, CreateLostObjectView create_lost_object,LostObjectView lost_object) {
-		LostObjectController.find_lost_object = find_lost_object;
-		LostObjectController.create_lost_object = create_lost_object;
+	public static void initialize(LostObjectView lost_object) {
+		
 		LostObjectController.lost_object = lost_object;
 	}
 	
-	public static void switchToFindLostObjectView() {
-		FrameController.getFrame().switchTo("FIND_LOST_OBJECT");
-	}
-	
-	public static void switchToCreateLostObjectView() {
-		FrameController.getFrame().switchTo("CREATE_LOST_OBJECT");
-	}
+
 	public static void switchToLostObjectView() 
 	{
 		FrameController.getFrame().switchTo("LOST_OBJECT");

@@ -28,7 +28,7 @@ public abstract class SystemController {
 		TicketController.initialize(new BuyTicketView());
 		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
-		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView(), new LostObjectView());
+		LostObjectController.initialize(new LostObjectView());
 		ReportController.initialize(new ReportView());
 		
 		FrameController.getFrame().addWindowListener(new java.awt.event.WindowAdapter() {

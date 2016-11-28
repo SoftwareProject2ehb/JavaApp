@@ -21,6 +21,7 @@ import javax.swing.table.TableRowSorter;
 
 import controller.ActionMenuController;
 import controller.LostObjectController;
+import model.LostObject;
 
 import javax.swing.SpringLayout;
 import javax.swing.JScrollPane;
@@ -244,6 +245,9 @@ public class LostObjectView extends JPanel {
 		JButton btnUpdate = new JButton("Update Object");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				LostObject lostObject;
+				//TODO bugfix
+				//lostObject = LostObjectController.li.get(table.convertRowIndexToModel(table.getSelectedRow()));
 				LostObjectController.updateLostObject();
 			}
 		});
