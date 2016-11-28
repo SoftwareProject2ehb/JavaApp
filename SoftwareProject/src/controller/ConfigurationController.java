@@ -2,8 +2,6 @@ package controller;
 
 import java.security.InvalidParameterException;
 
-import data_control.UserDAO;
-import model.User.Role;
 import model.Price.betalingsType;
 import model.User;
 import view.*;
@@ -95,4 +93,8 @@ public class ConfigurationController {
 	}
 	
 	
+	
+	public static void deletePrice() {
+		SystemController.deleteTicketType(price_config.getPrice());
+	}
 }
