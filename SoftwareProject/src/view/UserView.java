@@ -77,6 +77,11 @@ public class UserView extends JPanel {
 		add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("EDIT");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.switchToEditUserView();
+			}
+		});
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1, 0, SpringLayout.SOUTH, btnNewButton);
 		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1, -6, SpringLayout.WEST, btnNewButton);
 		add(btnNewButton_1);
