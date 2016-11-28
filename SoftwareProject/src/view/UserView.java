@@ -27,7 +27,7 @@ public class UserView extends JPanel {
 	public JTable table;
 	public JTextField textField;
 	public JComboBox searchAtt;
-	UserDAO ud = new UserDAO();
+	public DefaultTableModel tableModel;
 	
 
 	/**
@@ -39,30 +39,12 @@ public class UserView extends JPanel {
 		
 		String col[] = {"Login","Role"};
 
-		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+		tableModel = new DefaultTableModel(col, 0);
 		table = new JTable(tableModel);
 		springLayout.putConstraint(SpringLayout.NORTH, table, 36, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, table, 10, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, table, 440, SpringLayout.WEST, this);
 		add(table);
-<<<<<<< HEAD
-=======
-		ArrayList<User> users = UserDAO.getAllUsers();
-		
-		for (int i = 0; i < users.size(); i++){
-			int id = users.get(i).getUserID();
-			String voornaam = users.get(i).getFirstName();
-			String achternaam = users.get(i).getLastName();
-			String email = users.get(i).getEmail();
-			String phone = users.get(i).getPhone();
-			String login = users.get(i).getLogin();
-			String role = users.get(i).getRolen();
-			Boolean active = users.get(i).isActive();
-					   
-			Object[] data = {login ,role};
-			tableModel.addRow(data);
-		}
->>>>>>> refs/heads/master
 		
 		textField = new JTextField();
 		springLayout.putConstraint(SpringLayout.WEST, textField, 10, SpringLayout.WEST, this);
@@ -127,7 +109,7 @@ public class UserView extends JPanel {
 	
 	public void refreshTable(DefaultTableModel tableModel){
 		tableModel.setRowCount(0);
-		ArrayList<User> users = ud.getAllUsers();
+		ArrayList<User> users = UserDAO.getAllUsers();
 		for (int i = 0; i < users.size(); i++){
 			int id = users.get(i).getUserID();
 			String voornaam = users.get(i).getFirstName();
