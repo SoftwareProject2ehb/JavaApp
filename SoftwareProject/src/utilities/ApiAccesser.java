@@ -14,8 +14,7 @@ import org.json.*;
 import model.RouteStation;
 
 public abstract class ApiAccesser {
-	static ArrayList<ArrayList<RouteStation>> routes;
-	static ArrayList<RouteStation> stops;
+	
 	/*
 	 *Sites die ik gebruikt heb voor referentie:
 	 *
@@ -60,33 +59,37 @@ public abstract class ApiAccesser {
 	  // Een route tussen a en b bevat veel meer informatie dan alleen de naam van het station dus
 	  // ik ga nog een klasse moeten aanmaken die dat informatie kan opvangen 
 	  // dus het returntype zal meer iets zijn zoals ArrayList<RouteStop>
-	  public static ArrayList<ArrayList<RouteStation>> opvragingRoute(String a, String b, String time) throws JSONException, IOException, ParseException {
-		  routes = new ArrayList<ArrayList<RouteStation>>();
-		  
+	  public static void opvragingRoute(String a, String b, ArrayList<ArrayList<RouteStation>> routes, ArrayList<String> transfer_stations){
+		 
+		  ArrayList<RouteStation> stops;
+		 
+  
+		  try {
 		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
 		  
-		  
+		  	/*
 			String localTime = DateConverter.getDateOther() + " " + time + ":00";
 			
 			Timestamp ts = DateConverter.timestampConverter(localTime);
-			for (int k=0;k<json_data.getJSONArray("Routes").length();k++) {
+			*/
+			for (int k=0;k<json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length();k++) {
 				stops = new ArrayList<RouteStation>();
-				if (json_data.getJSONArray("Routes").getJSONObject(k).getJSONArray("Trains").length() < 1) {
+				if (json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length() < 1) {
 					break;
 				}
 			
-				JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(k).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
-					  
-				  
+				JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(k).getJSONObject("Stops").getJSONArray("Stations");
+				JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
+				for (int l=0;l<transfers_opslag.length();l++) {
+					transfer_stations.add(transfers_opslag.getJSONObject(l).get("TransferAt").toString());
+				}
 				
 				
-				boolean foundRoute = false;
+				
 				for (int i = 0; i < stations.length(); i++) {
-					if (stations.getJSONObject(i).getString("Name").toLowerCase().contains(a.toLowerCase()) && ts.before(DateConverter.timestampConverter(((stations.getJSONObject(i).getJSONObject("Time").getString("Departure")).replaceAll("T", " ")))) && !foundRoute) {
-						foundRoute = true; 
-					}
 					
-					if (stations.getJSONObject(i).getString("Name").toLowerCase().contains(b.toLowerCase()) && foundRoute) {
+					
+					if (i == stations.length()-1) {
 						RouteStation rs = new RouteStation (
 								stations.getJSONObject(i).getString("Name"),
 								stations.getJSONObject(i).getString("Coordinates"),
@@ -97,11 +100,20 @@ public abstract class ApiAccesser {
 								);
 						
 						stops.add(rs);
-						routes.add(stops);
-						stops = null;
-						break;
 						
-					} else if (foundRoute && i < stations.length()-1) {
+					} else if (i == 0) {
+						RouteStation rs = new RouteStation (
+								stations.getJSONObject(i).getString("Name"),
+								stations.getJSONObject(i).getString("Coordinates"),
+								null,
+								stations.getJSONObject(i).getJSONObject("Time").getString("Departure"),
+								0,
+								Integer.parseInt(stations.getJSONObject(i).getString("DeparturePlatform"))
+								);
+						
+						stops.add(rs);
+						
+					}else if (i < stations.length()-1) {
 						RouteStation rs = new RouteStation (
 								stations.getJSONObject(i).getString("Name"),
 								stations.getJSONObject(i).getString("Coordinates"),
@@ -115,14 +127,24 @@ public abstract class ApiAccesser {
 					}
 					
 				}
+				routes.add(stops);
 				
+			}
+		  } catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 			
 			
 		  
-		  
-		  return routes;
+
 	  }
 
 }
