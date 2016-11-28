@@ -8,10 +8,11 @@ import javax.swing.border.EmptyBorder;
 import controller.*;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 
 public class SystemFrame extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel contentPane = null;
 	private CardLayout card_layout = new CardLayout(0, 0);
 
 	/**
@@ -30,14 +31,15 @@ public class SystemFrame extends JFrame {
 		});
 	}
 
+	
 	/**
 	 * Create the frame.
 	 */
 	public SystemFrame() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 550, 400);
-		contentPane = new JPanel();
+		getContentpane();
+		contentPane.setPreferredSize(new Dimension(450, 300));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(card_layout);
@@ -58,6 +60,7 @@ public class SystemFrame extends JFrame {
 		contentPane.add(RouteController.search_route);
 		contentPane.add(LostObjectController.find_lost_object);
 		contentPane.add(LostObjectController.create_lost_object);
+		contentPane.add(LostObjectController.lost_object);
 		contentPane.add(ReportController.report);
 		
 		card_layout.addLayoutComponent(CustomerController.create_customer, "CREATE_CUSTOMER");
@@ -75,10 +78,19 @@ public class SystemFrame extends JFrame {
 		card_layout.addLayoutComponent(RouteController.search_route, "SEARCH_ROUTE");
 		card_layout.addLayoutComponent(LostObjectController.find_lost_object, "FIND_LOST_OBJECT");
 		card_layout.addLayoutComponent(LostObjectController.create_lost_object, "CREATE_LOST_OBJECT");
+		card_layout.addLayoutComponent(LostObjectController.lost_object, "LOST_OBJECT");
 		card_layout.addLayoutComponent(ReportController.report,"RAPORTEN" );
 		
 		card_layout.show(contentPane, "LOGIN");
 		
+		this.pack();
+	}
+	
+	public JPanel getContentpane() {
+		if (contentPane == null) {
+			contentPane = new JPanel();
+		}
+		return contentPane;
 	}
 	
 	public void switchTo(String panel_name) {

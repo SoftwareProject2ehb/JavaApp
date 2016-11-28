@@ -3,17 +3,18 @@ package data_control;
 import model.*;
 import model.Price.betalingsType;
 
-import com.mysql.jdbc.Statement;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-
 public class PriceDAO extends BaseDAO {
-	public static void createPrice(Price price) {
+	public static int createPrice(Price price) {
 		
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 
 		String sql = "INSERT INTO Price(typeTicket, typeBetaling, costPerUnit) VALUES(?,?,?)";
 		
@@ -25,10 +26,16 @@ public class PriceDAO extends BaseDAO {
 	        ps = getConnection().prepareStatement(sql);
 	        
 	        ps.setString(1, price.getTypeTicket());
-	        ps.setString(2, price.getTypeBetaling().toString());
+	        ps.setString(2, price.getTypeBetaling().toCapsString());
 	        ps.setDouble(3, price.getCostPerUnit());
 	        
 	        ps.executeUpdate();
+	        
+	        st = getConnection().createStatement();
+	        res = st.executeQuery("SELECT ID FROM Price ORDER BY ID DESC LIMIT 1");
+	        if (res.next()) {
+	        	id = res.getInt(1);
+	        }
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -36,12 +43,19 @@ public class PriceDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            throw new RuntimeException("error.unexpected");
 	        }
 	    }
+		return id;
 	}
 	
 	public static void removePrice(int id) {
@@ -61,7 +75,18 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
-		}
+		} finally {
+	        try {
+	            if (ps != null)
+	                ps.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 	}
 	
 	public static void updatePrice(Price price) {
@@ -75,7 +100,7 @@ public class PriceDAO extends BaseDAO {
 			ps = getConnection().prepareStatement(update);
 		
 			ps.setString(1, price.getTypeTicket());
-			ps.setString(2, price.getTypeBetaling().toString());
+			ps.setString(2, price.getTypeBetaling().toCapsString());
 			ps.setDouble(3, price.getCostPerUnit());
 			ps.setInt(4, price.getId());
 			
@@ -84,18 +109,30 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
-		}
+		} finally {
+	        try {
+	            if (ps != null)
+	                ps.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 	}
 	
 	public static Price findPriceById(int id) {
 		Statement st = null;
 		Price p = null;
+		ResultSet res = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Price WHERE ID = " + id);
+			res = st.executeQuery("SELECT * FROM Price WHERE ID = " + id);
 
 			while (res.next()) {
 				p = new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4));
@@ -103,20 +140,37 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 
 		return p;
 	}
 	
 	public static Price findPriceByType(String type) {
-		Statement st = null;
+		PreparedStatement ps = null;
 		Price p = null;
+		ResultSet res = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
-			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Price WHERE typeTicket LIKE '" + type + "'");
+			ps = getConnection().prepareStatement("SELECT * FROM Price WHERE typeTicket LIKE ?");
+			
+			ps.setString(1, type);
+			
+			res = ps.executeQuery();
 
 			while (res.next()) {
 				p = new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4));
@@ -124,7 +178,20 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (ps != null)
+	            	ps.close();
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 
 		return p;
 	}
@@ -132,14 +199,14 @@ public class PriceDAO extends BaseDAO {
 		
 	public static ArrayList<String> getAllTicketTypes() {
 		ArrayList<String> list = new ArrayList<String>();
-		
+		ResultSet res = null;
 		Statement st = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT typeTicket FROM Price");
+			res = st.executeQuery("SELECT typeTicket FROM Price");
 
 			while (res.next()) {
 				list.add(res.getString(1));
@@ -147,58 +214,14 @@ public class PriceDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		return list;
-	}
-	
-	public static ArrayList<Price> getAll() {
-		ArrayList<Price> list = new ArrayList<Price>();
-		
-		Statement st = null;
-		try {
-			if (getConnection().isClosed()) {
-				throw new IllegalStateException("error unexpected");
-			}
-			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Price");
-
-			while (res.next()) {
-				list.add(new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4)));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Price");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(1);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
+		} finally {
 	        try {
 	            if (st != null)
-	            	st.close();
+	                st.close();
+	            if (res != null)
+	                res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -206,6 +229,42 @@ public class PriceDAO extends BaseDAO {
 	        }
 	    }
 		
-		return id + 1;
+		return list;
+	}
+	
+	public static ArrayList<Price> getAll() {
+		ArrayList<Price> list = new ArrayList<Price>();
+		ResultSet res = null;
+		
+		Statement st = null;
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("error unexpected");
+			}
+			st = (Statement) getConnection().createStatement();
+			res = st.executeQuery("SELECT * FROM Price");
+
+			while (res.next()) {
+				list.add(new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	        try {
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
+		
+		return list;
 	}
 }

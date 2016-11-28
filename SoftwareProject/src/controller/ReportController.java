@@ -20,7 +20,7 @@ public class ReportController {
 	}
 	
 	public static void switchToReportView() {
-		SystemController.frame.switchTo("REPORT");
+		FrameController.getFrame().switchTo("REPORT");
 	}
 	
 	public static String fillOutput(int index){

@@ -20,14 +20,24 @@ public class Price {
 			}
 		}
 		
+		public String toCapsString() {
+			switch(this) {
+			case PER_STATION: return "PER_STATION";
+			case PER_KM: return "PER_KM";
+			case PER_HOUR: return "PER_HOUR";
+			case PER_ZONE: return "PER_ZONE";
+			default: throw new IllegalArgumentException();
+			}
+		}
+		
 		public static betalingsType stringToBetalingsType(String s) throws InvalidParameterException{
-			if (s.toUpperCase().equals("PER_STATION")) {
+			if (s.toUpperCase().equals("PER_STATION") || s.toUpperCase().equals("STATION")) {
 				return betalingsType.PER_STATION;
-			} else if (s.toUpperCase().equals("PER_KM")) {
+			} else if (s.toUpperCase().equals("PER_KM") || s.toUpperCase().equals("KM")) {
 				return betalingsType.PER_KM;
-			} else if (s.toUpperCase().equals("PER_HOUR")) {
+			} else if (s.toUpperCase().equals("PER_HOUR") || s.toUpperCase().equals("HOUR")) {
 				return betalingsType.PER_HOUR;
-			} else if (s.toUpperCase().equals("PER_ZONE")) {
+			} else if (s.toUpperCase().equals("PER_ZONE") || s.toUpperCase().equals("ZONE")) {
 				return betalingsType.PER_ZONE;
 			} else {
 				throw new InvalidParameterException();
@@ -67,7 +77,7 @@ public class Price {
 		this.typeTicket = typeTicket;
 		this.typeBetaling = bt;
 		this.costPerUnit = cpu;
-		this.id = PriceDAO.findNextId();
+		this.id = -1;
 	}
 	
 	public Price (int id, String typeTicket, betalingsType bt, double cpu) throws IllegalArgumentException {
@@ -89,6 +99,11 @@ public class Price {
 	}
 	
 	public String getTypeTicket() {
+		return typeTicket;
+	}
+	
+	@Override
+	public String toString() {
 		return typeTicket;
 	}
 

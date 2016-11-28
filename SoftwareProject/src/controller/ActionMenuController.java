@@ -15,6 +15,7 @@ public static ActionMenuView action_menu;
 	}
 	
 	public static void switchToActionMenuView() {
-		SystemController.frame.switchTo("ACTION_MENU");
+		FrameController.getFrame().switchTo("ACTION_MENU");
+		FrameController.changeSize(500, 300);
 	}
 }
