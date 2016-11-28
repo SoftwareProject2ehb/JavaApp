@@ -36,6 +36,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 public class PriceConfigView extends JPanel {
+	public final String EURO = "\u20ac";
+	
 	private JTextField txtSoort;
 	private JTextField txtPrijs;
 	private int index;
@@ -120,7 +122,7 @@ public class PriceConfigView extends JPanel {
 		comboBox_soort.setSelectedItem(priceList.get(index));
 		add(comboBox_soort);
 		
-		JLabel lblEuro = new JLabel("€");
+		JLabel lblEuro = new JLabel(EURO);
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, lblEuro, 0, SpringLayout.VERTICAL_CENTER, comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, lblEuro, 6, SpringLayout.EAST, comboBox_soort);
 		add(lblEuro);
