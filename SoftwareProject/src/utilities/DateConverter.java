@@ -35,10 +35,12 @@ public class DateConverter {
 	
 	public static String getTime() {
 		String t = "";
+		int hour = LocalTime.now().getHour();
+		int min = LocalTime.now().getMinute();
 		
-		t += LocalTime.now().getHour();
+		t += (hour<10)?("0"+hour):min;
 		t += ":";
-		t += LocalTime.now().getMinute();
+		t += (min<10)?("0"+min):min;
 		
 		return t;
 	}

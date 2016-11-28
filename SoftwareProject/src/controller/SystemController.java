@@ -130,6 +130,10 @@ public abstract class SystemController {
 		PriceDAO.updatePrice(p);
 	}
 	
+	public static void deleteTicketType(Price p) {
+		PriceDAO.removePrice(p.getId());
+	}
+	
 	public static String makeSubscriptionType() {
 		//TODO
 		return null;
