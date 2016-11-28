@@ -2,8 +2,10 @@ package controller;
 
 import java.security.InvalidParameterException;
 
+import data_control.UserDAO;
 import model.Price.betalingsType;
 import model.User;
+import model.User.Role;
 import view.*;
 
 public class ConfigurationController {
@@ -19,6 +21,7 @@ public class ConfigurationController {
 		ConfigurationController.price_config = price_config;
 		ConfigurationController.find_user = find_user;
 		ConfigurationController.create_user = create_user;
+		ConfigurationController.edit_user = edit_user;
 		ConfigurationController.configuration = configuration;
 	}
 	
@@ -37,6 +40,10 @@ public class ConfigurationController {
 	
 	public static void switchToCreateUserView() {
 		FrameController.getFrame().switchTo("CREATE_USER");
+	}
+	
+	public static void switchToEditUserView() {
+		FrameController.getFrame().switchTo("EDIT_USER");
 	}
 	
 	public static void switchToConfigurationView() {

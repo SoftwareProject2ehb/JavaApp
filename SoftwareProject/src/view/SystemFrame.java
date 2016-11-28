@@ -54,6 +54,7 @@ public class SystemFrame extends JFrame {
 		contentPane.add(TicketController.buy_ticket);
 		contentPane.add(ConfigurationController.create_user);
 		contentPane.add(ConfigurationController.find_user);
+		contentPane.add(ConfigurationController.edit_user);
 		contentPane.add(ConfigurationController.price_config);
 		contentPane.add(ConfigurationController.report);
 		contentPane.add(ConfigurationController.configuration);
