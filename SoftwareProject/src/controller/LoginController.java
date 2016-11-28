@@ -19,7 +19,9 @@ public class LoginController {
 	}
 	
 	public static void switchToLoginView() {
-		SystemController.frame.switchTo("LOGIN");
+		FrameController.getFrame().switchTo("LOGIN");
+		FrameController.changeSize();
+		login.reset();
 	}
 	
 	public static boolean login() {

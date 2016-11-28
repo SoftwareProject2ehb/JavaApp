@@ -12,9 +12,12 @@ import model.User.Role;
 public class UserDAO extends BaseDAO{
 	
 
-	public static void createUser(User user) {
+	public static int createUser(User user) {
 
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 
 		String sql = "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?)";
 
@@ -37,14 +40,25 @@ public class UserDAO extends BaseDAO{
 			ps.setBoolean(9, user.isActive());
 
 			ps.executeUpdate();
+			
+	        st = getConnection().createStatement();
+	        res = st.executeQuery("SELECT ID FROM Price ORDER BY ID DESC LIMIT 1");
+	        if (res.next()) {
+	        	id = res.getInt(1);
+	        }
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			;
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {
-				if (ps != null)
-					ps.close();
+	            if (ps != null)
+	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
 
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -52,7 +66,7 @@ public class UserDAO extends BaseDAO{
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-
+		return id;
 	}
 	
 	
@@ -67,8 +81,6 @@ public class UserDAO extends BaseDAO{
 		}
 			ps = getConnection().prepareStatement(update);
 		
-	
-			
 			ps.setString(1, user.getFirstName());
 			ps.setString(2, user.getLastName());
 			ps.setString(3, user.getEmail());
@@ -86,7 +98,19 @@ public class UserDAO extends BaseDAO{
 			System.out.println(e.getMessage());
 			
 			throw new RuntimeException(e.getMessage());
-		}      
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				
+				throw new RuntimeException(e.getMessage());
+			}
+		}
 	}
 	
 	public static User removeUser(int userID) {
@@ -105,6 +129,18 @@ public class UserDAO extends BaseDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 		return user;
 	}
@@ -113,24 +149,25 @@ public class UserDAO extends BaseDAO{
 	public static User findUserById(int id) {
 		User user = null;
 		Statement st = null;
+		ResultSet res = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
-	        if (rs.next()) {
+	        res = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
+	        if (res.next()) {
 	        	user = new User(
-						rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
+						res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
 						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 			}
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
@@ -139,6 +176,10 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            throw new RuntimeException("error.unexpected");
@@ -149,15 +190,16 @@ public class UserDAO extends BaseDAO{
 	
 	public static ArrayList<String> findAllLogins() {
 		ArrayList<String> result = new ArrayList<String>();
+		ResultSet res = null;
 		Statement st = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet rs = st.executeQuery("SELECT login FROM User");
-	        while (rs.next()) {
-	        	result.add(rs.getString("login"));
+	        res = st.executeQuery("SELECT login FROM User");
+	        while (res.next()) {
+	        	result.add(res.getString("login"));
 			}
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
@@ -166,6 +208,10 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            throw new RuntimeException("error.unexpected");
@@ -177,24 +223,25 @@ public class UserDAO extends BaseDAO{
 	public static User findUserByLogin(String login){
 		User user = null;
 		Statement st = null;
+		ResultSet res = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE login LIKE '%" + login+ "%'");
-	        if (rs.next()) {
+	        res = st.executeQuery("SELECT * FROM User WHERE login LIKE '%" + login+ "%'");
+	        if (res.next()) {
 	        	user = new User(
-						rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
+						res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
 						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 			}
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
@@ -203,6 +250,10 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            throw new RuntimeException("error.unexpected");
@@ -215,14 +266,15 @@ public class UserDAO extends BaseDAO{
 	public String findUserByIdForPassword(int id) {
 		String pass = null;
 		Statement st = null;
+		ResultSet res = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet rs = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
-	        if (rs.next()) {
-	        	pass = rs.getString("password");
+	        res = st.executeQuery("SELECT * FROM User WHERE ID = " + id);
+	        if (res.next()) {
+	        	pass = res.getString("password");
 	        }
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
@@ -231,6 +283,10 @@ public class UserDAO extends BaseDAO{
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            throw new RuntimeException("error.unexpected");
@@ -241,6 +297,7 @@ public class UserDAO extends BaseDAO{
 	
 	public static ArrayList<User> getAllUsers() {
 		ArrayList<User> lijst = new ArrayList<User>();
+		ResultSet res = null;
 		Statement st = null;
 		try {
 			if (getConnection() == null || getConnection().isClosed()) {
@@ -248,25 +305,37 @@ public class UserDAO extends BaseDAO{
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM User");
+			res = st.executeQuery("SELECT * FROM User");
 
-			while (rs.next()) {
-				User u = new User(rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
-						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+			while (res.next()) {
+				User u = new User(res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
+						//res.getString("address"), 
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 				lijst.add(u);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (st != null)
+	            	st.close();
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 
 		return lijst;
 	}
@@ -276,96 +345,86 @@ public class UserDAO extends BaseDAO{
 	public static ArrayList<User> findUserByAttribute(FindUser attribuut,String zoekop) { //Find user by attribute and string
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
+		ResultSet res = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " IN ('" + zoekop + "') ");
+			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " IN ('" + zoekop + "') ");
 
-			while (rs.next()) {
-				User u = new User(rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
-						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+			while (res.next()) {
+				User u = new User(res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
+						//res.getString("address"), 
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 				lijst.add(u);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} finally {
+	        try {
+	            if (st != null)
+	            	st.close();
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
 		return lijst;
 	}
 	
 	public static ArrayList<User> findUserByAttribute(FindUser attribuut,int zoekop) { //Find user by attribute and integer
 		ArrayList<User> lijst = new ArrayList<User>();
 		Statement st = null;
+		ResultSet res = null;
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " = " + zoekop);
+			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " = " + zoekop);
 
-			while (rs.next()) {
-				User u = new User(rs.getInt("ID"), 
-						rs.getString("first_name"),
-						rs.getString("last_name"), 
-						rs.getString("email"),
-						rs.getString("phone"),
-						//rs.getString("address"), 
-						rs.getString("login"),
-						rs.getString("password"), 
-						Role.valueOf(rs.getString("role")), 
-						rs.getBoolean("active"));
+			while (res.next()) {
+				User u = new User(res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
+						//res.getString("address"), 
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
 				lijst.add(u);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return lijst;
-	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM User");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(1);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
+		} finally {
 	        try {
 	            if (st != null)
 	            	st.close();
-
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            throw new RuntimeException("error.unexpected");
 	        }
 	    }
-		
-		return id + 1;
+		return lijst;
 	}
-	
 }

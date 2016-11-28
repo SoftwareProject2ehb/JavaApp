@@ -1,6 +1,6 @@
 package model;
 
-import controller.*;
+import controller.SystemController;
 
 public class Main {
 

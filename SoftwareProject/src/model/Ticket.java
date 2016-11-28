@@ -26,7 +26,7 @@ public class Ticket {
 		if (type == null || start == null || end == null || price < 0)
 			throw new IllegalArgumentException();
 		
-		this.ID = TicketDAO.findNextId();
+		this.id = -1;
 		this.typeTicket = type;
 		this.oneWayTicket = oneWayTicket;
 		this.price = price;

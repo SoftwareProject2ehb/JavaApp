@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableModel;
+
 import data_control.*;
 import model.*;
 import view.*;
@@ -19,11 +23,11 @@ public static FindSubscriptionView find_subscription;
 	}
 	
 	public static void switchToBuySubscriptionView() {
-		SystemController.frame.switchTo("BUY_SUBSCRIPTION");
+		FrameController.getFrame().switchTo("BUY_SUBSCRIPTION");
 	}
 	
 	public static void switchToFindSubscriptionView() {
-		SystemController.frame.switchTo("FIND_SUBSCRIPTION");
+		FrameController.getFrame().switchTo("FIND_SUBSCRIPTION");
 	}
 	
 	public static void calculatePrice() {
@@ -66,4 +70,50 @@ public static FindSubscriptionView find_subscription;
 		double prijs = Subscription.calculatePrice(SubscriptionTypeDAO.findSubTypeById(type), SubscriptionPriceDAO.findSubPriceById(price));
 		buy_subscription.txtPrijs.setText(String.valueOf(prijs));
 	}
+	
+	
+	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model) {
+
+		if (model.getRowCount() > 1) {
+			String col[] = {"ID","Type","Price", "Customer ID", "StartStation", "EndStation", "StartDate", "EndDate", "Active"};
+
+			model = new DefaultTableModel(col, 0);
+			
+		}
+
+	    for (int i=0;i<subList.size();i++) {
+	    	Object[] item = {subList.get(i).getId(),SubscriptionTypeDAO.findSubTypeById(subList.get(i).getTicketType()).getName(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
+	    			subList.get(i).getStartDate(), subList.get(i).getEndDate(), subList.get(i).getActive()};
+	    	model.addRow(item);
+	    }
+
+	    return model;
+
+	}
+	
+	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model, int id) {
+
+		
+		String col[] = {"ID","Type","Price", "Customer ID", "StartStation", "EndStation", "StartDate", "EndDate", "Active"};
+
+		model = new DefaultTableModel(col, 0);
+			
+		
+		
+		subList.clear();
+		subList.add(new SubscriptionDAO().findSubById(id));
+
+	    for (int i=0;i<subList.size();i++) {
+	    	Object[] item = {subList.get(i).getId(),SubscriptionTypeDAO.findSubTypeById(subList.get(i).getTicketType()).getName(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
+	    			subList.get(i).getStartDate(), subList.get(i).getEndDate(), subList.get(i).getActive()};
+	    	model.addRow(item);
+	    }
+
+	    return model;
+
+	}
+
+
+	
+	
 }

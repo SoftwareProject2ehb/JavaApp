@@ -44,7 +44,7 @@ public class User {
 	}
 	
 	public User(String firstName, String lastName, String email, String phone, String login, String password, Role rolen) {
-		this.userID = UserDAO.findNextId();
+		this.userID = -1;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

@@ -1,20 +1,26 @@
 package data_control;
 
 import model.*;
+import controller.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.Statement;
-
 public class CustomerDAO extends BaseDAO {
-	
-	public static void createCustomer(Customer customer) {
+	/**
+	 * @param customer The object of type Customer that should be created in the database.
+	 * @return The ID of the record containing the created Customer. This ID should be used to set the ID of the Customer object locally.
+	 */
+	public static int createCustomer(Customer customer) {
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 		
-		String sql = "INSERT INTO Customer VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO Customer (first_name, last_name, address, email, phone) VALUES(?,?,?,?,?)";
 		
 		try {
 
@@ -23,15 +29,19 @@ public class CustomerDAO extends BaseDAO {
 	        }
 	        ps = getConnection().prepareStatement(sql);
 	        
-	        ps.setInt(1, customer.getId());
-	        ps.setString(2, customer.getFirstName());
-	        ps.setString(3, customer.getLastName());
-	        ps.setString(4, customer.getAddress());
-	        ps.setString(5, customer.getEmail());
-	        ps.setString(6, customer.getPhone());
+	        ps.setString(1, customer.getFirstName());
+	        ps.setString(2, customer.getLastName());
+	        ps.setString(3, customer.getAddress());
+	        ps.setString(4, customer.getEmail());
+	        ps.setString(5, customer.getPhone());
 	  
-	        
 	       ps.executeUpdate();
+	       
+	       st = getConnection().createStatement();
+	       res = st.executeQuery("SELECT ID FROM Customer ORDER BY ID DESC LIMIT 1");
+	       if (res.next()) {
+	        	id = res.getInt(1);
+			}
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -39,12 +49,19 @@ public class CustomerDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
+	            if (!getConnection().isClosed())
+	            	getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            throw new RuntimeException("error.unexpected");
 	        }
 	    }
+		return id;
 	}
 	
 	public static void removeCustomer(Customer customer) {
@@ -70,6 +87,8 @@ public class CustomerDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (!getConnection().isClosed())
+	            	getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -106,6 +125,8 @@ public class CustomerDAO extends BaseDAO {
 	        try {
 	            if (ps != null)
 	                ps.close();
+	            if (!getConnection().isClosed())
+	            	getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -117,7 +138,7 @@ public class CustomerDAO extends BaseDAO {
 	public static Customer findCustomerById(int id) {
 		
 		Customer cust = null;
-		
+		ResultSet res = null;
 		Statement st = null;
 		
 		try {
@@ -127,7 +148,7 @@ public class CustomerDAO extends BaseDAO {
 	        }
 	        
 	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT * FROM Customer WHERE ID = " + id + " LIMIT 1");
+	        res = st.executeQuery("SELECT * FROM Customer WHERE ID = " + id + " LIMIT 1");
 	        
 	        if (res.next()) {
 	        	cust = new Customer(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
@@ -141,6 +162,10 @@ public class CustomerDAO extends BaseDAO {
 	        try {
 	            if (st != null)
 	            	st.close();
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+	            	getConnection().close();
 
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -149,40 +174,5 @@ public class CustomerDAO extends BaseDAO {
 	    }
 		
 		return cust;
-	}
-	
-	public static int findNextId() {
-		int id = 0;
-		Statement st = null;
-		
-		try {
-
-	        if (getConnection().isClosed()) {
-	            throw new IllegalStateException("error unexpected");
-	        }
-	        
-	        st = (Statement) getConnection().createStatement();
-	        ResultSet res = st.executeQuery("SELECT MAX(ID) FROM Customer");
-	        
-	        if (res.next()) {
-	        	id = res.getInt(1);
-
-			}
-	        
-	    } catch (SQLException e) {
-	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e.getMessage());
-	    } finally {
-	        try {
-	            if (st != null)
-	            	st.close();
-
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            throw new RuntimeException("error.unexpected");
-	        }
-	    }
-		
-		return id + 1;
 	}
 }

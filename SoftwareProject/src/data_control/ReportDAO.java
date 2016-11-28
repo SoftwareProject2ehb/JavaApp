@@ -15,22 +15,36 @@ public class ReportDAO extends BaseDAO {
 	{
 		ArrayList<String> meestVerkocht= new ArrayList<String>();
 		Statement st = null;
+		ResultSet res = null;
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select startsation, COUNT(startsation) AS MOST_FREQUENT from Ticket GROUP BY startsation ORDER BY COUNT(startsation) DESC )");
+			res = st.executeQuery("select startstation, COUNT(startstation) AS MOST_FREQUENT from Ticket GROUP BY startstation ORDER BY COUNT(startstation) DESC ");
 
 			while (res.next()) {
-				String data ="Station: " +  res.getString(1) + "aantal: " + res.getInt(2);
+				String data ="Station: " +  res.getString(1) + " aantal: " + res.getInt(2);
 				
 				meestVerkocht.add(data);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+            	if (res != null)
+                    res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return meestVerkocht;
@@ -42,22 +56,36 @@ public class ReportDAO extends BaseDAO {
 	{
 		ArrayList<String> meestVerkocht= new ArrayList<String>();
 		Statement st = null;
+		ResultSet res = null;
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select endstation COUNT(endstation) AS MOST_FREQUENT from Ticket GROUP BY endstation ORDER BY COUNT(endstation) DESC");
+			res = st.executeQuery("select endstation, COUNT(endstation) AS MOST_FREQUENT from Ticket GROUP BY endstation ORDER BY COUNT(endstation) DESC");
 
 			while (res.next()) {
-				String data ="Station: " +  res.getString(1) + "aantal: " + res.getInt(2);
+				String data ="Station: " +  res.getString(1) + " aantal: " + res.getInt(2);
 				
 				meestVerkocht.add(data);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+            	if (res != null)
+                    res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return meestVerkocht;
@@ -67,16 +95,15 @@ public class ReportDAO extends BaseDAO {
 	public static String getTypeMostSoldTicket(){
 		
 		String type = null;
-		
-
 		Statement st = null;
+		ResultSet res = null;
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select type, COUNT(type) AS MOST_FREQUENT from Ticket GROUP BY type ORDER BY COUNT(type) DESC LIMIT 1");
+			res = st.executeQuery("select type, COUNT(type) AS MOST_FREQUENT from Ticket GROUP BY type ORDER BY COUNT(type) DESC LIMIT 1");
 
 			res.next();
 			type = res.getString(1);
@@ -84,6 +111,19 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+            	if (res != null)
+                    res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return type;
@@ -93,16 +133,15 @@ public class ReportDAO extends BaseDAO {
 	public static int getAmountSoldTicket()
 	{
 		int amount = 0;
-		
-
 		Statement st = null;
+		ResultSet res = null;
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select COUNT(*) from Ticket");
+			res = st.executeQuery("select COUNT(*) from Ticket");
 
 			res.next();
 			amount = res.getInt(1);
@@ -110,8 +149,21 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+            	if (res != null)
+                    res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-				
+			
 		return amount;
 	}
 	
@@ -119,22 +171,36 @@ public class ReportDAO extends BaseDAO {
 	{
 		ArrayList<String> meestVerkocht= new ArrayList<String>();
 		Statement st = null;
+		ResultSet res = null;
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select startsation, COUNT(startsation) AS MOST_FREQUENT from Subscription GROUP BY startsation ORDER BY COUNT(startsation) DESC )");
+			res = st.executeQuery("select startstation, COUNT(startstation) AS MOST_FREQUENT from Subscription GROUP BY startstation ORDER BY COUNT(startstation) DESC ");
 
 			while (res.next()) {
-				String data ="Station: " +  res.getString(1) + "aantal: " + res.getInt(2);
+				String data ="Station: " +  res.getString(1) + " aantal: " + res.getInt(2);
 				
 				meestVerkocht.add(data);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+            	if (res != null)
+                    res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return meestVerkocht;
@@ -146,22 +212,36 @@ public class ReportDAO extends BaseDAO {
 	{
 		ArrayList<String> meestVerkocht= new ArrayList<String>();
 		Statement st = null;
+		ResultSet res = null;
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select endstation COUNT(endstation) AS MOST_FREQUENT from Subscription GROUP BY endstation ORDER BY COUNT(endstation) DESC");
+			res = st.executeQuery("select endstation, COUNT(endstation) AS MOST_FREQUENT from Subscription GROUP BY endstation ORDER BY COUNT(endstation) DESC");
 
 			while (res.next()) {
-				String data ="Station: " +  res.getString(1) + "aantal: " + res.getInt(2);
+				String data ="Station: " +  res.getString(1) + " aantal: " + res.getInt(2);
 				
 				meestVerkocht.add(data);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+            	if (res != null)
+                    res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return meestVerkocht;
@@ -171,23 +251,37 @@ public class ReportDAO extends BaseDAO {
 	public static String getTypeMostSoldSubscription(){
 		
 		String type = null;
-		
-
 		Statement st = null;
+		ResultSet res = null;
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select type, COUNT(type) AS MOST_FREQUENT from Subscription GROUP BY type ORDER BY COUNT(type) DESC LIMIT 1");
+			res = st.executeQuery("select type, COUNT(type) AS MOST_FREQUENT from Subscription GROUP BY type ORDER BY COUNT(type) DESC LIMIT 1");
 
 			res.next();
-			type = res.getString(1);
+			ResultSet res2 = st.executeQuery("SELECT name FROM `SubscriptionType` WHERE id =" + res.getString(1));
+			res2.next();
+			type = res2.getString(1);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+            	if (res != null)
+                    res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return type;
@@ -198,16 +292,15 @@ public class ReportDAO extends BaseDAO {
 	public static int getAmountSoldSubscripton()
 	{
 		int amount = 0;
-		
-
 		Statement st = null;
+		ResultSet res = null;
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			ResultSet res = st.executeQuery("select COUNT(*) from Subscription");
+			res = st.executeQuery("select COUNT(*) from Subscription");
 
 			res.next();
 			amount = res.getInt(1);
@@ -215,6 +308,19 @@ public class ReportDAO extends BaseDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+            try {
+            	if (st != null)
+                    st.close();
+            	if (res != null)
+                    res.close();
+				if (!getConnection().isClosed())
+					getConnection().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 		return amount;

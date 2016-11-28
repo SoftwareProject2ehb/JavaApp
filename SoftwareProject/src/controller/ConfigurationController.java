@@ -2,7 +2,7 @@ package controller;
 
 import java.security.InvalidParameterException;
 
-import model.User.Role;
+import model.Price.betalingsType;
 import view.*;
 
 public class ConfigurationController {

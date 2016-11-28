@@ -4,7 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
 import controller.ConfigurationController;
-import data_control.ReportDAO;
+import controller.ReportController;
+import model.Report;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -14,15 +15,21 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
-import model.Report;
+
 
 public class ReportView extends JPanel {
-
+	String[] soortRaport = {"Meest verkochte ticket 'van' ","Meest verkochte ticket 'naar'","Meest verkochte ticket 'Type'","Aantal verkochte tickets","Meest verkochte abonoment 'van' ","Meest verkochte abonoment 'naar'","Meest verkochte abonoment 'Type'","Aantal verkochte abonomenten"};
+	public JComboBox cboxReport = new JComboBox(soortRaport);
+	public JTextArea outputReport = new JTextArea();
+	
 	/**
 	 * Create the panel.
 	 */
 	public ReportView() {
 		SpringLayout springLayout = new SpringLayout();
+		springLayout.putConstraint(SpringLayout.WEST, cboxReport, 20, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.WEST, outputReport, 20, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, outputReport, -134, SpringLayout.EAST, this);
 		setLayout(springLayout);
 		
 		JLabel lblRaporten = new JLabel("Raporten");
@@ -31,89 +38,39 @@ public class ReportView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, lblRaporten, 10, SpringLayout.WEST, this);
 		add(lblRaporten);
 		
-		String[] soortRaport = {"Meest verkochte ticket 'van' ","Meest verkochte ticket 'naar'","Meest verkochte ticket 'Type'","Aantal verkochte tickets","Meest verkochte abonoment 'van' ","Meest verkochte abonoment 'naar'","Meest verkochte abonoment 'Type'","Aantal verkochte abonomenten"};
-		JComboBox cboxRaport = new JComboBox(soortRaport);
-		springLayout.putConstraint(SpringLayout.NORTH, cboxRaport, 6, SpringLayout.SOUTH, lblRaporten);
-		springLayout.putConstraint(SpringLayout.WEST, cboxRaport, 20, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.EAST, cboxRaport, 150, SpringLayout.WEST, this);
-		add(cboxRaport);
+		
+		springLayout.putConstraint(SpringLayout.NORTH, cboxReport, 6, SpringLayout.SOUTH, lblRaporten);
+		add(cboxReport);
 		
 		JButton zoekBtn = new JButton("Zoek");
-		springLayout.putConstraint(SpringLayout.NORTH, zoekBtn, -1, SpringLayout.NORTH, cboxRaport);
-		springLayout.putConstraint(SpringLayout.WEST, zoekBtn, 6, SpringLayout.EAST, cboxRaport);
+		springLayout.putConstraint(SpringLayout.NORTH, zoekBtn, 40, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.EAST, cboxReport, -6, SpringLayout.WEST, zoekBtn);
+		springLayout.putConstraint(SpringLayout.NORTH, outputReport, 4, SpringLayout.SOUTH, zoekBtn);
+		springLayout.putConstraint(SpringLayout.EAST, zoekBtn, 0, SpringLayout.EAST, outputReport);
 		add(zoekBtn);
-		
-		JTextArea output = new JTextArea();
-		springLayout.putConstraint(SpringLayout.NORTH, output, 4, SpringLayout.SOUTH, zoekBtn);
-		springLayout.putConstraint(SpringLayout.WEST, output, 20, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, output, 200, SpringLayout.SOUTH, zoekBtn);
-		springLayout.putConstraint(SpringLayout.EAST, output, 105, SpringLayout.EAST, zoekBtn);
-		add(output);
+		add(outputReport);
 		
 		JButton button = new JButton("<<  Terug");
+		springLayout.putConstraint(SpringLayout.SOUTH, outputReport, -4, SpringLayout.NORTH, button);
+		springLayout.putConstraint(SpringLayout.NORTH, button, 267, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, button, 20, SpringLayout.WEST, this);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToConfigurationView();
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, button, 4, SpringLayout.SOUTH, output);
-		springLayout.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, cboxRaport);
 		add(button);
 
 		
 		
 		zoekBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				int selectedIndex= cboxRaport.getSelectedIndex();
-				ArrayList<String> meestVerkocht;
-				switch(selectedIndex){
-				case 0:
-					 meestVerkocht = Report.getMostStartStationTicket();
-					
-					for (int i = 0; i < meestVerkocht.size(); i++) {
-						output.append(meestVerkocht.get(i) + "\n");
-					}
-					break;
-				case 1:
-					meestVerkocht = Report.getMostDestinationTicket();
-					
-					for (int i = 0; i < meestVerkocht.size(); i++) {
-						output.append(meestVerkocht.get(i) + "\n");
-					}
-					
-					break;
-				case 2:
-					output.append(ReportDAO.getTypeMostSoldTicket());
-					break;
-				case 3:
-					output.append(String.valueOf(ReportDAO.getAmountSoldTicket()));
-					break;
-				case 4:
-					 meestVerkocht = Report.getMostStartStationSubscription();
-						
-					for (int i = 0; i < meestVerkocht.size(); i++) {
-						output.append(meestVerkocht.get(i) + "\n");
-					}
-					break;
-				case 5:
-					 meestVerkocht = Report.getMostDestinationSubscription();
-						
-					for (int i = 0; i < meestVerkocht.size(); i++) {
-						output.append(meestVerkocht.get(i) + "\n");
-					}
-					break;
-				case 6:
-					output.append(String.valueOf(ReportDAO.getTypeMostSoldSubscription()));
-					break;
-				case 7:
-					output.append(String.valueOf(ReportDAO.getAmountSoldSubscripton()));
-					break;
-				
-				}
-				
-				
+				outputReport.setText(ReportController.fillOutput(cboxReport.getSelectedIndex()));
+
+
 			}
 		});
+		
 		
 		
 

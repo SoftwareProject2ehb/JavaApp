@@ -16,6 +16,16 @@ public class Stop {
 		this.platform = platform;
 	}
 	
+	public Stop(int trainID, String name, int platform)
+	{
+		if(trainID < 0 || stopID < 0 ||name == null || platform < 1)
+			throw new IllegalArgumentException();
+		this.trainID = trainID;
+		this.stopID = -1;
+		this.name = name;
+		this.platform = platform;
+	}
+	
 	public int getTrainID() {
 		return trainID;
 	}
