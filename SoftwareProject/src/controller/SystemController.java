@@ -139,8 +139,8 @@ public abstract class SystemController {
 		return null;
 	}
 	
-	public static LostObject addLostObject(String name, String station) {
-		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station);
+	public static LostObject addLostObject(String name, String station,String description) {
+		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station,description);
 		int lost_object_id = LostObjectDAO.createLostObject(obj);
 		obj.setID(lost_object_id);
 		return obj;
@@ -171,11 +171,11 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		lijstLostobject = LostObjectDAO.getAllLostObject(select_from_date + 1, select_to_date);
 		break;
 	case 1:
-		lijstLostobject =  LostObjectDAO.getAllLostObjectClaimed();
+		lijstLostobject =  LostObjectDAO.getAllLostObjectClaimed(select_from_date + 1, select_to_date);
 		
 		break;
 	case 2:
-		lijstLostobject = LostObjectDAO.getAllLostObjectNotClaimed();
+		lijstLostobject = LostObjectDAO.getAllLostObjectNotClaimed(select_from_date + 1, select_to_date);
 		
 		break;
 	}

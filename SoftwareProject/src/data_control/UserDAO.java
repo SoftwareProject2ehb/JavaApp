@@ -263,14 +263,16 @@ public class UserDAO extends BaseDAO{
 	
 	public static User findUserByLogin(String login){
 		User user = null;
-		Statement st = null;
+		PreparedStatement ps = null;
+		String update ="SELECT * FROM User WHERE login LIKE '%' ? '%'";
 		ResultSet res = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        st = (Statement) getConnection().createStatement();
-	        res = st.executeQuery("SELECT * FROM User WHERE login LIKE '%" + login+ "%'");
+	        ps = getConnection().prepareStatement(update);
+	        ps.setString(1, login);
+	        res = ps.executeQuery();
 	        if (res.next()) {
 	        	user = new User(
 						res.getInt("ID"), 
@@ -286,7 +288,7 @@ public class UserDAO extends BaseDAO{
 			}
 	        
 	        res.close();
-	        st.close();
+	        ps.close();
 	     // Maken van de logfile met text
 	     			String s = "Een gebruiker met id " + user.getUserID() + " probeert in te loggen";
 	     			LogFile log = new LogFile(s, user.getUserID());
@@ -297,8 +299,8 @@ public class UserDAO extends BaseDAO{
 	        throw new RuntimeException(e.getMessage());
 	    } finally {
 	        try {
-	            if (st != null)
-	            	st.close();
+	            if (ps != null)
+	            	ps.close();
 	            if (res != null)
 	            	res.close();
 	            if (!getConnection().isClosed())

@@ -91,6 +91,13 @@ public class TicketDAO extends BaseDAO {
 			
 			ps.executeUpdate();
 			ps.close();
+			  // Maken van de logfile met text
+			String s = "Een ticket  met id : "+ ticket.getId()+ " werdt gewijzigd door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		
+			// Eind maken van logfile
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -124,6 +131,13 @@ public class TicketDAO extends BaseDAO {
 				t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(5), res.getString(6), res.getDate(7));
 
 			}
+			// Maken van de logfile met text
+						String s = "Een ticket  met id : "+ id+ " werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+					
+						// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -160,6 +174,13 @@ public class TicketDAO extends BaseDAO {
 				Ticket t = new Ticket(res.getInt(1), res.getString(2), res.getBoolean(3), res.getDouble(4), res.getString(5), res.getString(6), res.getDate(7));
 				list.add(t);
 			}
+			// Maken van de logfile met text
+						String s = "Alle tickets werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+					
+						// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

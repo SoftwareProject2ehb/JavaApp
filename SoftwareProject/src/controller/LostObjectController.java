@@ -72,10 +72,11 @@ public abstract class LostObjectController {
 		LostObject lostObject;
 		String name_finder = lost_object.txtNameFound.getText();
 		String place =lost_object.txtPlaceFound.getText();
+		String description = lost_object.txtDescription.getText();
 		
 		
 		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-		lostObject = SystemController.addLostObject(name_finder, place);
+		lostObject = SystemController.addLostObject(name_finder, place,description);
 		tableModel.addRow(lostObject.toArray());
 		 lost_object.table.setModel(tableModel);
 		 tableModel.fireTableDataChanged();
@@ -93,7 +94,10 @@ public abstract class LostObjectController {
 		lostObject = lijstLostobject.get(lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()));
 		if (lostObject.isClaimed() == true)
 		{
-			//TODO error message
+			JOptionPane.showMessageDialog(null,
+				    "This object is already claimed, therefore you cant update it",
+				    "Something happened",
+				    JOptionPane.ERROR_MESSAGE);
 		}
 		else
 		{
@@ -104,11 +108,11 @@ public abstract class LostObjectController {
 			lost_object.txtNameClaimed.setText(null);
 			lost_object.txtPlaceClaimed.setText(null);
 			
-			lost_object.table.setValueAt(lostObject.isClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 5);
-			lost_object.table.setValueAt(lostObject.getUserIDClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 6);
-			lost_object.table.setValueAt(lostObject.getLocationClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 7);
-			lost_object.table.setValueAt(lostObject.getNameClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 8);
-			lost_object.table.setValueAt(lostObject.getDateClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 9);
+			lost_object.table.setValueAt(lostObject.isClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 6);
+			lost_object.table.setValueAt(lostObject.getUserIDClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 7);
+			lost_object.table.setValueAt(lostObject.getLocationClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 8);
+			lost_object.table.setValueAt(lostObject.getNameClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 9);
+			lost_object.table.setValueAt(lostObject.getDateClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 10);
 			//TODO DESCRIPTION
 			//lost_object.table.setValueAt(lostObject.isClaimed(), lost_object.table.convertRowIndexToModel(lost_object.table.getSelectedRow()), 5);
 		}
@@ -117,8 +121,11 @@ public abstract class LostObjectController {
 		
 	}
 	// done by me
-	public static void sortLostObjects(SortOrder currentOrder, int lastcol,MouseEvent e)
+	static int lastcol;
+	static SortOrder currentOrder = SortOrder.UNSORTED;
+	public static int sortLostObjects(MouseEvent e)
 	{
+		
 		//int rowClicked , int colClicked,
 		int row = lost_object.table.rowAtPoint(e.getPoint());
 		int col = lost_object.table.columnAtPoint(e.getPoint());
@@ -133,7 +140,7 @@ public abstract class LostObjectController {
 				currentOrder = SortOrder.UNSORTED;
 				lastcol = col;
 			}
-			;
+			
 
 			RowSorter<?> sorter = lost_object.table.getRowSorter();
 			List sortKeys = new ArrayList();
@@ -156,6 +163,7 @@ public abstract class LostObjectController {
 				row = lost_object.table.convertRowIndexToModel(row);
 			}
 		}
+		return lastcol;
 	}
 	public static void findAllLostObjects(DefaultTableModel tableModel){
 		LostObject lostObject;
@@ -182,9 +190,9 @@ public abstract class LostObjectController {
 		else
 			
 		{
-			JFrame frame = new JFrame();
-			JOptionPane.showMessageDialog(frame,
-				    "From date must be earlier then to date",
+			
+			JOptionPane.showMessageDialog(null,
+				    "'From' date must be earlier then 'to' date",
 				    "Something happened",
 				    JOptionPane.ERROR_MESSAGE);
 		}
