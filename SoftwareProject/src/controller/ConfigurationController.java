@@ -100,6 +100,10 @@ public class ConfigurationController {
 		}
 		//TODO empty fields check
 		SystemController.addUser(voornaam,achternaam,email,phone, rol);
+		create_user.txtVoornaam.setText("");
+		create_user.txtAchternaam.setText("");
+		create_user.txtEmail.setText("");
+		create_user.txtPhone.setText("");
 		switchToFindUserView();
 	}
 		
@@ -118,6 +122,10 @@ public class ConfigurationController {
 		}
 		//TODO empty fields check
 		SystemController.editUser(voornaam,achternaam,email,phone, rol);
+		edit_user.txtVoornaam.setText("");
+		edit_user.txtAchternaam.setText("");
+		edit_user.txtEmail.setText("");
+		edit_user.txtPhone.setText("");
 		switchToFindUserView();
 	}
 	
