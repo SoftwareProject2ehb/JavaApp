@@ -125,22 +125,22 @@ public class FindCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblGemeente, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblGemeente);
 		
-		JButton button = new JButton("<<  Terug");
-		button.addActionListener(new ActionListener() {
+		JButton btnTerugNaarMenu = new JButton("Terug naar Menu");
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnTerugNaarMenu, -10, SpringLayout.SOUTH, this);
+		btnTerugNaarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SubscriptionController.switchToBuySubscriptionView();
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, lblKlantZoeken);
-		this.add(button);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 0, SpringLayout.WEST, lblKlantZoeken);
+		this.add(btnTerugNaarMenu);
 		
 		JButton btnKlantGebruiken = new JButton("Klant Gebruiken");
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnKlantGebruiken, -10, SpringLayout.SOUTH, this);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, button, 0, SpringLayout.NORTH, btnKlantGebruiken);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnKlantGebruiken, 0, SpringLayout.NORTH, btnTerugNaarMenu);
 		this.add(btnKlantGebruiken);
 		
 		JList list = new JList();
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnKlantGebruiken, 0, SpringLayout.WEST, list);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnKlantGebruiken, 0, SpringLayout.EAST, list);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, list, 0, SpringLayout.NORTH, txtVoornaam);
 		sl_contentPane.putConstraint(SpringLayout.WEST, list, 10, SpringLayout.EAST, txtVoornaam);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, list, 0, SpringLayout.SOUTH, txtGemeente);
@@ -153,13 +153,13 @@ public class FindCustomerView extends JPanel {
 		this.add(lblGevondenKlanten);
 		
 		JButton btnMaakNieuweKlant = new JButton("Maak Nieuwe Klant");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnMaakNieuweKlant, 0, SpringLayout.NORTH, btnTerugNaarMenu);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnMaakNieuweKlant, -25, SpringLayout.WEST, btnKlantGebruiken);
 		btnMaakNieuweKlant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerController.switchToCreateCustomerView();
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnMaakNieuweKlant, 0, SpringLayout.NORTH, button);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnMaakNieuweKlant, 0, SpringLayout.EAST, txtVoornaam);
 		add(btnMaakNieuweKlant);
 	}
 

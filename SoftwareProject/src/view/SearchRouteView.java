@@ -102,7 +102,7 @@ public class SearchRouteView extends JPanel {
 	    groupAankomstVertrek.add(rdbtnVertrek);
 	    groupAankomstVertrek.add(rdbtnAankomst);
 		
-		JButton btnTerug = new JButton("<< Terug");
+		JButton btnTerug = new JButton("Terug naar Menu");
 		btnTerug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();
