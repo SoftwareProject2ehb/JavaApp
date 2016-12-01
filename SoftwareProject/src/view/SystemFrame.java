@@ -72,6 +72,7 @@ public class SystemFrame extends JFrame {
 		card_layout.addLayoutComponent(SubscriptionController.find_subscription, "FIND_SUBSCRIPTION");
 		card_layout.addLayoutComponent(TicketController.buy_ticket, "BUY_TICKET");
 		card_layout.addLayoutComponent(ConfigurationController.create_user, "CREATE_USER");
+		card_layout.addLayoutComponent(ConfigurationController.edit_user, "EDIT_USER");
 		card_layout.addLayoutComponent(ConfigurationController.find_user, "FIND_USER");
 		card_layout.addLayoutComponent(ConfigurationController.price_config, "PRICE_CONFIG");
 		card_layout.addLayoutComponent(ConfigurationController.report, "REPORT");
