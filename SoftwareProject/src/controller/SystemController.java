@@ -239,9 +239,8 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		String login = first_name + "_" + last_name;
 		String password = "pass";
 		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role);
-		UserDAO.createUser(new_user);
-		//int user_id = UserDAO.createUser(new_user);
-		//new_user.setUserID(user_id);
+		int user_id = UserDAO.createUser(new_user);
+		new_user.setUserID(user_id);
 		return null;
 	}
 	
