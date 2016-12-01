@@ -130,15 +130,15 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbGeldigheid, 106, SpringLayout.EAST, lblGeldigheid);
 		add(cbbGeldigheid);
 		
-		JButton button = new JButton("<<  Terug");
-		button.addActionListener(new ActionListener() {
+		JButton btnTerugNaarMenu = new JButton("Terug naar Menu");
+		btnTerugNaarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.NORTH, button, 5, SpringLayout.SOUTH, btnKoopTicket);
-		sl_contentPane.putConstraint(SpringLayout.WEST, button, 10, SpringLayout.WEST, this);
-		add(button);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnTerugNaarMenu, 5, SpringLayout.SOUTH, btnKoopTicket);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 10, SpringLayout.WEST, this);
+		add(btnTerugNaarMenu);
 		
 		JLabel lblGebruiker = new JLabel("Gebruiker");
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblGebruiker, 0, SpringLayout.SOUTH, lblTypeAbonnement);

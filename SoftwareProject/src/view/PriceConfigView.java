@@ -100,7 +100,7 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, btnVoegToe, -10, SpringLayout.EAST, this);
 		add(btnVoegToe);
 		
-		JButton btnTerug = new JButton("<<  Terug");
+		JButton btnTerug = new JButton("Terug naar Menu");
 		btnTerug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToConfigurationView();
@@ -147,7 +147,7 @@ public class PriceConfigView extends JPanel {
 		comboBox_type.setSelectedItem(priceList.get(index).getTypeBetaling());
 		add(comboBox_type);
 		
-		btnDelete = new JButton("DELETE");
+		btnDelete = new JButton("VERWIJDER");
 		btnDelete.setForeground(Color.RED);
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, btnDelete, 0, SpringLayout.VERTICAL_CENTER, comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, btnDelete, 6, SpringLayout.EAST, comboBox_type);
