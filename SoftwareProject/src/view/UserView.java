@@ -139,6 +139,7 @@ public class UserView extends JPanel {
 		JButton btnResetPassword = new JButton("RESET PASSWORD");
 		btnResetPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.resetPassword();
 			}
 		});
 		springLayout.putConstraint(SpringLayout.NORTH, btnResetPassword, 6, SpringLayout.SOUTH, table);

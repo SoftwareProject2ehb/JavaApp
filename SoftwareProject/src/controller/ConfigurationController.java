@@ -10,6 +10,7 @@ import data_control.UserDAO;
 import model.Price.betalingsType;
 import model.User;
 import model.User.Role;
+import utilities.Encryptor;
 import view.*;
 
 public class ConfigurationController {
@@ -99,7 +100,7 @@ public class ConfigurationController {
 		}
 		//TODO empty fields check
 		SystemController.addUser(voornaam,achternaam,email,phone, rol);
-		
+		switchToFindUserView();
 	}
 		
 	public static void editUser() throws InvalidParameterException{
@@ -117,6 +118,7 @@ public class ConfigurationController {
 		}
 		//TODO empty fields check
 		SystemController.editUser(voornaam,achternaam,email,phone, rol);
+		switchToFindUserView();
 	}
 	
 	public static void searchUser() throws InvalidParameterException{
@@ -163,12 +165,22 @@ public class ConfigurationController {
 	
 	public static void setInactiveUser(){
     	User u = getSelectedUser();
-		 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to set the User " +u.getFirstName() +" "+ u.getLastName() +" to Inactive ?", "User Status", JOptionPane.YES_NO_OPTION);
+		 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to set " +u.getFirstName() +" "+ u.getLastName() +" to Inactive ?", "User Status", JOptionPane.YES_NO_OPTION);
 	        if (reply == JOptionPane.YES_OPTION) {
 	    		u.setActive(false);
 	    		UserDAO.updateUser(u);
+	    		find_user.refreshTable(find_user.tableModel);
 	        }
-		
+	}
+	
+	public static void resetPassword(){
+    	User u = getSelectedUser();
+    	int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the password of " +u.getFirstName() +" "+ u.getLastName() +" ?", "User Password", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+        	u.setPassword(Encryptor.encrypt("pass"));
+    		UserDAO.updateUser(u);
+    		find_user.refreshTable(find_user.tableModel);
+        }
 	}
 
 	public static void deletePrice() {
