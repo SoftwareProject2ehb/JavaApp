@@ -11,9 +11,12 @@ import model.User.Role;
 
 public class UserDAO extends BaseDAO{
 	
-	public static void createUser(User user) {
+	public static int createUser(User user) {
 
 		PreparedStatement ps = null;
+		Statement st = null;
+		ResultSet res = null;
+		int id = -1;
 
 		String sql = "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?)";
 
@@ -36,23 +39,33 @@ public class UserDAO extends BaseDAO{
 			ps.setBoolean(9, user.isActive());
 
 			ps.executeUpdate();
+			
+	        st = getConnection().createStatement();
+	        res = st.executeQuery("SELECT ID FROM Price ORDER BY ID DESC LIMIT 1");
+	        if (res.next()) {
+	        	id = res.getInt(1);
+	        }
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			;
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {
 	            if (ps != null)
 	                ps.close();
+	            if (st != null)
+	                st.close();
+	            if (res != null)
+	                res.close();
 				if (!getConnection().isClosed())
 					getConnection().close();
+
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-
+		return id;
 	}
 	
 	
