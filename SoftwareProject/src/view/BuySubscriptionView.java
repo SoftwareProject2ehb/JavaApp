@@ -15,11 +15,15 @@ import javax.swing.border.EmptyBorder;
 import controller.ActionMenuController;
 import controller.CustomerController;
 import controller.SubscriptionController;
+import data_control.SubscriptionPriceDAO;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class BuySubscriptionView extends JPanel {
 	public JTextField txtPrijs;
@@ -79,7 +83,7 @@ public class BuySubscriptionView extends JPanel {
 		add(lblTypeAbonnement);
 		
 		cbbType = new JComboBox();
-		cbbType.setModel(new DefaultComboBoxModel(new String[] {"Type 1"}));
+		cbbType.setModel(new DefaultComboBoxModel(SubscriptionPriceDAO.getAllSubTypes().toArray())); // new String[] {"Standaard", "Student"})
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbType, 0, SpringLayout.WEST, cbbBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, cbbType, 0, SpringLayout.SOUTH, lblTypeAbonnement);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbType, 106, SpringLayout.EAST, lblTypeAbonnement);
@@ -124,11 +128,15 @@ public class BuySubscriptionView extends JPanel {
 		add(lblBegindatum);
 		
 		cbbGeldigheid = new JComboBox();
-		cbbGeldigheid.setModel(new DefaultComboBoxModel(new String[] {"1 maand", "2 maanden", "3 maanden", "6 maanden", "1 jaar"}));
+		cbbGeldigheid.setModel(new DefaultComboBoxModel(SubscriptionPriceDAO.getLengthsForType((String) cbbType.getSelectedItem()).toArray())); // new String[] {"1 maand", "2 maanden", "3 maanden", "6 maanden", "1 jaar"}
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbGeldigheid, 6, SpringLayout.EAST, lblGeldigheid);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, cbbGeldigheid, 0, SpringLayout.SOUTH, lblEindstation);
-		sl_contentPane.putConstraint(SpringLayout.EAST, cbbGeldigheid, 106, SpringLayout.EAST, lblGeldigheid);
 		add(cbbGeldigheid);
+		
+		JLabel lblMaand = new JLabel("maand");
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblMaand, 6, SpringLayout.EAST, cbbGeldigheid);
+		sl_contentPane.putConstraint(SpringLayout.VERTICAL_CENTER, lblMaand, 0, SpringLayout.VERTICAL_CENTER, lblEindstation);
+		add(lblMaand);
 		
 		JButton button = new JButton("<<  Terug");
 		button.addActionListener(new ActionListener() {
@@ -157,6 +165,26 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, txtGebruiker, 0, SpringLayout.EAST, txtBegindatum);
 		add(txtGebruiker);
 		txtGebruiker.setColumns(10);
+		
+		cbbType.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					cbbGeldigheid.setModel(new DefaultComboBoxModel(SubscriptionPriceDAO.getLengthsForType((String) event.getItem()).toArray()));
+				}
+			}
+		});
+		
+		cbbGeldigheid.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					if (event.getItem().toString().equals("1.0"))
+						lblMaand.setText("maand");
+					else 
+						lblMaand.setText("maanden");
+				}
+			}
+		});
 	}
-
 }

@@ -134,9 +134,35 @@ public abstract class SystemController {
 		PriceDAO.removePrice(p.getId());
 	}
 	
-	public static String makeSubscriptionType() {
-		//TODO
-		return null;
+	public static String makeSubscriptionType(String subscription_type, String unit, double cost_per_unit, double aantal_maanden) throws IllegalArgumentException{
+		SubscriptionPrice type;
+		switch (unit) {
+		case "hour":
+			type = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_HOUR, cost_per_unit, aantal_maanden);
+			break;
+		case "station":
+			type = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_STATION, cost_per_unit, aantal_maanden);
+			break;
+		case "km":
+			type = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_KM, cost_per_unit, aantal_maanden);
+			break;
+		case "zone":
+			type = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_ZONE, cost_per_unit, aantal_maanden);
+			break;
+		default:
+			throw new IllegalArgumentException();
+		}
+		int pricetype_id = SubscriptionPriceDAO.createSubscriptionPrice(type);
+		type.setId(pricetype_id);
+		return "Abonnementtype succesvol aangemaakt.";
+	}
+	
+	public static void updateSubscriptionType(SubscriptionPrice p) {
+		SubscriptionPriceDAO.updateSubType(p);
+	}
+	
+	public static void deleteSubscriptionType(SubscriptionPrice p) {
+		SubscriptionPriceDAO.removeSubscriptionPrice(p.getId());
 	}
 	
 	public static String addLostObject(String name, String station, Timestamp date) {

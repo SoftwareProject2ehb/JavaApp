@@ -38,7 +38,7 @@ public class DateConverter {
 		int hour = LocalTime.now().getHour();
 		int min = LocalTime.now().getMinute();
 		
-		t += (hour<10)?("0"+hour):min;
+		t += (hour<10)?("0"+hour):hour;
 		t += ":";
 		t += (min<10)?("0"+min):min;
 		
