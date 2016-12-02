@@ -60,7 +60,7 @@ public class ConfigurationView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnGebruikers, 141, SpringLayout.WEST, this);
 		add(btnGebruikers);
 		
-		JButton btnTerug = new JButton("<<  Terug");
+		JButton btnTerug = new JButton("Terug naar Menu");
 		btnTerug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();

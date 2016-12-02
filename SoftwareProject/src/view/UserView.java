@@ -106,15 +106,15 @@ public class UserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, btnRefresh, -6, SpringLayout.WEST, btnNewButton_2);
 		add(btnRefresh);
 		
-		JButton button = new JButton("<<  Terug");
-		button.addActionListener(new ActionListener() {
+		JButton btnTeugNaarMenu = new JButton("Teug naar Menu");
+		btnTeugNaarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToConfigurationView();
 			}
 		});
-		springLayout.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, table);
-		springLayout.putConstraint(SpringLayout.SOUTH, button, 0, SpringLayout.SOUTH, btnNewButton);
-		add(button);
+		springLayout.putConstraint(SpringLayout.WEST, btnTeugNaarMenu, 0, SpringLayout.WEST, table);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnTeugNaarMenu, 0, SpringLayout.SOUTH, btnNewButton);
+		add(btnTeugNaarMenu);
 	}
 
 }

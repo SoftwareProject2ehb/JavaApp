@@ -126,6 +126,21 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, btnVoegToe, -10, SpringLayout.EAST, this);
 		add(btnVoegToe);
 		
+		JButton btnTerug = new JButton("Terug naar Menu");
+		btnTerug.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.switchToConfigurationView();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.WEST, btnTerug, 0, SpringLayout.WEST, lblNieuwSoortBiljet);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnTerug, -10, SpringLayout.SOUTH, this);
+		add(btnTerug);
+		
+		JButton btnOk = new JButton("OK");
+		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnOk, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnOk, 0, SpringLayout.SOUTH, btnTerug);
+		add(btnOk);
+		
 		comboBox_soort = new JComboBox();
 		springLayout.putConstraint(SpringLayout.WEST, comboBox_soort, 0, SpringLayout.WEST, lblNieuwSoortBiljet);
 		springLayout.putConstraint(SpringLayout.NORTH, comboBox_soort, 25, SpringLayout.SOUTH, lblNieuwSoortBiljet);
@@ -288,21 +303,6 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, lblInfo, 20, SpringLayout.SOUTH, sub_comboBox_soort);
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblInfo, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(lblInfo);
-		
-		JButton btnTerug = new JButton("<<  Terug");
-		btnTerug.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ConfigurationController.switchToConfigurationView();
-			}
-		});
-		springLayout.putConstraint(SpringLayout.WEST, btnTerug, 0, SpringLayout.WEST, lblNieuwSoortBiljet);
-		springLayout.putConstraint(SpringLayout.SOUTH, btnTerug, -10, SpringLayout.SOUTH, this);
-		add(btnTerug);
-		
-		JButton btnOk = new JButton("Wijzig");
-		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnOk, 0, SpringLayout.HORIZONTAL_CENTER, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, btnOk, 0, SpringLayout.SOUTH, btnTerug);
-		add(btnOk);
 		
 		btnDelete.addActionListener(new ActionListener() {
 			@Override
