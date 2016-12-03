@@ -29,7 +29,7 @@ public class SubscriptionDAOTEST {
 		
 		Subscription testObj = sd.findSubById(1);
 		assertEquals(true, testObj.getId() == 1);
-		assertEquals(true, testObj.getTicketType() == 1);
+		assertEquals(true, testObj.getSubscriptionType().equals("1"));
 		assertEquals(true, testObj.getPrice() == 20.0);
 		assertEquals(true, testObj.getCustomerId() == 1);
 		assertEquals(true, testObj.getStartStation().equals("Zele"));

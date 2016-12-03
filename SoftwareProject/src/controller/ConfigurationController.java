@@ -26,6 +26,7 @@ public class ConfigurationController {
 	
 	public static void switchToPriceConfigView() {
 		FrameController.getFrame().switchTo("PRICE_CONFIG");
+		FrameController.changeSize(700, 400);
 	}
 	
 	public static void switchToFindUserView() {
@@ -50,5 +51,17 @@ public class ConfigurationController {
 	
 	public static void deletePrice() {
 		SystemController.deleteTicketType(price_config.getPrice());
+	}
+	
+	public static void createSubPrice() {
+		SystemController.makeSubscriptionPrice(price_config.getSubTxtSoort(), betalingsType.PER_HOUR.toString(), 1, price_config.getMonths());
+	}
+	
+	public static void updateSubPrice() {
+		SystemController.updateSubscriptionType(price_config.getSubscriptionPrice());
+	}
+	
+	public static void deleteSubPrice() {
+		SystemController.deleteSubscriptionType(price_config.getSubscriptionPrice());
 	}
 }

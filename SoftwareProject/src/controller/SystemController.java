@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import model.Price.betalingsType;
 import model.User.Role;
 import utilities.*;
 import view.*;
@@ -133,10 +134,36 @@ public abstract class SystemController {
 	public static void deleteTicketType(Price p) {
 		PriceDAO.removePrice(p.getId());
 	}
+
+	public static String makeSubscriptionPrice(String subscription_type, String unit, double cost_per_unit, double aantal_maanden) throws IllegalArgumentException{
+		SubscriptionPrice price;
+		switch (unit) {
+		case "hour":
+			price = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_HOUR, cost_per_unit, aantal_maanden);
+			break;
+		case "station":
+			price = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_STATION, cost_per_unit, aantal_maanden);
+			break;
+		case "km":
+			price = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_KM, cost_per_unit, aantal_maanden);
+			break;
+		case "zone":
+			price = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_ZONE, cost_per_unit, aantal_maanden);
+			break;
+		default:
+			throw new IllegalArgumentException();
+		}
+		int pricetype_id = SubscriptionPriceDAO.createSubscriptionPrice(price);
+		price.setId(pricetype_id);
+		return "Abonnementtype succesvol aangemaakt.";
+	}
 	
-	public static String makeSubscriptionType() {
-		//TODO
-		return null;
+	public static void updateSubscriptionType(SubscriptionPrice p) {
+		SubscriptionPriceDAO.updateSubType(p);
+	}
+	
+	public static void deleteSubscriptionType(SubscriptionPrice p) {
+		SubscriptionPriceDAO.removeSubscriptionPrice(p.getId());
 	}
 	
 	public static String addLostObject(String name, String station, Timestamp date) {

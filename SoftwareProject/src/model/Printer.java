@@ -148,7 +148,7 @@ public class Printer {
 		contentStream.newLineAtOffset(0, -15);
 		contentStream.drawString("Prijs : € " + s.getPrice());
 		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Type : " + s.getTicketType());
+		contentStream.drawString("Type : " + s.getSubscriptionType());
 		contentStream.newLineAtOffset(0, -15);
 		contentStream.drawString("Van : " + s.getStartStation());
 		contentStream.newLineAtOffset(0, -15);
