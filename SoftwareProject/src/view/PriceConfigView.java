@@ -49,28 +49,34 @@ public class PriceConfigView extends JPanel {
 	private JTextField txtPrijs;
 	private int index = 0;
 	private ArrayList<Price> priceList;
-	private String defaultTxt = "Naam van het nieuw soort biljet";
+	private String defaultTxt = "Naam invullen";
 	private JComboBox comboBox_type;
 	private JComboBox comboBox_soort;
 	private JButton btnDelete;
 	
 	private JTextField sub_txtSoort;
 	private JTextField sub_txtPrijs;
-	private int sub_index = 0;
-	private ArrayList<SubscriptionPrice> sub_priceList;
-	private String sub_defaultTxt = "Naam van het nieuw soort abonnement";
+	
+	private ArrayList<String> subTypes;
+	private int subTypes_index = 0;
+	private ArrayList<Double> subLengths;
+	private int subLengths_index = 0;
+	private String sub_defaultTxt = "Naam invullen";
 	private JComboBox cbb_maandenVoegToe;
 	private JComboBox sub_comboBox_type;
 	private JComboBox sub_comboBox_soort;
 	private JComboBox sub_comboBox_maanden;
 	private JButton sub_btnDelete;
+	private SubscriptionPrice subPrice;
 
 	/**
 	 * Create the panel.
 	 */
 	public PriceConfigView() {
 		priceList = PriceDAO.getAll();
-		sub_priceList = SubscriptionPriceDAO.getAllSubPrices();
+		subTypes = SubscriptionPriceDAO.getAllSubTypes();
+		subLengths = SubscriptionPriceDAO.getLengthsForType(subTypes.get(subTypes_index));
+		subPrice = SubscriptionPriceDAO.findSubPriceByTypeAndLength(subTypes.get(subTypes_index), subLengths.get(subLengths_index));
 		
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
@@ -117,13 +123,12 @@ public class PriceConfigView extends JPanel {
 
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, txtSoort, 0, SpringLayout.VERTICAL_CENTER, lblNieuwSoortBiljet);
 		springLayout.putConstraint(SpringLayout.WEST, txtSoort, 14, SpringLayout.EAST, lblNieuwSoortBiljet);
+		txtSoort.setColumns(15);
 		add(txtSoort);
-		txtSoort.setColumns(10);
 		
 		JButton btnVoegToe = new JButton("Voeg toe");
-		springLayout.putConstraint(SpringLayout.EAST, txtSoort, -6, SpringLayout.WEST, btnVoegToe);
+		springLayout.putConstraint(SpringLayout.WEST, btnVoegToe, 6, SpringLayout.EAST, txtSoort);
 		springLayout.putConstraint(SpringLayout.NORTH, btnVoegToe, -5, SpringLayout.NORTH, lblNieuwSoortBiljet);
-		springLayout.putConstraint(SpringLayout.EAST, btnVoegToe, -10, SpringLayout.EAST, this);
 		add(btnVoegToe);
 		
 		JButton btnTerug = new JButton("Terug naar Menu");
@@ -136,7 +141,7 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnTerug, -10, SpringLayout.SOUTH, this);
 		add(btnTerug);
 		
-		JButton btnOk = new JButton("OK");
+		JButton btnOk = new JButton("Wijzig prijzen");
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnOk, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnOk, 0, SpringLayout.SOUTH, btnTerug);
 		add(btnOk);
@@ -221,8 +226,8 @@ public class PriceConfigView extends JPanel {
 
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, sub_txtSoort, 0, SpringLayout.VERTICAL_CENTER, sub_lblNieuwSoortBiljet);
 		springLayout.putConstraint(SpringLayout.WEST, sub_txtSoort, 14, SpringLayout.EAST, sub_lblNieuwSoortBiljet);
+		sub_txtSoort.setColumns(15);
 		add(sub_txtSoort);
-		sub_txtSoort.setColumns(10);
 		
 		cbb_maandenVoegToe = new JComboBox();
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, cbb_maandenVoegToe, 0, SpringLayout.VERTICAL_CENTER, sub_lblNieuwSoortBiljet);
@@ -230,13 +235,12 @@ public class PriceConfigView extends JPanel {
 		cbb_maandenVoegToe.setModel(new DefaultComboBoxModel(new String[] {"1", "3", "6", "12"}));
 		add(cbb_maandenVoegToe);
 		
-		JLabel lblMaandVoegToe = new JLabel("maanden");
+		JLabel lblMaandVoegToe = new JLabel("maand");
 		springLayout.putConstraint(SpringLayout.WEST, lblMaandVoegToe, 6, SpringLayout.EAST, cbb_maandenVoegToe);
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, lblMaandVoegToe, 0, SpringLayout.VERTICAL_CENTER, sub_lblNieuwSoortBiljet);
 		add(lblMaandVoegToe);
 		
 		JButton sub_btnVoegToe = new JButton("Voeg toe");
-		//springLayout.putConstraint(SpringLayout.EAST, sub_txtSoort, -6, SpringLayout.WEST, sub_btnVoegToe);
 		springLayout.putConstraint(SpringLayout.NORTH, sub_btnVoegToe, -5, SpringLayout.NORTH, sub_lblNieuwSoortBiljet);
 		springLayout.putConstraint(SpringLayout.WEST, sub_btnVoegToe, 15, SpringLayout.EAST, lblMaandVoegToe);
 		add(sub_btnVoegToe);
@@ -244,8 +248,8 @@ public class PriceConfigView extends JPanel {
 		sub_comboBox_soort = new JComboBox();
 		springLayout.putConstraint(SpringLayout.WEST, sub_comboBox_soort, 0, SpringLayout.WEST, sub_lblNieuwSoortBiljet);
 		springLayout.putConstraint(SpringLayout.NORTH, sub_comboBox_soort, 25, SpringLayout.SOUTH, sub_lblNieuwSoortBiljet);
-		sub_comboBox_soort.setModel(new DefaultComboBoxModel(sub_priceList.toArray()));
-		sub_comboBox_soort.setSelectedItem(sub_priceList.get(sub_index));
+		sub_comboBox_soort.setModel(new DefaultComboBoxModel(subTypes.toArray()));
+		sub_comboBox_soort.setSelectedItem(subTypes.get(subTypes_index));
 		add(sub_comboBox_soort);
 		
 		JLabel sub_lblEuro = new JLabel(EURO);
@@ -256,7 +260,7 @@ public class PriceConfigView extends JPanel {
 		sub_txtPrijs = new JTextField();
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, sub_txtPrijs, 0, SpringLayout.VERTICAL_CENTER, sub_comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, sub_txtPrijs, 6, SpringLayout.EAST, sub_lblEuro);
-		sub_txtPrijs.setText(Double.toString(sub_priceList.get(sub_index).getLengthInMonths()));
+		sub_txtPrijs.setText(Double.toString(subPrice.getCostPerUnit()));
 		sub_txtPrijs.setColumns(4);
 		((AbstractDocument) sub_txtPrijs.getDocument()).setDocumentFilter(PatternFilter.prijsFilter);
 		add(sub_txtPrijs);
@@ -270,7 +274,7 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, sub_comboBox_type, 0, SpringLayout.VERTICAL_CENTER, sub_comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, sub_comboBox_type, 6, SpringLayout.EAST, sub_lblPer);
 		sub_comboBox_type.setModel(new DefaultComboBoxModel(betalingsType.values()));
-		sub_comboBox_type.setSelectedItem(sub_priceList.get(sub_index).getTypeBetaling());
+		sub_comboBox_type.setSelectedItem(subPrice.getTypeBetaling());
 		add(sub_comboBox_type);
 		
 		JLabel sub_lblVoor = new JLabel("voor");
@@ -281,14 +285,10 @@ public class PriceConfigView extends JPanel {
 		sub_comboBox_maanden = new JComboBox();
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, sub_comboBox_maanden, 0, SpringLayout.VERTICAL_CENTER, sub_comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, sub_comboBox_maanden, 6, SpringLayout.EAST, sub_lblVoor);
-		sub_comboBox_maanden.setModel(new DefaultComboBoxModel(SubscriptionPriceDAO.getLengthsForType(sub_comboBox_soort.getSelectedItem().toString()).toArray()));
-		/*
-		SubscriptionPriceDAO.getLengthsForType((String) sub_comboBox_soort.getSelectedItem()).toArray()
-		SubscriptionPriceDAO.getLengthsForType((String) sub_comboBox_type.getSelectedItem()).toArray()
-		*/
+		sub_comboBox_maanden.setModel(new DefaultComboBoxModel(subLengths.toArray()));
 		add(sub_comboBox_maanden);
 		
-		JLabel lblMaand = new JLabel("maanden");
+		JLabel lblMaand = new JLabel("maand");
 		springLayout.putConstraint(SpringLayout.WEST, lblMaand, 6, SpringLayout.EAST, sub_comboBox_maanden);
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, lblMaand, 0, SpringLayout.VERTICAL_CENTER, sub_comboBox_soort);
 		add(lblMaand);
@@ -327,10 +327,12 @@ public class PriceConfigView extends JPanel {
 				ArrayList<String> options = new ArrayList<String>();
 			    options.add("JA"); // 0
 			    options.add("NEE"); // 1
-				int choice = JOptionPane.showOptionDialog(null, "Bent u zeker dat u de prijs " + sub_priceList.get(sub_index).getTypeSubscription() + " wilt verwijderen?", "Prijs verwijderen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options.toArray(), "NEE");
+				int choice = JOptionPane.showOptionDialog(null, 
+						"Bent u zeker dat u de prijs " + subTypes.get(subTypes_index) + " (" + subLengths.get(subLengths_index) + " maanden) wilt verwijderen?",
+						"Prijs verwijderen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options.toArray(), "NEE");
 				if (choice == 0) {
 					ConfigurationController.deleteSubPrice();
-					updateSubPriceList(0);
+					updateSubPriceList(0, 0);
 					lblInfo.setText("Prijs verwijderd");
 				}
 				else 
@@ -354,10 +356,43 @@ public class PriceConfigView extends JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent event) {
 				if (event.getStateChange() == ItemEvent.SELECTED) {
-					sub_index = sub_priceList.indexOf(event.getItem());
-					sub_comboBox_soort.setSelectedItem(sub_priceList.get(sub_index));
-					sub_txtPrijs.setText(Double.toString(sub_priceList.get(sub_index).getCostPerUnit()));
-					sub_comboBox_type.setSelectedItem(sub_priceList.get(sub_index).getTypeBetaling());
+					subTypes_index = subTypes.indexOf(event.getItem());
+					subLengths = SubscriptionPriceDAO.getLengthsForType(subTypes.get(subTypes_index));
+					subLengths_index = 0;
+					subPrice = SubscriptionPriceDAO.findSubPriceByTypeAndLength(subTypes.get(subTypes_index), subLengths.get(subLengths_index));
+					sub_txtPrijs.setText(Double.toString(subPrice.getCostPerUnit()));
+					sub_comboBox_type.setSelectedItem(subPrice.getTypeBetaling());
+					sub_comboBox_maanden.setModel(new DefaultComboBoxModel(subLengths.toArray()));
+					sub_comboBox_maanden.setSelectedItem(subLengths.get(subLengths_index));
+				}
+			}
+		});
+		
+		sub_comboBox_maanden.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					if (event.getItem().toString().equals("1.0"))
+						lblMaand.setText("maand");
+					else 
+						lblMaand.setText("maanden");
+					
+					subLengths_index = subLengths.indexOf(event.getItem());
+					subPrice = SubscriptionPriceDAO.findSubPriceByTypeAndLength(subTypes.get(subTypes_index), subLengths.get(subLengths_index));
+					sub_txtPrijs.setText(Double.toString(subPrice.getCostPerUnit()));
+					sub_comboBox_type.setSelectedItem(subPrice.getTypeBetaling());
+				}
+			}
+		});
+		
+		cbb_maandenVoegToe.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					if (event.getItem().toString().equals("1"))
+						lblMaandVoegToe.setText("maand");
+					else 
+						lblMaandVoegToe.setText("maanden");
 				}
 			}
 		});
@@ -383,6 +418,27 @@ public class PriceConfigView extends JPanel {
 			public void mouseExited(MouseEvent e) {}
 		});
 		
+		sub_btnVoegToe.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				lblInfo.setText("Even geduld ...");
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				ConfigurationController.createSubPrice();
+				sub_txtSoort.setForeground(Color.LIGHT_GRAY);
+				sub_txtSoort.setText(defaultTxt);
+				updateSubPriceList(-1, -1);
+				lblInfo.setText("Abonnement toegevoegd");
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+		});
+		
 		btnOk.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {}
@@ -395,7 +451,7 @@ public class PriceConfigView extends JPanel {
 				ConfigurationController.updatePrice();
 				ConfigurationController.updateSubPrice();
 				updatePriceList(index);
-				updateSubPriceList(sub_index);
+				updateSubPriceList(subTypes_index, subLengths_index);
 				lblInfo.setText("Prijs gewijzigd");
 			}
 			@Override
@@ -409,21 +465,26 @@ public class PriceConfigView extends JPanel {
 	 * Updates the array PriceList and shows the new info of price at index i (takes the latest index if i < 0)
 	 */
 	public void updatePriceList(int i) {
-		priceList = PriceDAO.getAll(); // Refresh the list
-		comboBox_soort.setModel(new DefaultComboBoxModel(priceList.toArray())); // Refresh the combobox
-		index = (i < 0)?(priceList.size() - 1):i; // put index on latest item
+		priceList = PriceDAO.getAll(); 
+		comboBox_soort.setModel(new DefaultComboBoxModel(priceList.toArray())); 
+		index = (i < 0)?(priceList.size() - 1):i; 
 		comboBox_soort.setSelectedItem(priceList.get(index));
 		txtPrijs.setText(Double.toString(priceList.get(index).getCostPerUnit()));
 		comboBox_type.setSelectedItem(priceList.get(index).getTypeBetaling());
 	}
 	
-	public void updateSubPriceList(int i) {
-		sub_priceList = SubscriptionPriceDAO.getAllSubPrices(); // Refresh the list
-		sub_comboBox_soort.setModel(new DefaultComboBoxModel(sub_priceList.toArray())); // Refresh the combobox
-		sub_index = (i < 0)?(sub_priceList.size() - 1):i; // put index on latest item
-		sub_comboBox_soort.setSelectedItem(sub_priceList.get(sub_index));
-		sub_txtPrijs.setText(Double.toString(sub_priceList.get(sub_index).getCostPerUnit()));
-		sub_comboBox_type.setSelectedItem(sub_priceList.get(sub_index).getTypeBetaling());
+	public void updateSubPriceList(int t, int l) {
+		subTypes = SubscriptionPriceDAO.getAllSubTypes();
+		subTypes_index = (t < 0)?(subTypes.size() - 1):t;
+		sub_comboBox_soort.setModel(new DefaultComboBoxModel(subTypes.toArray()));
+		sub_comboBox_soort.setSelectedItem(subTypes.get(subTypes_index));
+		subLengths = SubscriptionPriceDAO.getLengthsForType(subTypes.get(subTypes_index));
+		subLengths_index = (l < 0)?(subLengths.size() - 1):l;
+		sub_comboBox_maanden.setModel(new DefaultComboBoxModel(subLengths.toArray()));
+		sub_comboBox_maanden.setSelectedItem(subLengths.get(subLengths_index));
+		subPrice = SubscriptionPriceDAO.findSubPriceByTypeAndLength(subTypes.get(subTypes_index), subLengths.get(subLengths_index));
+		sub_txtPrijs.setText(Double.toString(subPrice.getCostPerUnit()));
+		sub_comboBox_type.setSelectedItem(subPrice.getTypeBetaling());
 	}
 	
 	public String getTxtSoort() {
@@ -434,6 +495,10 @@ public class PriceConfigView extends JPanel {
 		return sub_txtSoort.getText();
 	}
 	
+	public Double getMonths() {
+		return Double.parseDouble((String) cbb_maandenVoegToe.getSelectedItem());
+	}
+	
 	public Price getPrice() {
 		return new Price(priceList.get(index).getId(),
 				priceList.get(index).getTypeTicket(),
@@ -442,10 +507,8 @@ public class PriceConfigView extends JPanel {
 	}
 	
 	public SubscriptionPrice getSubscriptionPrice() {
-		return new SubscriptionPrice(sub_priceList.get(sub_index).getId(),
-				sub_priceList.get(sub_index).getTypeSubscription(),
-				betalingsType.stringToBetalingsType(sub_comboBox_type.getSelectedItem().toString()),
-				Double.valueOf(sub_txtPrijs.getText()),
-				1.0);
+		subPrice.setCostPerUnit(Double.parseDouble(sub_txtPrijs.getText()));
+		subPrice.setTypeBetaling((betalingsType) sub_comboBox_type.getSelectedItem());
+		return subPrice;
 	}
 }

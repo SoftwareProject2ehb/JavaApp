@@ -33,7 +33,6 @@ public class SubscriptionPriceDAO extends BaseDAO{
 			}
 	
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -64,9 +63,6 @@ public class SubscriptionPriceDAO extends BaseDAO{
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			
-			//st = getConnection().createStatement();
-			//res = st.executeQuery("SELECT * FROM SubscriptionPrice where id=" + id);
-			
 			ps = getConnection().prepareStatement("SELECT * FROM SubscriptionPrice where typeSubscription=? and lengthInMonths=?");
 			ps.setString(1, type);
 			ps.setDouble(2, length);
@@ -82,7 +78,6 @@ public class SubscriptionPriceDAO extends BaseDAO{
 			}
 	
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -109,7 +104,7 @@ public class SubscriptionPriceDAO extends BaseDAO{
 		ResultSet res = null;
 		int id = -1;
 		
-		String sql = "INSERT INTO SubscriptionPrice VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO SubscriptionPrice VALUES (null,?,?,?,?)";
 
 		try {
 
@@ -118,18 +113,19 @@ public class SubscriptionPriceDAO extends BaseDAO{
 			}
 			ps = getConnection().prepareStatement(sql);
 
-			ps.setInt(1, subPrice.getId());
-			ps.setString(2, subPrice.getTypeSubscription());
-			ps.setString(3, subPrice.getTypeBetaling().toCapsString());
-			ps.setDouble(4, subPrice.getCostPerUnit());
-			ps.setDouble(5, subPrice.getLengthInMonths());
+			//ps.setInt(1, subPrice.getId());
+			ps.setString(1, subPrice.getTypeSubscription());
+			ps.setString(2, subPrice.getTypeBetaling().toCapsString());
+			ps.setDouble(3, subPrice.getCostPerUnit());
+			ps.setDouble(4, subPrice.getLengthInMonths());
 
 			ps.executeUpdate();
 			
 			st = getConnection().createStatement();
-	        res = st.executeQuery("SELECT id FROM SubscriptionPrice ORDER BY id DESC LIMIT 1");
+	        res = st.executeQuery("SELECT MAX(id) FROM SubscriptionPrice");
 	        if (res.next()) {
 	        	id = res.getInt(1);
+	        	id++;
 	        }
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -168,13 +164,12 @@ public class SubscriptionPriceDAO extends BaseDAO{
 				SubscriptionPrice sbp = new SubscriptionPrice(res.getInt("id"), 
 						res.getString("typeSubscription"),
 						betalingsType.stringToBetalingsType(res.getString("typeBetaling")),
-						res.getDouble("lengthInMonths"),
-						res.getDouble("costPerUnit") 
+						res.getDouble("costPerUnit"),
+						res.getDouble("lengthInMonths")
 						);
 				lijst.add(sbp);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -196,7 +191,7 @@ public class SubscriptionPriceDAO extends BaseDAO{
 	
 	public static void updateSubType(SubscriptionPrice subPrice) {
 		PreparedStatement ps = null;
-		String sql = "UPDATE SubscriptionPrice SET typeSubscription=?, typeBetaling=?, lengthInMonths=?, price=? WHERE id = " + subPrice.getId();
+		String sql = "UPDATE SubscriptionPrice SET typeSubscription=?, typeBetaling=?, lengthInMonths=?, costPerUnit=? WHERE id=?";
 
 		try {
 
@@ -208,6 +203,7 @@ public class SubscriptionPriceDAO extends BaseDAO{
 			ps.setString(2, subPrice.getTypeBetaling().toCapsString());
 			ps.setDouble(3, subPrice.getLengthInMonths());
 			ps.setDouble(4, subPrice.getCostPerUnit());
+			ps.setInt(5,  subPrice.getId());
 			
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -243,7 +239,6 @@ public class SubscriptionPriceDAO extends BaseDAO{
 				list.add(res.getString(1));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 	        try {
@@ -272,9 +267,6 @@ public class SubscriptionPriceDAO extends BaseDAO{
 				throw new IllegalStateException("error unexpected");
 			}
 			
-			//st = (Statement) getConnection().createStatement();
-			//res = st.executeQuery("SELECT lengthInMonths FROM SubscriptionPrice WHERE type=?");
-
 			ps = getConnection().prepareStatement("SELECT lengthInMonths FROM SubscriptionPrice WHERE typeSubscription=?");
 			ps.setString(1, type);
 			
@@ -284,7 +276,6 @@ public class SubscriptionPriceDAO extends BaseDAO{
 				list.add(res.getDouble(1));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 	        try {

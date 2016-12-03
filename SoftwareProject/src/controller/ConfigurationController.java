@@ -54,7 +54,7 @@ public class ConfigurationController {
 	}
 	
 	public static void createSubPrice() {
-		SystemController.makeSubscriptionType(price_config.getSubTxtSoort(), betalingsType.PER_HOUR.toString(), 1, 1.0);
+		SystemController.makeSubscriptionPrice(price_config.getSubTxtSoort(), betalingsType.PER_HOUR.toString(), 1, price_config.getMonths());
 	}
 	
 	public static void updateSubPrice() {
