@@ -15,6 +15,7 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 import data_control.*;
+import data_control.UserDAO.FindUser;
 
 public abstract class SystemController {
 	public static SystemNMBS system = new SystemNMBS();
@@ -27,7 +28,7 @@ public abstract class SystemController {
 		ActionMenuController.initialize(new ActionMenuView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
 		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView(), new LostObjectView());
 		ReportController.initialize(new ReportView());
@@ -260,14 +261,35 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		return lijstLostobject;
 	}
 
-	public static String addUser(String first_name, String last_name, String email, String phone, String password,
+	public static String addUser(String first_name, String last_name, String email, String phone,
 			Role role) {
 		String login = first_name + "_" + last_name;
+		String password = "pass";
 		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role);
 		int user_id = UserDAO.createUser(new_user);
 		new_user.setUserID(user_id);
 		return null;
 	}
+	
+	public static String editUser(String first_name, String last_name, String email, String phone, Role role) {
+		User user = ConfigurationController.getSelectedUser();
+		String login = first_name + "_" + last_name;
+		user.setFirstName(first_name);
+		user.setLastName(last_name);
+		user.setLogin(login);
+		user.setEmail(email);
+		user.setPhone(phone);
+		user.setRolen(role.toString());
+		UserDAO.updateUser(user);
+		return null;
+	}
+	
+	public static ArrayList<User> searchUser(String searchText, UserDAO.FindUser att){
+		ArrayList<User> userList = new ArrayList<User>();
+		userList = UserDAO.findUserByAttribute(att, searchText);
+		return userList;
+	}
+	
 	
 	public static String changePrice(String measure_unit, double cost_per_unit) {
 		//TODO Implementation

@@ -11,7 +11,6 @@ import model.User.Role;
 
 public class UserDAO extends BaseDAO{
 	
-
 	public static int createUser(User user) {
 
 		PreparedStatement ps = null;
@@ -295,7 +294,7 @@ public class UserDAO extends BaseDAO{
 		return pass;
 	}
 	
-	public static ArrayList<User> getAllUsers() {
+	public static ArrayList<User> getAllActiveUsers() {
 		ArrayList<User> lijst = new ArrayList<User>();
 		ResultSet res = null;
 		Statement st = null;
@@ -305,7 +304,52 @@ public class UserDAO extends BaseDAO{
 				throw new IllegalStateException("Connection onverwacht beeindigd");
 			}
 			st = getConnection().createStatement();
-			res = st.executeQuery("SELECT * FROM User");
+			res = st.executeQuery("SELECT * FROM User WHERE active = 1");
+
+			while (res.next()) {
+				User u = new User(res.getInt("ID"), 
+						res.getString("first_name"),
+						res.getString("last_name"), 
+						res.getString("email"),
+						res.getString("phone"),
+						//res.getString("address"), 
+						res.getString("login"),
+						res.getString("password"), 
+						Role.valueOf(res.getString("role")), 
+						res.getBoolean("active"));
+				lijst.add(u);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	        try {
+	            if (st != null)
+	            	st.close();
+	            if (res != null)
+	            	res.close();
+	            if (!getConnection().isClosed())
+					getConnection().close();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            throw new RuntimeException("error.unexpected");
+	        }
+	    }
+
+		return lijst;
+	}
+	
+	public static ArrayList<User> getAllInactiveUsers() {
+		ArrayList<User> lijst = new ArrayList<User>();
+		ResultSet res = null;
+		Statement st = null;
+		try {
+			if (getConnection() == null || getConnection().isClosed()) {
+				// afhandelen zoals je zelf wilt
+				throw new IllegalStateException("Connection onverwacht beeindigd");
+			}
+			st = getConnection().createStatement();
+			res = st.executeQuery("SELECT * FROM User WHERE active = 0");
 
 			while (res.next()) {
 				User u = new User(res.getInt("ID"), 
@@ -340,7 +384,7 @@ public class UserDAO extends BaseDAO{
 		return lijst;
 	}
 
-	enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active};
+	public enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active};
 
 	public static ArrayList<User> findUserByAttribute(FindUser attribuut,String zoekop) { //Find user by attribute and string
 		ArrayList<User> lijst = new ArrayList<User>();
@@ -351,7 +395,7 @@ public class UserDAO extends BaseDAO{
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " IN ('" + zoekop + "') ");
+			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + "  LIKE '%" + zoekop + "%'");
 
 			while (res.next()) {
 				User u = new User(res.getInt("ID"), 
