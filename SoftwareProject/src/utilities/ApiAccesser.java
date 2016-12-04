@@ -11,6 +11,8 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 import java.io.*;
 import org.json.*;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import model.RouteStation;
 
 public abstract class ApiAccesser {
@@ -61,9 +63,9 @@ public abstract class ApiAccesser {
 	  // dus het returntype zal meer iets zijn zoals ArrayList<RouteStop>
 	  public static void opvragingRoute(String a, String b, ArrayList<ArrayList<RouteStation>> routes, ArrayList<ArrayList<String>> transfer_stations){
 		 
-		  ArrayList<RouteStation> stops;
-		  ArrayList<String> transfers_per_route;
-  
+		  ArrayList<RouteStation> stops = new ArrayList<RouteStation>();
+		  ArrayList<String> transfers_per_route = new ArrayList<String>();
+		  ArrayList<JSONArray> stations = new ArrayList<JSONArray>();
 		  try {
 		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
 		  
@@ -72,65 +74,41 @@ public abstract class ApiAccesser {
 			
 			Timestamp ts = DateConverter.timestampConverter(localTime);
 			*/
-			for (int k=0;k<json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length();k++) {
-				stops = new ArrayList<RouteStation>();
-				transfers_per_route = new ArrayList<String>();
-				if (json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length() < 1) {
-					break;
-				}
+		  JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
+		  for (int l=0;l<transfers_opslag.length();l++) {
+				
+				transfers_per_route.add(transfers_opslag.getJSONObject(l).get("TransferAt").toString());
+			}
 			
-				JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(k).getJSONObject("Stops").getJSONArray("Stations");
-				JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
-				for (int l=0;l<transfers_opslag.length();l++) {
+		  transfer_stations.add(new ArrayList<String>(transfers_per_route));
+		  
+			for (int k=0;k<json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length();k++) {
+				
+				
+				
+				stations.add( json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(k).getJSONObject("Stops").getJSONArray("Stations"));
+				
+				
+				
+				for (int i = 0; i < stations.get(k).length(); i++) {
 					
-					transfers_per_route.add(transfers_opslag.getJSONObject(l).get("TransferAt").toString());
+					
+					
+				 stops.add( new RouteStation (
+							stations.get(k).getJSONObject(i).getString("Name"),
+							stations.get(k).getJSONObject(i).getString("Coordinates"),
+							stations.get(k).getJSONObject(i).getJSONObject("Time").get("Arrival").toString(),
+							stations.get(k).getJSONObject(i).getJSONObject("Time").get("Departure").toString(),
+							stations.get(k).getJSONObject(i).get("ArrivalPlatform").toString(),
+							stations.get(k).getJSONObject(i).get("DeparturePlatform").toString()
+							));
+					
+					
+				
+					
 				}
-				
-				
-				
-				for (int i = 0; i < stations.length(); i++) {
-					
-					
-					if (i == stations.length()-1) {
-						RouteStation rs = new RouteStation (
-								stations.getJSONObject(i).getString("Name"),
-								stations.getJSONObject(i).getString("Coordinates"),
-								stations.getJSONObject(i).getJSONObject("Time").getString("Arrival"),
-								null,
-								Integer.parseInt(stations.getJSONObject(i).getString("ArrivalPlatform")),
-								0
-								);
-						
-						stops.add(rs);
-						
-					} else if (i == 0) {
-						RouteStation rs = new RouteStation (
-								stations.getJSONObject(i).getString("Name"),
-								stations.getJSONObject(i).getString("Coordinates"),
-								null,
-								stations.getJSONObject(i).getJSONObject("Time").getString("Departure"),
-								0,
-								Integer.parseInt(stations.getJSONObject(i).getString("DeparturePlatform"))
-								);
-						
-						stops.add(rs);
-						
-					}else if (i < stations.length()-1) {
-						RouteStation rs = new RouteStation (
-								stations.getJSONObject(i).getString("Name"),
-								stations.getJSONObject(i).getString("Coordinates"),
-								stations.getJSONObject(i).getJSONObject("Time").getString("Arrival"),
-								stations.getJSONObject(i).getJSONObject("Time").getString("Departure"),
-								Integer.parseInt(stations.getJSONObject(i).getString("ArrivalPlatform")),
-								Integer.parseInt(stations.getJSONObject(i).getString("DeparturePlatform"))
-								);
-						
-						stops.add(rs);
-					}
-					routes.add(stops);
-				}
-				
-				transfer_stations.add(transfers_per_route);
+				routes.add(new ArrayList<>(stops));
+				stops.clear();
 				
 			}
 		  } catch (JSONException e) {

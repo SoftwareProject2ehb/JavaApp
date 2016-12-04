@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import utilities.ApiAccesser;
 
@@ -65,14 +67,14 @@ public class Route {
 			for (int k=0;i<routes.get(i).size();k++) {
 				if (!start) {
 					if (routes.get(i).get(k).getNaam().toLowerCase().contains(this.begin_station.toLowerCase())) {
-						System.out.println(routes.get(i).get(k).getNaam().toLowerCase());
+						
 						queried_route.add(routes.get(i).get(k));
-						System.out.println(routes.get(i).get(k).getNaam().toLowerCase());
+						
 						start = true;
 					}
 				}
 				
-				if (start && !eind) {
+				else if (start && !eind) {
 					if (routes.get(i).get(k).getNaam().toLowerCase().contains(this.eind_station.toLowerCase())) {
 						queried_route.add(routes.get(i).get(k));
 						eind = true;

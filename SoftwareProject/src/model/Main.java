@@ -14,8 +14,8 @@ import view.FindSubscriptionView;
 public class Main {
 
 	public static void main(String[] args){
-		Route r = new Route("Zele", "gent-sint-pieters");
-		r.transfers();
-		r.routes();
+		Route rs = new Route ("Zele", "gent-sint-pieters");
+		rs.fillQueriedRoute();
+		rs.showQueriedRoute();
 	}
 }

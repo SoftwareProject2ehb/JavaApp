@@ -5,11 +5,11 @@ public class RouteStation {
 	private String coordinates;
 	private String arrivalTime;
 	private String departureTime;
-	private int arrivalPlatform;
-	private int departurePlatform;
+	private String arrivalPlatform;
+	private String departurePlatform;
 	
-	public RouteStation(String naam, String coordinates, String arrivalTime, String departureTime, int arrivalPlatform,
-			int departurePlatform) {
+	public RouteStation(String naam, String coordinates, String arrivalTime, String departureTime, String arrivalPlatform,
+			String departurePlatform) {
 		super();
 		this.naam = naam;
 		this.coordinates = coordinates;
@@ -51,19 +51,19 @@ public class RouteStation {
 		this.departureTime = departureTime;
 	}
 
-	public int getArrivalPlatform() {
+	public String getArrivalPlatform() {
 		return arrivalPlatform;
 	}
 
-	public void setArrivalPlatform(int arrivalPlatform) {
+	public void setArrivalPlatform(String arrivalPlatform) {
 		this.arrivalPlatform = arrivalPlatform;
 	}
 
-	public int getDeparturePlatform() {
+	public String getDeparturePlatform() {
 		return departurePlatform;
 	}
 
-	public void setDeparturePlatform(int departurePlatform) {
+	public void setDeparturePlatform(String departurePlatform) {
 		this.departurePlatform = departurePlatform;
 	}
 	
