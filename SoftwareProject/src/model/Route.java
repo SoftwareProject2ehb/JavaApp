@@ -57,7 +57,7 @@ public class Route {
 		}
 	}
 	
-	public void fillQueriedRoute() {
+	public boolean fillQueriedRouteWithoutTransfers() {
 		boolean eind = false;
 		boolean start = false;
 		for (int i=0;i<routes.size();i++) {
@@ -78,6 +78,7 @@ public class Route {
 					if (routes.get(i).get(k).getNaam().toLowerCase().contains(this.eind_station.toLowerCase())) {
 						queried_route.add(routes.get(i).get(k));
 						eind = true;
+						
 						break;
 					} else {
 						queried_route.add(routes.get(i).get(k));
@@ -86,9 +87,73 @@ public class Route {
 				
 			}
 		}
+		
+		
+		return eind;
 	}
 	
-	
+	public void fillQueriedRouteWithTransfers() {
+		
+			boolean eind = false;
+			boolean start = false;
+			boolean queried_route_compleet = false;
+			boolean transfer_gevonden = false;
+			int route_index = -1;
+			int station_index = -1;
+			for (int i=0;i<routes.size();i++) {
+				if (eind) {
+					break;
+				}
+				for (int k=0;k<routes.get(i).size();k++) {
+					if (routes.get(i).get(k).getNaam().toLowerCase().contains(eind_station.toLowerCase())){
+						eind = true;
+						route_index = i;
+						station_index = k;
+						break;
+					}
+				}
+			}
+			if (eind && route_index == 0) {
+				fillQueriedRouteWithoutTransfers();
+			}else if (eind) {
+					int m = 1;
+					
+					for (int h=0;h<routes.size();h++) {
+						transfer_gevonden = false;
+						if (queried_route_compleet) {
+							break;
+						}
+						for (int f=0;f<routes.get(h).size();f++) {
+							if (!start) {
+								if (routes.get(h).get(f).getNaam().toLowerCase().contains(this.begin_station.toLowerCase())) {
+									
+									queried_route.add(routes.get(h).get(f));
+									
+									start = true;
+								}
+							}
+							else if (h == route_index && f == station_index){
+								queried_route.add(routes.get(h).get(f));
+								queried_route_compleet = true;
+								break;
+							} else if (h == route_index)  {
+								queried_route.add(routes.get(h).get(f));
+							}
+							
+							else if (routes.get(h).get(f).getNaam().toLowerCase().contains(transfer_stations.get(0).get(m).toLowerCase())) {
+								queried_route.add(routes.get(h).get(f));
+								transfer_gevonden = true;
+								m++;
+								break;
+							}  else  {
+								queried_route.add(routes.get(h).get(f));
+							}
+						}
+					}
+				
+			}
+		
+	}
 	
 	public void showQueriedRoute() {
 		

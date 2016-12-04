@@ -75,12 +75,14 @@ public abstract class ApiAccesser {
 			Timestamp ts = DateConverter.timestampConverter(localTime);
 			*/
 		  JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
+		  /*
 		  for (int l=0;l<transfers_opslag.length();l++) {
 				
 				transfers_per_route.add(transfers_opslag.getJSONObject(l).get("TransferAt").toString());
 			}
 			
 		  transfer_stations.add(new ArrayList<String>(transfers_per_route));
+		  */
 		  
 			for (int k=0;k<json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length();k++) {
 				
@@ -108,9 +110,12 @@ public abstract class ApiAccesser {
 					
 				}
 				routes.add(new ArrayList<>(stops));
+				transfers_per_route.add(transfers_opslag.getJSONObject(k).get("TransferAt").toString());
 				stops.clear();
 				
 			}
+			transfer_stations.add(new ArrayList<String>(transfers_per_route));
+			
 		  } catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
