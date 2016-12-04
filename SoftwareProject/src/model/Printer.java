@@ -40,7 +40,7 @@ public class Printer {
 		QrCode.makeQrCode(qrTxt, qrTitle);
 		String image = qrTitle + ".png";
 		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
-
+		String euro = "\u20ac";
 		// Create a document and add a page to it
 		PDDocument document = new PDDocument();
 		PDPage page = new PDPage();
@@ -105,8 +105,9 @@ public class Printer {
 		contentStream.beginText();
 		contentStream.setFont(font, 12);
 		contentStream.moveTextPositionByAmount(110, 700);
-
-		contentStream.drawString("€ " + t.getPrice());
+		double prijs = t.getPrice();
+		double new_prijs = Math.floor(prijs * 100) / 100;
+		contentStream.drawString(euro + " " + new_prijs);
 		contentStream.newLineAtOffset(0, -15);
 		contentStream.drawString("" + t.getTypeTicket());
 		contentStream.newLineAtOffset(0, -15);
@@ -249,7 +250,9 @@ public class Printer {
 		contentStream.beginText();
 		contentStream.setFont(font, 12);
 		contentStream.moveTextPositionByAmount(110, 700);
-		contentStream.drawString("" + s.getPrice());
+		double prijs = s.getPrice();
+		double new_prijs = Math.floor(prijs * 100) / 100;
+		contentStream.drawString("" + new_prijs);
 		contentStream.newLineAtOffset(0, -15);
 		contentStream.drawString("" + s.getSubscriptionType());
 		contentStream.newLineAtOffset(0, -15);
