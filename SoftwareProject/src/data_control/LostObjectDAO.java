@@ -23,7 +23,7 @@ public class LostObjectDAO extends BaseDAO{
 		 ResultSet res = null;
 		 int id = -1;
 
-		    String sql = "INSERT INTO LostObject VALUES(null,?,?,?,?,false,null,null,null,null)";
+		    String sql = "INSERT INTO LostObject VALUES(null,?,?,?,?,?,false,null,null,null,null)";
 
 		    try {
 
@@ -35,25 +35,28 @@ public class LostObjectDAO extends BaseDAO{
 		        ps.setInt(1, object.getUserID());
 		        ps.setString(2, object.getName());
 		        ps.setString(3, object.getPlace());
-		        // TODO SET DATE
+		        ps.setString(4, object.getDescription());
 		        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-		        ps.setTimestamp(4, date);
+		        ps.setTimestamp(5, date);
 		        
 		        ps.executeUpdate();
 		        
-		        // Maken van de logfile met text
-				String s = "Een lost object werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
-				+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
-				LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
-				LogFileDAO.createLogFile(log);
-			
-				// Eind maken van logfile
+		       
 		        
 		        st = getConnection().createStatement();
 		        res = st.executeQuery("SELECT ID FROM LostObject ORDER BY ID DESC LIMIT 1");
 		        if (res.next()) {
 		        	id = res.getInt(1);
 		        }
+		        ps.close();
+		        res.close();
+		        // Maken van de logfile met text
+				String s = "Een lost object met id : "+ id+ " werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
+				+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+				LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+				LogFileDAO.createLogFile(log);
+			
+				// Eind maken van logfile
 		    } catch (SQLException e) {
 		        System.out.println(e.getMessage());
 		        throw new RuntimeException(e.getMessage());
@@ -97,9 +100,11 @@ public static void updateLostObject(LostObject object) {
 			ps.setInt(5, object.getID());
 			 // TODO SET DATE
 			ps.executeUpdate();
+			 ps.close();
+		      
 			
 			// Maken van de logfile met text
-				String s = "Een lost object werdt gewijzigd door user " + SystemController.system.logged_user.getFirstName()
+				String s = "Een lost object met id : "+  object.getID() + " werdt gewijzigd door user " + SystemController.system.logged_user.getFirstName()
 				+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
 				LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
 				LogFileDAO.createLogFile(log);
@@ -124,25 +129,29 @@ public static void updateLostObject(LostObject object) {
 
 public static LostObject getLostObjectFromRS(ResultSet res) throws SQLException{
 	
-	return new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4), res.getTimestamp(5), res.getBoolean(6),res.getInt(7),res.getString(8),res.getString(9),res.getTimestamp(10));
+	return new LostObject(res.getInt(1), res.getInt(2),res.getString(3), res.getString(4),res.getString(5), res.getTimestamp(6), res.getBoolean(7),res.getInt(8),res.getString(9),res.getString(10),res.getTimestamp(11));
 }
 
 
 public static LostObject getLostObjectById(int objectID) {
-	Statement st = null;
+	PreparedStatement ps = null;
 	LostObject lost = null;
 	ResultSet res = null;
+	String update ="SELECT * FROM LostObject WHERE ID = ?" ;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getConnection().createStatement();
-		res = st.executeQuery("SELECT * FROM LostObject WHERE ID = " + objectID);
+		ps = getConnection().prepareStatement(update);
+		ps.setInt(1, objectID);
+		res = ps.executeQuery();
 
 		while (res.next()) {
 			lost = getLostObjectFromRS(res);
 
 		}
+		 ps.close();
+	        res.close();
 		
 		// Maken van de logfile met text
 			String s = "Een lost object werdt gezocht op id door user " + SystemController.system.logged_user.getFirstName()
@@ -157,8 +166,8 @@ public static LostObject getLostObjectById(int objectID) {
 		e.printStackTrace();
 	} finally {
         try {
-            if (st != null)
-                st.close();
+            if (ps != null)
+                ps.close();
             if (res != null)
                 res.close();
             if (!getConnection().isClosed())
@@ -177,22 +186,28 @@ public static LostObject getLostObjectById(int objectID) {
 
 public static ArrayList<LostObject> getAllLostObject(int from , int to) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
-	Statement st = null;
+	PreparedStatement ps = null;
+	String update ="SELECT * FROM LostObject WHERE timeFound  BETWEEN NOW() - INTERVAL ? MONTH AND NOW() - INTERVAL ? MONTH";
+	
 	ResultSet res  = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getConnection().createStatement();
-		res = st.executeQuery("SELECT * FROM LostObject where timeFound  BETWEEN NOW() - INTERVAL "+from +" MONTH AND NOW() - INTERVAL "+ to +" MONTH");
+		ps = getConnection().prepareStatement(update);
+		ps.setInt(1, from);
+		ps.setInt(2, to);
+		res = ps.executeQuery();
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		ps.close();
+        res.close();
 		
 		// Maken van de logfile met text
-			String s = "Alle lost object not claimed werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+			String s = "Alle lost object werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
 			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
 			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
 			LogFileDAO.createLogFile(log);
@@ -204,10 +219,11 @@ public static ArrayList<LostObject> getAllLostObject(int from , int to) {
 		e.getMessage();
 	} finally {
         try {
-            if (st != null)
-                st.close();
+          
             if (res != null)
                 res.close();
+            if (ps != null)
+                ps.close();
             if (!getConnection().isClosed())
 				getConnection().close();
 
@@ -219,21 +235,27 @@ public static ArrayList<LostObject> getAllLostObject(int from , int to) {
 
 	return lijst;
 }
-public static ArrayList<LostObject> getAllLostObjectNotClaimed() {
+public static ArrayList<LostObject> getAllLostObjectNotClaimed(int from , int to) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
-	Statement st = null;
+	PreparedStatement ps = null;
+	String update ="SELECT * FROM LostObject WHERE claimed = false AND timeFound  BETWEEN NOW() - INTERVAL ? MONTH AND NOW() - INTERVAL ? MONTH";
+	
 	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getConnection().createStatement();
-		res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = false");
+		ps =  getConnection().prepareStatement(update);
+		ps.setInt(1, from);
+		ps.setInt(2, to);
+		res = ps.executeQuery();
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		ps.close();
+        res.close();
 		// Maken van de logfile met text
 			String s = "Alle lost object not claimed werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
 			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
@@ -246,8 +268,8 @@ public static ArrayList<LostObject> getAllLostObjectNotClaimed() {
 		e.printStackTrace();
 	} finally {
         try {
-            if (st != null)
-                st.close();
+            if (ps != null)
+                ps.close();
             if (res != null)
                 res.close();
             if (!getConnection().isClosed())
@@ -262,21 +284,27 @@ public static ArrayList<LostObject> getAllLostObjectNotClaimed() {
 	return lijst;
 }
 
-public static ArrayList<LostObject> getAllLostObjectClaimed() {
+public static ArrayList<LostObject> getAllLostObjectClaimed(int from , int to) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
-	Statement st = null;
+	PreparedStatement ps = null;
+	String update ="SELECT * FROM LostObject WHERE claimed = true AND timeFound  BETWEEN NOW() - INTERVAL ? MONTH AND NOW() - INTERVAL ? MONTH";
+	
 	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getConnection().createStatement();
-		res = st.executeQuery("SELECT * FROM LostObject WHERE claimed = true");
+		ps =  getConnection().prepareStatement(update);
+		ps.setInt(1, from);
+		ps.setInt(2, to);
+		res = ps.executeQuery();
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		ps.close();
+        res.close();
 		// Maken van de logfile met text
 			String s = "Alle lost object claimed werdt gezocht door " + SystemController.system.logged_user.getFirstName()
 			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
@@ -289,8 +317,8 @@ public static ArrayList<LostObject> getAllLostObjectClaimed() {
 		e.printStackTrace();
 	} finally {
         try {
-            if (st != null)
-                st.close();
+            if (ps != null)
+                ps.close();
             if (res != null)
                 res.close();
             if (!getConnection().isClosed())
@@ -309,20 +337,27 @@ public static ArrayList<LostObject> getAllLostObjectClaimed() {
 //ZOEK op attribuut werkt niet
 public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject attribuut,String zoekop) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
-	Statement st = null;
+	PreparedStatement ps = null;
+	String update ="SELECT * FROM LostObject WHERE "+attribuut+" LIKE ? ";
+	
 	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getConnection().createStatement();
-		res = st.executeQuery("SELECT * FROM LostObject WHERE " + attribuut +" =  '" + zoekop + "';");
+		ps = getConnection().prepareStatement(update);
+		
+		ps.setString(1, "%"+zoekop+"%");
+		
+		res = ps.executeQuery();
 
+		
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
-		
+		ps.close();
+        res.close();
 		// Maken van de logfile met text
 			String s = "Een lost object werdt gezocht met attribuut : "+ attribuut+" en value : "+ zoekop+"door user " + SystemController.system.logged_user.getFirstName()
 			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
@@ -335,8 +370,8 @@ public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject att
 		e.printStackTrace();
 	} finally {
         try {
-            if (st != null)
-                st.close();
+            if (ps != null)
+                ps.close();
             if (res != null)
                 res.close();
             if (!getConnection().isClosed())
@@ -352,19 +387,23 @@ public static ArrayList<LostObject> getLostObjectOpAttribut(SearchLostObject att
 }
 public static ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
 	ArrayList<LostObject> lijst = new ArrayList<LostObject>();
-	Statement st = null;
+	PreparedStatement ps = null;
+	String update ="SELECT * FROM LostObject WHERE timeFound LIKE '%' ? '%'";
 	ResultSet res = null;
 	try {
 		if (getConnection().isClosed()) {
 			throw new IllegalStateException("error unexpected");
 		}
-		st = (Statement) getConnection().createStatement();
-		res = st.executeQuery("SELECT * FROM LostObject WHERE timeFound LIKE '%" + date + "%'");
+		ps =  getConnection().prepareStatement(update);
+		ps.setString(1, date);
+		res = ps.executeQuery();
 
 		while (res.next()) {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		ps.close();
+        res.close();
 		// Maken van de logfile met text
 						String s = "Alle lost object op datum found : "+ date +" werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
 						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
@@ -377,8 +416,8 @@ public static ArrayList<LostObject> getAllLostObjectOnDateFound(String date) {
 		e.getMessage();
 	} finally {
         try {
-            if (st != null)
-                st.close();
+            if (ps != null)
+                ps.close();
             if (res != null)
                 res.close();
             if (!getConnection().isClosed())
@@ -407,6 +446,8 @@ public static ArrayList<LostObject> getAllLostObjectOnDateClaimed(String date) {
 			LostObject lost = getLostObjectFromRS(res);
 			lijst.add(lost);
 		}
+		st.close();
+        res.close();
 		// Maken van de logfile met text
 			String s = "Alle lost object op datum claimed : "+ date +" werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
 			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
