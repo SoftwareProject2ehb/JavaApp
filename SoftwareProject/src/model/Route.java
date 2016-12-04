@@ -28,7 +28,7 @@ public class Route {
 		this.eind_station = eind_station;
 
 		ApiAccesser.opvragingRoute(begin_station, eind_station, routes, transfer_stations);
-	
+		fillQueriedRouteWithTransfers();
 	}
 	
 	public void transfers () {
