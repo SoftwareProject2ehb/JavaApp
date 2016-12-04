@@ -76,6 +76,7 @@ public class ConfigurationController {
 	
 	public static void switchToConfigurationView() {
 		FrameController.getFrame().switchTo("CONFIGURATION");
+		FrameController.changeSize(500, 300);
 	}
 	
 	public static void createPrice() {
