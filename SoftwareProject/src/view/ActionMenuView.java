@@ -11,6 +11,10 @@ import controller.SystemController;
 import controller.TicketController;
 
 import java.awt.GridLayout;
+
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -20,6 +24,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
 
@@ -71,7 +78,9 @@ public class ActionMenuView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, btnRoutevinder, 55, SpringLayout.SOUTH, lblKeuzemenu);
 		springLayout.putConstraint(SpringLayout.WEST, btnRoutevinder, 0, SpringLayout.WEST, lblKeuzemenu);
 		
-		JButton btwTicketKopen = new JButton("Ticket Kopen");
+		String ticketIcon = this.getClass().getClassLoader().getResource("ticket.png").getFile();
+		JButton btwTicketKopen = new JButton(new ImageIcon(ticketIcon));
+		
 		GridBagConstraints gbc_btwTicketKopen = new GridBagConstraints();
 		gbc_btwTicketKopen.insets = new Insets(0, 0, 5, 5);
 		gbc_btwTicketKopen.gridx = 3;
