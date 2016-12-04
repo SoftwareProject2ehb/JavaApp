@@ -27,7 +27,7 @@ package utilities;
 /*::                                                                         :*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-class DistanceCalculator
+public class DistanceCalculator
 {
 	public static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
 		double theta = lon1 - lon2;

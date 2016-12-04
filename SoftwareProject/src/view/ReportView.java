@@ -50,16 +50,16 @@ public class ReportView extends JPanel {
 		add(zoekBtn);
 		add(outputReport);
 		
-		JButton button = new JButton("<<  Terug");
-		springLayout.putConstraint(SpringLayout.SOUTH, outputReport, -4, SpringLayout.NORTH, button);
-		springLayout.putConstraint(SpringLayout.NORTH, button, 267, SpringLayout.NORTH, this);
-		springLayout.putConstraint(SpringLayout.WEST, button, 20, SpringLayout.WEST, this);
-		button.addActionListener(new ActionListener() {
+		JButton btnTerugNaarMenu = new JButton("Terug naar Menu");
+		springLayout.putConstraint(SpringLayout.SOUTH, outputReport, -4, SpringLayout.NORTH, btnTerugNaarMenu);
+		springLayout.putConstraint(SpringLayout.NORTH, btnTerugNaarMenu, 267, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 20, SpringLayout.WEST, this);
+		btnTerugNaarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToConfigurationView();
 			}
 		});
-		add(button);
+		add(btnTerugNaarMenu);
 
 		
 		

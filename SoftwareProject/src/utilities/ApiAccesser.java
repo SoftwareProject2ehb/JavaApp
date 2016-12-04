@@ -2,14 +2,21 @@ package utilities;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.*;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 import java.io.*;
 import org.json.*;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
+import model.RouteStation;
+
 public abstract class ApiAccesser {
+	
 	/*
 	 *Sites die ik gebruikt heb voor referentie:
 	 *
@@ -54,6 +61,65 @@ public abstract class ApiAccesser {
 	  // Een route tussen a en b bevat veel meer informatie dan alleen de naam van het station dus
 	  // ik ga nog een klasse moeten aanmaken die dat informatie kan opvangen 
 	  // dus het returntype zal meer iets zijn zoals ArrayList<RouteStop>
-	  public abstract ArrayList<String> opvragingRoute(String a, String b);
+	  public static void opvragingRoute(String a, String b, ArrayList<ArrayList<RouteStation>> routes, ArrayList<ArrayList<String>> transfer_stations){
+		 
+		  ArrayList<RouteStation> stops = new ArrayList<RouteStation>();
+		  ArrayList<String> transfers_per_route = new ArrayList<String>();
+		  ArrayList<JSONArray> stations = new ArrayList<JSONArray>();
+		  try {
+		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
+		  
+		  	
+		  JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
+		  
+		  
+			for (int k=0;k<json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length();k++) {
+				
+				
+				
+				stations.add( json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(k).getJSONObject("Stops").getJSONArray("Stations"));
+				
+				
+				
+				for (int i = 0; i < stations.get(k).length(); i++) {
+					
+					
+					
+				 stops.add( new RouteStation (
+							stations.get(k).getJSONObject(i).getString("Name"),
+							stations.get(k).getJSONObject(i).getString("Coordinates"),
+							stations.get(k).getJSONObject(i).getJSONObject("Time").get("Arrival").toString(),
+							stations.get(k).getJSONObject(i).getJSONObject("Time").get("Departure").toString(),
+							stations.get(k).getJSONObject(i).get("ArrivalPlatform").toString(),
+							stations.get(k).getJSONObject(i).get("DeparturePlatform").toString()
+							));
+					
+					
+				
+					
+				}
+				routes.add(new ArrayList<>(stops));
+				transfers_per_route.add(transfers_opslag.getJSONObject(k).get("TransferAt").toString());
+				stops.clear();
+				
+			}
+			transfer_stations.add(new ArrayList<String>(transfers_per_route));
+			
+		  } catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			
+		  
+
+	  }
 
 }

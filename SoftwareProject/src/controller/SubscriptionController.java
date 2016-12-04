@@ -28,49 +28,15 @@ public static FindSubscriptionView find_subscription;
 	
 	public static void switchToFindSubscriptionView() {
 		FrameController.getFrame().switchTo("FIND_SUBSCRIPTION");
+		FrameController.changeSize(765, 415);
 	}
 	
 	public static void calculatePrice() {
-		//TODO Dit is verschrikkelijke code, verschrikkelijk. Horrific. Regelrechte onzin. Maar beter ging niet om 23:37. Volledige prijsberekening van Subscription moet aangepast worden.
-		int type = 1;
-		int price = 1;
+		SubscriptionPrice sp = SubscriptionPriceDAO.findSubPriceByTypeAndLength((String) buy_subscription.cbbType.getSelectedItem(), (Double) buy_subscription.cbbGeldigheid.getSelectedItem());
 		
-		switch (buy_subscription.cbbGeldigheid.getSelectedItem().toString()) {
-		case "1 maand":
-			price = 1;
-			break;
-			
-		case "2 maanden":
-			price = 2;
-			break;
-			
-		case "3 maanden":
-			price = 3;
-			break;
-			
-		case "6 maanden":
-			price = 4;
-			break;
-			
-		case "1 jaar":
-			price = 5;
-			break;
-		}
-		
-		switch (buy_subscription.cbbType.getSelectedItem().toString()) {
-		case "Type 1":
-			type = 1;
-			break;
-			
-		case "Type 2":
-			type = 2;
-			break;
-		}
-		
-		double prijs = Subscription.calculatePrice(SubscriptionTypeDAO.findSubTypeById(type), SubscriptionPriceDAO.findSubPriceById(price));
+		double prijs = sp.getCostPerUnit(); // TODO hier prijs berekenen met lengte etc
 		buy_subscription.txtPrijs.setText(String.valueOf(prijs));
 	}
-	
 	
 	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model) {
 
@@ -82,38 +48,28 @@ public static FindSubscriptionView find_subscription;
 		}
 
 	    for (int i=0;i<subList.size();i++) {
-	    	Object[] item = {subList.get(i).getId(),SubscriptionTypeDAO.findSubTypeById(subList.get(i).getTicketType()).getName(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
+	    	Object[] item = {subList.get(i).getId(),subList.get(i).getSubscriptionType(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
 	    			subList.get(i).getStartDate(), subList.get(i).getEndDate(), subList.get(i).getActive()};
 	    	model.addRow(item);
 	    }
 
 	    return model;
-
 	}
 	
 	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model, int id) {
-
-		
 		String col[] = {"ID","Type","Price", "Customer ID", "StartStation", "EndStation", "StartDate", "EndDate", "Active"};
 
 		model = new DefaultTableModel(col, 0);
 			
-		
-		
 		subList.clear();
-		subList.add(new SubscriptionDAO().findSubById(id));
+		subList.add(SubscriptionDAO.findSubById(id));
 
 	    for (int i=0;i<subList.size();i++) {
-	    	Object[] item = {subList.get(i).getId(),SubscriptionTypeDAO.findSubTypeById(subList.get(i).getTicketType()).getName(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
+	    	Object[] item = {subList.get(i).getId(),subList.get(i).getSubscriptionType(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
 	    			subList.get(i).getStartDate(), subList.get(i).getEndDate(), subList.get(i).getActive()};
 	    	model.addRow(item);
 	    }
 
 	    return model;
-
 	}
-
-
-	
-	
 }

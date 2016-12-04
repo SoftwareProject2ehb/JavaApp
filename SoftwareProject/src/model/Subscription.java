@@ -3,12 +3,12 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 import data_control.SubscriptionDAO;
+import data_control.SubscriptionPriceDAO;
 
 public class Subscription {
 	
-	
 	private int id;
-	private int typeId;
+	private String type;
 	private double price;
 	private String startStation;
 	private String endStation;
@@ -16,12 +16,11 @@ public class Subscription {
 	private Date startDate;
 	private Date endDate;
 	private int active;
-	
 
-	public Subscription(int typeId, double price, int customerId, String endStation, String startStation,
+	public Subscription(String type, double price, int customerId, String endStation, String startStation,
 			Date startDate, Date endDate) {
 		this.id = -1;
-		this.typeId = typeId;
+		this.type = type;
 		this.price = price;
 		this.startStation = startStation;
 		this.endStation = endStation;
@@ -31,19 +30,17 @@ public class Subscription {
 		this.active = 1;
 	}
 	
-	public Subscription(int typeId, double price, int customerId, String endStation, String startStation,
+	public Subscription(String type, double price, int customerId, String endStation, String startStation,
 			Date startDate, Date endDate, int active) {
-		this(typeId, price, customerId, endStation, startStation, startDate, endDate);
+		this(type, price, customerId, endStation, startStation, startDate, endDate);
 		this.active = active;
 	}
 	
-	public Subscription(int id, int typeId, double price, int customerId, String endStation, String startStation,
+	public Subscription(int id, String type, double price, int customerId, String endStation, String startStation,
 			Date startDate, Date endDate, int active) {
-		this(typeId, price, customerId, endStation, startStation, startDate, endDate, active);
+		this(type, price, customerId, endStation, startStation, startDate, endDate, active);
 		this.id = id;
 	}
-	
-
 
 	public int getId() {
 		return id;
@@ -53,12 +50,12 @@ public class Subscription {
 		this.id = id;
 	}
 
-	public int getTicketType() {
-		return typeId;
+	public String getSubscriptionType() {
+		return type;
 	}
 
-	public void setTicketType(String type) {
-		this.typeId = typeId;
+	public void setSubscriptionType(String type) {
+		this.type = type;
 	}
 
 	public double getPrice() {
@@ -116,9 +113,4 @@ public class Subscription {
 	public void setActived(int active) {
 		this.active = active;
 	}
-	
-	public static double calculatePrice(SubscriptionType subType, SubscriptionPrice subPrice) {
-		return subType.getFactor() * subPrice.getPrice();
-	}
-	
 }
