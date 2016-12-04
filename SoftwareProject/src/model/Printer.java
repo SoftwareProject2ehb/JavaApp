@@ -251,7 +251,7 @@ public class Printer {
 		contentStream.moveTextPositionByAmount(110, 700);
 		contentStream.drawString("" + s.getPrice());
 		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("" + s.getTicketType());
+		contentStream.drawString("" + s.getSubscriptionType());
 		contentStream.newLineAtOffset(0, -15);
 		contentStream.drawString("" + s.getStartStation());
 		contentStream.newLineAtOffset(0, -15);
