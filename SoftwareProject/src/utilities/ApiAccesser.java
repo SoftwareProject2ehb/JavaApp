@@ -59,10 +59,10 @@ public abstract class ApiAccesser {
 	  // Een route tussen a en b bevat veel meer informatie dan alleen de naam van het station dus
 	  // ik ga nog een klasse moeten aanmaken die dat informatie kan opvangen 
 	  // dus het returntype zal meer iets zijn zoals ArrayList<RouteStop>
-	  public static void opvragingRoute(String a, String b, ArrayList<ArrayList<RouteStation>> routes, ArrayList<String> transfer_stations){
+	  public static void opvragingRoute(String a, String b, ArrayList<ArrayList<RouteStation>> routes, ArrayList<ArrayList<String>> transfer_stations){
 		 
 		  ArrayList<RouteStation> stops;
-		 
+		  ArrayList<String> transfers_per_route;
   
 		  try {
 		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
@@ -74,6 +74,7 @@ public abstract class ApiAccesser {
 			*/
 			for (int k=0;k<json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length();k++) {
 				stops = new ArrayList<RouteStation>();
+				transfers_per_route = new ArrayList<String>();
 				if (json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length() < 1) {
 					break;
 				}
@@ -81,7 +82,8 @@ public abstract class ApiAccesser {
 				JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(k).getJSONObject("Stops").getJSONArray("Stations");
 				JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
 				for (int l=0;l<transfers_opslag.length();l++) {
-					transfer_stations.add(transfers_opslag.getJSONObject(l).get("TransferAt").toString());
+					
+					transfers_per_route.add(transfers_opslag.getJSONObject(l).get("TransferAt").toString());
 				}
 				
 				
@@ -125,9 +127,10 @@ public abstract class ApiAccesser {
 						
 						stops.add(rs);
 					}
-					
+					routes.add(stops);
 				}
-				routes.add(stops);
+				
+				transfer_stations.add(transfers_per_route);
 				
 			}
 		  } catch (JSONException e) {
