@@ -132,11 +132,7 @@ public class Route {
 						}
 						
 						for (int f=0;f<routes.get(h).size();f++) {
-							if (transfer_gevonden && !routes.get(h).get(f).getNaam().toLowerCase().contains(transfer_stations.get(0).get(m).toLowerCase())) {
-								f++;
-							} else {
-								m++;
-							}
+							
 							if (!start) {
 								if (routes.get(h).get(f).getNaam().toLowerCase().contains(this.begin_station.toLowerCase())) {
 									
@@ -149,15 +145,21 @@ public class Route {
 								queried_route.add(routes.get(h).get(f));
 								queried_route_compleet = true;
 								break;
-							} else if (h == route_index)  {
+							}
+							else if (h == route_index && !transfer_gevonden) {
 								queried_route.add(routes.get(h).get(f));
 							}
-							
 							else if (routes.get(h).get(f).getNaam().toLowerCase().contains(transfer_stations.get(0).get(m).toLowerCase())) {
 								queried_route.add(routes.get(h).get(f));
-								transfer_gevonden = true;
-								break;
-							}  else  {
+								if (!transfer_gevonden) {
+									transfer_gevonden = true;
+									break;
+								} else {
+									transfer_gevonden = false;
+									m++;
+								}
+								
+							}  else if (!transfer_gevonden)  {
 								queried_route.add(routes.get(h).get(f));
 							}
 						}

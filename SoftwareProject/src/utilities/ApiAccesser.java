@@ -69,20 +69,9 @@ public abstract class ApiAccesser {
 		  try {
 		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
 		  
-		  	/*
-			String localTime = DateConverter.getDateOther() + " " + time + ":00";
-			
-			Timestamp ts = DateConverter.timestampConverter(localTime);
-			*/
+		  	
 		  JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
-		  /*
-		  for (int l=0;l<transfers_opslag.length();l++) {
-				
-				transfers_per_route.add(transfers_opslag.getJSONObject(l).get("TransferAt").toString());
-			}
-			
-		  transfer_stations.add(new ArrayList<String>(transfers_per_route));
-		  */
+		  
 		  
 			for (int k=0;k<json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").length();k++) {
 				

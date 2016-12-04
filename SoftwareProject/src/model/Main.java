@@ -14,7 +14,7 @@ import view.FindSubscriptionView;
 public class Main {
 
 	public static void main(String[] args){
-		Route rs = new Route ("Zele", "brussel-west");
+		Route rs = new Route ("Zele", "La Louviere-Sud");
 		rs.fillQueriedRouteWithTransfers();
 		rs.showQueriedRoute();
 		System.out.println(rs.calculateDistance());
