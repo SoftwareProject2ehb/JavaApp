@@ -3,6 +3,7 @@
  */
 package model;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -15,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class Printer {
 		String qrTitle = "TQR" + t.getId();
 		QrCode.makeQrCode(qrTxt, qrTitle);
 		String image = qrTitle + ".png";
+		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
 
 		// Create a document and add a page to it
 		PDDocument document = new PDDocument();
@@ -45,41 +48,80 @@ public class Printer {
 
 		// Create a new font object selecting one of the PDF base fonts
 		PDFont font = PDType1Font.HELVETICA_BOLD;
-
 		// Start a new content stream which will "hold" the to be created content
 		PDPageContentStream contentStream;
 
 		contentStream = new PDPageContentStream(document, page);
-
-		// Define a text content stream using the selected font, moving the cursor and drawing the text "Hello World"
+		//draw rectangle
+		contentStream.setNonStrokingColor(200, 200, 200);
+		contentStream.fillRect(0, 750, 700, 50);
+		contentStream.setNonStrokingColor(Color.GRAY);
+		contentStream.fillRect(0, 560, 700, 10);
+		//draw lines
+		contentStream.drawLine(0, 750, 700, 750);
+		contentStream.drawLine(420, 850, 420, 570);
+		//contentStream.drawLine(0, 570, 700, 570);
+		//contentStream.drawLine(0, 530, 700, 530);
+		//ticket Number
+		contentStream.setNonStrokingColor(Color.BLACK);
+		contentStream.beginText();
+		contentStream.setFont(font, 16);
+		contentStream.moveTextPositionByAmount(30, 765);
+		contentStream.drawString("Ticket Nr " + t.getId());
+		contentStream.endText();
+		//date
+		contentStream.setNonStrokingColor(134,51,51);
 		contentStream.beginText();
 		contentStream.setFont(font, 12);
-		contentStream.moveTextPositionByAmount(100, 700);
-
+		contentStream.moveTextPositionByAmount(455, 765);
+		contentStream.drawString(timeStamp);
+		contentStream.endText();
+		// Define a text content stream using the selected font, moving the cursor and drawing the text "Hello World"
+		contentStream.setNonStrokingColor(134,51,51);
+		contentStream.beginText();
+		contentStream.setFont(font, 12);
+		contentStream.moveTextPositionByAmount(60, 700);
+		
 		String title = "Ticket" + t.getId() + "(" + t.getDate() + ").pdf";
-
-		contentStream.drawString("Ticket nr " + t.getId());
+		
+		contentStream.drawString("Prijs : ");
 		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Prijs : € " + t.getPrice());
+		contentStream.drawString("Type : ");
 		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Type : " + t.getTypeTicket());
+		contentStream.drawString("Van : ");
+		contentStream.newLineAtOffset(0, -15);
+		contentStream.drawString("Tot : ");
+		contentStream.newLineAtOffset(0, -15);
+		contentStream.drawString("Op : ");
+		contentStream.newLineAtOffset(0, -15);
 		contentStream.newLineAtOffset(0, -15);
 		if (t.isOneWayTicket())
-			contentStream.drawString("ENKEL");
+			contentStream.drawString("GELDIG VOOR EEN ENKEL REIS");
 		else
-			contentStream.drawString("HEEN EN TERUG");
-		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Van : " + t.getStartStation());
-		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Tot : " + t.getEndStation());
-		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Op : " + t.getDate());
+			contentStream.drawString("GELDIG VOOR EEN HEEN EN TERUG REIS");
 		contentStream.endText();
 
+		contentStream.setNonStrokingColor(Color.BLACK);
+		contentStream.beginText();
+		contentStream.setFont(font, 12);
+		contentStream.moveTextPositionByAmount(110, 700);
+
+		contentStream.drawString("� " + t.getPrice());
+		contentStream.newLineAtOffset(0, -15);
+		contentStream.drawString("" + t.getTypeTicket());
+		contentStream.newLineAtOffset(0, -15);
+		contentStream.drawString("" + t.getStartStation());
+		contentStream.newLineAtOffset(0, -15);
+		contentStream.drawString("" + t.getEndStation());
+		contentStream.newLineAtOffset(0, -15);
+		contentStream.drawString("" + t.getDate());
+		contentStream.endText();
+
+		
 		PDImageXObject ximage = null;
 		BufferedImage awtImage = ImageIO.read( new File( image ) );
 		ximage = PDImageXObject.createFromFile(image, document);
-		contentStream.drawImage(ximage, 350, 575);
+		contentStream.drawImage(ximage, 430, 575);
 
 		// Make sure that the content stream is closed:
 		contentStream.close();
@@ -123,7 +165,7 @@ public class Printer {
 		String qrTitle = "SQR" + s.getId();
 		QrCode.makeQrCode(qrTxt, qrTitle);
 		String image = qrTitle + ".png";
-
+		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
 		// Create a document and add a page to it
 		PDDocument document = new PDDocument();
 		PDPage page = new PDPage();
@@ -136,33 +178,90 @@ public class Printer {
 		PDPageContentStream contentStream;
 
 		contentStream = new PDPageContentStream(document, page);
-
-		// Define a text content stream using the selected font, moving the cursor and drawing the text "Hello World"
+		
+		//draw rectangle
+		contentStream.setNonStrokingColor(200, 200, 200);
+		contentStream.fillRect(0, 750, 700, 50);
+		contentStream.setNonStrokingColor(Color.GRAY);
+		contentStream.fillRect(0, 560, 700, 10);
+		//draw lines
+		contentStream.drawLine(0, 750, 700, 750);
+		contentStream.drawLine(420, 850, 420, 570);
+		//contentStream.drawLine(0, 570, 700, 570);
+		//contentStream.drawLine(0, 530, 700, 530);
+		//abonnement Number
+		contentStream.setNonStrokingColor(Color.BLACK);
+		contentStream.beginText();
+		contentStream.setFont(font, 16);
+		contentStream.moveTextPositionByAmount(30, 765);
+		contentStream.drawString("Abonnement Nr " + s.getId());
+		contentStream.endText();
+		//date
+		contentStream.setNonStrokingColor(134,51,51);
 		contentStream.beginText();
 		contentStream.setFont(font, 12);
-		contentStream.moveTextPositionByAmount(100, 700);
+		contentStream.moveTextPositionByAmount(455, 765);
+		contentStream.drawString(timeStamp);
+		contentStream.endText();		
+
+		// Define a text content stream using the selected font, moving the cursor and drawing the text "Hello World"
+		contentStream.setNonStrokingColor(134,51,51);
+		contentStream.beginText();
+		contentStream.setFont(font, 12);
+		contentStream.moveTextPositionByAmount(60, 700);
 
 		String title = "Abonnement" + s.getId() + "(" + s.getStartDate() + " to " + s.getEndDate() + ").pdf";
 
-		contentStream.drawString("Abonnement nr " + s.getId());
+		contentStream.drawString("PRIJS: ");
 		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Prijs : € " + s.getPrice());
+		contentStream.drawString("TYPE : ");
 		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Type : " + s.getSubscriptionType());
+		contentStream.drawString("VAN : ");
 		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Van : " + s.getStartStation());
-		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Tot : " + s.getEndStation());
-		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Van : " + s.getStartDate());
-		contentStream.newLineAtOffset(0, -15);
-		contentStream.drawString("Tot : " + s.getEndDate());
+		contentStream.drawString("TOT : ");
 		contentStream.endText();
 
+		contentStream.beginText();
+		contentStream.setFont(font, 13);
+		contentStream.moveTextPositionByAmount(60, 620);
+		contentStream.drawString("GELDIG VAN :");
+		contentStream.endText();
+
+		contentStream.beginText();
+		contentStream.setFont(font, 13);
+		contentStream.moveTextPositionByAmount(260, 620);
+		contentStream.drawString("TOT : ");
+		contentStream.endText();
+		
+		contentStream.beginText();
+		contentStream.setFont(font, 13);
+		contentStream.setNonStrokingColor(Color.BLACK);
+		contentStream.moveTextPositionByAmount(115, 600);
+		contentStream.drawString("" + s.getStartDate());
+		contentStream.endText();
+		
+		contentStream.beginText();
+		contentStream.setFont(font, 13);
+		contentStream.moveTextPositionByAmount(262, 600);
+		contentStream.drawString("" + s.getEndDate());
+		contentStream.endText();
+		
+		contentStream.beginText();
+		contentStream.setFont(font, 12);
+		contentStream.moveTextPositionByAmount(110, 700);
+		contentStream.drawString("" + s.getPrice());
+		contentStream.newLineAtOffset(0, -15);
+		contentStream.drawString("" + s.getSubscriptionType());
+		contentStream.newLineAtOffset(0, -15);
+		contentStream.drawString("" + s.getStartStation());
+		contentStream.newLineAtOffset(0, -15);
+		contentStream.drawString("" + s.getEndStation());
+		contentStream.endText();
+		
 		PDImageXObject ximage = null;
 		BufferedImage awtImage = ImageIO.read( new File( image ) );
 		ximage = PDImageXObject.createFromFile(image, document);
-		contentStream.drawImage(ximage, 350, 575);
+		contentStream.drawImage(ximage, 430, 575);
 
 		// Make sure that the content stream is closed:
 		contentStream.close();
