@@ -28,6 +28,7 @@ public static FindSubscriptionView find_subscription;
 	
 	public static void switchToFindSubscriptionView() {
 		FrameController.getFrame().switchTo("FIND_SUBSCRIPTION");
+		FrameController.changeSize(765, 415);
 	}
 	
 	public static void calculatePrice() {
