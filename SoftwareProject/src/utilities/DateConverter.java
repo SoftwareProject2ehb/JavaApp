@@ -33,6 +33,19 @@ public class DateConverter {
 		return d;
 	}
 	
+	public static String getDateOther() {
+		String d = "";
+		
+		d += LocalDate.now().getYear();
+		d += "-";
+		d += LocalDate.now().getMonthValue();
+		d += "-";
+		d += LocalDate.now().getDayOfMonth();
+		
+		
+		return d;
+	}
+	
 	public static String getTime() {
 		String t = "";
 		int hour = LocalTime.now().getHour();
