@@ -30,7 +30,7 @@ public class SubscriptionDAO extends BaseDAO{
 			ps = getConnection().prepareStatement(sql);
 
 			ps.setInt(1, sub.getId());
-			ps.setInt(2, sub.getTicketType());
+			ps.setString(2, sub.getSubscriptionType());
 			ps.setDouble(3, sub.getPrice());
 			ps.setInt(4, sub.getCustomerId());
 			ps.setString(5, sub.getStartStation());
@@ -84,7 +84,7 @@ public class SubscriptionDAO extends BaseDAO{
 
 			while (res.next()) {
 				Subscription sb = new Subscription(res.getInt("id"), 
-						res.getInt("type"),
+						res.getString("type"),
 						res.getDouble("price"), 
 						res.getInt("customer"),
 						res.getString("startstation"),
@@ -139,7 +139,7 @@ public class SubscriptionDAO extends BaseDAO{
 	
 			while (res.next()) {
 				sb = new Subscription(res.getInt("id"), 
-						res.getInt("type"),
+						res.getString("type"),
 						res.getDouble("price"), 
 						res.getInt("customer"),
 						res.getString("startstation"),
@@ -184,7 +184,7 @@ public class SubscriptionDAO extends BaseDAO{
 			}
 			ps = getConnection().prepareStatement(sql);
 
-			ps.setInt(1, sub.getTicketType());
+			ps.setString(1, sub.getSubscriptionType());
 			ps.setDouble(2, sub.getPrice());
 			ps.setInt(3, sub.getCustomerId());
 			ps.setString(4, sub.getStartStation());
@@ -296,7 +296,7 @@ public class SubscriptionDAO extends BaseDAO{
 			
 			while (res.next()) {
 				Subscription sb = new Subscription(res.getInt("id"), 
-						res.getInt("type"),
+						res.getString("type"),
 						res.getDouble("price"), 
 						res.getInt("customer"),
 						res.getString("startstation"),

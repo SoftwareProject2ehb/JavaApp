@@ -38,8 +38,6 @@ public class SearchRouteView extends JPanel {
 	public JTextField txtUur;
 	public JTextField txtDatum;
 	
-	
-	
 	/**
 	 * Create the panel.
 	 */
@@ -57,22 +55,18 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, lblVan, 10, SpringLayout.WEST, this);
 		add(lblVan);
 		
-		//textField = new JTextField();
 		cbbVan = new JComboBox();
 		springLayout.putConstraint(SpringLayout.NORTH, cbbVan, 61, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, cbbVan, 27, SpringLayout.EAST, lblVan);
 		springLayout.putConstraint(SpringLayout.NORTH, lblVan, 5, SpringLayout.NORTH, cbbVan);
 		cbbVan.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
 		add(cbbVan);
-		//textField.setColumns(10);
 		
-		//textField_1 = new JTextField();
 		cbbTot = new JComboBox();
 		springLayout.putConstraint(SpringLayout.NORTH, cbbTot, 104, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, cbbTot, 0, SpringLayout.WEST, cbbVan);
 		add(cbbTot);
 		cbbTot.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
-		//textField_1.setColumns(10);
 		
 		JLabel lblTot = new JLabel("Tot");
 		springLayout.putConstraint(SpringLayout.NORTH, lblTot, 5, SpringLayout.NORTH, cbbTot);

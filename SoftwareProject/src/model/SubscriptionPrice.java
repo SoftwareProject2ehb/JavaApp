@@ -1,21 +1,31 @@
 package model;
 
 import data_control.SubscriptionPriceDAO;
+import model.Price.betalingsType;
 
 public class SubscriptionPrice {
+	@Override
+	public String toString() {
+		return typeSubscription;
+	}
+
 	private int id;
+	private String typeSubscription;
+	private betalingsType typeBetaling;
+	private double costPerUnit;
 	private double lengthInMonths;
-	private double price;
 	
-	public SubscriptionPrice(double lengthInMonths, double price) {
+	public SubscriptionPrice(String typeSubscription, betalingsType typeBetaling, double costPerUnit, double lengthInMonths) {
 		super();
 		this.id = -1;
+		this.typeSubscription = typeSubscription;
+		this.typeBetaling = typeBetaling;
+		this.costPerUnit = costPerUnit;
 		this.lengthInMonths = lengthInMonths;
-		this.price = price;
 	}
 	
-	public SubscriptionPrice(int id, double lengthInMonths, double price) {
-		this(lengthInMonths, price);
+	public SubscriptionPrice(int id, String typeSubscription, betalingsType typeBetaling, double costPerUnit, double lengthInMonths) {
+		this(typeSubscription, typeBetaling, costPerUnit, lengthInMonths);
 		this.id = id;
 	}
 	public int getId() {
@@ -30,12 +40,26 @@ public class SubscriptionPrice {
 	public void setLengthInMonths(double lengthInMonths) {
 		this.lengthInMonths = lengthInMonths;
 	}
-	public double getPrice() {
-		return price;
+	public double getCostPerUnit() {
+		return costPerUnit;
 	}
-	public void setPrice(double price) {
-		this.price = price;
+	public void setCostPerUnit(double costPerUnit) {
+		this.costPerUnit = costPerUnit;
 	}
-	
-	
+
+	public String getTypeSubscription() {
+		return typeSubscription;
+	}
+
+	public void setTypeSubscription(String typeSubscription) {
+		this.typeSubscription = typeSubscription;
+	}
+
+	public betalingsType getTypeBetaling() {
+		return typeBetaling;
+	}
+
+	public void setTypeBetaling(betalingsType typeBetaling) {
+		this.typeBetaling = typeBetaling;
+	}
 }
