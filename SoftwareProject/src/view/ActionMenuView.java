@@ -32,10 +32,18 @@ import javax.swing.SpringLayout;
 
 public class ActionMenuView extends JPanel {
 
+	String ticket_icon_path = this.getClass().getClassLoader().getResource("ticket.png").getFile();
+	String find_icon_path = this.getClass().getClassLoader().getResource("find.png").getFile();
+	String config_icon_path = this.getClass().getClassLoader().getResource("config.png").getFile();
+	String subscription_icon_path = this.getClass().getClassLoader().getResource("subscription.png").getFile();
+	String route_icon_path = this.getClass().getClassLoader().getResource("route.png").getFile();
+	String lostobject_icon_path = this.getClass().getClassLoader().getResource("lostobjects.png").getFile();
+	
 	/**
 	 * Create the panel.
 	 */
 	public ActionMenuView() {
+		
 		SpringLayout springLayout = new SpringLayout();
 		
 		JLabel lblKeuzemenu = new JLabel("Keuzemenu");
@@ -57,70 +65,72 @@ public class ActionMenuView extends JPanel {
 		add(btnAfmelden);
 		
 		JPanel panel = new JPanel();
-		springLayout.putConstraint(SpringLayout.NORTH, panel, 52, SpringLayout.SOUTH, lblKeuzemenu);
+		springLayout.putConstraint(SpringLayout.NORTH, panel, 20, SpringLayout.SOUTH, lblKeuzemenu);
 		springLayout.putConstraint(SpringLayout.WEST, panel, 0, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, panel, -43, SpringLayout.NORTH, btnAfmelden);
+		springLayout.putConstraint(SpringLayout.SOUTH, panel, -6, SpringLayout.NORTH, btnAfmelden);
 		springLayout.putConstraint(SpringLayout.EAST, panel, 500, SpringLayout.WEST, this);
 		add(panel);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{10, 0, 10, 0, 10, 0, 0};
-		gbl_panel.rowHeights = new int[]{10, 0, 10, 0, 10};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
+		SpringLayout sl_panel = new SpringLayout();
+		panel.setLayout(sl_panel);
 		
-		JButton btnRoutevinder = new JButton("Routevinder");
-		GridBagConstraints gbc_btnRoutevinder = new GridBagConstraints();
-		gbc_btnRoutevinder.insets = new Insets(0, 0, 5, 5);
-		gbc_btnRoutevinder.gridx = 1;
-		gbc_btnRoutevinder.gridy = 1;
-		panel.add(btnRoutevinder, gbc_btnRoutevinder);
+		JButton btnRoutevinder = new JButton(new ImageIcon(route_icon_path));
+		btnRoutevinder.setContentAreaFilled(false);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnRoutevinder, 0, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, btnRoutevinder, 20, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnRoutevinder, 85, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnRoutevinder, 105, SpringLayout.WEST, panel);
+		panel.add(btnRoutevinder);
 		springLayout.putConstraint(SpringLayout.NORTH, btnRoutevinder, 55, SpringLayout.SOUTH, lblKeuzemenu);
 		springLayout.putConstraint(SpringLayout.WEST, btnRoutevinder, 0, SpringLayout.WEST, lblKeuzemenu);
 		
-		String ticketIcon = this.getClass().getClassLoader().getResource("ticket.png").getFile();
-		JButton btwTicketKopen = new JButton(new ImageIcon(ticketIcon));
 		
-		GridBagConstraints gbc_btwTicketKopen = new GridBagConstraints();
-		gbc_btwTicketKopen.insets = new Insets(0, 0, 5, 5);
-		gbc_btwTicketKopen.gridx = 3;
-		gbc_btwTicketKopen.gridy = 1;
-		panel.add(btwTicketKopen, gbc_btwTicketKopen);
+		JButton btwTicketKopen = new JButton(new ImageIcon(ticket_icon_path));
+		btwTicketKopen.setContentAreaFilled(false);
+		sl_panel.putConstraint(SpringLayout.NORTH, btwTicketKopen, 0, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, btwTicketKopen, 100, SpringLayout.EAST, btnRoutevinder);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btwTicketKopen, 85, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btwTicketKopen, 185, SpringLayout.EAST, btnRoutevinder);
+		panel.add(btwTicketKopen);
 		springLayout.putConstraint(SpringLayout.NORTH, btwTicketKopen, 90, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, btwTicketKopen, 174, SpringLayout.WEST, this);
 		
-		JButton btnNewButton_2 = new JButton("Abonnement Kopen");
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_2.gridx = 5;
-		gbc_btnNewButton_2.gridy = 1;
-		panel.add(btnNewButton_2, gbc_btnNewButton_2);
+		JButton btnNewButton_2 = new JButton(new ImageIcon(subscription_icon_path));
+		btnNewButton_2.setContentAreaFilled(false);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton_2, 0, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, btnNewButton_2, 100, SpringLayout.EAST, btwTicketKopen);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnNewButton_2, 85, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton_2, 185, SpringLayout.EAST, btwTicketKopen);
+		panel.add(btnNewButton_2);
 		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_2, 90, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_2, -10, SpringLayout.EAST, this);
 		
-		JButton btnAbonnementOpzoeken = new JButton("Abonnement Opzoeken");
-		GridBagConstraints gbc_btnAbonnementOpzoeken = new GridBagConstraints();
-		gbc_btnAbonnementOpzoeken.insets = new Insets(0, 0, 0, 5);
-		gbc_btnAbonnementOpzoeken.gridx = 1;
-		gbc_btnAbonnementOpzoeken.gridy = 3;
-		panel.add(btnAbonnementOpzoeken, gbc_btnAbonnementOpzoeken);
+		JButton btnAbonnementOpzoeken = new JButton(new ImageIcon(find_icon_path));
+		btnAbonnementOpzoeken.setContentAreaFilled(false);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnAbonnementOpzoeken, 10, SpringLayout.SOUTH, btnRoutevinder);
+		sl_panel.putConstraint(SpringLayout.WEST, btnAbonnementOpzoeken, 0, SpringLayout.WEST, btnRoutevinder);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnAbonnementOpzoeken, 95, SpringLayout.SOUTH, btnRoutevinder);
+		sl_panel.putConstraint(SpringLayout.EAST, btnAbonnementOpzoeken, 0, SpringLayout.EAST, btnRoutevinder);
+		panel.add(btnAbonnementOpzoeken);
 		springLayout.putConstraint(SpringLayout.NORTH, btnAbonnementOpzoeken, 143, SpringLayout.SOUTH, lblKeuzemenu);
 		springLayout.putConstraint(SpringLayout.WEST, btnAbonnementOpzoeken, 0, SpringLayout.WEST, lblKeuzemenu);
 		
-		JButton btnNewButton_4 = new JButton("Configuratie");
-		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-		gbc_btnNewButton_4.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_4.gridx = 3;
-		gbc_btnNewButton_4.gridy = 3;
-		panel.add(btnNewButton_4, gbc_btnNewButton_4);
+		JButton btnNewButton_4 = new JButton(new ImageIcon(config_icon_path));
+		btnNewButton_4.setContentAreaFilled(false);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnNewButton_4, 0, SpringLayout.NORTH, btnAbonnementOpzoeken);
+		sl_panel.putConstraint(SpringLayout.WEST, btnNewButton_4, 0, SpringLayout.WEST, btwTicketKopen);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnNewButton_4, 0, SpringLayout.SOUTH, btnAbonnementOpzoeken);
+		sl_panel.putConstraint(SpringLayout.EAST, btnNewButton_4, 0, SpringLayout.EAST, btwTicketKopen);
+		panel.add(btnNewButton_4);
 		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_4, 178, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, btnNewButton_4, 174, SpringLayout.WEST, this);
 		
-		JButton btnVerlorenVoorwerpen = new JButton("Verloren Voorwerpen");
-		GridBagConstraints gbc_btnVerlorenVoorwerpen = new GridBagConstraints();
-		gbc_btnVerlorenVoorwerpen.gridx = 5;
-		gbc_btnVerlorenVoorwerpen.gridy = 3;
-		panel.add(btnVerlorenVoorwerpen, gbc_btnVerlorenVoorwerpen);
+		JButton btnVerlorenVoorwerpen = new JButton(new ImageIcon(lostobject_icon_path));
+		btnVerlorenVoorwerpen.setContentAreaFilled(false);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnVerlorenVoorwerpen, 0, SpringLayout.NORTH, btnAbonnementOpzoeken);
+		sl_panel.putConstraint(SpringLayout.WEST, btnVerlorenVoorwerpen, 0, SpringLayout.WEST, btnNewButton_2);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnVerlorenVoorwerpen, 0, SpringLayout.SOUTH, btnAbonnementOpzoeken);
+		sl_panel.putConstraint(SpringLayout.EAST, btnVerlorenVoorwerpen, 0, SpringLayout.EAST, btnNewButton_2);
+		panel.add(btnVerlorenVoorwerpen);
 		springLayout.putConstraint(SpringLayout.EAST, btnVerlorenVoorwerpen, -4, SpringLayout.EAST, this);
 		btnVerlorenVoorwerpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
