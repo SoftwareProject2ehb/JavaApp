@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import controller.SystemController;
 import model.*;
 import model.User.Role;
 import utilities.DateConverter;
@@ -44,6 +45,8 @@ public class SubscriptionDAO extends BaseDAO{
 	        if (res.next()) {
 	        	id = res.getInt(1);
 	        }
+	       
+		// Eind maken van logfile
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -91,6 +94,13 @@ public class SubscriptionDAO extends BaseDAO{
 						res.getInt("active"));
 				lijst.add(sb);
 			}
+			 st.close();
+		     res.close();
+		        // Maken van de logfile met text
+				String s = "Een subscription met id :  werdt aangemaakt door user " + SystemController.system.logged_user.getFirstName()
+				+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+				LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+				LogFileDAO.createLogFile(log);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

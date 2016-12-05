@@ -15,6 +15,7 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 import data_control.*;
+import data_control.UserDAO.FindUser;
 
 public abstract class SystemController {
 	public static SystemNMBS system = new SystemNMBS();
@@ -27,9 +28,9 @@ public abstract class SystemController {
 		ActionMenuController.initialize(new ActionMenuView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(), new CreateUserView(), new ConfigurationView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
-		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView(), new LostObjectView());
+		LostObjectController.initialize(new LostObjectView());
 		ReportController.initialize(new ReportView());
 		
 		FrameController.getFrame().addWindowListener(new java.awt.event.WindowAdapter() {
@@ -166,13 +167,23 @@ public abstract class SystemController {
 		SubscriptionPriceDAO.removeSubscriptionPrice(p.getId());
 	}
 	
-	public static String addLostObject(String name, String station, Timestamp date) {
-		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station, date, false, -1, null, null, null);
+	public static LostObject addLostObject(String name, String station,String description) {
+		LostObject obj = new LostObject(system.logged_user.getUserID(), name, station,description);
 		int lost_object_id = LostObjectDAO.createLostObject(obj);
 		obj.setID(lost_object_id);
-		return "Succesvol toegevoegd.";
+		return obj;
 	}
-
+	public static LostObject updateLostObject(String name, String place,LostObject obj)
+	{
+		
+		
+		obj.setNameClaimed(name);
+		obj.setLocationClaimed(place);
+		obj.setDateClaimed(new java.sql.Timestamp(new java.util.Date().getTime()));
+		obj.setUserIDClaimed(SystemController.system.logged_user.getUserID());
+		LostObjectDAO.updateLostObject(obj);
+		return obj;
+	}
 	/*
 	 * public static ArrayList<LostObject> searchLostObject(String name_user,
 	 * String place_found, Timestamp time_found, Boolean claimed) {
@@ -188,16 +199,19 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		lijstLostobject = LostObjectDAO.getAllLostObject(select_from_date + 1, select_to_date);
 		break;
 	case 1:
-		lijstLostobject =  LostObjectDAO.getAllLostObjectClaimed();
+		lijstLostobject =  LostObjectDAO.getAllLostObjectClaimed(select_from_date + 1, select_to_date);
 		
 		break;
 	case 2:
-		lijstLostobject = LostObjectDAO.getAllLostObjectNotClaimed();
+		lijstLostobject = LostObjectDAO.getAllLostObjectNotClaimed(select_from_date + 1, select_to_date);
 		
 		break;
 	}
 	return lijstLostobject;
 }	
+
+
+
 	public static ArrayList<LostObject> searchLostObject(String name_user, String place_found, Timestamp time_found, Boolean claimed) {
 		ArrayList<LostObject> object_array = LostObjectDAO.getLostObjectByMultipleArgs(name_user, place_found, time_found, claimed);
 		return object_array;
@@ -260,14 +274,35 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		return lijstLostobject;
 	}
 
-	public static String addUser(String first_name, String last_name, String email, String phone, String password,
+	public static String addUser(String first_name, String last_name, String email, String phone,
 			Role role) {
 		String login = first_name + "_" + last_name;
+		String password = "pass";
 		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role);
 		int user_id = UserDAO.createUser(new_user);
 		new_user.setUserID(user_id);
 		return null;
 	}
+	
+	public static String editUser(String first_name, String last_name, String email, String phone, Role role) {
+		User user = ConfigurationController.getSelectedUser();
+		String login = first_name + "_" + last_name;
+		user.setFirstName(first_name);
+		user.setLastName(last_name);
+		user.setLogin(login);
+		user.setEmail(email);
+		user.setPhone(phone);
+		user.setRolen(role.toString());
+		UserDAO.updateUser(user);
+		return null;
+	}
+	
+	public static ArrayList<User> searchUser(String searchText, UserDAO.FindUser att){
+		ArrayList<User> userList = new ArrayList<User>();
+		userList = UserDAO.findUserByAttribute(att, searchText);
+		return userList;
+	}
+	
 	
 	public static String changePrice(String measure_unit, double cost_per_unit) {
 		//TODO Implementation

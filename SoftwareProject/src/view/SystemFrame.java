@@ -54,12 +54,11 @@ public class SystemFrame extends JFrame {
 		contentPane.add(TicketController.buy_ticket);
 		contentPane.add(ConfigurationController.create_user);
 		contentPane.add(ConfigurationController.find_user);
+		contentPane.add(ConfigurationController.edit_user);
 		contentPane.add(ConfigurationController.price_config);
 		contentPane.add(ConfigurationController.report);
 		contentPane.add(ConfigurationController.configuration);
 		contentPane.add(RouteController.search_route);
-		contentPane.add(LostObjectController.find_lost_object);
-		contentPane.add(LostObjectController.create_lost_object);
 		contentPane.add(LostObjectController.lost_object);
 		contentPane.add(ReportController.report);
 		
@@ -71,13 +70,12 @@ public class SystemFrame extends JFrame {
 		card_layout.addLayoutComponent(SubscriptionController.find_subscription, "FIND_SUBSCRIPTION");
 		card_layout.addLayoutComponent(TicketController.buy_ticket, "BUY_TICKET");
 		card_layout.addLayoutComponent(ConfigurationController.create_user, "CREATE_USER");
+		card_layout.addLayoutComponent(ConfigurationController.edit_user, "EDIT_USER");
 		card_layout.addLayoutComponent(ConfigurationController.find_user, "FIND_USER");
 		card_layout.addLayoutComponent(ConfigurationController.price_config, "PRICE_CONFIG");
 		card_layout.addLayoutComponent(ConfigurationController.report, "REPORT");
 		card_layout.addLayoutComponent(ConfigurationController.configuration, "CONFIGURATION");
 		card_layout.addLayoutComponent(RouteController.search_route, "SEARCH_ROUTE");
-		card_layout.addLayoutComponent(LostObjectController.find_lost_object, "FIND_LOST_OBJECT");
-		card_layout.addLayoutComponent(LostObjectController.create_lost_object, "CREATE_LOST_OBJECT");
 		card_layout.addLayoutComponent(LostObjectController.lost_object, "LOST_OBJECT");
 		card_layout.addLayoutComponent(ReportController.report,"RAPORTEN" );
 		

@@ -3,6 +3,7 @@ package model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import controller.SystemController;
 import data_control.LostObjectDAO;
 
 public class LostObject {
@@ -10,9 +11,10 @@ private int id;
 private int user_id;
 private String name;
 private String place;
-// TO DO SET DATE
+private String description;
 private Timestamp date;
 private boolean claimed;
+
 private int user_id_claimed;
 private String location_claimed;
 
@@ -20,35 +22,37 @@ private String name_claimed;
 private Timestamp date_claimed;
 
 //Constructor voor het maken van een found object
-public LostObject(int user_id, String name, String place) {
+public LostObject(int user_id, String name, String place, String description) {
 	super();
 	this.user_id = user_id;
 	this.name = name;
 	this.place = place;
+	this.description = description;
 	this.id = -1;
 	this.date = new java.sql.Timestamp(new java.util.Date().getTime());
 	
 }
 
 //Constructor voor het updaten van een bestaand object
-public LostObject(int userID, String name, String place, Timestamp date, boolean claimed, int user_id_claimed, String location_claimed,String name_claimed,
+public LostObject(int userID, String name, String place,String description, Timestamp date, boolean claimed, int user_id_claimed, String location_claimed,String name_claimed,
 		 Timestamp date_claimed) {
-	this(userID, name, place);
+	this(userID, name, place,description);
 	this.claimed = claimed;
-	this.user_id_claimed = user_id_claimed;
+	this.user_id_claimed = SystemController.system.logged_user.getUserID();
 	this.location_claimed = location_claimed;
 	this.name_claimed = name_claimed;
-	this.date_claimed = date_claimed;
+	this.date_claimed = new java.sql.Timestamp(new java.util.Date().getTime());
 	this.id = -1;
 }
 
 //Constructor for the whole ost object
-public LostObject(int id, int userid, String name, String place, Timestamp timefound, boolean claimed, int userclaimed,
+public LostObject(int id, int userid, String name, String place,String description, Timestamp timefound, boolean claimed, int userclaimed,
 		String location, String nameclaimed, Timestamp timeclaimed) {
 	this.id = id;
 	this.user_id = userid;
 	this.name = name;
 	this.place = place;
+	this.description = description;
 	this.date = timefound;
 	this.claimed = claimed;
 	this.user_id_claimed = userclaimed;
@@ -148,6 +152,13 @@ public String getLocationClaimed() {
 public void setLocationClaimed(String location_claimed) {
 	this.location_claimed = location_claimed;
 }
+public String getDescription() {
+	return description;
+}
+
+public void setDescription(String description) {
+	this.description = description;
+}
 @Override
 public String toString() {
 	return "ID=" + id + "\n userID=" + user_id + "\n name=" + name + "\n Place=" + place + "\n date=" + date
@@ -156,7 +167,7 @@ public String toString() {
 public Object[] toArray ()
 {
 	Object obj[] = { this.getID(), this.getUserID(),
-			this.getName(), this.getPlace(),
+			this.getName(), this.getPlace(),this.getDescription(),
 			this.getDate(), this.isClaimed(),
 			this.getUserIDClaimed(), this.getLocationClaimed(),
 			this.getNameClaimed(), this.getDateClaimed() };

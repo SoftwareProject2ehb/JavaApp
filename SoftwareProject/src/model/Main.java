@@ -14,11 +14,6 @@ import view.FindSubscriptionView;
 public class Main {
 
 	public static void main(String[] args){
-		Route rs = new Route ("Zele", "La Louviere-Sud");
-		rs.fillQueriedRouteWithTransfers();
-		rs.showQueriedRoute();
-		System.out.println(rs.calculateDistance());
-		System.out.println(rs.calculateTime());
-		
+		SystemController.startUp();
 	}
 }

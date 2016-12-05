@@ -39,9 +39,17 @@ public class CustomerDAO extends BaseDAO {
 	       
 	       st = getConnection().createStatement();
 	       res = st.executeQuery("SELECT ID FROM Customer ORDER BY ID DESC LIMIT 1");
+	       
 	       if (res.next()) {
 	        	id = res.getInt(1);
 			}
+	       
+	    // Maken van de logfile met text
+			String s = "Een customer met id : "+  id + " werdt aangemaakt door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -79,7 +87,12 @@ public class CustomerDAO extends BaseDAO {
 	        ps.setInt(1, customer.getId());
 	        
 	        ps.executeUpdate();
-	        
+	     // Maken van de logfile met text
+	     			String s = "Een customer met id : "+  customer.getId() + " werdt verwijderd door user " + SystemController.system.logged_user.getFirstName()
+	     			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+	     			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+	     			LogFileDAO.createLogFile(log);
+	     		// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -118,6 +131,12 @@ public class CustomerDAO extends BaseDAO {
 	  
 	        
 	       ps.executeUpdate();
+	    // Maken van de logfile met text
+			String s = "Een customer met id : "+  customer.getId() + " werdt verwijderd door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
