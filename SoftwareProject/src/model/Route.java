@@ -75,6 +75,12 @@ public class Route {
 						queried_route.add(routes.get(i).get(k));
 						
 						start = true;
+					} else
+					if (routes.get(i).get(k).getNaam().toLowerCase().contains(this.begin_station.toLowerCase())) {
+						
+						queried_route.add(routes.get(i).get(k));
+						
+						start = true;
 					}
 				}
 				
@@ -83,6 +89,12 @@ public class Route {
 						break;
 					}
 					if (routes.get(i).get(k).getNaam().toLowerCase().contains(this.eind_station.toLowerCase())) {
+						queried_route.add(routes.get(i).get(k));
+						eind = true;
+						
+						break;
+					}
+					else if (routes.get(i).get(k).getNaam().toLowerCase().contains(this.eind_station.toLowerCase())) {
 						queried_route.add(routes.get(i).get(k));
 						eind = true;
 						
@@ -112,6 +124,12 @@ public class Route {
 					break;
 				}
 				for (int k=0;k<routes.get(i).size();k++) {
+					if (routes.get(i).get(k).getNaam().toLowerCase().equals(eind_station.toLowerCase())){
+						eind = true;
+						route_index = i;
+						station_index = k;
+						break;
+					} else 
 					if (routes.get(i).get(k).getNaam().toLowerCase().contains(eind_station.toLowerCase())){
 						eind = true;
 						route_index = i;
@@ -134,7 +152,12 @@ public class Route {
 						for (int f=0;f<routes.get(h).size();f++) {
 							
 							if (!start) {
-								if (routes.get(h).get(f).getNaam().toLowerCase().contains(this.begin_station.toLowerCase())) {
+								if (routes.get(h).get(f).getNaam().toLowerCase().equals(this.begin_station.toLowerCase())) {
+									
+									queried_route.add(routes.get(h).get(f));
+									
+									start = true;
+								}else if (routes.get(h).get(f).getNaam().toLowerCase().contains(this.begin_station.toLowerCase())) {
 									
 									queried_route.add(routes.get(h).get(f));
 									
@@ -149,7 +172,17 @@ public class Route {
 							else if (h == route_index && !transfer_gevonden) {
 								queried_route.add(routes.get(h).get(f));
 							}
-							else if (routes.get(h).get(f).getNaam().toLowerCase().contains(transfer_stations.get(0).get(m).toLowerCase())) {
+							else if (routes.get(h).get(f).getNaam().toLowerCase().equals(transfer_stations.get(0).get(m).toLowerCase())) {
+								queried_route.add(routes.get(h).get(f));
+								if (!transfer_gevonden) {
+									transfer_gevonden = true;
+									break;
+								} else {
+									transfer_gevonden = false;
+									m++;
+								}
+								
+							} else if (routes.get(h).get(f).getNaam().toLowerCase().contains(transfer_stations.get(0).get(m).toLowerCase())) {
 								queried_route.add(routes.get(h).get(f));
 								if (!transfer_gevonden) {
 									transfer_gevonden = true;
@@ -188,14 +221,10 @@ public class Route {
 	public double calculateDistance() {
 		double distance = 0;
 		
-		String station_1_coordinates;
-		String station_2_coordinates;
-		int count = 0;
-		while (count < queried_route.size()-1) {
 		
-		station_1_coordinates = queried_route.get(count).getCoordinates();
-		count++;
-		station_2_coordinates = queried_route.get(count).getCoordinates();
+		
+		String station_1_coordinates = queried_route.get(0).getCoordinates();
+		String station_2_coordinates = queried_route.get(queried_route.size()-1).getCoordinates();
 			
 			
 		if (station_1_coordinates == "" || station_2_coordinates == "")
@@ -204,9 +233,9 @@ public class Route {
 		double[] station_1_coordinates_dbl = StringFunctions.convertCoordinates(station_1_coordinates);
 		double[] station_2_coordinates_dbl = StringFunctions.convertCoordinates(station_2_coordinates);
 		
-		distance += DistanceCalculator.distance(station_1_coordinates_dbl[0], station_1_coordinates_dbl[1], station_2_coordinates_dbl[0], station_2_coordinates_dbl[1], "K");
+		distance = DistanceCalculator.distance(station_1_coordinates_dbl[0], station_1_coordinates_dbl[1], station_2_coordinates_dbl[0], station_2_coordinates_dbl[1], "K");
 			
-		}
+		
 		return distance;
 	}
 	
