@@ -14,6 +14,20 @@ import view.FindSubscriptionView;
 public class Main {
 
 	public static void main(String[] args){
-		SystemController.startUp();
+		//SystemController.startUp();
+		Route rs = new Route("aalst", "aalter");
+		ArrayList<RouteStation> essentials = new ArrayList<RouteStation>(rs.getRouteEssentials());
+		
+		
+		
+		for (RouteStation stop: essentials) {
+			System.out.println(stop.getNaam());
+			System.out.println(stop.getArrivalTime());
+			System.out.println(stop.getDepartureTime());
+			System.out.println(stop.getArrivalPlatform());
+			System.out.println(stop.getDeparturePlatform());
+		}
+		System.out.println(rs.calculateTimeProper());
+		
 	}
 }
