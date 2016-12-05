@@ -239,5 +239,21 @@ public class Route {
 		
 	}
 	
+	public ArrayList<RouteStation> getRouteEssentials() {
+		ArrayList<RouteStation> essentials = new ArrayList<RouteStation>();
+		essentials.add(queried_route.get(0));
+		for (int i=1;i<queried_route.size();i++) {
+			if (queried_route.get(i).getNaam().toLowerCase().contains(queried_route.get(i-1).getNaam().toLowerCase())) {
+				essentials.add(queried_route.get(i-1));
+				essentials.add(queried_route.get(i));
+			}
+		}
+		
+		essentials.add(queried_route.get(queried_route.size()-1));
+		
+		
+		return essentials;
+	}
+	
 	
 }
