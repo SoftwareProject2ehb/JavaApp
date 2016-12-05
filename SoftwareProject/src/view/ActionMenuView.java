@@ -83,8 +83,9 @@ public class ActionMenuView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, btnRoutevinder, 55, SpringLayout.SOUTH, lblKeuzemenu);
 		springLayout.putConstraint(SpringLayout.WEST, btnRoutevinder, 0, SpringLayout.WEST, lblKeuzemenu);
 		
-		
-		JButton btwTicketKopen = new JButton(new ImageIcon(ticket_icon_path));
+		String s = ticket_icon_path;
+		s=s.replaceAll("%20", " ");
+		JButton btwTicketKopen = new JButton(new ImageIcon(s));
 		btwTicketKopen.setContentAreaFilled(false);
 		sl_panel.putConstraint(SpringLayout.NORTH, btwTicketKopen, 0, SpringLayout.NORTH, panel);
 		sl_panel.putConstraint(SpringLayout.WEST, btwTicketKopen, 100, SpringLayout.EAST, btnRoutevinder);

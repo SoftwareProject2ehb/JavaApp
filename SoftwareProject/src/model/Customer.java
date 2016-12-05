@@ -169,5 +169,12 @@ public class Customer {
 		
 		return null;
 	}
+	public Object[] toArray ()
+	{
+		Object obj[] = { this.getId(),this.getFirstName(),this.getLastName(),this.getAddress(),this.getEmail(),this.getPhone() };
+		
+		
+		return obj;
+		}
 	
 }

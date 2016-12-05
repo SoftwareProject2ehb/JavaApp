@@ -86,6 +86,16 @@ public abstract class SystemController {
 		new_customer.setId(customer_id);
 		return "Customer created.";
 	}
+	public static ArrayList<Customer> findCustomers(String Voornaam, String Achternaam,String Adress, String Phone, String Email) {
+		ArrayList<Customer> lijstCustomers = new ArrayList<Customer>();
+	
+		
+			 lijstCustomers = CustomerDAO.getCustomerByMultipleArgs(Voornaam, Achternaam, Adress, Phone, Email);
+			
+			
+		
+		return  lijstCustomers;
+	}
 	
 	public static String buyTicket(String type_ticket, boolean is_one_way_ticket, double ticket_price, String start_station, String end_station, Date date) {
 		Ticket new_ticket = new Ticket(type_ticket, is_one_way_ticket, ticket_price, start_station, end_station, date);
