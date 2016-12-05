@@ -26,8 +26,10 @@ public class Route {
 		transfer_stations = new ArrayList<ArrayList<String>>();
 		this.begin_station = begin_station;
 		this.eind_station = eind_station;
-
+		
+		//Hier vul ik de route datamember op met alle mogelijke routes.
 		ApiAccesser.opvragingRoute(begin_station, eind_station, routes, transfer_stations);
+		//Vervolgens filter ik die routes met de volgende methode om een route te bekomen met alle relevante stations met eventuele transfers.
 		fillQueriedRouteWithTransfers();
 	}
 	
@@ -64,11 +66,21 @@ public class Route {
 	public boolean fillQueriedRouteWithoutTransfers() {
 		boolean eind = false;
 		boolean start = false;
+		/*
+		 * In kort ga ik hier eerst op zoek naar de startstation
+		 * eens ik die gevonden heb vul ik de stations erna in de queried_route list
+		 * tot en met de eindstation waarna ik stop. 
+		 */
 		for (int i=0;i<routes.size();i++) {
 			if (eind) {
 				break;
 			}
 			for (int k=0;i<routes.get(i).size();k++) {
+				/*
+				 * Als de startstation gevonden is moet er niet meer naar gezocht worden en mag je deze block skippen
+				 * ook vergelijk ik eerst met een equals en pas daarna met een contains omdat er stations bestaan zoals
+				 * aalst en aalst-kerrebroek en aan de andere kant stations zoals Brussel-Zuid/Bruxelles-Midi
+				 */
 				if (!start) {
 					if (routes.get(i).get(k).getNaam().toLowerCase().contains(this.begin_station.toLowerCase())) {
 						
@@ -85,7 +97,8 @@ public class Route {
 				}
 				
 				else if (start && !eind) {
-					if (k > 14) {
+					// het gebeurt heel zelden dat de index over de grens gaat en deze vang ik op met de volgende if
+					if (k > routes.get(i).size()-1) {
 						break;
 					}
 					if (routes.get(i).get(k).getNaam().toLowerCase().contains(this.eind_station.toLowerCase())) {
@@ -119,6 +132,12 @@ public class Route {
 			boolean transfer_gevonden = false;
 			int route_index = -1;
 			int station_index = -1;
+			
+			/*
+			 * Zelfde werkwijze als de methode zonder transfers met het verschil dat ik eerst op zoek ga naar de eindstation
+			 * Eens ik die gevonden heb, ga ik kijken ofdat het op dezelfde treinroute zit als de startstation. Deze treinroute is altijd de eerste treinroute.
+			 * Als dit niet het geval is en het ligt op een andere treinroute  
+			 */
 			for (int i=0;i<routes.size();i++) {
 				if (eind) {
 					break;
