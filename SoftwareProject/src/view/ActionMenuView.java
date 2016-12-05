@@ -32,17 +32,31 @@ import javax.swing.SpringLayout;
 
 public class ActionMenuView extends JPanel {
 
-	String ticket_icon_path = this.getClass().getClassLoader().getResource("ticket.png").getFile();
-	String find_icon_path = this.getClass().getClassLoader().getResource("find.png").getFile();
-	String config_icon_path = this.getClass().getClassLoader().getResource("config.png").getFile();
-	String subscription_icon_path = this.getClass().getClassLoader().getResource("subscription.png").getFile();
-	String route_icon_path = this.getClass().getClassLoader().getResource("route.png").getFile();
-	String lostobject_icon_path = this.getClass().getClassLoader().getResource("lostobjects.png").getFile();
+	String ticket_icon_path;
+	String find_icon_path;
+	String config_icon_path;
+	String subscription_icon_path;
+	String route_icon_path;
+	String lostobject_icon_path;
 	
 	/**
 	 * Create the panel.
 	 */
 	public ActionMenuView() {
+		
+
+		ticket_icon_path = this.getClass().getClassLoader().getResource("ticket.png").getFile();
+		ticket_icon_path.replaceAll("%20", " ");
+		find_icon_path = this.getClass().getClassLoader().getResource("find.png").getFile();
+		find_icon_path.replaceAll("%20", " ");
+		config_icon_path = this.getClass().getClassLoader().getResource("config.png").getFile();
+		config_icon_path.replaceAll("%20", " ");
+		subscription_icon_path = this.getClass().getClassLoader().getResource("subscription.png").getFile();
+		subscription_icon_path.replaceAll("%20", " ");
+		route_icon_path = this.getClass().getClassLoader().getResource("route.png").getFile();
+		route_icon_path.replaceAll("%20", " ");
+		lostobject_icon_path = this.getClass().getClassLoader().getResource("lostobjects.png").getFile();
+		lostobject_icon_path.replaceAll("%20", " ");
 		
 		SpringLayout springLayout = new SpringLayout();
 		
