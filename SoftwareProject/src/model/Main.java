@@ -15,8 +15,10 @@ public class Main {
 
 	public static void main(String[] args){
 		//SystemController.startUp();
-		Route rs = new Route("Zele", "Charleroi-sud");
+		Route rs = new Route("aalst", "aalter");
 		ArrayList<RouteStation> essentials = new ArrayList<RouteStation>(rs.getRouteEssentials());
+		
+		
 		
 		for (RouteStation stop: essentials) {
 			System.out.println(stop.getNaam());
@@ -25,5 +27,7 @@ public class Main {
 			System.out.println(stop.getArrivalPlatform());
 			System.out.println(stop.getDeparturePlatform());
 		}
+		System.out.println(rs.calculateTimeProper());
+		
 	}
 }

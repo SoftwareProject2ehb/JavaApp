@@ -239,6 +239,36 @@ public class Route {
 		
 	}
 	
+	
+	public String calculateTimeProper() {
+		Timestamp station_1_time = null, station_2_time = null;
+		
+			try {
+				station_1_time = DateConverter.timestampConverter(queried_route.get(0).getDepartureTime().replaceAll("T", " "));
+				station_2_time = DateConverter.timestampConverter(queried_route.get(queried_route.size()-1).getArrivalTime().replaceAll("T", " "));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			// get time difference in seconds
+		    long milliseconds = station_2_time.getTime() - station_1_time.getTime();
+		    int seconds = (int) milliseconds / 1000;
+		 
+		    // calculate hours minutes and seconds
+		    int hours = seconds / 3600;
+		    
+		    
+		    int minutes = (seconds % 3600) / 60;
+		    seconds = (seconds % 3600) % 60;
+		    String result = hours  + ":" + minutes;
+		    
+		    return result;
+		    
+			
+		
+	}
+	
 	public ArrayList<RouteStation> getRouteEssentials() {
 		ArrayList<RouteStation> essentials = new ArrayList<RouteStation>();
 		essentials.add(queried_route.get(0));
