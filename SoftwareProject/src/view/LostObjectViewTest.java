@@ -4,28 +4,19 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.SpringLayout;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 import javax.swing.JTable;
 
-import java.awt.CardLayout;
-import java.awt.Dimension;
-
-
-import javax.swing.JTextPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -34,14 +25,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
-
-import javax.swing.AbstractListModel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import data_control.*;
-import data_control.LostObjectDAO.SearchLostObject;
-import javafx.scene.control.TableColumn.SortType;
 import model.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
