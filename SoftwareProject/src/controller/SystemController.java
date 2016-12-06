@@ -127,8 +127,8 @@ public abstract class SystemController {
 		case "km":
 			type = new Price(ticket_type, Price.betalingsType.PER_KM, cost_per_unit);
 			break;
-		case "zone":
-			type = new Price(ticket_type, Price.betalingsType.PER_ZONE, cost_per_unit);
+		case "fixed":
+			type = new Price(ticket_type, Price.betalingsType.FIXED, cost_per_unit);
 			break;
 		default:
 			throw new IllegalArgumentException();
@@ -158,8 +158,8 @@ public abstract class SystemController {
 		case "km":
 			price = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_KM, cost_per_unit, aantal_maanden);
 			break;
-		case "zone":
-			price = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_ZONE, cost_per_unit, aantal_maanden);
+		case "fixed":
+			price = new SubscriptionPrice(subscription_type, Price.betalingsType.FIXED, cost_per_unit, aantal_maanden);
 			break;
 		default:
 			throw new IllegalArgumentException();

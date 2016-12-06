@@ -32,10 +32,30 @@ public static FindSubscriptionView find_subscription;
 	}
 	
 	public static void calculatePrice() {
+		double prijs;
 		SubscriptionPrice sp = SubscriptionPriceDAO.findSubPriceByTypeAndLength((String) buy_subscription.cbbType.getSelectedItem(), (Double) buy_subscription.cbbGeldigheid.getSelectedItem());
 		
-		double prijs = sp.getCostPerUnit(); // TODO hier prijs berekenen met lengte etc
-		buy_subscription.txtPrijs.setText(String.valueOf(prijs));
+		Route route = new Route ((String) buy_subscription.cbbBeginstation.getSelectedItem(), (String) buy_subscription.cbbEindstation.getSelectedItem());
+		
+		switch(sp.getTypeBetaling()) {
+		case PER_KM:
+			prijs = route.calculateDistance() * sp.getCostPerUnit();
+			break;
+		case PER_HOUR:
+			prijs = route.calculateTime() * sp.getCostPerUnit();
+			break;
+		case PER_STATION:
+			prijs = ((route.getQueriedRoute().size() - route.getRouteEssentials().size() - 2) / 2) * sp.getCostPerUnit();
+			break;
+		case FIXED:
+			prijs = sp.getCostPerUnit();
+			break;
+		default:
+			prijs = -1;
+			break;
+		}
+		
+		buy_subscription.txtPrijs.setText(String.format("%.2f", prijs));
 	}
 	
 	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model) {

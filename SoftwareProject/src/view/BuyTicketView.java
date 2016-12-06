@@ -6,9 +6,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
+
+import org.apache.pdfbox.io.IOUtils;
 
 import controller.ActionMenuController;
 import controller.TicketController;
+import utilities.DateConverter;
+import utilities.PatternFilter;
 
 import javax.swing.JList;
 import javax.swing.JComboBox;
@@ -17,6 +22,12 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
 public class BuyTicketView extends JPanel {
@@ -26,11 +37,18 @@ public class BuyTicketView extends JPanel {
 	public JComboBox cbbEindstation;
 	public JComboBox cbbType;
 	public JCheckBox checkBox;
-	
+	private ArrayList<String> station_list = null;
 	/**
 	 * Create the panel.
 	 */
 	public BuyTicketView() {
+		try {
+			Scanner in = new Scanner(new FileReader(this.getClass().getClassLoader().getResource("stations.txt").getFile()));
+			String[] station_list = in.nextLine().split(",", -1);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		SpringLayout sl_contentPane = new SpringLayout();
 		this.setLayout(sl_contentPane);
@@ -55,14 +73,14 @@ public class BuyTicketView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbBeginstation, -3, SpringLayout.NORTH, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbBeginstation, 6, SpringLayout.EAST, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbBeginstation, 106, SpringLayout.EAST, lblBeginstation);
-		cbbBeginstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		cbbBeginstation.setModel(new DefaultComboBoxModel(station_list.toArray()));
 		add(cbbBeginstation);
 		
 		cbbEindstation = new JComboBox();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbEindstation, -3, SpringLayout.NORTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbEindstation, 6, SpringLayout.EAST, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbEindstation, 106, SpringLayout.EAST, lblEindstation);
-		cbbEindstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		cbbEindstation.setModel(new DefaultComboBoxModel(station_list.toArray()));
 		add(cbbEindstation);
 		
 		JLabel lblDatum = new JLabel("Datum");
@@ -73,6 +91,8 @@ public class BuyTicketView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtDatum, -3, SpringLayout.NORTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtDatum, 6, SpringLayout.EAST, lblDatum);
 		sl_contentPane.putConstraint(SpringLayout.EAST, txtDatum, 106, SpringLayout.EAST, lblDatum);
+		txtDatum.setText(DateConverter.getDate());
+		((AbstractDocument) txtDatum.getDocument()).setDocumentFilter(PatternFilter.datumFilter);
 		add(txtDatum);
 		txtDatum.setColumns(10);
 		
