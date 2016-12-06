@@ -2,20 +2,31 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.DateFormatter;
 
 import controller.ActionMenuController;
+import controller.FrameController;
 import controller.RouteController;
+import model.Route;
+import model.RouteStation;
 import utilities.DateConverter;
 import utilities.PatternFilter;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -25,7 +36,9 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 
@@ -37,12 +50,18 @@ public class SearchRouteView extends JPanel {
 	public JRadioButton rdbtnAankomst;
 	public JTextField txtUur;
 	public JTextField txtDatum;
+	public SpringLayout springLayout;
+	public JButton btnZoek;
+	public JButton btnTerug;
+	public JSeparator sep;
+	public JPanel panel;
+	public JScrollPane scrollPane;
 	
 	/**
 	 * Create the panel.
 	 */
 	public SearchRouteView() {
-		SpringLayout springLayout = new SpringLayout();
+		springLayout = new SpringLayout();
 		setLayout(springLayout);
 		
 		JLabel lblRoutevinder = new JLabel("Routevinder");
@@ -96,9 +115,20 @@ public class SearchRouteView extends JPanel {
 	    groupAankomstVertrek.add(rdbtnVertrek);
 	    groupAankomstVertrek.add(rdbtnAankomst);
 		
-		JButton btnTerug = new JButton("Terug naar Menu");
+		btnTerug = new JButton("Terug naar Menu");
 		btnTerug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				deleteShowRoute();
+				
+				panel = new JPanel(new GridBagLayout());
+				panel.add(new JLabel("Zoek een route."));
+				
+				scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				scrollPane.setPreferredSize(new Dimension(350, 250));
+				springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
+				springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, SearchRouteView.this);
+				add(scrollPane);
+				
 				ActionMenuController.switchToActionMenuView();
 			}
 		});
@@ -109,10 +139,11 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnTerug, -10, SpringLayout.SOUTH, this);
 		add(btnTerug);
 		
-		JButton btnZoek = new JButton("Zoek");
+		btnZoek = new JButton("Zoek");
 		btnZoek.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RouteController.findRoute();
+				showRoute();
+				FrameController.changeSize(750, 300);
 			}
 		});
 		springLayout.putConstraint(SpringLayout.NORTH, btnZoek, 0, SpringLayout.NORTH, btnTerug);
@@ -138,5 +169,71 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, chckbxHeenterug, 0, SpringLayout.WEST, rdbtnAankomst);
 		springLayout.putConstraint(SpringLayout.SOUTH, chckbxHeenterug, 0, SpringLayout.SOUTH, lblVan);
 		add(chckbxHeenterug);
+		
+		sep = new JSeparator(SwingConstants.VERTICAL);
+		springLayout.putConstraint(SpringLayout.WEST, sep, 5, SpringLayout.EAST, chckbxHeenterug);
+		springLayout.putConstraint(SpringLayout.NORTH, sep, 25, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, sep, -25, SpringLayout.SOUTH, this);
+		add(sep);
+		
+		springLayout.putConstraint(SpringLayout.WEST, btnZoek, 15 , SpringLayout.EAST, btnTerug);
+		springLayout.putConstraint(SpringLayout.EAST, btnZoek, -115 , SpringLayout.WEST, sep);
+		
+		panel = new JPanel(new GridBagLayout());
+		panel.add(new JLabel("Zoek een route."));
+		
+		scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setPreferredSize(new Dimension(350, 250));
+		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
+		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
+		add(scrollPane);
+	}
+	
+	public void showRoute() {
+		deleteShowRoute();
+		
+		// Get information
+		Route route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
+		ArrayList<RouteStation> rs = new ArrayList<RouteStation>(route.getQueriedRoute());
+		ArrayList<RouteStation> tussenstops = route.getRouteEssentials();
+		
+		// Show information
+		panel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridwidth = 3;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		
+		panel.add(new JLabel(rs.get(0).getNaam() + " - " + rs.get(rs.size() - 1).getNaam() + " (Totale duur: " + route.calculateTimeProper() + ")"), gbc);
+		
+		gbc.gridy++;
+		panel.add(new JLabel("Vertrek: " + tussenstops.get(0).getNaam() + " (peron " + tussenstops.get(0).getDeparturePlatform() + ") " + tussenstops.get(0).getDepartureTime().substring(11,16)), gbc);
+		
+		for (int i = 1; i < tussenstops.size() - 1; i++) {
+			gbc.gridy++;
+			
+			if (i % 2 == 1) {
+				panel.add(new JLabel("Afstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getArrivalPlatform() + ") " + tussenstops.get(i).getArrivalTime().substring(11,16)), gbc);
+			}
+			else {
+				panel.add(new JLabel("Opstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getDeparturePlatform() + ") " + tussenstops.get(i).getDepartureTime().substring(11,16)), gbc);
+			}
+		}
+		
+		gbc.gridy++;
+		panel.add(new JLabel("Aankomst: " + tussenstops.get(tussenstops.size() -1).getNaam() + " (peron " + tussenstops.get(tussenstops.size() -1).getArrivalPlatform() + ") " + tussenstops.get(tussenstops.size() -1).getArrivalTime().substring(11,16)), gbc);
+		
+		scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setPreferredSize(new Dimension(350, 250));
+		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
+		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
+		add(scrollPane);
+	}
+	
+	public void deleteShowRoute() {
+		remove(panel);
+		remove(scrollPane);
 	}
 }
