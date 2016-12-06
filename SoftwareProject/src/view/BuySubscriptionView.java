@@ -35,7 +35,7 @@ public class BuySubscriptionView extends JPanel {
 	public JComboBox cbbEindstation;
 	public JComboBox cbbType;
 	public JComboBox cbbGeldigheid;
-	private JTextField txtGebruiker;
+	public JTextField txtGebruiker;
 	
 	/**
 	 * Create the panel.
