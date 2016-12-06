@@ -16,6 +16,7 @@ import javax.swing.text.AbstractDocument;
 import controller.ActionMenuController;
 import controller.CustomerController;
 import controller.SubscriptionController;
+import controller.SystemController;
 import data_control.SubscriptionPriceDAO;
 import utilities.DateConverter;
 import utilities.PatternFilter;
@@ -65,14 +66,14 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbBeginstation, -3, SpringLayout.NORTH, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbBeginstation, 6, SpringLayout.EAST, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbBeginstation, 106, SpringLayout.EAST, lblBeginstation);
-		cbbBeginstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		cbbBeginstation.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		add(cbbBeginstation);
 		
 		cbbEindstation = new JComboBox();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbEindstation, -3, SpringLayout.NORTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbEindstation, 6, SpringLayout.EAST, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbEindstation, 106, SpringLayout.EAST, lblEindstation);
-		cbbEindstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		cbbEindstation.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		add(cbbEindstation);
 		
 		JLabel lblGeldigheid = new JLabel("Geldigheid");

@@ -22,6 +22,7 @@ public class TicketController {
 	
 	public static void switchToBuyTicketView() {
 		FrameController.getFrame().switchTo("BUY_TICKET");
+		FrameController.changeSize(500,300);
 	}
 	
 	public static double calculatePrice() {
