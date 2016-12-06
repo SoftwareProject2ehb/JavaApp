@@ -6,9 +6,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
 
 import controller.ActionMenuController;
 import controller.TicketController;
+import utilities.DateConverter;
+import utilities.PatternFilter;
 
 import javax.swing.JList;
 import javax.swing.JComboBox;
@@ -73,6 +76,8 @@ public class BuyTicketView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtDatum, -3, SpringLayout.NORTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtDatum, 6, SpringLayout.EAST, lblDatum);
 		sl_contentPane.putConstraint(SpringLayout.EAST, txtDatum, 106, SpringLayout.EAST, lblDatum);
+		txtDatum.setText(DateConverter.getDate());
+		((AbstractDocument) txtDatum.getDocument()).setDocumentFilter(PatternFilter.datumFilter);
 		add(txtDatum);
 		txtDatum.setColumns(10);
 		

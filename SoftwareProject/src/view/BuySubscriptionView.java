@@ -11,11 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
 
 import controller.ActionMenuController;
 import controller.CustomerController;
 import controller.SubscriptionController;
 import data_control.SubscriptionPriceDAO;
+import utilities.DateConverter;
+import utilities.PatternFilter;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -109,6 +112,7 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtPrijs, 0, SpringLayout.SOUTH, btnOfferte);
 		add(txtPrijs);
 		txtPrijs.setColumns(10);
+		txtPrijs.setEditable(false);
 		
 		JLabel lblPrijs = new JLabel("Prijs");
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblPrijs, 0, SpringLayout.WEST, lblGeldigheid);
@@ -118,6 +122,8 @@ public class BuySubscriptionView extends JPanel {
 		txtBegindatum = new JTextField();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtBegindatum, -3, SpringLayout.NORTH, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, txtBegindatum, -69, SpringLayout.EAST, this);
+		txtBegindatum.setText(DateConverter.getDate());
+		((AbstractDocument) txtBegindatum.getDocument()).setDocumentFilter(PatternFilter.datumFilter);
 		add(txtBegindatum);
 		txtBegindatum.setColumns(10);
 		
