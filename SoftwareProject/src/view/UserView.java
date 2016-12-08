@@ -7,6 +7,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import controller.ConfigurationController;
+import controller.FrameController;
 import data_control.UserDAO;
 import model.User;
 
@@ -18,6 +19,7 @@ import javax.swing.JFrame;
 import java.awt.Component;
 import java.awt.Dimension;
 
+import javax.security.auth.login.Configuration;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,10 +27,10 @@ import java.awt.event.ActionEvent;
 
 public class UserView extends JPanel {
 	public JTable table;
-	public JTextField textField;
+	public JTextField txtSearch;
 	public JComboBox searchAtt;
 	public DefaultTableModel tableModel;
-	
+	public EditUserView edit_user;
 
 	/**
 	 * Create the panel.
@@ -36,31 +38,49 @@ public class UserView extends JPanel {
 	public UserView() {
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
-		
-		String col[] = {"Login","Role"};
+		String col[] = {"ID","Voornaam","Achternaam","Email","Telefoon Nr.","Username","Role"};
 
-		tableModel = new DefaultTableModel(col, 0);
+		tableModel = new DefaultTableModel(col, 0){
+			@Override
+			public boolean isCellEditable(int row,int column)
+			{
+				// NON EDITABLE CELLS
+				return false;
+			};
+		};
 		table = new JTable(tableModel);
 		springLayout.putConstraint(SpringLayout.NORTH, table, 36, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, table, 10, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.EAST, table, 440, SpringLayout.WEST, this);
 		add(table);
 		
-		textField = new JTextField();
-		springLayout.putConstraint(SpringLayout.WEST, textField, 10, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, textField, -6, SpringLayout.NORTH, table);
-		springLayout.putConstraint(SpringLayout.EAST, textField, -195, SpringLayout.EAST, this);
-		add(textField);
-		textField.setColumns(10);
+		txtSearch = new JTextField();
+		springLayout.putConstraint(SpringLayout.WEST, txtSearch, 10, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, txtSearch, -6, SpringLayout.NORTH, table);
+		add(txtSearch);
+		txtSearch.setColumns(10);
 		
 		searchAtt = new JComboBox();
-		springLayout.putConstraint(SpringLayout.WEST, searchAtt, 6, SpringLayout.EAST, textField);
+		springLayout.putConstraint(SpringLayout.EAST, txtSearch, -6, SpringLayout.WEST, searchAtt);
+		springLayout.putConstraint(SpringLayout.WEST, searchAtt, 449, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, searchAtt, -6, SpringLayout.NORTH, table);
+		searchAtt.addItem("ID");
+		searchAtt.addItem("Voornaam");
+		searchAtt.addItem("Achternaam");
+		searchAtt.addItem("Email");
+		searchAtt.addItem("Telefoon Nr.");
+		searchAtt.addItem("Username");
+		searchAtt.addItem("Role");
 		add(searchAtt);
 		
 		JButton btnSearch = new JButton("Search");
 		springLayout.putConstraint(SpringLayout.EAST, searchAtt, -12, SpringLayout.WEST, btnSearch);
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			ConfigurationController.searchUser();
+			}
+		});
 		springLayout.putConstraint(SpringLayout.SOUTH, btnSearch, -6, SpringLayout.NORTH, table);
+		springLayout.putConstraint(SpringLayout.EAST, table, 0, SpringLayout.EAST, btnSearch);
 		springLayout.putConstraint(SpringLayout.EAST, btnSearch, -10, SpringLayout.EAST, this);
 		add(btnSearch);
 		
@@ -76,40 +96,60 @@ public class UserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton, -10, SpringLayout.SOUTH, this);
 		add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("EDIT");
-		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton_1, 0, SpringLayout.SOUTH, btnNewButton);
-		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1, -6, SpringLayout.WEST, btnNewButton);
-		add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("REMOVE");
-		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_2, 0, SpringLayout.NORTH, btnNewButton);
-		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_2, -6, SpringLayout.WEST, btnNewButton_1);
-		add(btnNewButton_2);
-		
 		JButton btnRefresh = new JButton("Refresh");
+		springLayout.putConstraint(SpringLayout.NORTH, btnRefresh, 0, SpringLayout.NORTH, btnNewButton);
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				refreshTable(tableModel);
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnRefresh, 0, SpringLayout.NORTH, btnNewButton);
-		springLayout.putConstraint(SpringLayout.EAST, btnRefresh, -6, SpringLayout.WEST, btnNewButton_2);
 		add(btnRefresh);
 		
-		JButton btnTeugNaarMenu = new JButton("Teug naar Menu");
-		btnTeugNaarMenu.addActionListener(new ActionListener() {
+		JButton button = new JButton("<<  Terug");
+		springLayout.putConstraint(SpringLayout.WEST, btnRefresh, 7, SpringLayout.EAST, button);
+		springLayout.putConstraint(SpringLayout.WEST, button, 10, SpringLayout.WEST, this);
+		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToConfigurationView();
 			}
 		});
-		springLayout.putConstraint(SpringLayout.WEST, btnTeugNaarMenu, 0, SpringLayout.WEST, table);
-		springLayout.putConstraint(SpringLayout.SOUTH, btnTeugNaarMenu, 0, SpringLayout.SOUTH, btnNewButton);
-		add(btnTeugNaarMenu);
+		springLayout.putConstraint(SpringLayout.SOUTH, button, 0, SpringLayout.SOUTH, btnNewButton);
+		add(button);
+		
+		JButton btnNewButton_1 = new JButton("EDIT");
+		springLayout.putConstraint(SpringLayout.NORTH, btnNewButton_1, 0, SpringLayout.NORTH, btnNewButton);
+		springLayout.putConstraint(SpringLayout.EAST, btnNewButton_1, -6, SpringLayout.WEST, btnNewButton);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.switchToEditUserView();
+			}
+		});
+		add(btnNewButton_1);
+		
+		JButton btnInactive = new JButton("INACTIVE");
+		btnInactive.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.setInactiveUser();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.NORTH, btnInactive, 6, SpringLayout.SOUTH, table);
+		springLayout.putConstraint(SpringLayout.EAST, btnInactive, -6, SpringLayout.WEST, btnNewButton_1);
+		add(btnInactive);
+		
+		JButton btnResetPassword = new JButton("RESET PASSWORD");
+		btnResetPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConfigurationController.resetPassword();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.NORTH, btnResetPassword, 6, SpringLayout.SOUTH, table);
+		springLayout.putConstraint(SpringLayout.EAST, btnResetPassword, -6, SpringLayout.WEST, btnInactive);
+		add(btnResetPassword);
 	}
 	
 	public void refreshTable(DefaultTableModel tableModel){
 		tableModel.setRowCount(0);
-		ArrayList<User> users = UserDAO.getAllUsers();
+		ArrayList<User> users = UserDAO.getAllActiveUsers();
 		for (int i = 0; i < users.size(); i++){
 			int id = users.get(i).getUserID();
 			String voornaam = users.get(i).getFirstName();
@@ -119,8 +159,8 @@ public class UserView extends JPanel {
 			String login = users.get(i).getLogin();
 			String role = users.get(i).getRolen();
 			Boolean active = users.get(i).isActive();
-					   
-			Object[] data = {login ,role};
+					 
+			Object[] data = {id,voornaam,achternaam,email,phone,login,role};
 			tableModel.addRow(data);
 		}
 	}

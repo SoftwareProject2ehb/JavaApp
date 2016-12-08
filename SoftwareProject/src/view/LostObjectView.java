@@ -21,6 +21,7 @@ import javax.swing.table.TableRowSorter;
 
 import controller.ActionMenuController;
 import controller.LostObjectController;
+import model.LostObject;
 
 import javax.swing.SpringLayout;
 import javax.swing.JScrollPane;
@@ -42,6 +43,7 @@ public class LostObjectView extends JPanel {
 	public JTextField txtPlaceClaimed;
 	public JTextField txtNameClaimed;
 	public JTextField txtValue;
+	public JTextArea txtDescription;
 	public JComboBox cbbFind;
 	public JComboBox cbbSort;
 	public JComboBox cbbFrom;
@@ -79,7 +81,7 @@ public class LostObjectView extends JPanel {
 		
 		//BEGIN EVERYTHING ABOUT TABLE
 		
-		String colname[] = {"ID","UserID","Name","Location","time","claimed","user","locationclaimed","nameclaimed","time"};
+		String colname[] = {"ID","UserID","Name","Location","Description","time","claimed","user","locationclaimed","nameclaimed","time"};
 		DefaultTableModel tableModel = new DefaultTableModel(colname,0)
 		{
 			@Override
@@ -93,13 +95,14 @@ public class LostObjectView extends JPanel {
 		table = new JTable();
 		table.setRowSorter(sorter);
 		
+		
 		JTableHeader header = table.getTableHeader();
 		header.addMouseListener(new MouseAdapter() {
-			SortOrder currentOrder = SortOrder.UNSORTED;
 			int lastcol = -1;
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				LostObjectController.sortLostObjects(currentOrder,lastcol,e);	
+				lastcol = LostObjectController.sortLostObjects(e);	
 			}
 		});
 		table.setModel(tableModel);
@@ -197,7 +200,7 @@ public class LostObjectView extends JPanel {
 		sl_pnlAdd.putConstraint(SpringLayout.WEST, lblDescription, 10, SpringLayout.WEST, pnlAdd);
 		pnlAdd.add(lblDescription);
 		
-		JTextArea txtDescription = new JTextArea();
+		txtDescription = new JTextArea();
 		sl_pnlAdd.putConstraint(SpringLayout.NORTH, txtDescription, 165, SpringLayout.NORTH, pnlAdd);
 		sl_pnlAdd.putConstraint(SpringLayout.WEST, txtDescription, 0, SpringLayout.WEST, lblName);
 		sl_pnlAdd.putConstraint(SpringLayout.SOUTH, txtDescription, 434, SpringLayout.NORTH, pnlAdd);
@@ -207,7 +210,7 @@ public class LostObjectView extends JPanel {
 		JButton btnAdd = new JButton("Add object");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LostObjectController.addLostObject();
+				LostObjectController.addLostObject(tableModel);
 			}
 		});
 		sl_pnlAdd.putConstraint(SpringLayout.SOUTH, btnAdd, -10, SpringLayout.SOUTH, pnlAdd);
@@ -244,6 +247,9 @@ public class LostObjectView extends JPanel {
 		JButton btnUpdate = new JButton("Update Object");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				LostObject lostObject;
+				//TODO bugfix
+				//lostObject = LostObjectController.li.get(table.convertRowIndexToModel(table.getSelectedRow()));
 				LostObjectController.updateLostObject();
 			}
 		});
@@ -254,7 +260,7 @@ public class LostObjectView extends JPanel {
 		//END EVERYTHING ABOUT PANEL UPDATE
 		// BEGIN EVERYTHING ABOUT PANEL FIND
 		JPanel pnlFind = new JPanel();
-		tabbedPane.addTab("New tab", null, pnlFind, null);
+		tabbedPane.addTab("Find", null, pnlFind, null);
 		SpringLayout sl_pnlFind = new SpringLayout();
 		pnlFind.setLayout(sl_pnlFind);
 		

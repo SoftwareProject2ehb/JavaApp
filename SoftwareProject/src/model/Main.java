@@ -1,10 +1,10 @@
 package model;
 
-import controller.SystemController;
+import controller.*;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		SystemController.startUp();
 	}
 }

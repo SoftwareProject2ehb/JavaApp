@@ -79,6 +79,7 @@ public class FindSubscriptionView extends JPanel {
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();
+				table.clearSelection();
 			}
 		});
 		add(btnCancel);

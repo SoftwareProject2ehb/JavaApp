@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import controller.SystemController;
 import model.*;
 import model.User.Role;
 import utilities.DateConverter;
@@ -29,7 +30,7 @@ public class SubscriptionDAO extends BaseDAO{
 			ps = getConnection().prepareStatement(sql);
 
 			ps.setInt(1, sub.getId());
-			ps.setInt(2, sub.getTicketType());
+			ps.setString(2, sub.getSubscriptionType());
 			ps.setDouble(3, sub.getPrice());
 			ps.setInt(4, sub.getCustomerId());
 			ps.setString(5, sub.getStartStation());
@@ -44,6 +45,8 @@ public class SubscriptionDAO extends BaseDAO{
 	        if (res.next()) {
 	        	id = res.getInt(1);
 	        }
+	       
+		// Eind maken van logfile
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -81,7 +84,7 @@ public class SubscriptionDAO extends BaseDAO{
 
 			while (res.next()) {
 				Subscription sb = new Subscription(res.getInt("id"), 
-						res.getInt("type"),
+						res.getString("type"),
 						res.getDouble("price"), 
 						res.getInt("customer"),
 						res.getString("startstation"),
@@ -91,6 +94,13 @@ public class SubscriptionDAO extends BaseDAO{
 						res.getInt("active"));
 				lijst.add(sb);
 			}
+			 st.close();
+		     res.close();
+		        // Maken van de logfile met text
+				String s = "Een subscription met id :  werdt aangemaakt door user " + SystemController.system.logged_user.getFirstName()
+				+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+				LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+				LogFileDAO.createLogFile(log);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,7 +139,7 @@ public class SubscriptionDAO extends BaseDAO{
 	
 			while (res.next()) {
 				sb = new Subscription(res.getInt("id"), 
-						res.getInt("type"),
+						res.getString("type"),
 						res.getDouble("price"), 
 						res.getInt("customer"),
 						res.getString("startstation"),
@@ -174,7 +184,7 @@ public class SubscriptionDAO extends BaseDAO{
 			}
 			ps = getConnection().prepareStatement(sql);
 
-			ps.setInt(1, sub.getTicketType());
+			ps.setString(1, sub.getSubscriptionType());
 			ps.setDouble(2, sub.getPrice());
 			ps.setInt(3, sub.getCustomerId());
 			ps.setString(4, sub.getStartStation());
@@ -286,7 +296,7 @@ public class SubscriptionDAO extends BaseDAO{
 			
 			while (res.next()) {
 				Subscription sb = new Subscription(res.getInt("id"), 
-						res.getInt("type"),
+						res.getString("type"),
 						res.getDouble("price"), 
 						res.getInt("customer"),
 						res.getString("startstation"),
