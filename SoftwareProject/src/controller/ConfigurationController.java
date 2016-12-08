@@ -46,7 +46,7 @@ public class ConfigurationController {
 	}
 	
 	public static void switchToCreateUserView() {
-		FrameController.changeSize(430,300);
+		FrameController.changeSize(850,350);
 		FrameController.getFrame().switchTo("CREATE_USER");
 	}
 	
@@ -56,13 +56,19 @@ public class ConfigurationController {
 		edit_user.txtAchternaam.setText(user.getLastName());
 		edit_user.txtEmail.setText(user.getEmail());
 		edit_user.txtPhone.setText(user.getPhone());
+		edit_user.txtStreet.setText(user.getStreet());
+		edit_user.txtNumber.setText(user.getNumber());
+		edit_user.txtBus.setText(user.getBus());
+		edit_user.txtPostalCode.setText(Integer.toString(user.getPostalCode()));
+		edit_user.txtCity.setText(user.getCity());
+		edit_user.txtCountry.setText(user.getCountry());
 		if(user.getRolen() == "ADMIN"){
 			edit_user.comboRole.setSelectedItem("ADMIN");
 		}
 		else{
 			edit_user.comboRole.setSelectedItem("USER");
 		}
-		FrameController.changeSize(430,300);
+		FrameController.changeSize(850,350);
 		FrameController.getFrame().switchTo("EDIT_USER");
 	}
 	
@@ -92,6 +98,12 @@ public class ConfigurationController {
 		String achternaam = create_user.txtAchternaam.getText();
 		String email = create_user.txtEmail.getText();
 		String phone = create_user.txtPhone.getText();
+		String street = create_user.txtStreet.getText();
+		String number = create_user.txtNumber.getText();
+		String bus = create_user.txtBus.getText();
+		int postalCode = Integer.parseInt(create_user.txtPostalCode.getText());
+		String city = create_user.txtCity.getText();
+		String country = create_user.txtCountry.getText();
 		Role rol = null;
 		Object chosenRole = create_user.role.getSelectedItem();
 		if (chosenRole == "USER") {
@@ -101,34 +113,55 @@ public class ConfigurationController {
 			rol = Role.ADMIN;
 		}
 		//TODO empty fields check
-		SystemController.addUser(voornaam,achternaam,email,phone, rol);
+		SystemController.addUser(voornaam,achternaam,email,phone, rol, street, number, bus, postalCode, city, country);
 		create_user.txtVoornaam.setText("");
 		create_user.txtAchternaam.setText("");
 		create_user.txtEmail.setText("");
 		create_user.txtPhone.setText("");
+		create_user.txtStreet.setText("");
+		create_user.txtNumber.setText("");
+		create_user.txtBus.setText("");
+		create_user.txtPostalCode.setText("");
+		create_user.txtCity.setText("");
+		create_user.txtCountry.setText("");
 		switchToFindUserView();
 	}
 		
 	public static void editUser() throws InvalidParameterException{
+		Role rol = null;
+		Object chosenRole = edit_user.comboRole.getSelectedItem();
+		String password = null;
+		
 		String voornaam = edit_user.txtVoornaam.getText();
 		String achternaam = edit_user.txtAchternaam.getText();
 		String email = edit_user.txtEmail.getText();
 		String phone = edit_user.txtPhone.getText();
-		Role rol = null;
-		Object chosenRole = edit_user.comboRole.getSelectedItem();
+		String street = edit_user.txtStreet.getText();
+		String number = edit_user.txtNumber.getText();
+		String bus = edit_user.txtBus.getText();
+		int postalCode = Integer.parseInt(edit_user.txtPostalCode.getText());
+		String city = edit_user.txtCity.getText();
+		String country = edit_user.txtCountry.getText();
+		String pass1 = String.valueOf(edit_user.txtPass1.getPassword());
+		String pass2 = String.valueOf(edit_user.txtPass2.getPassword());
 		if (chosenRole == "USER") {
 			rol = Role.USER;
 		}
 		if (chosenRole == "ADMIN") {
 			rol = Role.ADMIN;
 		}
+		if(pass1.equals(pass2) || pass1 == null && pass2 == null || pass1 == "" && pass2 == ""){
+			password = pass1;
+			SystemController.editUser(voornaam,achternaam,email,phone, rol,street,number,bus,postalCode,city,country,password);
+			edit_user.txtPass1.setText("");
+			edit_user.txtPass2.setText("");
+			switchToFindUserView();
+		}
+		else {
+			JOptionPane.showMessageDialog(edit_user, "Passwords do not match!");
+		}
 		//TODO empty fields check
-		SystemController.editUser(voornaam,achternaam,email,phone, rol);
-		edit_user.txtVoornaam.setText("");
-		edit_user.txtAchternaam.setText("");
-		edit_user.txtEmail.setText("");
-		edit_user.txtPhone.setText("");
-		switchToFindUserView();
+		
 	}
 	
 	public static void searchUser() throws InvalidParameterException{
@@ -185,9 +218,10 @@ public class ConfigurationController {
 	
 	public static void resetPassword(){
     	User u = getSelectedUser();
+    	String password = u.getFirstName() + "_" + u.getLastName();
     	int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the password of " +u.getFirstName() +" "+ u.getLastName() +" ?", "User Password", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-        	u.setPassword(Encryptor.encrypt("pass"));
+        	u.setPassword(Encryptor.encrypt(password));
     		UserDAO.updateUser(u);
     		find_user.refreshTable(find_user.tableModel);
         }
