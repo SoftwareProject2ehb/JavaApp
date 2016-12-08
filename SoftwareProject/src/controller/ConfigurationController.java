@@ -19,13 +19,15 @@ public class ConfigurationController {
 	public static UserView find_user;
 	public static CreateUserView create_user;
 	public static EditUserView edit_user;
+	public static EditPasswordView edit_password_view;
 	public static ConfigurationView configuration;
 	
-	public static void initialize(ReportView report, PriceConfigView price_config, UserView find_user, EditUserView edit_user, CreateUserView create_user, ConfigurationView configuration) {
+	public static void initialize(ReportView report, PriceConfigView price_config, UserView find_user, EditUserView edit_user, CreateUserView create_user,EditPasswordView edit_password_view , ConfigurationView configuration) {
 		ConfigurationController.report = report;
 		ConfigurationController.price_config = price_config;
 		ConfigurationController.find_user = find_user;
 		ConfigurationController.edit_user = edit_user;
+		ConfigurationController.edit_password_view = edit_password_view;
 		ConfigurationController.create_user = create_user;
 		ConfigurationController.configuration = configuration;
 	}
@@ -40,9 +42,12 @@ public class ConfigurationController {
 	}
 	
 	public static void switchToFindUserView() {
-		FrameController.changeSize(665,430);
+		FrameController.changeSize(800,450);
 		find_user.refreshTable(find_user.tableModel);
 		FrameController.getFrame().switchTo("FIND_USER");
+	}
+	public static void switchToEditPasswordView() {
+		FrameController.getFrame().switchTo("EDIT_PASSWORD");
 	}
 	
 	public static void switchToCreateUserView() {
@@ -129,8 +134,6 @@ public class ConfigurationController {
 	public static void editUser() throws InvalidParameterException{
 		Role rol = null;
 		Object chosenRole = edit_user.comboRole.getSelectedItem();
-		String password = null;
-		
 		String voornaam = edit_user.txtVoornaam.getText();
 		String achternaam = edit_user.txtAchternaam.getText();
 		String email = edit_user.txtEmail.getText();
@@ -150,8 +153,7 @@ public class ConfigurationController {
 			rol = Role.ADMIN;
 		}
 		if(pass1.equals(pass2) || pass1 == null && pass2 == null || pass1 == "" && pass2 == ""){
-			password = pass1;
-			SystemController.editUser(voornaam,achternaam,email,phone, rol,street,number,bus,postalCode,city,country,password);
+			SystemController.editUser(voornaam,achternaam,email,phone, rol,street,number,bus,postalCode,city,country,pass1);
 			edit_user.txtPass1.setText("");
 			edit_user.txtPass2.setText("");
 			switchToFindUserView();
@@ -188,6 +190,18 @@ public class ConfigurationController {
 		if(chosenAttribute == "Role"){
 			fUser = UserDAO.FindUser.role;
 		}
+		if(chosenAttribute == "Straat"){
+			fUser = UserDAO.FindUser.street;
+		}
+		if(chosenAttribute == "Postcode"){
+			fUser = UserDAO.FindUser.postalcode;
+		}
+		if(chosenAttribute == "Land"){
+			fUser = UserDAO.FindUser.country;
+		}
+		if(chosenAttribute == "Stad"){
+			fUser = UserDAO.FindUser.city;
+		}
 		//TODO empty field check
 		find_user.tableModel.setRowCount(0);
 		ArrayList<User> users = SystemController.searchUser(txtSearch, fUser);
@@ -196,13 +210,30 @@ public class ConfigurationController {
 			String voornaam = users.get(i).getFirstName();
 			String achternaam = users.get(i).getLastName();
 			String email = users.get(i).getEmail();
-			String phone = users.get(i).getPhone();
 			String login = users.get(i).getLogin();
 			String role = users.get(i).getRolen();
+			String city = users.get(i).getCity();
 					   
-			Object[] data = {id,voornaam,achternaam,email,phone,login,role};
+			Object[] data = {id,voornaam,achternaam,email,city,login,role};
 			find_user.tableModel.addRow(data);
 		}
+	}
+	
+	public static void editDefaultPassword(){
+		User user  = SystemController.system.logged_user;
+		String pass1 = String.valueOf(edit_password_view.txtPass1.getPassword());
+		String pass2 = String.valueOf(edit_password_view.txtPass2.getPassword());
+		if(pass1.equals(pass2) || pass1 == null && pass2 == null || pass1 == "" && pass2 == ""){
+			user.setPassword(Encryptor.encrypt(pass1));
+			UserDAO.updateUser(user);
+			edit_password_view.txtPass1.setText("");
+			edit_password_view.txtPass2.setText("");
+			ActionMenuController.switchToActionMenuView();
+		}
+		else {
+			JOptionPane.showMessageDialog(edit_password_view, "Passwords do not match!");
+		}
+		
 	}
 	
 	public static void setInactiveUser(){

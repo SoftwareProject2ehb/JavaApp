@@ -418,7 +418,7 @@ public class UserDAO extends BaseDAO{
 		return lijst;
 	}
 
-	public enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active};
+	public enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active,street,number,postalcode,bus,city,country};
 
 	public static ArrayList<User> findUserByAttribute(FindUser attribuut,String zoekop) { //Find user by attribute and string
 		ArrayList<User> lijst = new ArrayList<User>();

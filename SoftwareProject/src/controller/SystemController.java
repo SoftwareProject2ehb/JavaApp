@@ -28,7 +28,7 @@ public abstract class SystemController {
 		ActionMenuController.initialize(new ActionMenuView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(), new ConfigurationView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(),new EditPasswordView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
 		LostObjectController.initialize(new FindLostObjectView(), new CreateLostObjectView(), new LostObjectView());
 		ReportController.initialize(new ReportView());
@@ -291,6 +291,17 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		user.setPassword(Encryptor.encrypt(password));
 		UserDAO.updateUser(user);
 		return null;
+	}
+	
+	public static void defaultPasswordCheck(){
+		User user = system.logged_user;
+		String default_pass = user.getFirstName() + "_" + user.getLastName();
+		if(user.checkPassword(Encryptor.encrypt(default_pass))){
+			ConfigurationController.switchToEditPasswordView();
+		}
+		else{
+			ActionMenuController.switchToActionMenuView();
+		}
 	}
 	
 	public static ArrayList<User> searchUser(String searchText, UserDAO.FindUser att){
