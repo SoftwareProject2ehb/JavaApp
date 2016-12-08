@@ -6,6 +6,9 @@ import model.User.Role;
 import utilities.*;
 import view.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -85,6 +88,16 @@ public abstract class SystemController {
 		int customer_id = CustomerDAO.createCustomer(new_customer);
 		new_customer.setId(customer_id);
 		return "Customer created.";
+	}
+	public static ArrayList<Customer> findCustomers(String Voornaam, String Achternaam,String Adress, String Phone, String Email) {
+		ArrayList<Customer> lijstCustomers = new ArrayList<Customer>();
+	
+		
+			 lijstCustomers = CustomerDAO.getCustomerByMultipleArgs(Voornaam, Achternaam, Adress, Phone, Email);
+			
+			
+		
+		return  lijstCustomers;
 	}
 	
 	public static String buyTicket(String type_ticket, boolean is_one_way_ticket, double ticket_price, String start_station, String end_station, Date date) {
@@ -307,5 +320,28 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 	public static String changePrice(String measure_unit, double cost_per_unit) {
 		//TODO Implementation
 		return null;
+	}
+	
+	public static String[] getStations() {
+		BufferedReader br = null;
+		String[] station_list = null;
+		try {
+			br = new BufferedReader(new FileReader("./resources/stations.txt"));
+			String result = br.readLine();
+			station_list = result.split(",");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		return station_list;
 	}
 }

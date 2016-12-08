@@ -10,6 +10,7 @@ import javax.swing.text.DateFormatter;
 import controller.ActionMenuController;
 import controller.FrameController;
 import controller.RouteController;
+import controller.SystemController;
 import model.Route;
 import model.RouteStation;
 import utilities.DateConverter;
@@ -71,30 +72,32 @@ public class SearchRouteView extends JPanel {
 		this.add(lblRoutevinder);
 		
 		JLabel lblVan = new JLabel("Van");
+		springLayout.putConstraint(SpringLayout.NORTH, lblVan, 31, SpringLayout.SOUTH, lblRoutevinder);
 		springLayout.putConstraint(SpringLayout.WEST, lblVan, 10, SpringLayout.WEST, this);
 		add(lblVan);
 		
 		cbbVan = new JComboBox();
 		springLayout.putConstraint(SpringLayout.NORTH, cbbVan, 61, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, cbbVan, 27, SpringLayout.EAST, lblVan);
-		springLayout.putConstraint(SpringLayout.NORTH, lblVan, 5, SpringLayout.NORTH, cbbVan);
-		cbbVan.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		springLayout.putConstraint(SpringLayout.EAST, cbbVan, 147, SpringLayout.EAST, lblVan);
+		cbbVan.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		add(cbbVan);
 		
 		cbbTot = new JComboBox();
 		springLayout.putConstraint(SpringLayout.NORTH, cbbTot, 104, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, cbbTot, 0, SpringLayout.WEST, cbbVan);
+		springLayout.putConstraint(SpringLayout.EAST, cbbTot, 0, SpringLayout.EAST, cbbVan);
 		add(cbbTot);
-		cbbTot.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		cbbTot.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		
 		JLabel lblTot = new JLabel("Tot");
-		springLayout.putConstraint(SpringLayout.NORTH, lblTot, 5, SpringLayout.NORTH, cbbTot);
+		springLayout.putConstraint(SpringLayout.NORTH, lblTot, 29, SpringLayout.SOUTH, lblVan);
 		springLayout.putConstraint(SpringLayout.WEST, lblTot, 0, SpringLayout.WEST, lblVan);
 		add(lblTot);
 		
 		JLabel lblDatum = new JLabel("Datum (dd/mm/jjjj)");
-		springLayout.putConstraint(SpringLayout.WEST, lblDatum, 10, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.NORTH, lblDatum, 31, SpringLayout.SOUTH, cbbTot);
+		springLayout.putConstraint(SpringLayout.WEST, lblDatum, 10, SpringLayout.WEST, this);
 		add(lblDatum);
 		
 		JLabel lblUur = new JLabel("Uur");
@@ -140,13 +143,13 @@ public class SearchRouteView extends JPanel {
 		add(btnTerug);
 		
 		btnZoek = new JButton("Zoek");
+		springLayout.putConstraint(SpringLayout.NORTH, btnZoek, 0, SpringLayout.NORTH, btnTerug);
 		btnZoek.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showRoute();
 				FrameController.changeSize(750, 300);
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnZoek, 0, SpringLayout.NORTH, btnTerug);
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnZoek, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(btnZoek);
 		
@@ -159,6 +162,9 @@ public class SearchRouteView extends JPanel {
 		add(txtUur);
 		
 		txtDatum = new JTextField(7);
+		
+		springLayout.putConstraint(SpringLayout.WEST, btnZoek, 25 , SpringLayout.WEST, txtDatum);
+		springLayout.putConstraint(SpringLayout.EAST, btnZoek, 100, SpringLayout.WEST, txtDatum);
 		springLayout.putConstraint(SpringLayout.NORTH, txtDatum, -5, SpringLayout.NORTH, lblDatum);
 		springLayout.putConstraint(SpringLayout.WEST, txtDatum, 41, SpringLayout.EAST, lblDatum);
 		txtDatum.setText(DateConverter.getDate());
@@ -175,9 +181,6 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, sep, 25, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, sep, -25, SpringLayout.SOUTH, this);
 		add(sep);
-		
-		springLayout.putConstraint(SpringLayout.WEST, btnZoek, 15 , SpringLayout.EAST, btnTerug);
-		springLayout.putConstraint(SpringLayout.EAST, btnZoek, -115 , SpringLayout.WEST, sep);
 		
 		panel = new JPanel(new GridBagLayout());
 		panel.add(new JLabel("Zoek een route."));

@@ -92,4 +92,7 @@ public static FindSubscriptionView find_subscription;
 
 	    return model;
 	}
+	public static void setGebruikerField(String naam) {
+		buy_subscription.txtGebruiker.setText(naam);
+	}
 }

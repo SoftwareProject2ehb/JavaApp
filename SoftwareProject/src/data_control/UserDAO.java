@@ -370,6 +370,12 @@ public class UserDAO extends BaseDAO{
 						res.getBoolean("active"));
 				lijst.add(u);
 			}
+			// Maken van de logfile met text
+						String s = "Alle actif users logins werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+					// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
