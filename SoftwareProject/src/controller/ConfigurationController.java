@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import data_control.UserDAO;
 import model.Price.betalingsType;
@@ -80,8 +81,13 @@ public class ConfigurationController {
 	public static User getSelectedUser(){
 		int column = 0;
 		int row = find_user.table.getSelectedRow();
-		int value = Integer.parseInt(find_user.table.getModel().getValueAt(row, column).toString());
-		User user = UserDAO.findUserById(value);
+		User user = null;
+		if (row == -1){ // no row selected 
+			JOptionPane.showMessageDialog(find_user, "No row was selected");
+		}else{
+			int value = Integer.parseInt(find_user.table.getModel().getValueAt(row, column).toString());
+			user = UserDAO.findUserById(value);
+		}
 		return user;
 	}
 	
@@ -116,20 +122,41 @@ public class ConfigurationController {
 		if (chosenRole == "ADMIN") {
 			rol = Role.ADMIN;
 		}
-		//TODO empty fields check
-		SystemController.addUser(voornaam,achternaam,email,phone, rol, street, number, bus, postalCode, city, country);
-		create_user.txtVoornaam.setText("");
-		create_user.txtAchternaam.setText("");
-		create_user.txtEmail.setText("");
-		create_user.txtPhone.setText("");
-		create_user.txtStreet.setText("");
-		create_user.txtNumber.setText("");
-		create_user.txtBus.setText("");
-		create_user.txtPostalCode.setText("");
-		create_user.txtCity.setText("");
-		create_user.txtCountry.setText("");
-		switchToFindUserView();
+		if(allFieldsEmptyCreate()){
+			SystemController.addUser(voornaam,achternaam,email,phone, rol, street, number, bus, postalCode, city, country);
+			create_user.txtVoornaam.setText("");
+			create_user.txtAchternaam.setText("");
+			create_user.txtEmail.setText("");
+			create_user.txtPhone.setText("");
+			create_user.txtStreet.setText("");
+			create_user.txtNumber.setText("");
+			create_user.txtBus.setText("");
+			create_user.txtPostalCode.setText("");
+			create_user.txtCity.setText("");
+			create_user.txtCountry.setText("");
+			switchToFindUserView();
+		}		
 	}
+	public static boolean allFieldsEmptyCreate() {
+		ArrayList<JTextField> array = create_user.getTextFields();
+			for (JTextField textbox : array) {
+	            if (textbox.getText().trim().isEmpty()) {
+	            	JOptionPane.showMessageDialog(create_user, "Field(s) missing !");
+	                return false;
+	            }
+	        }
+        return true;
+    }
+	public static boolean AllFieldsEmptyEdit() {
+		ArrayList<JTextField> array = edit_user.getTextFields();
+        for (JTextField textbox : array) {
+            if (textbox.getText().trim().isEmpty() ) {
+            	JOptionPane.showMessageDialog(edit_user, "Field(s) missing !");
+                return false;
+            }
+        }
+        return true;
+    }
 		
 	public static void editUser() throws InvalidParameterException{
 		Role rol = null;
@@ -153,13 +180,15 @@ public class ConfigurationController {
 			rol = Role.ADMIN;
 		}
 		if(pass1.equals(pass2) || pass1 == null && pass2 == null || pass1 == "" && pass2 == ""){
-			SystemController.editUser(voornaam,achternaam,email,phone, rol,street,number,bus,postalCode,city,country,pass1);
-			edit_user.txtPass1.setText("");
-			edit_user.txtPass2.setText("");
-			switchToFindUserView();
+			if(AllFieldsEmptyEdit()){
+				SystemController.editUser(voornaam,achternaam,email,phone, rol,street,number,bus,postalCode,city,country,pass1);
+				edit_user.txtPass1.setText("");
+				edit_user.txtPass2.setText("");
+				switchToFindUserView();
+			}
 		}
 		else {
-			JOptionPane.showMessageDialog(edit_user, "Passwords do not match!");
+			JOptionPane.showMessageDialog(edit_user, "Passwords don't match !");
 		}
 		//TODO empty fields check
 		

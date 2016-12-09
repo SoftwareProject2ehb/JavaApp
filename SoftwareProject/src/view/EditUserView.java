@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
@@ -43,22 +44,22 @@ public class EditUserView extends JPanel {
 		lblEditUser.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblEditUser);
 		
-		JLabel lblNewLabel = new JLabel("Voornaam: ");
+		JLabel lblNewLabel = new JLabel("Voornaam *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 27, SpringLayout.SOUTH, lblEditUser);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel, 59, SpringLayout.WEST, this);
 		add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Achternaam: ");
+		JLabel lblNewLabel_1 = new JLabel("Achternaam *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_1, 94, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_1, 59, SpringLayout.WEST, this);
 		add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Email: ");
+		JLabel lblNewLabel_2 = new JLabel("Email *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_2, 26, SpringLayout.SOUTH, lblNewLabel_1);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_2, 59, SpringLayout.WEST, this);
 		add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Telefoon Nr.: ");
+		JLabel lblNewLabel_3 = new JLabel("Telefoon Nr. *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 21, SpringLayout.SOUTH, lblNewLabel_2);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_3, 0, SpringLayout.WEST, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_3, 144, SpringLayout.WEST, this);
@@ -109,29 +110,29 @@ public class EditUserView extends JPanel {
 		});
 		add(btnTerug);
 		
-		JLabel lblStreet = new JLabel("Street: ");
+		JLabel lblStreet = new JLabel("Street *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblStreet, 0, SpringLayout.NORTH, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.WEST, lblStreet, 463, SpringLayout.WEST, this);
 		add(lblStreet);
 		
-		JLabel lblNewLabel_5 = new JLabel("Number: ");
+		JLabel lblNewLabel_5 = new JLabel("Number *: ");
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_1, -319, SpringLayout.WEST, lblNewLabel_5);
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_5, 0, SpringLayout.NORTH, lblNewLabel_1);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_5, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_5);
 		
-		JLabel lblNewLabel_6 = new JLabel("Postalcode: ");
+		JLabel lblNewLabel_6 = new JLabel("Postalcode *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_6, 0, SpringLayout.NORTH, lblNewLabel_2);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_6, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_6);
 		
-		JLabel lblNewLabel_7 = new JLabel("City: ");
+		JLabel lblNewLabel_7 = new JLabel("City *: ");
 		springLayout.putConstraint(SpringLayout.EAST, txtPhone, -54, SpringLayout.WEST, lblNewLabel_7);
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_7, 0, SpringLayout.NORTH, lblNewLabel_3);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_7, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_7);
 		
-		JLabel lblNewLabel_8 = new JLabel("Country: ");
+		JLabel lblNewLabel_8 = new JLabel("Country *: ");
 		springLayout.putConstraint(SpringLayout.EAST, comboRole, -54, SpringLayout.WEST, lblNewLabel_8);
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_8, 0, SpringLayout.NORTH, lblNewLabel_4);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_8, 0, SpringLayout.WEST, lblStreet);
@@ -230,6 +231,25 @@ public class EditUserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, txtPass2, 0, SpringLayout.WEST, txtVoornaam);
 		springLayout.putConstraint(SpringLayout.EAST, txtPass2, 0, SpringLayout.EAST, txtVoornaam);
 		add(txtPass2);
+		
+		JLabel lblifPasswordIs = new JLabel("*if password is left empty it will not be edited");
+		springLayout.putConstraint(SpringLayout.NORTH, lblifPasswordIs, 5, SpringLayout.NORTH, lblEditUser);
+		springLayout.putConstraint(SpringLayout.WEST, lblifPasswordIs, 18, SpringLayout.EAST, lblEditUser);
+		add(lblifPasswordIs);
 
+	}
+	public ArrayList<JTextField> getTextFields() {
+		ArrayList<JTextField> array = new ArrayList<JTextField>();
+		array.add(txtVoornaam);
+		array.add(txtAchternaam);
+		array.add(txtEmail);
+		array.add(txtPhone);
+		array.add(txtStreet);
+		array.add(txtNumber);
+		array.add(txtCountry);
+		array.add(txtPostalCode);
+		array.add(txtCity);
+		
+		return array;
 	}
 }
