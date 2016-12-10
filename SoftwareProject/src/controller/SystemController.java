@@ -31,7 +31,7 @@ public abstract class SystemController {
 		ActionMenuController.initialize(new ActionMenuView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(), new ConfigurationView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(),new EditPasswordView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
 		LostObjectController.initialize(new LostObjectView());
 		ReportController.initialize(new ReportView());
@@ -288,16 +288,18 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 	}
 
 	public static String addUser(String first_name, String last_name, String email, String phone,
-			Role role) {
+			Role role, String street, String number, String bus, int postal_code, String city, String country) {
 		String login = first_name + "_" + last_name;
-		String password = "pass";
-		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role);
+		String password = first_name + "_" + last_name;
+		boolean activeU = true;
+		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role, activeU, street, number, bus, postal_code, city, country);
 		int user_id = UserDAO.createUser(new_user);
 		new_user.setUserID(user_id);
 		return null;
 	}
 	
-	public static String editUser(String first_name, String last_name, String email, String phone, Role role) {
+	public static String editUser(String first_name, String last_name, String email, String phone, Role role, String street, String number, String bus,
+			int postal_code, String city, String country,String password) {
 		User user = ConfigurationController.getSelectedUser();
 		String login = first_name + "_" + last_name;
 		user.setFirstName(first_name);
@@ -306,8 +308,26 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		user.setEmail(email);
 		user.setPhone(phone);
 		user.setRolen(role.toString());
+		user.setStreet(street);
+		user.setNumber(number);
+		user.setBus(bus);
+		user.setPostalCode(postal_code);
+		user.setCity(city);
+		user.setCountry(country);
+		user.setPassword(Encryptor.encrypt(password));
 		UserDAO.updateUser(user);
 		return null;
+	}
+	
+	public static void defaultPasswordCheck(){
+		User user = system.logged_user;
+		String default_pass = user.getFirstName() + "_" + user.getLastName();
+		if(user.checkPassword(Encryptor.encrypt(default_pass))){
+			ConfigurationController.switchToEditPasswordView();
+		}
+		else{
+			ActionMenuController.switchToActionMenuView();
+		}
 	}
 	
 	public static ArrayList<User> searchUser(String searchText, UserDAO.FindUser att){
