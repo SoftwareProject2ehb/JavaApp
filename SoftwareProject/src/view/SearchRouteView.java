@@ -29,6 +29,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -57,6 +58,9 @@ public class SearchRouteView extends JPanel {
 	public JSeparator sep;
 	public JPanel panel;
 	public JScrollPane scrollPane;
+	public JButton btnBuyTicket;
+	public JButton btnBuySubscription;
+	public JButton btnMore;
 	
 	/**
 	 * Create the panel.
@@ -203,20 +207,31 @@ public class SearchRouteView extends JPanel {
 		// Show information
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.weightx = 1;
+		gbc.weighty = 1;
 		
-		gbc.gridwidth = 3;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		btnBuyTicket = new JButton("Koop ticket");
+		panel.add(btnBuyTicket, gbc);
+		
+		gbc.gridx = 1;
+		btnBuySubscription = new JButton("Koop abonnement");
+		panel.add(btnBuySubscription, gbc);
+		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridwidth = 2;
+		gbc.gridy++;
 		
 		panel.add(new JLabel(rs.get(0).getNaam() + " - " + rs.get(rs.size() - 1).getNaam() + " (Totale duur: " + route.calculateTimeProper() + ")"), gbc);
 		
 		gbc.gridy++;
 		panel.add(new JLabel("Vertrek: " + tussenstops.get(0).getNaam() + " (peron " + tussenstops.get(0).getDeparturePlatform() + ") " + tussenstops.get(0).getDepartureTime().substring(11,16)), gbc);
 		
+		for (int k = 0; k < 5; k++) {
 		for (int i = 1; i < tussenstops.size() - 1; i++) {
 			gbc.gridy++;
-			
 			if (i % 2 == 1) {
 				panel.add(new JLabel("Afstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getArrivalPlatform() + ") " + tussenstops.get(i).getArrivalTime().substring(11,16)), gbc);
 			}
@@ -224,15 +239,41 @@ public class SearchRouteView extends JPanel {
 				panel.add(new JLabel("Opstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getDeparturePlatform() + ") " + tussenstops.get(i).getDepartureTime().substring(11,16)), gbc);
 			}
 		}
+		}
 		
 		gbc.gridy++;
 		panel.add(new JLabel("Aankomst: " + tussenstops.get(tussenstops.size() -1).getNaam() + " (peron " + tussenstops.get(tussenstops.size() -1).getArrivalPlatform() + ") " + tussenstops.get(tussenstops.size() -1).getArrivalTime().substring(11,16)), gbc);
+		
+		gbc.gridy++;
+		btnMore = new JButton("Meer info");
+		panel.add(btnMore, gbc);
 		
 		scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setPreferredSize(new Dimension(350, 250));
 		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
 		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
 		add(scrollPane);
+		
+		btnBuyTicket.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("BUY TICKET");
+			}
+		});
+		
+		btnBuySubscription.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("BUY SUBSCRIPTION");
+			}
+		});
+		
+		btnMore.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("SHOW MORE");
+			}
+		});
 	}
 	
 	public void deleteShowRoute() {
