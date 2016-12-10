@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import model.User;
+import model.User.Role;
 
 public class UserTest {
 	
@@ -14,15 +15,15 @@ public class UserTest {
 	 */
 	public void testSetID() {
 
-		User test = new User(0, null, null, null, null, null, null, null, false, null, null, null, 0, null, null);
+		User test = new User("firstname", "lastname", "email", "phone", "login", "password", Role.ADMIN, true, "street", "number", "bus", 5, "city", "country");
 		int ID = 3;
 		test.setUserID(ID);
-		assertEquals(test.getUserID(), ID);
+		assertEquals(test.getUserID(), 3);
 	}
 	
 	@Test
 	public void testGetID() {
-		User test = new User(0, null, null, null, null, null, null, null, false, null, null, null, 0, null, null);
+		User test = new User("firstname", "lastname", "email", "phone", "login", "password", Role.ADMIN, true, "street", "number", "bus", 5, "city", "country");
 		int givID = 5;
 		test.setUserID(5);
 		int result = test.getUserID();
@@ -34,7 +35,7 @@ public class UserTest {
 	 * test getter en setter voor voornaam
 	 */
 	public void testSetVoornaam() {
-		User test = new User(0, null, null, null, null, null, null, null, false, null, null, null, 0, null, null);
+		User test = new User("firstname", "lastname", "email", "phone", "login", "password", Role.ADMIN, true, "street", "number", "bus", 5, "city", "country");
 		String voornaam = "test";
 		test.setFirstName(voornaam);
 		assertEquals(test.getFirstName(), voornaam);
@@ -42,7 +43,7 @@ public class UserTest {
 	
 	@Test
 	public void testGetVoornaam() {
-		User test = new User(0, null, null, null, null, null, null, null, false, null, null, null, 0, null, null);
+		User test = new User("firstname", "lastname", "email", "phone", "login", "password", Role.ADMIN, true, "street", "number", "bus", 5, "city", "country");
 		String givVoornaam = "mohamed";
 		test.setFirstName("mohamed");
 		String result = test.getFirstName();
@@ -54,7 +55,7 @@ public class UserTest {
 	 * test setter en getter voor password
 	 */
 	public void testSetPassword() {
-		User test = new User(0, null, null, null, null, null, null, null, false, null, null, null, 0, null, null);
+		User test = new User("firstname", "lastname", "email", "phone", "login", "password", Role.ADMIN, true, "street", "number", "bus", 5, "city", "country");
 		String testPassword = "pass";
 		test.setPassword(testPassword);
 		assertEquals(test.getPassword(), testPassword);
@@ -62,7 +63,7 @@ public class UserTest {
 	
 	@Test
 	public void testGetPassword() {
-		User test = new User(0, null, null, null, null, null, null, null, false, null, null, null, 0, null, null);
+		User test = new User("firstname", "lastname", "email", "phone", "login", "password", Role.ADMIN, true, "street", "number", "bus", 5, "city", "country");
 		String givPassword = "pass1";
 		test.setPassword("pass1");
 		String result = test.getPassword();
@@ -74,7 +75,7 @@ public class UserTest {
 	 * test getter en setter voor phone
 	 */
 	public void testSetPhone() {
-		User test = new User(0, null, null, null, null, null, null, null, false, null, null, null, 0, null, null);
+		User test = new User("firstname", "lastname", "email", "phone", "login", "password", Role.ADMIN, true, "street", "number", "bus", 5, "city", "country");
 		String phone = "0999";
 		test.setPhone(phone);
 		assertEquals(test.getPhone(), phone);
@@ -82,7 +83,7 @@ public class UserTest {
 	
 	@Test
 	public void testGetPhone() {
-		User test = new User(0, null, null, null, null, null, null, null, false, null, null, null, 0, null, null);
+		User test = new User("firstname", "lastname", "email", "phone", "login", "password", Role.ADMIN, true, "street", "number", "bus", 5, "city", "country");
 		String phone = "0999";
 		test.setPhone("0999");
 		String result = test.getPhone();
