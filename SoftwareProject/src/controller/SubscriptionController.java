@@ -24,6 +24,7 @@ public static FindSubscriptionView find_subscription;
 	
 	public static void switchToBuySubscriptionView() {
 		FrameController.getFrame().switchTo("BUY_SUBSCRIPTION");
+		FrameController.changeSize(500, 350);
 	}
 	
 	public static void switchToFindSubscriptionView() {
@@ -94,5 +95,11 @@ public static FindSubscriptionView find_subscription;
 	}
 	public static void setGebruikerField(String naam) {
 		buy_subscription.txtGebruiker.setText(naam);
+	}
+	
+	public static void setInfo(String begin, String eind, String datum) {
+		buy_subscription.cbbBeginstation.setSelectedItem(begin);
+		buy_subscription.cbbEindstation.setSelectedItem(eind);
+		buy_subscription.txtBegindatum.setText(datum);
 	}
 }

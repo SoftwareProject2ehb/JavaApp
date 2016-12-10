@@ -58,9 +58,13 @@ public class SearchRouteView extends JPanel {
 	public JSeparator sep;
 	public JPanel panel;
 	public JScrollPane scrollPane;
-	public JButton btnBuyTicket;
-	public JButton btnBuySubscription;
-	public JButton btnMore;
+	public JButton btnBuyTicket = new JButton("Koop ticket");
+	public JButton btnBuySubscription = new JButton("Koop abonnement");
+	public JButton btnMore = new JButton("Meer info");
+	public boolean showMore = false;
+	public Route route;
+	public ArrayList<RouteStation> rs;
+	public ArrayList<RouteStation> tussenstops;
 	
 	/**
 	 * Create the panel.
@@ -150,8 +154,8 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, btnZoek, 0, SpringLayout.NORTH, btnTerug);
 		btnZoek.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				getRouteInformation();
 				showRoute();
-				FrameController.changeSize(750, 300);
 			}
 		});
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnZoek, 0, SpringLayout.HORIZONTAL_CENTER, this);
@@ -197,87 +201,136 @@ public class SearchRouteView extends JPanel {
 	}
 	
 	public void showRoute() {
+		showMore = false;
 		deleteShowRoute();
-		
-		// Get information
-		Route route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
-		ArrayList<RouteStation> rs = new ArrayList<RouteStation>(route.getQueriedRoute());
-		ArrayList<RouteStation> tussenstops = route.getRouteEssentials();
-		
-		// Show information
-		panel = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		btnBuyTicket = new JButton("Koop ticket");
-		panel.add(btnBuyTicket, gbc);
-		
-		gbc.gridx = 1;
-		btnBuySubscription = new JButton("Koop abonnement");
-		panel.add(btnBuySubscription, gbc);
-		
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridx = 0;
-		gbc.gridwidth = 2;
-		gbc.gridy++;
-		
-		panel.add(new JLabel(rs.get(0).getNaam() + " - " + rs.get(rs.size() - 1).getNaam() + " (Totale duur: " + route.calculateTimeProper() + ")"), gbc);
-		
-		gbc.gridy++;
-		panel.add(new JLabel("Vertrek: " + tussenstops.get(0).getNaam() + " (peron " + tussenstops.get(0).getDeparturePlatform() + ") " + tussenstops.get(0).getDepartureTime().substring(11,16)), gbc);
-		
-		for (int k = 0; k < 5; k++) {
-		for (int i = 1; i < tussenstops.size() - 1; i++) {
-			gbc.gridy++;
-			if (i % 2 == 1) {
-				panel.add(new JLabel("Afstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getArrivalPlatform() + ") " + tussenstops.get(i).getArrivalTime().substring(11,16)), gbc);
-			}
-			else {
-				panel.add(new JLabel("Opstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getDeparturePlatform() + ") " + tussenstops.get(i).getDepartureTime().substring(11,16)), gbc);
-			}
-		}
-		}
-		
-		gbc.gridy++;
-		panel.add(new JLabel("Aankomst: " + tussenstops.get(tussenstops.size() -1).getNaam() + " (peron " + tussenstops.get(tussenstops.size() -1).getArrivalPlatform() + ") " + tussenstops.get(tussenstops.size() -1).getArrivalTime().substring(11,16)), gbc);
-		
-		gbc.gridy++;
-		btnMore = new JButton("Meer info");
-		panel.add(btnMore, gbc);
-		
-		scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setPreferredSize(new Dimension(350, 250));
-		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
-		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
-		add(scrollPane);
-		
+		createButtons();
+		createPanel();
+		createScrollPane();
+		FrameController.changeSize(750, 300);
+	}
+	
+	public void reShowRoute() {
+		deleteShowRoute();
+		createPanel();
+		createScrollPane();
+		FrameController.changeSize(750, 300);
+	}
+	
+	public void deleteShowRoute() {
+		remove(panel);
+		remove(scrollPane);
+	}
+
+	public void getRouteInformation() {
+		route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
+		rs = route.getQueriedRoute();
+		tussenstops = route.getRouteEssentials();
+	}
+	
+	public void createButtons() {
 		btnBuyTicket.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("BUY TICKET");
+				RouteController.buyTicket();
 			}
 		});
 		
 		btnBuySubscription.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("BUY SUBSCRIPTION");
+				RouteController.buySubscription();
 			}
 		});
 		
 		btnMore.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("SHOW MORE");
+				if (showMore) {
+					btnMore.setText("Meer info");
+					showMore = false;
+					reShowRoute();
+				}
+				else {
+					btnMore.setText("Minder info");
+					showMore = true;
+					reShowRoute();
+				}
 			}
 		});
 	}
 	
-	public void deleteShowRoute() {
-		remove(panel);
-		remove(scrollPane);
+	public void createPanel() {
+		panel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		panel.add(btnBuyTicket, gbc);
+
+		gbc.gridx = 1;
+		panel.add(btnBuySubscription, gbc);
+
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridwidth = 2;
+		gbc.gridy++;
+
+		panel.add(new JLabel(rs.get(0).getNaam() + " - " + rs.get(rs.size() - 1).getNaam() + " (Totale duur: " + route.calculateTimeProper() + ")"), gbc);
+
+		gbc.gridy++;
+		panel.add(new JLabel("Vertrek: " + tussenstops.get(0).getNaam() + " (peron " + tussenstops.get(0).getDeparturePlatform() + ") " + tussenstops.get(0).getDepartureTime().substring(11,16)), gbc);
+
+		if (showMore) {
+			int j = 1;
+			for (int i = 1; i < tussenstops.size() - 1; i++) {
+
+				while(j < rs.size()-1 && !tussenstops.get(i).getNaam().equals(rs.get(j).getNaam())) {
+					gbc.gridy++;
+					panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+					j++;
+				}
+				j++;
+				gbc.gridy++;
+				if (i % 2 == 1) {
+					panel.add(new JLabel("Afstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getArrivalPlatform() + ") " + tussenstops.get(i).getArrivalTime().substring(11,16)), gbc);
+				}
+				else {
+					panel.add(new JLabel("Opstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getDeparturePlatform() + ") " + tussenstops.get(i).getDepartureTime().substring(11,16)), gbc);
+				}
+			}
+
+			while(j < rs.size()-1) {
+				gbc.gridy++;
+				panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+				j++;
+			}
+		}
+		else {
+			for (int i = 1; i < tussenstops.size() - 1; i++) {
+				gbc.gridy++;
+				if (i % 2 == 1) {
+					panel.add(new JLabel("Afstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getArrivalPlatform() + ") " + tussenstops.get(i).getArrivalTime().substring(11,16)), gbc);
+				}
+				else {
+					panel.add(new JLabel("Opstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getDeparturePlatform() + ") " + tussenstops.get(i).getDepartureTime().substring(11,16)), gbc);
+				}
+			}
+		}
+
+		gbc.gridy++;
+		panel.add(new JLabel("Aankomst: " + tussenstops.get(tussenstops.size() -1).getNaam() + " (peron " + tussenstops.get(tussenstops.size() -1).getArrivalPlatform() + ") " + tussenstops.get(tussenstops.size() -1).getArrivalTime().substring(11,16)), gbc);
+
+		gbc.gridy++;
+		panel.add(btnMore, gbc);
+	}
+	
+	public void createScrollPane() {
+		scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setPreferredSize(new Dimension(350, 250));
+		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
+		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
+		add(scrollPane);
 	}
 }
