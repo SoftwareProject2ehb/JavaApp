@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JPanel;
 
+import controller.ActionMenuController;
 import controller.ConfigurationController;
 import controller.LoginController;
 import controller.LostObjectController;
@@ -50,10 +51,10 @@ public class ActionMenuView extends JPanel {
 		add(btnAfmelden);
 		
 		JPanel panel = new JPanel();
-		springLayout.putConstraint(SpringLayout.NORTH, panel, 52, SpringLayout.SOUTH, lblKeuzemenu);
-		springLayout.putConstraint(SpringLayout.WEST, panel, 0, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, panel, -43, SpringLayout.NORTH, btnAfmelden);
-		springLayout.putConstraint(SpringLayout.EAST, panel, 500, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.NORTH, panel, 51, SpringLayout.SOUTH, lblKeuzemenu);
+		springLayout.putConstraint(SpringLayout.WEST, panel, 10, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, panel, -44, SpringLayout.NORTH, btnAfmelden);
+		springLayout.putConstraint(SpringLayout.EAST, panel, -7, SpringLayout.EAST, this);
 		add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{10, 0, 10, 0, 10, 0, 0};
@@ -119,9 +120,22 @@ public class ActionMenuView extends JPanel {
 			}
 		});
 		springLayout.putConstraint(SpringLayout.SOUTH, btnVerlorenVoorwerpen, -31, SpringLayout.NORTH, panel);
+		
+		JButton btnMyAccount = new JButton("My Account");
+		btnMyAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ActionMenuController.AccountInfo();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.NORTH, btnMyAccount, 0, SpringLayout.NORTH, lblKeuzemenu);
+		springLayout.putConstraint(SpringLayout.EAST, btnMyAccount, 0, SpringLayout.EAST, panel);
+		add(btnMyAccount);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConfigurationController.switchToConfigurationView();
+				if(SystemController.checkAccess()){
+					ConfigurationController.switchToConfigurationView();
+					System.out.println("yeees");
+				}
 			}
 		});
 		btnAbonnementOpzoeken.addActionListener(new ActionListener() {
