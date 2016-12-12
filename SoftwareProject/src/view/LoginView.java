@@ -8,10 +8,15 @@ import java.util.Arrays;
 import javax.swing.*;
 
 import controller.ActionMenuController;
+import controller.ConfigurationController;
 import controller.CustomerController;
 import controller.LoginController;
 import controller.SystemController;
 import data_control.BaseDAO;
+import model.SystemNMBS;
+import model.User;
+import utilities.Encryptor;
+
 import javax.swing.border.LineBorder;
 
 public class LoginView extends JPanel {
@@ -69,8 +74,7 @@ public class LoginView extends JPanel {
 			@Override
             public void actionPerformed(ActionEvent e) {
             	if (LoginController.login()) {
-            		ActionMenuController.switchToActionMenuView();
-            		
+            		SystemController.defaultPasswordCheck();
             	} else {
             		lblStatus.setForeground(Color.RED);
                     lblStatus.setText("Ongeldige combinatie.");
@@ -127,7 +131,7 @@ public class LoginView extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (LoginController.login()) {
-	            		ActionMenuController.switchToActionMenuView();
+						SystemController.defaultPasswordCheck();
 	            	} else {
 	            		lblStatus.setForeground(Color.RED);
 	                    lblStatus.setText("Ongeldige combinatie.");

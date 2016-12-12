@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JRadioButton;
 
 public class UserView extends JPanel {
 	public JTable table;
@@ -38,7 +39,7 @@ public class UserView extends JPanel {
 	public UserView() {
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
-		String col[] = {"ID","Voornaam","Achternaam","Email","Telefoon Nr.","Username","Role"};
+		String col[] = {"ID","Voornaam","Achternaam","Email","Stad","Username","Role"};
 
 		tableModel = new DefaultTableModel(col, 0){
 			@Override
@@ -51,17 +52,18 @@ public class UserView extends JPanel {
 		table = new JTable(tableModel);
 		springLayout.putConstraint(SpringLayout.NORTH, table, 36, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, table, 10, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, table, -10, SpringLayout.EAST, this);
 		add(table);
 		
 		txtSearch = new JTextField();
 		springLayout.putConstraint(SpringLayout.WEST, txtSearch, 10, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, txtSearch, -6, SpringLayout.NORTH, table);
+		springLayout.putConstraint(SpringLayout.EAST, txtSearch, -255, SpringLayout.EAST, this);
 		add(txtSearch);
 		txtSearch.setColumns(10);
 		
 		searchAtt = new JComboBox();
-		springLayout.putConstraint(SpringLayout.EAST, txtSearch, -6, SpringLayout.WEST, searchAtt);
-		springLayout.putConstraint(SpringLayout.WEST, searchAtt, 449, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.WEST, searchAtt, 6, SpringLayout.EAST, txtSearch);
 		springLayout.putConstraint(SpringLayout.SOUTH, searchAtt, -6, SpringLayout.NORTH, table);
 		searchAtt.addItem("ID");
 		searchAtt.addItem("Voornaam");
@@ -70,18 +72,21 @@ public class UserView extends JPanel {
 		searchAtt.addItem("Telefoon Nr.");
 		searchAtt.addItem("Username");
 		searchAtt.addItem("Role");
+		searchAtt.addItem("Straat");
+		searchAtt.addItem("Postcode");
+		searchAtt.addItem("Land");
+		searchAtt.addItem("Stad");
 		add(searchAtt);
 		
 		JButton btnSearch = new JButton("Search");
 		springLayout.putConstraint(SpringLayout.EAST, searchAtt, -12, SpringLayout.WEST, btnSearch);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnSearch, -6, SpringLayout.NORTH, table);
+		springLayout.putConstraint(SpringLayout.EAST, btnSearch, 0, SpringLayout.EAST, table);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			ConfigurationController.searchUser();
 			}
 		});
-		springLayout.putConstraint(SpringLayout.SOUTH, btnSearch, -6, SpringLayout.NORTH, table);
-		springLayout.putConstraint(SpringLayout.EAST, table, 0, SpringLayout.EAST, btnSearch);
-		springLayout.putConstraint(SpringLayout.EAST, btnSearch, -10, SpringLayout.EAST, this);
 		add(btnSearch);
 		
 		JButton btnNewButton = new JButton("ADD");
@@ -145,6 +150,11 @@ public class UserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, btnResetPassword, 6, SpringLayout.SOUTH, table);
 		springLayout.putConstraint(SpringLayout.EAST, btnResetPassword, -6, SpringLayout.WEST, btnInactive);
 		add(btnResetPassword);
+		
+		JRadioButton rdbtnShowInactiveUsers = new JRadioButton("Show inactive users ");
+		springLayout.putConstraint(SpringLayout.NORTH, rdbtnShowInactiveUsers, 0, SpringLayout.NORTH, btnNewButton);
+		springLayout.putConstraint(SpringLayout.WEST, rdbtnShowInactiveUsers, 6, SpringLayout.EAST, btnRefresh);
+		add(rdbtnShowInactiveUsers);
 	}
 	
 	public void refreshTable(DefaultTableModel tableModel){
@@ -155,14 +165,12 @@ public class UserView extends JPanel {
 			String voornaam = users.get(i).getFirstName();
 			String achternaam = users.get(i).getLastName();
 			String email = users.get(i).getEmail();
-			String phone = users.get(i).getPhone();
 			String login = users.get(i).getLogin();
 			String role = users.get(i).getRolen();
-			Boolean active = users.get(i).isActive();
-					 
-			Object[] data = {id,voornaam,achternaam,email,phone,login,role};
+			String city = users.get(i).getCity();
+					   
+			Object[] data = {id,voornaam,achternaam,email,city,login,role};
 			tableModel.addRow(data);
 		}
 	}
-
 }

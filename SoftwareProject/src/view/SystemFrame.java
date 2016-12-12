@@ -54,6 +54,7 @@ public class SystemFrame extends JFrame {
 		contentPane.add(TicketController.buy_ticket);
 		contentPane.add(ConfigurationController.create_user);
 		contentPane.add(ConfigurationController.find_user);
+		contentPane.add(ConfigurationController.edit_password_view);
 		contentPane.add(ConfigurationController.edit_user);
 		contentPane.add(ConfigurationController.price_config);
 		contentPane.add(ConfigurationController.report);
@@ -72,6 +73,7 @@ public class SystemFrame extends JFrame {
 		card_layout.addLayoutComponent(ConfigurationController.create_user, "CREATE_USER");
 		card_layout.addLayoutComponent(ConfigurationController.edit_user, "EDIT_USER");
 		card_layout.addLayoutComponent(ConfigurationController.find_user, "FIND_USER");
+		card_layout.addLayoutComponent(ConfigurationController.edit_password_view, "EDIT_PASSWORD");
 		card_layout.addLayoutComponent(ConfigurationController.price_config, "PRICE_CONFIG");
 		card_layout.addLayoutComponent(ConfigurationController.report, "REPORT");
 		card_layout.addLayoutComponent(ConfigurationController.configuration, "CONFIGURATION");
