@@ -7,6 +7,8 @@ import utilities.*;
 import view.*;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Date;
@@ -21,6 +23,7 @@ import data_control.*;
 import data_control.UserDAO.FindUser;
 
 public abstract class SystemController {
+	public final static String EURO = "\u20ac";
 	public static SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
 		
@@ -105,7 +108,7 @@ public abstract class SystemController {
 		int ticket_id = TicketDAO.createTicket(new_ticket);
 		new_ticket.setId(ticket_id);
 		
-		if (JOptionPane.showConfirmDialog(null, "Ticket van " + start_station + " naar " + end_station + " gekocht voor �" + String.valueOf(ticket_price).substring(0, 4) + ". Wilt u de ticket afprinten?", "Afprinten?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+		if (JOptionPane.showConfirmDialog(null, "Ticket van " + start_station + " naar " + end_station + " gekocht voor " + EURO + String.valueOf(ticket_price).substring(0, 4) + ". Wilt u de ticket afprinten?", "Afprinten?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			try {
 				Printer.printTicket(new_ticket);
 			} catch (IOException e) {
@@ -357,7 +360,9 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		BufferedReader br = null;
 		String[] station_list = null;
 		try {
-			br = new BufferedReader(new FileReader("./resources/stations.txt"));
+			FileInputStream fis = new FileInputStream(new File("./resources/stations.txt"));
+			UnicodeReader reader = new UnicodeReader(fis, "UTF-8");
+			br = new BufferedReader(reader);
 			String result = br.readLine();
 			station_list = result.split(",");
 		} catch (IOException e1) {
