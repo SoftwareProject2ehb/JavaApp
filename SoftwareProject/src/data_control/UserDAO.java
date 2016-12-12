@@ -479,11 +479,7 @@ public class UserDAO extends BaseDAO{
 		return lijst;
 	}
 
-<<<<<<< HEAD
 	public enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active};
-=======
-	public enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active,street,number,postalcode,bus,city,country};
->>>>>>> refs/heads/master
 
 	public static ArrayList<User> findUserByAttribute(FindUser attribuut,String zoekop) { //Find user by attribute and string
 		ArrayList<User> lijst = new ArrayList<User>();
@@ -494,12 +490,8 @@ public class UserDAO extends BaseDAO{
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-<<<<<<< HEAD
 			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " LIKE '%" + zoekop + "%' ");
 
-=======
-			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + "  LIKE '%" + zoekop + "%'");
->>>>>>> refs/heads/master
 
 			while (res.next()) {
 				User u = new User(res.getInt("ID"), 
