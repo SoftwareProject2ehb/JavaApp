@@ -117,21 +117,21 @@ public class Ticket {
 		return ErrorCode.NO_ERROR;
 	}
 	
-	public static double calculatePrice(String ticket_type, boolean one_way, String start_station, String end_station) {
+	public static double calculatePrice(String ticket_type, boolean one_way, Route route) {
 		Price type = PriceDAO.findPriceByType(ticket_type);
 		double price;
 		
 			switch (type.typeBetaling) {
 			case PER_HOUR:
-				price = type.costPerUnit * RouteCalculator.calculateTime(start_station, end_station); 
+				price = type.costPerUnit * route.calculateTime();
 				break;
 				
 			case PER_KM:
-				price = type.costPerUnit * RouteCalculator.calculateDistance(start_station, end_station); 
+				price = type.costPerUnit * route.calculateDistance();
 				break;
 				
 			case PER_STATION:
-				price = type.costPerUnit * RouteCalculator.calculateStations(start_station, end_station); 
+				price = type.costPerUnit * ((route.getQueriedRoute().size() - route.getRouteEssentials().size() - 2) / 2);
 				break;
 			default:
 				price = 0;

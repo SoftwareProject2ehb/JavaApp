@@ -24,53 +24,40 @@ public static FindSubscriptionView find_subscription;
 	
 	public static void switchToBuySubscriptionView() {
 		FrameController.getFrame().switchTo("BUY_SUBSCRIPTION");
+		FrameController.changeSize(500, 350);
 	}
 	
 	public static void switchToFindSubscriptionView() {
 		FrameController.getFrame().switchTo("FIND_SUBSCRIPTION");
+		FrameController.changeSize(765, 415);
 	}
 	
 	public static void calculatePrice() {
-		//TODO Dit is verschrikkelijke code, verschrikkelijk. Horrific. Regelrechte onzin. Maar beter ging niet om 23:37. Volledige prijsberekening van Subscription moet aangepast worden.
-		int type = 1;
-		int price = 1;
+		double prijs;
+		SubscriptionPrice sp = SubscriptionPriceDAO.findSubPriceByTypeAndLength((String) buy_subscription.cbbType.getSelectedItem(), (Double) buy_subscription.cbbGeldigheid.getSelectedItem());
 		
-		switch (buy_subscription.cbbGeldigheid.getSelectedItem().toString()) {
-		case "1 maand":
-			price = 1;
+		Route route = new Route ((String) buy_subscription.cbbBeginstation.getSelectedItem(), (String) buy_subscription.cbbEindstation.getSelectedItem());
+		
+		switch(sp.getTypeBetaling()) {
+		case PER_KM:
+			prijs = route.calculateDistance() * sp.getCostPerUnit();
 			break;
-			
-		case "2 maanden":
-			price = 2;
+		case PER_HOUR:
+			prijs = route.calculateTime() * sp.getCostPerUnit();
 			break;
-			
-		case "3 maanden":
-			price = 3;
+		case PER_STATION:
+			prijs = ((route.getQueriedRoute().size() - route.getRouteEssentials().size() - 2) / 2) * sp.getCostPerUnit();
 			break;
-			
-		case "6 maanden":
-			price = 4;
+		case FIXED:
+			prijs = sp.getCostPerUnit();
 			break;
-			
-		case "1 jaar":
-			price = 5;
+		default:
+			prijs = -1;
 			break;
 		}
 		
-		switch (buy_subscription.cbbType.getSelectedItem().toString()) {
-		case "Type 1":
-			type = 1;
-			break;
-			
-		case "Type 2":
-			type = 2;
-			break;
-		}
-		
-		double prijs = Subscription.calculatePrice(SubscriptionTypeDAO.findSubTypeById(type), SubscriptionPriceDAO.findSubPriceById(price));
-		buy_subscription.txtPrijs.setText(String.valueOf(prijs));
+		buy_subscription.txtPrijs.setText(String.format("%.2f", prijs));
 	}
-	
 	
 	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model) {
 
@@ -82,38 +69,37 @@ public static FindSubscriptionView find_subscription;
 		}
 
 	    for (int i=0;i<subList.size();i++) {
-	    	Object[] item = {subList.get(i).getId(),SubscriptionTypeDAO.findSubTypeById(subList.get(i).getTicketType()).getName(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
+	    	Object[] item = {subList.get(i).getId(),subList.get(i).getSubscriptionType(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
 	    			subList.get(i).getStartDate(), subList.get(i).getEndDate(), subList.get(i).getActive()};
 	    	model.addRow(item);
 	    }
 
 	    return model;
-
 	}
 	
 	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model, int id) {
-
-		
 		String col[] = {"ID","Type","Price", "Customer ID", "StartStation", "EndStation", "StartDate", "EndDate", "Active"};
 
 		model = new DefaultTableModel(col, 0);
 			
-		
-		
 		subList.clear();
-		subList.add(new SubscriptionDAO().findSubById(id));
+		subList.add(SubscriptionDAO.findSubById(id));
 
 	    for (int i=0;i<subList.size();i++) {
-	    	Object[] item = {subList.get(i).getId(),SubscriptionTypeDAO.findSubTypeById(subList.get(i).getTicketType()).getName(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
+	    	Object[] item = {subList.get(i).getId(),subList.get(i).getSubscriptionType(), subList.get(i).getPrice(), subList.get(i).getCustomerId(), subList.get(i).getStartStation(), subList.get(i).getEndStation(),
 	    			subList.get(i).getStartDate(), subList.get(i).getEndDate(), subList.get(i).getActive()};
 	    	model.addRow(item);
 	    }
 
 	    return model;
-
 	}
-
-
+	public static void setGebruikerField(String naam) {
+		buy_subscription.txtGebruiker.setText(naam);
+	}
 	
-	
+	public static void setInfo(String begin, String eind, String datum) {
+		buy_subscription.cbbBeginstation.setSelectedItem(begin);
+		buy_subscription.cbbEindstation.setSelectedItem(eind);
+		buy_subscription.txtBegindatum.setText(datum);
+	}
 }

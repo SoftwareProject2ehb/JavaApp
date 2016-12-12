@@ -2,6 +2,7 @@ package model;
 
 import model.*;
 import utilities.Encryptor;
+import controller.SystemController;
 import data_control.*;
 
 public class SystemNMBS {
@@ -20,6 +21,12 @@ public class SystemNMBS {
 		
 		if (user.checkPassword(Encryptor.encrypt(password))) {
 			logged_user = user;
+			
+			   // Maken van de logfile met text
+			String s = "User met id :"+ user.getUserID() +" is succesvol ingelogd";
+			LogFile log = new LogFile(s, user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 		} else {
 			return ErrorCode.INCORRECT_PARAM;
 		}

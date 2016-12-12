@@ -44,19 +44,19 @@ public class FindSubscriptionView extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 		
-		JRadioButton rdbtnSearchById = new JRadioButton("Search by id");
+		JRadioButton rdbtnSearchById = new JRadioButton("Search op ID");
 		springLayout.putConstraint(SpringLayout.WEST, rdbtnSearchById, 10, SpringLayout.WEST, this);
 		buttonGroup.add(rdbtnSearchById);
 		springLayout.putConstraint(SpringLayout.NORTH, rdbtnSearchById, 8, SpringLayout.SOUTH, textField);
 		add(rdbtnSearchById);
 		
-		JRadioButton rdbtnSearchByCustomer = new JRadioButton("Search by Customer id");
+		JRadioButton rdbtnSearchByCustomer = new JRadioButton("Search op ID van klant");
 		springLayout.putConstraint(SpringLayout.WEST, rdbtnSearchByCustomer, 10, SpringLayout.WEST, this);
 		buttonGroup.add(rdbtnSearchByCustomer);
 		springLayout.putConstraint(SpringLayout.NORTH, rdbtnSearchByCustomer, 6, SpringLayout.SOUTH, rdbtnSearchById);
 		add(rdbtnSearchByCustomer);
 		
-		JButton btnFind = new JButton("Find");
+		JButton btnFind = new JButton("Zoek Abonnement");
 		btnFind.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -70,25 +70,26 @@ public class FindSubscriptionView extends JPanel {
 
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnFind, 6, SpringLayout.SOUTH, rdbtnSearchByCustomer);
-		springLayout.putConstraint(SpringLayout.WEST, btnFind, 10, SpringLayout.WEST, this);
 		add(btnFind);
 		
-		JButton btnCancel = new JButton("Cancel");
+		JButton btnCancel = new JButton("Terug naar Menu");
+		springLayout.putConstraint(SpringLayout.NORTH, btnFind, 0, SpringLayout.NORTH, btnCancel);
+		springLayout.putConstraint(SpringLayout.NORTH, btnCancel, 6, SpringLayout.SOUTH, rdbtnSearchByCustomer);
+		springLayout.putConstraint(SpringLayout.WEST, btnCancel, 0, SpringLayout.WEST, textField);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();
+				table.clearSelection();
 			}
 		});
-		springLayout.putConstraint(SpringLayout.SOUTH, btnCancel, 0, SpringLayout.SOUTH, btnFind);
-		springLayout.putConstraint(SpringLayout.EAST, btnCancel, -10, SpringLayout.EAST, this);
 		add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		springLayout.putConstraint(SpringLayout.EAST, btnFind, 0, SpringLayout.EAST, scrollPane);
 		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 22, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 10, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, scrollPane, -30, SpringLayout.NORTH, textField);
-		springLayout.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, btnCancel);
+		springLayout.putConstraint(SpringLayout.EAST, scrollPane, -10, SpringLayout.EAST, this);
 		scrollPane.setViewportView(table);
 		add(scrollPane);
 

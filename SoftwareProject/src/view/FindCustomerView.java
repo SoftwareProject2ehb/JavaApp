@@ -5,31 +5,42 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 
 import controller.CustomerController;
+import controller.LostObjectController;
 import controller.SubscriptionController;
+import controller.SystemController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class FindCustomerView extends JPanel {
 
-	private JTextField txtVoornaam;
-	private JTextField txtAchternaam;
-	private JTextField txtEmail;
-	private JTextField txtTelN;
-	private JTextField txtStraatnaam;
-	private JTextField txtPostcode;
-	private JTextField txtGemeente;
+	public JTextField txtVoornaam;
+	public JTextField txtAchternaam;
+	public JTextField txtEmail;
+	public JTextField txtTelN;
+	public JTextField txtStraatnaam;
+	public JTextField txtPostcode;
+	public JTextField txtGemeente;
+	public JTable table;
 	/**
 	 * Create the panel.
 	 */
 	public FindCustomerView() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 984, 485);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		SpringLayout sl_contentPane = new SpringLayout();
 		this.setLayout(sl_contentPane);
@@ -125,42 +136,97 @@ public class FindCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblGemeente, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblGemeente);
 		
-		JButton button = new JButton("<<  Terug");
-		button.addActionListener(new ActionListener() {
+		JButton btnTerugNaarMenu = new JButton("Terug naar Menu");
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnTerugNaarMenu, -10, SpringLayout.SOUTH, this);
+		btnTerugNaarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SubscriptionController.switchToBuySubscriptionView();
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, lblKlantZoeken);
-		this.add(button);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 0, SpringLayout.WEST, lblKlantZoeken);
+		this.add(btnTerugNaarMenu);
 		
 		JButton btnKlantGebruiken = new JButton("Klant Gebruiken");
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnKlantGebruiken, -10, SpringLayout.SOUTH, this);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, button, 0, SpringLayout.NORTH, btnKlantGebruiken);
+		btnKlantGebruiken.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(table.getSelectedRow() == -1)
+				{
+					JOptionPane.showMessageDialog(null,
+						    "Search a customer and select the customer in the table",
+						    "Something happened",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				else{
+				CustomerController.useKlant();
+				SubscriptionController.switchToBuySubscriptionView();
+				}
+			}
+		});
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnKlantGebruiken, 0, SpringLayout.NORTH, btnTerugNaarMenu);
 		this.add(btnKlantGebruiken);
 		
-		JList list = new JList();
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnKlantGebruiken, 0, SpringLayout.WEST, list);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, list, 0, SpringLayout.NORTH, txtVoornaam);
-		sl_contentPane.putConstraint(SpringLayout.WEST, list, 10, SpringLayout.EAST, txtVoornaam);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, list, 0, SpringLayout.SOUTH, txtGemeente);
-		sl_contentPane.putConstraint(SpringLayout.EAST, list, -20, SpringLayout.EAST, this);
-		this.add(list);
-		
 		JLabel lblGevondenKlanten = new JLabel("Gevonden klanten:");
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblGevondenKlanten, 0, SpringLayout.WEST, list);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblGevondenKlanten, -6, SpringLayout.NORTH, list);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblGevondenKlanten, 18, SpringLayout.NORTH, this);
+		sl_contentPane.putConstraint(SpringLayout.WEST, lblGevondenKlanten, 204, SpringLayout.EAST, lblKlantZoeken);
 		this.add(lblGevondenKlanten);
 		
 		JButton btnMaakNieuweKlant = new JButton("Maak Nieuwe Klant");
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnKlantGebruiken, 6, SpringLayout.EAST, btnMaakNieuweKlant);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnMaakNieuweKlant, 0, SpringLayout.NORTH, btnTerugNaarMenu);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnMaakNieuweKlant, 6, SpringLayout.EAST, btnTerugNaarMenu);
 		btnMaakNieuweKlant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerController.switchToCreateCustomerView();
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnMaakNieuweKlant, 0, SpringLayout.NORTH, button);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnMaakNieuweKlant, 0, SpringLayout.EAST, txtVoornaam);
 		add(btnMaakNieuweKlant);
+		String colname[] = {"ID","FirstName","LastName","Address","Email","Phone"};
+		DefaultTableModel tableModel = new DefaultTableModel(colname,0)
+		{
+			@Override
+			public boolean isCellEditable(int row,int column)
+			{
+				// NON EDITABLE CELLS
+				return false;
+			};
+		};
+		TableRowSorter sorter = new TableRowSorter(tableModel);
+		table = new JTable();
+		table.setRowSorter(sorter);
+		JTableHeader header = table.getTableHeader();
+		header.addMouseListener(new MouseAdapter() {
+			int lastcol = -1;
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lastcol = CustomerController.sortCustomers(e);	
+			}
+		});
+		table.setModel(tableModel);
+		
+		
+		JButton btnSearch = new JButton("Search");
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnSearch, 15, SpringLayout.EAST, btnKlantGebruiken);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnSearch, -20, SpringLayout.EAST, this);
+		btnSearch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				table.clearSelection();
+				tableModel.setRowCount(0);
+				CustomerController.findCustomers(tableModel);
+			}
+		});
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnSearch, 0, SpringLayout.NORTH, btnTerugNaarMenu);
+		add(btnSearch);
+		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, scrollPane, 15, SpringLayout.SOUTH, lblGevondenKlanten);
+		sl_contentPane.putConstraint(SpringLayout.WEST, scrollPane, 25, SpringLayout.EAST, txtVoornaam);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, scrollPane, 3, SpringLayout.SOUTH, txtGemeente);
+		sl_contentPane.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, btnSearch);
+		add(scrollPane);
+		scrollPane.setViewportView(table);
 	}
-
 }

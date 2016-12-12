@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 public class DateConverter {
 	public static Date convert(String date) throws ParseException {
-		java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+		java.util.Date utilDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		return sqlDate;
 	}
@@ -33,12 +33,25 @@ public class DateConverter {
 		return d;
 	}
 	
+	public static String getDateOther() {
+		String d = "";
+		
+		d += LocalDate.now().getYear();
+		d += "-";
+		d += LocalDate.now().getMonthValue();
+		d += "-";
+		d += LocalDate.now().getDayOfMonth();
+		
+		
+		return d;
+	}
+	
 	public static String getTime() {
 		String t = "";
 		int hour = LocalTime.now().getHour();
 		int min = LocalTime.now().getMinute();
 		
-		t += (hour<10)?("0"+hour):min;
+		t += (hour<10)?("0"+hour):hour;
 		t += ":";
 		t += (min<10)?("0"+min):min;
 		
