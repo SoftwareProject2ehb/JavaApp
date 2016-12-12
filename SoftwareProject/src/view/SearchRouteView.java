@@ -276,6 +276,10 @@ public class SearchRouteView extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridwidth = 2;
 		gbc.gridy++;
+		
+		if(rs.isEmpty()) {
+			return;
+		}
 
 		panel.add(new JLabel(rs.get(0).getNaam() + " - " + rs.get(rs.size() - 1).getNaam() + " (Totale duur: " + route.calculateTimeProper() + ")"), gbc);
 

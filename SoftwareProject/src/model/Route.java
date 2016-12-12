@@ -66,6 +66,11 @@ public class Route {
 	public boolean fillQueriedRouteWithoutTransfers() {
 		boolean eind = false;
 		boolean start = false;
+		
+		if (routes.isEmpty()) {
+			return false;
+		}
+		
 		/*
 		 * In kort ga ik hier eerst op zoek naar de startstation
 		 * eens ik die gevonden heb vul ik de stations erna in de queried_route list
@@ -132,6 +137,10 @@ public class Route {
 			boolean transfer_gevonden = false;
 			int route_index = -1;
 			int station_index = -1;
+			
+			if (routes.isEmpty()) {
+				return;
+			}
 			
 			/*
 			 * Zelfde werkwijze als de methode zonder transfers met het verschil dat ik eerst op zoek ga naar de eindstation
@@ -319,6 +328,11 @@ public class Route {
 	
 	public ArrayList<RouteStation> getRouteEssentials() {
 		ArrayList<RouteStation> essentials = new ArrayList<RouteStation>();
+		
+		if (queried_route.isEmpty()) {
+			return null;
+		}
+		
 		essentials.add(queried_route.get(0));
 		for (int i=1;i<queried_route.size();i++) {
 			if (queried_route.get(i).getNaam().toLowerCase().contains(queried_route.get(i-1).getNaam().toLowerCase())) {
