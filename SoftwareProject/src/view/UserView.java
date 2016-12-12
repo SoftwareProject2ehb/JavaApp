@@ -52,6 +52,10 @@ public class UserView extends JPanel {
 		table = new JTable(tableModel);
 		springLayout.putConstraint(SpringLayout.NORTH, table, 36, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, table, 10, SpringLayout.WEST, this);
+<<<<<<< HEAD
+=======
+		springLayout.putConstraint(SpringLayout.EAST, table, -10, SpringLayout.EAST, this);
+>>>>>>> refs/heads/master
 		add(table);
 		
 		txtSearch = new JTextField();
