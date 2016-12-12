@@ -54,12 +54,12 @@ public abstract class ApiAccesser {
 	    }
 	  }
 	  
-	  public static JSONObject readJsonFromLocal(){
+	  public static JSONObject readJsonFromLocal(String a, String b){
 		  
 		  JSONObject jsonn = null;
 	      BufferedReader rdd;
 		try {
-				rdd = new BufferedReader(new FileReader("offline_files/offlinejsondoc.json"));
+				rdd = new BufferedReader(new FileReader("offline_files/offlinejsondoc_" + a.toLowerCase() + "_" + b.toLowerCase() + ".json"));
 				String jsonText = readAll(rdd);
 				jsonn = new JSONObject(jsonText);
 				return jsonn;
@@ -88,7 +88,7 @@ public abstract class ApiAccesser {
 		  ArrayList<JSONArray> stations = new ArrayList<JSONArray>();
 		  try {
 		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
-		  //JSONObject json_data = ApiAccesser.readJsonFromLocal();
+		  //JSONObject json_data = ApiAccesser.readJsonFromLocal(a, b);
 		  
 		  	
 		  JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
