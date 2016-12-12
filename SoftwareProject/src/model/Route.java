@@ -249,6 +249,9 @@ public class Route {
 	public double calculateDistance() {
 		double distance = 0;
 		
+		if (queried_route.isEmpty()) {
+			return 0;
+		}
 		
 		
 		String station_1_coordinates = queried_route.get(0).getCoordinates();
@@ -269,6 +272,10 @@ public class Route {
 	
 	public double calculateTime() {
 		Timestamp station_1_time = null, station_2_time = null;
+		
+		if (queried_route.isEmpty()) {
+			return 0.0;
+		}
 		
 			try {
 				station_1_time = DateConverter.timestampConverter(queried_route.get(0).getDepartureTime().replaceAll("T", " "));
@@ -299,6 +306,10 @@ public class Route {
 	
 	public String calculateTimeProper() {
 		Timestamp station_1_time = null, station_2_time = null;
+		
+		if (queried_route.isEmpty()) {
+			return "Geen route";
+		}
 		
 			try {
 				station_1_time = DateConverter.timestampConverter(queried_route.get(0).getDepartureTime().replaceAll("T", " "));

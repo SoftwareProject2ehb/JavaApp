@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import data_control.*;
@@ -56,7 +57,12 @@ public static FindSubscriptionView find_subscription;
 			break;
 		}
 		
-		buy_subscription.txtPrijs.setText(String.format("%.2f", prijs));
+		if (route.getQueriedRoute().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Kon geen prijs berekenen, de route is niet gevonden.");
+		} else {
+			buy_subscription.txtPrijs.setText(String.format("%.2f", prijs));
+		}
+		
 	}
 	
 	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model) {
