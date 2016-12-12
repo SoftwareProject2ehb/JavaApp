@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 import javax.swing.JOptionPane;
 
+import model.Printer;
 import model.Ticket;
 import utilities.DateConverter;
 import view.BuyTicketView;
@@ -53,7 +54,6 @@ public class TicketController {
 		} else {
 			try {
 				SystemController.buyTicket(type, !one_way, price, start_station, end_station, DateConverter.convert(buy_ticket.txtDatum.getText()));
-				JOptionPane.showMessageDialog(null, "Ticket van " + start_station + " naar " + end_station + " gekocht voor �" + String.valueOf(price).substring(0, 4) + ".");
 			} catch (ParseException e) {
 				JOptionPane.showMessageDialog(null, "Kon geen ticket kopen.");
 			}

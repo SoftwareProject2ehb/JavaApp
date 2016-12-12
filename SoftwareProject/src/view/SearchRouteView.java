@@ -37,6 +37,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -198,18 +200,11 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
 		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
 		add(scrollPane);
+		
+		createButtonListeners();
 	}
 	
 	public void showRoute() {
-		showMore = false;
-		deleteShowRoute();
-		createButtons();
-		createPanel();
-		createScrollPane();
-		FrameController.changeSize(750, 300);
-	}
-	
-	public void reShowRoute() {
 		deleteShowRoute();
 		createPanel();
 		createScrollPane();
@@ -227,7 +222,7 @@ public class SearchRouteView extends JPanel {
 		tussenstops = route.getRouteEssentials();
 	}
 	
-	public void createButtons() {
+	public void createButtonListeners() {
 		btnBuyTicket.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -248,12 +243,12 @@ public class SearchRouteView extends JPanel {
 				if (showMore) {
 					btnMore.setText("Meer info");
 					showMore = false;
-					reShowRoute();
+					showRoute();
 				}
 				else {
 					btnMore.setText("Minder info");
 					showMore = true;
-					reShowRoute();
+					showRoute();
 				}
 			}
 		});
