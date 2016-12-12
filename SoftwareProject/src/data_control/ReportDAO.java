@@ -262,7 +262,7 @@ public class ReportDAO extends BaseDAO {
 			res = st.executeQuery("select type, COUNT(type) AS MOST_FREQUENT from Subscription GROUP BY type ORDER BY COUNT(type) DESC LIMIT 1");
 
 			res.next();
-			ResultSet res2 = st.executeQuery("SELECT name FROM `SubscriptionType` WHERE id =" + res.getString(1));
+			ResultSet res2 = st.executeQuery("SELECT type FROM `Subscription` WHERE id =" + res.getString(1));
 			res2.next();
 			type = res2.getString(1);
 			
