@@ -1,5 +1,6 @@
 package controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -7,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 import data_control.*;
 import model.*;
+import utilities.DateConverter;
 import view.*;
 
 public class SubscriptionController {
@@ -107,5 +109,17 @@ public static FindSubscriptionView find_subscription;
 		buy_subscription.cbbBeginstation.setSelectedItem(begin);
 		buy_subscription.cbbEindstation.setSelectedItem(eind);
 		buy_subscription.txtBegindatum.setText(datum);
+	}
+
+	public static void buySubscription() {
+		calculatePrice();
+		buy_subscription.txtPrijs.getText();
+		//TODO Fill customer
+		try {
+			SystemController.buySubscription((String) buy_subscription.cbbType.getSelectedItem(), 1, (String) buy_subscription.cbbEindstation.getSelectedItem(), (String) buy_subscription.cbbBeginstation.getSelectedItem(), DateConverter.timestampConverter(buy_subscription.txtBegindatum.getText()), DateConverter.timestampConverter(buy_subscription.txtBegindatum.getText()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
