@@ -217,9 +217,10 @@ public class SearchRouteView extends JPanel {
 			springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
 			add(scrollPane);
 		}
-		
-		createPanel();
-		createScrollPane();
+		else {
+			createPanel();
+			createScrollPane();
+		}
 		FrameController.changeSize(750, 300);
 	}
 	
