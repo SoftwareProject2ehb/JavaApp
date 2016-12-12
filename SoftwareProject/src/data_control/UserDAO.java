@@ -52,6 +52,15 @@ public class UserDAO extends BaseDAO{
 	        if (res.next()) {
 	        	id = res.getInt(1);
 	        }
+	        ps.close();
+	        res.close();
+	        // Maken van de logfile met text
+			String s = "Een user met id : "+ id+ " werdt toegevoed door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		
+			// Eind maken van logfile
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -143,7 +152,13 @@ public class UserDAO extends BaseDAO{
 			st = getConnection().createStatement();
 			String SQL = "DELETE FROM User WHERE ID = " + userID;
 			st.executeUpdate(SQL);
-
+			st.close();
+			// Maken van de logfile met text
+			String s = "Een user met id : "+ userID + " werdt verwijderd door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -192,6 +207,15 @@ public class UserDAO extends BaseDAO{
 						res.getString("city"),
 						res.getString("country"));
 			}
+	        
+	        res.close();
+	        st.close();
+			// Maken van de logfile met text
+			String s = "Een user met id : "+  id + " werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -224,6 +248,15 @@ public class UserDAO extends BaseDAO{
 	        while (res.next()) {
 	        	result.add(res.getString("login"));
 			}
+	        
+	        res.close();
+	        st.close();
+			// Maken van de logfile met text
+			String s = "Alle users logins werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+			LogFileDAO.createLogFile(log);
+		// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
@@ -245,14 +278,16 @@ public class UserDAO extends BaseDAO{
 	
 	public static User findUserByLogin(String login){
 		User user = null;
-		Statement st = null;
+		PreparedStatement ps = null;
+		String update ="SELECT * FROM User WHERE login LIKE '%' ? '%'";
 		ResultSet res = null;
 		try {
 	        if (getConnection().isClosed()) {
 	            throw new IllegalStateException("error unexpected");
 	        }
-	        st = (Statement) getConnection().createStatement();
-	        res = st.executeQuery("SELECT * FROM User WHERE login LIKE '%" + login+ "%'");
+	        ps = getConnection().prepareStatement(update);
+	        ps.setString(1, login);
+	        res = ps.executeQuery();
 	        if (res.next()) {
 	        	user = new User(
 						res.getInt("ID"), 
@@ -272,13 +307,21 @@ public class UserDAO extends BaseDAO{
 						res.getString("city"),
 						res.getString("country"));
 			}
+	        
+	        res.close();
+	        ps.close();
+	     // Maken van de logfile met text
+	     			String s = "Een gebruiker met id " + user.getUserID() + " probeert in te loggen";
+	     			LogFile log = new LogFile(s, user.getUserID());
+	     			LogFileDAO.createLogFile(log);
+	     		// Eind maken van logfile
 	    } catch (SQLException e) {
 	        System.out.println(e.getMessage());
 	        throw new RuntimeException(e.getMessage());
 	    } finally {
 	        try {
-	            if (st != null)
-	            	st.close();
+	            if (ps != null)
+	            	ps.close();
 	            if (res != null)
 	            	res.close();
 	            if (!getConnection().isClosed())
@@ -355,6 +398,12 @@ public class UserDAO extends BaseDAO{
 						res.getString("country"));
 				lijst.add(u);
 			}
+			// Maken van de logfile met text
+						String s = "Alle actif users logins werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+					// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -406,6 +455,10 @@ public class UserDAO extends BaseDAO{
 						res.getString("country"));
 				lijst.add(u);
 			}
+			   res.close();
+		        st.close();
+		  
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -426,7 +479,7 @@ public class UserDAO extends BaseDAO{
 		return lijst;
 	}
 
-	public enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active,street,number,postalcode,bus,city,country};
+	public enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active};
 
 	public static ArrayList<User> findUserByAttribute(FindUser attribuut,String zoekop) { //Find user by attribute and string
 		ArrayList<User> lijst = new ArrayList<User>();
@@ -437,7 +490,8 @@ public class UserDAO extends BaseDAO{
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + "  LIKE '%" + zoekop + "%'");
+			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " LIKE '%" + zoekop + "%' ");
+
 
 			while (res.next()) {
 				User u = new User(res.getInt("ID"), 
@@ -458,6 +512,14 @@ public class UserDAO extends BaseDAO{
 						res.getString("country"));
 				lijst.add(u);
 			}
+			st.close();
+			res.close();
+			// Maken van de logfile met text
+						String s = "Alle users logins werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+					// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -486,7 +548,7 @@ public class UserDAO extends BaseDAO{
 				throw new IllegalStateException("error unexpected");
 			}
 			st = (Statement) getConnection().createStatement();
-			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " = " + zoekop);
+			res = st.executeQuery("SELECT * FROM User WHERE " + attribuut + " LIKE '%" + zoekop + "%' ");
 
 			while (res.next()) {
 				User u = new User(res.getInt("ID"), 
@@ -507,6 +569,14 @@ public class UserDAO extends BaseDAO{
 						res.getString("country"));
 				lijst.add(u);
 			}
+			st.close();
+			res.close();
+			// Maken van de logfile met text
+						String s = "Alle users logins werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+					// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
