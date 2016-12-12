@@ -104,6 +104,15 @@ public abstract class SystemController {
 		Ticket new_ticket = new Ticket(type_ticket, is_one_way_ticket, ticket_price, start_station, end_station, date);
 		int ticket_id = TicketDAO.createTicket(new_ticket);
 		new_ticket.setId(ticket_id);
+		
+		if (JOptionPane.showConfirmDialog(null, "Ticket van " + start_station + " naar " + end_station + " gekocht voor �" + String.valueOf(ticket_price).substring(0, 4) + ". Wilt u de ticket afprinten?", "Afprinten?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			try {
+				Printer.printTicket(new_ticket);
+			} catch (IOException e) {
+				System.out.println("Probleem met het printen in SystemController.buyTicket");
+			}
+		}
+		
 		return "Ticket bought.";
 	}
 
