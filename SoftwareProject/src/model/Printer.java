@@ -5,6 +5,8 @@ package model;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
@@ -21,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.print.PrintService;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -131,16 +134,10 @@ public class Printer {
 		document.save(title);
 		document.close();
 
-		Path path = FileSystems.getDefault().getPath(image);
-
-		try {
-			Files.delete(path);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		PrinterJob job = PrinterJob.getPrinterJob();
+		//job.setPrintable(new PDFPageable(document));
 		job.setPageable(new PDFPageable(document));
+		
 		if (job.printDialog()) {
 			try {
 				job.print();
@@ -149,6 +146,15 @@ public class Printer {
 				e.printStackTrace();
 			}
 		}
+		
+		Path path = FileSystems.getDefault().getPath(image);
+
+		try {
+			Files.delete(path);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		/* Uncomment this to delete pdf after it was printed.
 		Path path2 = FileSystems.getDefault().getPath(title);
 
