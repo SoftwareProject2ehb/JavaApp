@@ -7,6 +7,8 @@ import utilities.*;
 import view.*;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Date;
@@ -323,7 +325,9 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		user.setPostalCode(postal_code);
 		user.setCity(city);
 		user.setCountry(country);
-		user.setPassword(Encryptor.encrypt(password));
+		if ((password == "")) {
+			user.setPassword(Encryptor.encrypt(password));
+		}
 		UserDAO.updateUser(user);
 		return null;
 	}
@@ -355,7 +359,9 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		BufferedReader br = null;
 		String[] station_list = null;
 		try {
-			br = new BufferedReader(new FileReader("./resources/stations.txt"));
+			FileInputStream fis = new FileInputStream(new File("./resources/stations.txt"));
+			UnicodeReader reader = new UnicodeReader(fis, "UTF-8");
+			br = new BufferedReader(reader);
 			String result = br.readLine();
 			station_list = result.split(",");
 		} catch (IOException e1) {
