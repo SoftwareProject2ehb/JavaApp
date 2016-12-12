@@ -206,6 +206,18 @@ public class SearchRouteView extends JPanel {
 	
 	public void showRoute() {
 		deleteShowRoute();
+		
+		if(rs.isEmpty()) {
+			panel = new JPanel(new GridBagLayout());
+			panel.add(new JLabel("Geen route."));
+			
+			scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scrollPane.setPreferredSize(new Dimension(350, 250));
+			springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
+			springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
+			add(scrollPane);
+		}
+		
 		createPanel();
 		createScrollPane();
 		FrameController.changeSize(750, 300);
@@ -220,6 +232,8 @@ public class SearchRouteView extends JPanel {
 		route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
 		rs = route.getQueriedRoute();
 		tussenstops = route.getRouteEssentials();
+		
+		//route.showQueriedRoute();
 	}
 	
 	public void createButtonListeners() {
