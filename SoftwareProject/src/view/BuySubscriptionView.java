@@ -11,11 +11,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
 
 import controller.ActionMenuController;
 import controller.CustomerController;
 import controller.SubscriptionController;
+import controller.SystemController;
 import data_control.SubscriptionPriceDAO;
+import utilities.DateConverter;
+import utilities.PatternFilter;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -32,7 +36,7 @@ public class BuySubscriptionView extends JPanel {
 	public JComboBox cbbEindstation;
 	public JComboBox cbbType;
 	public JComboBox cbbGeldigheid;
-	private JTextField txtGebruiker;
+	public JTextField txtGebruiker;
 	
 	/**
 	 * Create the panel.
@@ -62,14 +66,14 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbBeginstation, -3, SpringLayout.NORTH, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbBeginstation, 6, SpringLayout.EAST, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbBeginstation, 106, SpringLayout.EAST, lblBeginstation);
-		cbbBeginstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		cbbBeginstation.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		add(cbbBeginstation);
 		
 		cbbEindstation = new JComboBox();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbEindstation, -3, SpringLayout.NORTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbEindstation, 6, SpringLayout.EAST, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbEindstation, 106, SpringLayout.EAST, lblEindstation);
-		cbbEindstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		cbbEindstation.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		add(cbbEindstation);
 		
 		JLabel lblGeldigheid = new JLabel("Geldigheid");
@@ -109,6 +113,7 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtPrijs, 0, SpringLayout.SOUTH, btnOfferte);
 		add(txtPrijs);
 		txtPrijs.setColumns(10);
+		txtPrijs.setEditable(false);
 		
 		JLabel lblPrijs = new JLabel("Prijs");
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblPrijs, 0, SpringLayout.WEST, lblGeldigheid);
@@ -118,6 +123,8 @@ public class BuySubscriptionView extends JPanel {
 		txtBegindatum = new JTextField();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtBegindatum, -3, SpringLayout.NORTH, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, txtBegindatum, -69, SpringLayout.EAST, this);
+		txtBegindatum.setText(DateConverter.getDate());
+		((AbstractDocument) txtBegindatum.getDocument()).setDocumentFilter(PatternFilter.datumFilter);
 		add(txtBegindatum);
 		txtBegindatum.setColumns(10);
 		

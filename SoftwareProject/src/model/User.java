@@ -3,14 +3,13 @@ package model;
 import data_control.UserDAO;
 import utilities.Encryptor;
 
-public class User {
+public class User extends Address{
 
 	int userID = 0;
 	String firstName;
 	String lastName;
 	String email;
 	String phone;
-	//Address address;
 	String login;
 	String password;
 	Role rolen;
@@ -20,9 +19,11 @@ public class User {
 		 ADMIN,USER
 	}
 	
-	public User(int userID, String firstName, String lastName, String email, String phone, /*Address address,*/
-			String login, String password, Role rolen, boolean active) {
+	public User(int userID, String firstName, String lastName, String email, String phone,String login, 
+			String password, Role rolen, boolean active, String street, String number, String bus, 
+			int postalCode, String city,String country) {
 		
+		super(street,number,bus,postalCode,city,country);
 		if (firstName == null || lastName == null || email == null || phone == null || login == null || password == null ||
 			rolen == null)
 			throw new IllegalArgumentException();
@@ -32,18 +33,15 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.phone = phone;
-		//this.address = address;
 		this.login = login;
 		this.password = password;
 		this.rolen = rolen;
 		this.active = active;
 	}
 	
-	public User(){
-		
-	}
-	
-	public User(String firstName, String lastName, String email, String phone, String login, String password, Role rolen) {
+	public User(String firstName, String lastName, String email, String phone, String login, String password, Role rolen, boolean active,
+			String street, String number, String bus, int postalCode, String city,String country) {
+		super(street,number,bus,postalCode,city,country);
 		this.userID = 0;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -123,17 +121,6 @@ public class User {
 		return 2;
 	}
 	
-	/*public Address getAddress() {
-		return address;
-	}
-
-	public int setAddress(Address address) {
-		if (address == null)
-			return ErrorCode.NULL_PARAM;
-		this.address = address;
-		return ErrorCode.NO_ERROR;
-	}*/
-
 	public String getLogin() {
 		return login;
 	}

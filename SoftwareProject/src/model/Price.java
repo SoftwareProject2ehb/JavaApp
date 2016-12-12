@@ -7,7 +7,7 @@ import data_control.PriceDAO;
 
 public class Price {
 	public enum betalingsType {
-		PER_STATION, PER_KM, PER_HOUR, PER_ZONE;
+		PER_STATION, PER_KM, PER_HOUR, FIXED;
 		
 		@Override
 		public String toString() {
@@ -15,7 +15,7 @@ public class Price {
 			case PER_STATION: return "station";
 			case PER_KM: return "km";
 			case PER_HOUR: return "hour";
-			case PER_ZONE: return "zone";
+			case FIXED: return "fixed";
 			default: throw new IllegalArgumentException();
 			}
 		}
@@ -25,7 +25,7 @@ public class Price {
 			case PER_STATION: return "PER_STATION";
 			case PER_KM: return "PER_KM";
 			case PER_HOUR: return "PER_HOUR";
-			case PER_ZONE: return "PER_ZONE";
+			case FIXED: return "FIXED";
 			default: throw new IllegalArgumentException();
 			}
 		}
@@ -37,8 +37,8 @@ public class Price {
 				return betalingsType.PER_KM;
 			} else if (s.toUpperCase().equals("PER_HOUR") || s.toUpperCase().equals("HOUR")) {
 				return betalingsType.PER_HOUR;
-			} else if (s.toUpperCase().equals("PER_ZONE") || s.toUpperCase().equals("ZONE")) {
-				return betalingsType.PER_ZONE;
+			} else if (s.toUpperCase().equals("FIXED")) {
+				return betalingsType.FIXED;
 			} else {
 				throw new InvalidParameterException();
 			}

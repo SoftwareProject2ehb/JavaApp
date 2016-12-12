@@ -6,6 +6,9 @@ import model.User.Role;
 import utilities.*;
 import view.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -28,7 +31,7 @@ public abstract class SystemController {
 		ActionMenuController.initialize(new ActionMenuView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(), new ConfigurationView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(),new EditPasswordView(), new ConfigurationView());
 		RouteController.initialize(new SearchRouteView());
 		LostObjectController.initialize(new LostObjectView());
 		ReportController.initialize(new ReportView());
@@ -86,6 +89,16 @@ public abstract class SystemController {
 		new_customer.setId(customer_id);
 		return "Customer created.";
 	}
+	public static ArrayList<Customer> findCustomers(String Voornaam, String Achternaam,String Adress, String Phone, String Email) {
+		ArrayList<Customer> lijstCustomers = new ArrayList<Customer>();
+	
+		
+			 lijstCustomers = CustomerDAO.getCustomerByMultipleArgs(Voornaam, Achternaam, Adress, Phone, Email);
+			
+			
+		
+		return  lijstCustomers;
+	}
 	
 	public static String buyTicket(String type_ticket, boolean is_one_way_ticket, double ticket_price, String start_station, String end_station, Date date) {
 		Ticket new_ticket = new Ticket(type_ticket, is_one_way_ticket, ticket_price, start_station, end_station, date);
@@ -117,8 +130,8 @@ public abstract class SystemController {
 		case "km":
 			type = new Price(ticket_type, Price.betalingsType.PER_KM, cost_per_unit);
 			break;
-		case "zone":
-			type = new Price(ticket_type, Price.betalingsType.PER_ZONE, cost_per_unit);
+		case "fixed":
+			type = new Price(ticket_type, Price.betalingsType.FIXED, cost_per_unit);
 			break;
 		default:
 			throw new IllegalArgumentException();
@@ -148,8 +161,8 @@ public abstract class SystemController {
 		case "km":
 			price = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_KM, cost_per_unit, aantal_maanden);
 			break;
-		case "zone":
-			price = new SubscriptionPrice(subscription_type, Price.betalingsType.PER_ZONE, cost_per_unit, aantal_maanden);
+		case "fixed":
+			price = new SubscriptionPrice(subscription_type, Price.betalingsType.FIXED, cost_per_unit, aantal_maanden);
 			break;
 		default:
 			throw new IllegalArgumentException();
@@ -275,16 +288,18 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 	}
 
 	public static String addUser(String first_name, String last_name, String email, String phone,
-			Role role) {
+			Role role, String street, String number, String bus, int postal_code, String city, String country) {
 		String login = first_name + "_" + last_name;
-		String password = "pass";
-		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role);
+		String password = first_name + "_" + last_name;
+		boolean activeU = true;
+		User new_user = new User(first_name, last_name, email, phone, login, Encryptor.encrypt(password), role, activeU, street, number, bus, postal_code, city, country);
 		int user_id = UserDAO.createUser(new_user);
 		new_user.setUserID(user_id);
 		return null;
 	}
 	
-	public static String editUser(String first_name, String last_name, String email, String phone, Role role) {
+	public static String editUser(String first_name, String last_name, String email, String phone, Role role, String street, String number, String bus,
+			int postal_code, String city, String country,String password) {
 		User user = ConfigurationController.getSelectedUser();
 		String login = first_name + "_" + last_name;
 		user.setFirstName(first_name);
@@ -293,8 +308,26 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		user.setEmail(email);
 		user.setPhone(phone);
 		user.setRolen(role.toString());
+		user.setStreet(street);
+		user.setNumber(number);
+		user.setBus(bus);
+		user.setPostalCode(postal_code);
+		user.setCity(city);
+		user.setCountry(country);
+		user.setPassword(Encryptor.encrypt(password));
 		UserDAO.updateUser(user);
 		return null;
+	}
+	
+	public static void defaultPasswordCheck(){
+		User user = system.logged_user;
+		String default_pass = user.getFirstName() + "_" + user.getLastName();
+		if(user.checkPassword(Encryptor.encrypt(default_pass))){
+			ConfigurationController.switchToEditPasswordView();
+		}
+		else{
+			ActionMenuController.switchToActionMenuView();
+		}
 	}
 	
 	public static ArrayList<User> searchUser(String searchText, UserDAO.FindUser att){
@@ -307,5 +340,28 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 	public static String changePrice(String measure_unit, double cost_per_unit) {
 		//TODO Implementation
 		return null;
+	}
+	
+	public static String[] getStations() {
+		BufferedReader br = null;
+		String[] station_list = null;
+		try {
+			br = new BufferedReader(new FileReader("./resources/stations.txt"));
+			String result = br.readLine();
+			station_list = result.split(",");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		return station_list;
 	}
 }

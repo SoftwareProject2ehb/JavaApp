@@ -20,7 +20,7 @@ public class UserDAO extends BaseDAO{
 		ResultSet res = null;
 		int id = -1;
 
-		String sql = "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 
@@ -28,18 +28,23 @@ public class UserDAO extends BaseDAO{
 				throw new IllegalStateException("error unexpected");
 			}
 			ps = getConnection().prepareStatement(sql);
-
+			
 			ps.setInt(1, user.getUserID());
 			ps.setString(2, user.getFirstName());
 			ps.setString(3, user.getLastName());
 			ps.setString(4, user.getEmail());
 			ps.setString(5, user.getPhone());
-			//ps.setInt(6, user.getAddress());
 			ps.setString(6, user.getLogin());
 			ps.setString(7, user.getPassword());
 			ps.setString(8, user.getRolen());
 			ps.setBoolean(9, user.isActive());
-
+			ps.setString(10, user.getStreet());
+			ps.setString(11, user.getNumber());
+			ps.setString(12, user.getBus());
+			ps.setInt(13, user.getPostalCode());
+			ps.setString(14, user.getCity());
+			ps.setString(15, user.getCountry());
+			
 			ps.executeUpdate();
 			
 	        st = getConnection().createStatement();
@@ -83,7 +88,8 @@ public class UserDAO extends BaseDAO{
 	public static void updateUser(User user) {
 		
 		PreparedStatement ps = null;	
-		String update = "UPDATE User SET first_name=?, last_name=?, email=?, phone=?, login=?, password=?, role=?, active=? WHERE ID = ?";
+		String update = "UPDATE User SET first_name=?, last_name=?, email=?, phone=?, login=?, password=?, role=?, "
+						+ "active=?, street=?, number=?, bus=?, postalcode=?, city=?, country=? WHERE ID = ?";
 		
 		try {
 		if (getConnection().isClosed()) {
@@ -95,12 +101,17 @@ public class UserDAO extends BaseDAO{
 			ps.setString(2, user.getLastName());
 			ps.setString(3, user.getEmail());
 			ps.setString(4, user.getPhone());
-			//ps.setString(6, user.getAddress());
 			ps.setString(5, user.getLogin());
 			ps.setString(6, user.getPassword());
 			ps.setString(7, user.getRolen());
 			ps.setBoolean(8, user.isActive());
-			ps.setInt(9, user.getUserID());
+			ps.setString(9, user.getStreet());
+			ps.setString(10, user.getNumber());
+			ps.setString(11, user.getBus());
+			ps.setInt(12, user.getPostalCode());
+			ps.setString(13, user.getCity());
+			ps.setString(14, user.getCountry());
+			ps.setInt(15, user.getUserID());
 		
 			ps.executeUpdate();
 			ps.close();
@@ -185,11 +196,16 @@ public class UserDAO extends BaseDAO{
 						res.getString("last_name"), 
 						res.getString("email"),
 						res.getString("phone"),
-						//rs.getString("address"), 
 						res.getString("login"),
 						res.getString("password"), 
 						Role.valueOf(res.getString("role")), 
-						res.getBoolean("active"));
+						res.getBoolean("active"),
+						res.getString("street"),
+						res.getString("number"),
+						res.getString("bus"),
+						res.getInt("postalcode"),
+						res.getString("city"),
+						res.getString("country"));
 			}
 	        
 	        res.close();
@@ -283,7 +299,13 @@ public class UserDAO extends BaseDAO{
 						res.getString("login"),
 						res.getString("password"), 
 						Role.valueOf(res.getString("role")), 
-						res.getBoolean("active"));
+						res.getBoolean("active"),
+			        	res.getString("street"),
+						res.getString("number"),
+						res.getString("bus"),
+						res.getInt("postalcode"),
+						res.getString("city"),
+						res.getString("country"));
 			}
 	        
 	        res.close();
@@ -367,9 +389,21 @@ public class UserDAO extends BaseDAO{
 						res.getString("login"),
 						res.getString("password"), 
 						Role.valueOf(res.getString("role")), 
-						res.getBoolean("active"));
+						res.getBoolean("active"),
+						res.getString("street"),
+						res.getString("number"),
+						res.getString("bus"),
+						res.getInt("postalcode"),
+						res.getString("city"),
+						res.getString("country"));
 				lijst.add(u);
 			}
+			// Maken van de logfile met text
+						String s = "Alle actif users logins werdt gezocht door user " + SystemController.system.logged_user.getFirstName()
+						+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
+						LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
+						LogFileDAO.createLogFile(log);
+					// Eind maken van logfile
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -412,7 +446,13 @@ public class UserDAO extends BaseDAO{
 						res.getString("login"),
 						res.getString("password"), 
 						Role.valueOf(res.getString("role")), 
-						res.getBoolean("active"));
+						res.getBoolean("active"),
+						res.getString("street"),
+						res.getString("number"),
+						res.getString("bus"),
+						res.getInt("postalcode"),
+						res.getString("city"),
+						res.getString("country"));
 				lijst.add(u);
 			}
 			   res.close();
@@ -439,7 +479,7 @@ public class UserDAO extends BaseDAO{
 		return lijst;
 	}
 
-	public enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active};
+	public enum FindUser {ID,first_name,last_name,email,phone,login ,password,role,active,street,number,postalcode,bus,city,country};
 
 	public static ArrayList<User> findUserByAttribute(FindUser attribuut,String zoekop) { //Find user by attribute and string
 		ArrayList<User> lijst = new ArrayList<User>();
@@ -462,7 +502,13 @@ public class UserDAO extends BaseDAO{
 						res.getString("login"),
 						res.getString("password"), 
 						Role.valueOf(res.getString("role")), 
-						res.getBoolean("active"));
+						res.getBoolean("active"),
+						res.getString("street"),
+						res.getString("number"),
+						res.getString("bus"),
+						res.getInt("postalcode"),
+						res.getString("city"),
+						res.getString("country"));
 				lijst.add(u);
 			}
 			st.close();
@@ -513,7 +559,13 @@ public class UserDAO extends BaseDAO{
 						res.getString("login"),
 						res.getString("password"), 
 						Role.valueOf(res.getString("role")), 
-						res.getBoolean("active"));
+						res.getBoolean("active"),
+						res.getString("street"),
+						res.getString("number"),
+						res.getString("bus"),
+						res.getInt("postalcode"),
+						res.getString("city"),
+						res.getString("country"));
 				lijst.add(u);
 			}
 			st.close();

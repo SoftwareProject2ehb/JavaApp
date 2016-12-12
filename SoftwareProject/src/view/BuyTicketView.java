@@ -6,9 +6,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
+
+import org.apache.pdfbox.io.IOUtils;
 
 import controller.ActionMenuController;
+import controller.SystemController;
 import controller.TicketController;
+import utilities.DateConverter;
+import utilities.PatternFilter;
 
 import javax.swing.JList;
 import javax.swing.JComboBox;
@@ -17,6 +23,14 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
 public class BuyTicketView extends JPanel {
@@ -26,11 +40,12 @@ public class BuyTicketView extends JPanel {
 	public JComboBox cbbEindstation;
 	public JComboBox cbbType;
 	public JCheckBox checkBox;
-	
+	private ArrayList<String> station_list = null;
 	/**
 	 * Create the panel.
 	 */
 	public BuyTicketView() {
+		
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		SpringLayout sl_contentPane = new SpringLayout();
 		this.setLayout(sl_contentPane);
@@ -55,14 +70,14 @@ public class BuyTicketView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbBeginstation, -3, SpringLayout.NORTH, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbBeginstation, 6, SpringLayout.EAST, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbBeginstation, 106, SpringLayout.EAST, lblBeginstation);
-		cbbBeginstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		cbbBeginstation.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		add(cbbBeginstation);
 		
 		cbbEindstation = new JComboBox();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, cbbEindstation, -3, SpringLayout.NORTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbEindstation, 6, SpringLayout.EAST, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbEindstation, 106, SpringLayout.EAST, lblEindstation);
-		cbbEindstation.setModel(new DefaultComboBoxModel(new String[] {"Aalst", "Aalst-Kerrebroek", "Aalter", "Aarschot", "Aarsele"}));
+		cbbEindstation.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		add(cbbEindstation);
 		
 		JLabel lblDatum = new JLabel("Datum");
@@ -73,6 +88,8 @@ public class BuyTicketView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtDatum, -3, SpringLayout.NORTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtDatum, 6, SpringLayout.EAST, lblDatum);
 		sl_contentPane.putConstraint(SpringLayout.EAST, txtDatum, 106, SpringLayout.EAST, lblDatum);
+		txtDatum.setText(DateConverter.getDate());
+		((AbstractDocument) txtDatum.getDocument()).setDocumentFilter(PatternFilter.datumFilter);
 		add(txtDatum);
 		txtDatum.setColumns(10);
 		
@@ -100,12 +117,12 @@ public class BuyTicketView extends JPanel {
 		add(cbbType);
 		
 		JButton btnOfferte = new JButton("Offerte");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnOfferte, 25, SpringLayout.SOUTH, cbbType);
 		btnOfferte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TicketController.calculatePrice();
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnOfferte, 51, SpringLayout.SOUTH, cbbType);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnOfferte, 0, SpringLayout.EAST, cbbBeginstation);
 		add(btnOfferte);
 		
@@ -132,13 +149,13 @@ public class BuyTicketView extends JPanel {
 		add(lblPrijs);
 		
 		JButton btnTerugNaarMenu = new JButton("Terug naar Menu");
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 5, SpringLayout.WEST, this);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnTerugNaarMenu, -5, SpringLayout.SOUTH, this);
 		btnTerugNaarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 10, SpringLayout.WEST, this);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnTerugNaarMenu, -10, SpringLayout.SOUTH, this);
 		add(btnTerugNaarMenu);
 
 	}
