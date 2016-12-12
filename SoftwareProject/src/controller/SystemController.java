@@ -325,7 +325,9 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		user.setPostalCode(postal_code);
 		user.setCity(city);
 		user.setCountry(country);
-		user.setPassword(Encryptor.encrypt(password));
+		if ((password == "")) {
+			user.setPassword(Encryptor.encrypt(password));
+		}
 		UserDAO.updateUser(user);
 		return null;
 	}

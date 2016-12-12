@@ -127,17 +127,11 @@ public abstract class ApiAccesser {
 			transfer_stations.add(new ArrayList<String>(transfers_per_route));
 			
 		  } catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (IOException e) {
+				stops.removeAll(stops);
+				transfer_stations.removeAll(transfer_stations);
 			}
-
-			
-			
-		  
-
 	  }
 
 }
