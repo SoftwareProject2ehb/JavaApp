@@ -39,7 +39,12 @@ public static FindSubscriptionView find_subscription;
 		double prijs;
 		SubscriptionPrice sp = SubscriptionPriceDAO.findSubPriceByTypeAndLength((String) buy_subscription.cbbType.getSelectedItem(), (Double) buy_subscription.cbbGeldigheid.getSelectedItem());
 		
-		Route route = new Route ((String) buy_subscription.cbbBeginstation.getSelectedItem(), (String) buy_subscription.cbbEindstation.getSelectedItem());
+		Route route;
+		try {
+			route = new Route ((String) buy_subscription.cbbBeginstation.getSelectedItem(), (String) buy_subscription.cbbEindstation.getSelectedItem(), DateConverter.convert(buy_subscription.txtBegindatum.getText()));
+		} catch (ParseException e) {
+			route = new Route ((String) buy_subscription.cbbBeginstation.getSelectedItem(), (String) buy_subscription.cbbEindstation.getSelectedItem());
+		}
 		
 		switch(sp.getTypeBetaling()) {
 		case PER_KM:
