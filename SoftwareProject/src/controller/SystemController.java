@@ -31,7 +31,7 @@ public abstract class SystemController {
 		
 	public static void startUp() {
 		//Set language of the application and load all language strings
-		Language.setLanguage(LANGUAGE.DUTCH);
+		Language.setLanguage(LANGUAGE.ENGLISH);
 		Language.refresh();
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
