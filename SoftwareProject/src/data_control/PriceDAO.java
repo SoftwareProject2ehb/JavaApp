@@ -287,13 +287,15 @@ public class PriceDAO extends BaseDAO {
 				list.add(new Price(res.getInt(1), res.getString(2), betalingsType.stringToBetalingsType(res.getString(3)), res.getDouble(4)));
 			}
 			
+			// TODO dit werkt niet
+			/*
 			// Maken van de logfile met text
 			String s = "Alle tickets werdt gewijzigd door user " + SystemController.system.logged_user.getFirstName()
 			+" "+SystemController.system.logged_user.getLastName()+ " met ID : " +SystemController.system.logged_user.getUserID();
 			LogFile log = new LogFile(s, SystemController.system.logged_user.getUserID());
 			LogFileDAO.createLogFile(log);
-		// Eind maken van logfile
-		  
+			// Eind maken van logfile
+		  	*/
 		 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

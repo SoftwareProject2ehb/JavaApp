@@ -308,22 +308,22 @@ public class Route {
 				e.printStackTrace();
 			}
 			
-			// get time difference in seconds
-		    long milliseconds = station_2_time.getTime() - station_1_time.getTime();
-		    int seconds = (int) milliseconds / 1000;
-		 
-		    // calculate hours minutes and seconds
-		    int hours = seconds / 3600;
-		    
-		    
-		    int minutes = (seconds % 3600) / 60;
-		    seconds = (seconds % 3600) % 60;
-		    String result = hours  + ":" + minutes;
+				// get time difference in seconds
+			    long milliseconds = station_2_time.getTime() - station_1_time.getTime();
+			    int seconds = (int) milliseconds / 1000;
+			 
+			    // calculate hours minutes and seconds
+			    int hours = seconds / 3600;
+			    int minutes = (seconds % 3600) / 60;
+
+			    String result = hours  + ":";
+			    
+			    if (minutes < 10)
+			    	result += "0" + minutes;
+			    else
+			    	result += minutes;
 		    
 		    return result;
-		    
-			
-		
 	}
 	
 	public ArrayList<RouteStation> getRouteEssentials() {

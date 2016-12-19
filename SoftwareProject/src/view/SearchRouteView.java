@@ -233,8 +233,6 @@ public class SearchRouteView extends JPanel {
 		route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
 		rs = route.getQueriedRoute();
 		tussenstops = route.getRouteEssentials();
-		
-		//route.showQueriedRoute();
 	}
 	
 	public void createButtonListeners() {
@@ -302,7 +300,12 @@ public class SearchRouteView extends JPanel {
 
 				while(j < rs.size()-1 && !tussenstops.get(i).getNaam().equals(rs.get(j).getNaam())) {
 					gbc.gridy++;
-					panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+					
+					if(rs.get(j).getArrivalPlatform().equals("null"))
+						panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getDeparturePlatform() + ") " + rs.get(j).getDepartureTime().substring(11,16)), gbc);
+					else
+						panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+					
 					j++;
 				}
 				j++;
@@ -317,7 +320,12 @@ public class SearchRouteView extends JPanel {
 
 			while(j < rs.size()-1) {
 				gbc.gridy++;
-				panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+				
+				if(rs.get(j).getArrivalPlatform().equals("null"))
+					panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getDeparturePlatform() + ") " + rs.get(j).getDepartureTime().substring(11,16)), gbc);
+				else
+					panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+				
 				j++;
 			}
 		}
