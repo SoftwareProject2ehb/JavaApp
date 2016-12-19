@@ -43,7 +43,7 @@ public abstract class CustomerController {
 		String community;
 		
 		for (int i = 0; i < 7; i++) {
-			if (array.get(i) == null || array.get(i).getText() == "") {
+			if (array.get(i) == null || array.get(i).getText().equals("")) {
 				throw new InvalidParameterException("Een van de gegeven waarden voor de klant is ongeldig.");
 			}
 		}

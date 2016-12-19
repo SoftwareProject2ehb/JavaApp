@@ -31,7 +31,7 @@ public abstract class SystemController {
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
 		LoginController.initialize(new LoginView());
-		ActionMenuController.initialize(new ActionMenuView());
+		ActionMenuController.initialize(new ActionMenuView(), new AccountInfoView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
 		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(),new EditPasswordView(), new ConfigurationView());
@@ -342,6 +342,15 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		else{
 			ActionMenuController.switchToActionMenuView();
 		}
+	}
+	
+	public static boolean checkAccess(){
+		User user  = SystemController.system.logged_user;
+		if (user.getRolen() == "ADMIN")
+			return true;
+		else
+			JOptionPane.showMessageDialog(null, "You have no access here.", "No Access", JOptionPane.WARNING_MESSAGE);
+			return false;
 	}
 	
 	public static ArrayList<User> searchUser(String searchText, UserDAO.FindUser att){

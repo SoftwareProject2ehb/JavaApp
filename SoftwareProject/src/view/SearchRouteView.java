@@ -41,6 +41,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -230,9 +231,16 @@ public class SearchRouteView extends JPanel {
 	}
 
 	public void getRouteInformation() {
-		route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
-		rs = route.getQueriedRoute();
-		tussenstops = route.getRouteEssentials();
+		try {
+			route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem(), DateConverter.convert(txtDatum.getText()));
+			rs = route.getQueriedRoute();
+			tussenstops = route.getRouteEssentials();
+		} catch (ParseException e) {
+			route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
+			rs = route.getQueriedRoute();
+			tussenstops = route.getRouteEssentials();
+		}
+		
 		
 		//route.showQueriedRoute();
 	}
