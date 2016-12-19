@@ -48,6 +48,8 @@ public class ConfigurationController {
 		FrameController.getFrame().switchTo("FIND_USER");
 	}
 	public static void switchToEditPasswordView() {
+		edit_password_view.txtPass1.setText("");
+		edit_password_view.txtPass2.setText("");
 		FrameController.getFrame().switchTo("EDIT_PASSWORD");
 	}
 	
