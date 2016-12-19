@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.CustomerController;
-import event_handlers.CreateCustomer_CreatePressed;
 
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
