@@ -21,6 +21,16 @@ public class Route {
 	private String begin_station;
 	private String eind_station;
 	
+	public Route(String begin_station, String eind_station, Date time) {
+		routes = new ArrayList<ArrayList<RouteStation>>();
+		transfer_stations = new ArrayList<ArrayList<String>>();
+		this.begin_station = begin_station;
+		this.eind_station = eind_station;
+		
+		ApiAccesser.opvragingRoute(begin_station, eind_station, routes, transfer_stations, time);
+		fillQueriedRouteWithTransfers();
+	}
+	
 	public Route(String begin_station, String eind_station) {
 		routes = new ArrayList<ArrayList<RouteStation>>();
 		transfer_stations = new ArrayList<ArrayList<String>>();
@@ -28,7 +38,7 @@ public class Route {
 		this.eind_station = eind_station;
 		
 		//Hier vul ik de route datamember op met alle mogelijke routes.
-		ApiAccesser.opvragingRoute(begin_station, eind_station, routes, transfer_stations);
+		ApiAccesser.opvragingRoute(begin_station, eind_station, routes, transfer_stations, new Date());
 		//Vervolgens filter ik die routes met de volgende methode om een route te bekomen met alle relevante stations met eventuele transfers.
 		fillQueriedRouteWithTransfers();
 	}
@@ -249,6 +259,9 @@ public class Route {
 	public double calculateDistance() {
 		double distance = 0;
 		
+		if (queried_route.isEmpty()) {
+			return 0;
+		}
 		
 		
 		String station_1_coordinates = queried_route.get(0).getCoordinates();
@@ -269,6 +282,10 @@ public class Route {
 	
 	public double calculateTime() {
 		Timestamp station_1_time = null, station_2_time = null;
+		
+		if (queried_route.isEmpty()) {
+			return 0.0;
+		}
 		
 			try {
 				station_1_time = DateConverter.timestampConverter(queried_route.get(0).getDepartureTime().replaceAll("T", " "));
@@ -299,6 +316,10 @@ public class Route {
 	
 	public String calculateTimeProper() {
 		Timestamp station_1_time = null, station_2_time = null;
+		
+		if (queried_route.isEmpty()) {
+			return "Geen route";
+		}
 		
 			try {
 				station_1_time = DateConverter.timestampConverter(queried_route.get(0).getDepartureTime().replaceAll("T", " "));
