@@ -1,6 +1,7 @@
 package controller;
 
 import java.text.ParseException;
+import java.util.Date;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.swing.JOptionPane;
@@ -32,8 +33,15 @@ public class TicketController {
 		String end_station = buy_ticket.cbbEindstation.getSelectedItem().toString();
 		String type = buy_ticket.cbbType.getSelectedItem().toString();
 		boolean one_way = buy_ticket.checkBox.isSelected();
+		Route route;
+		try {
+			Date time = DateConverter.convert(buy_ticket.txtDatum.getText());
+			 route = new Route (start_station, end_station, time);
+		} catch (ParseException e) {
+			route = new Route (start_station, end_station);
+		}
 		
-		Route route = new Route (start_station, end_station);
+		
 		
 		double price = Ticket.calculatePrice(type, !one_way, route);
 		if (price == 0) {

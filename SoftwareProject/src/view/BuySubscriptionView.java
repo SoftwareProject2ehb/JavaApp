@@ -104,6 +104,11 @@ public class BuySubscriptionView extends JPanel {
 		add(btnOfferte);
 		
 		JButton btnKoopTicket = new JButton("Koop Abonnement");
+		btnKoopTicket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SubscriptionController.buySubscription();
+			}
+		});
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnKoopTicket, 13, SpringLayout.SOUTH, btnOfferte);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnKoopTicket, 0, SpringLayout.EAST, cbbBeginstation);
 		add(btnKoopTicket);

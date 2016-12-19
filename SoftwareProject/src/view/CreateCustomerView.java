@@ -4,10 +4,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.CustomerController;
-import event_handlers.CreateCustomer_CreatePressed;
+import controller.SystemController;
 
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.ArrayList;
 
@@ -131,7 +133,7 @@ public class CreateCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblGemeente, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblGemeente);
 		
-		JButton button = new JButton("<<  Terug");
+		JButton button = new JButton("Terug naar menu");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerController.switchToFindCustomerView();
@@ -143,7 +145,8 @@ public class CreateCustomerView extends JPanel {
 		JButton btnKlantAanmaken = new JButton("Klant Aanmaken");
 		btnKlantAanmaken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				CustomerController.createCustomer();
+				
 			}
 		});
 		sl_contentPane.putConstraint(SpringLayout.NORTH, button, 0, SpringLayout.NORTH, btnKlantAanmaken);

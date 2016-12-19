@@ -11,9 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data_control.LogFileDAO;
-import data_control.StopDAO;
 import model.LogFile;
-import model.Stop;
 
 public class LogFileDAOTest {
 
