@@ -16,6 +16,7 @@ import data_control.SubscriptionPriceDAO;
 import model.Price;
 import model.Price.betalingsType;
 import model.SubscriptionPrice;
+import utilities.Language;
 import utilities.PatternFilter;
 
 import javax.swing.JScrollPane;
@@ -49,7 +50,7 @@ public class PriceConfigView extends JPanel {
 	private JTextField txtPrijs;
 	private int index = 0;
 	private ArrayList<Price> priceList;
-	private String defaultTxt = "Naam invullen";
+	private String defaultTxt = Language.getString("defaulttext");
 	private JComboBox comboBox_type;
 	private JComboBox comboBox_soort;
 	private JButton btnDelete;
@@ -61,7 +62,7 @@ public class PriceConfigView extends JPanel {
 	private int subTypes_index = 0;
 	private ArrayList<Double> subLengths;
 	private int subLengths_index = 0;
-	private String sub_defaultTxt = "Naam invullen";
+	private String sub_defaultTxt = Language.getString("defaulttext");
 	private JComboBox cbb_maandenVoegToe;
 	private JComboBox sub_comboBox_type;
 	private JComboBox sub_comboBox_soort;
@@ -81,19 +82,19 @@ public class PriceConfigView extends JPanel {
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 		
-		JLabel lblPrijsConfiguratie = new JLabel("Prijs configuratie");
+		JLabel lblPrijsConfiguratie = new JLabel(Language.getString("priceconfig"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblPrijsConfiguratie, 10, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblPrijsConfiguratie, 20, SpringLayout.WEST, this);
 		lblPrijsConfiguratie.setFont(new Font("Arial Black", Font.PLAIN, 17));
 		add(lblPrijsConfiguratie);
 		
-		JLabel lblTicketten = new JLabel("Ticketten");
+		JLabel lblTicketten = new JLabel(Language.getString("tickets"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblTicketten, 10, SpringLayout.SOUTH, lblPrijsConfiguratie);
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblTicketten, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		lblTicketten.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		add(lblTicketten);
 		
-		JLabel lblNieuwSoortBiljet = new JLabel("Nieuw soort biljet toevoegen");
+		JLabel lblNieuwSoortBiljet = new JLabel(Language.getString("createnewticket"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblNieuwSoortBiljet, 20, SpringLayout.SOUTH, lblTicketten);
 		springLayout.putConstraint(SpringLayout.WEST, lblNieuwSoortBiljet, 10, SpringLayout.WEST, this);
 		add(lblNieuwSoortBiljet);
@@ -126,12 +127,12 @@ public class PriceConfigView extends JPanel {
 		txtSoort.setColumns(15);
 		add(txtSoort);
 		
-		JButton btnVoegToe = new JButton("Voeg toe");
+		JButton btnVoegToe = new JButton(Language.getString("create"));
 		springLayout.putConstraint(SpringLayout.WEST, btnVoegToe, 6, SpringLayout.EAST, txtSoort);
 		springLayout.putConstraint(SpringLayout.NORTH, btnVoegToe, -5, SpringLayout.NORTH, lblNieuwSoortBiljet);
 		add(btnVoegToe);
 		
-		JButton btnTerug = new JButton("Terug naar Menu");
+		JButton btnTerug = new JButton(Language.getString("return"));
 		btnTerug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToConfigurationView();
@@ -141,7 +142,7 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnTerug, -10, SpringLayout.SOUTH, this);
 		add(btnTerug);
 		
-		JButton btnOk = new JButton("Wijzig prijzen");
+		JButton btnOk = new JButton(Language.getString("changeprices"));
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnOk, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnOk, 0, SpringLayout.SOUTH, btnTerug);
 		add(btnOk);
@@ -166,7 +167,7 @@ public class PriceConfigView extends JPanel {
 		((AbstractDocument) txtPrijs.getDocument()).setDocumentFilter(PatternFilter.prijsFilter);
 		add(txtPrijs);
 		
-		JLabel lblPer = new JLabel("per");
+		JLabel lblPer = new JLabel(Language.getString("per"));
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, lblPer, 0, SpringLayout.VERTICAL_CENTER, comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, lblPer, 6, SpringLayout.EAST, txtPrijs);
 		add(lblPer);
@@ -178,7 +179,7 @@ public class PriceConfigView extends JPanel {
 		comboBox_type.setSelectedItem(priceList.get(index).getTypeBetaling());
 		add(comboBox_type);
 		
-		btnDelete = new JButton("VERWIJDER");
+		btnDelete = new JButton(Language.getString("delete"));
 		btnDelete.setForeground(Color.RED);
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, btnDelete, 0, SpringLayout.VERTICAL_CENTER, comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, btnDelete, 6, SpringLayout.EAST, comboBox_type);
@@ -190,13 +191,13 @@ public class PriceConfigView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, sep, -25, SpringLayout.EAST, this);
 		add(sep);
 		
-		JLabel lblAbonnementen = new JLabel("Abonnementen");
+		JLabel lblAbonnementen = new JLabel(Language.getString("subs"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblAbonnementen, 10, SpringLayout.SOUTH, sep);
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblAbonnementen, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		lblAbonnementen.setFont(new Font("Arial Black", Font.PLAIN, 13));
 		add(lblAbonnementen);
 		
-		JLabel sub_lblNieuwSoortBiljet = new JLabel("Nieuw abonnement toevoegen");
+		JLabel sub_lblNieuwSoortBiljet = new JLabel(Language.getString("createnewsub"));
 		springLayout.putConstraint(SpringLayout.NORTH, sub_lblNieuwSoortBiljet, 20, SpringLayout.SOUTH, lblAbonnementen);
 		springLayout.putConstraint(SpringLayout.WEST, sub_lblNieuwSoortBiljet, 10, SpringLayout.WEST, this);
 		add(sub_lblNieuwSoortBiljet);
@@ -235,12 +236,12 @@ public class PriceConfigView extends JPanel {
 		cbb_maandenVoegToe.setModel(new DefaultComboBoxModel(new String[] {"1", "3", "6", "12"}));
 		add(cbb_maandenVoegToe);
 		
-		JLabel lblMaandVoegToe = new JLabel("maand");
+		JLabel lblMaandVoegToe = new JLabel(Language.getString("month"));
 		springLayout.putConstraint(SpringLayout.WEST, lblMaandVoegToe, 6, SpringLayout.EAST, cbb_maandenVoegToe);
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, lblMaandVoegToe, 0, SpringLayout.VERTICAL_CENTER, sub_lblNieuwSoortBiljet);
 		add(lblMaandVoegToe);
 		
-		JButton sub_btnVoegToe = new JButton("Voeg toe");
+		JButton sub_btnVoegToe = new JButton(Language.getString("create"));
 		springLayout.putConstraint(SpringLayout.NORTH, sub_btnVoegToe, -5, SpringLayout.NORTH, sub_lblNieuwSoortBiljet);
 		springLayout.putConstraint(SpringLayout.WEST, sub_btnVoegToe, 15, SpringLayout.EAST, lblMaandVoegToe);
 		add(sub_btnVoegToe);
@@ -265,7 +266,7 @@ public class PriceConfigView extends JPanel {
 		((AbstractDocument) sub_txtPrijs.getDocument()).setDocumentFilter(PatternFilter.prijsFilter);
 		add(sub_txtPrijs);
 		
-		JLabel sub_lblPer = new JLabel("per");
+		JLabel sub_lblPer = new JLabel(Language.getString("per"));
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, sub_lblPer, 0, SpringLayout.VERTICAL_CENTER, sub_comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, sub_lblPer, 6, SpringLayout.EAST, sub_txtPrijs);
 		add(sub_lblPer);
@@ -277,7 +278,7 @@ public class PriceConfigView extends JPanel {
 		sub_comboBox_type.setSelectedItem(subPrice.getTypeBetaling());
 		add(sub_comboBox_type);
 		
-		JLabel sub_lblVoor = new JLabel("voor");
+		JLabel sub_lblVoor = new JLabel(Language.getString("totwo"));
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, sub_lblVoor, 0, SpringLayout.VERTICAL_CENTER, sub_comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, sub_lblVoor, 6, SpringLayout.EAST, sub_comboBox_type);
 		add(sub_lblVoor);
@@ -288,12 +289,12 @@ public class PriceConfigView extends JPanel {
 		sub_comboBox_maanden.setModel(new DefaultComboBoxModel(subLengths.toArray()));
 		add(sub_comboBox_maanden);
 		
-		JLabel lblMaand = new JLabel("maand");
+		JLabel lblMaand = new JLabel(Language.getString("month"));
 		springLayout.putConstraint(SpringLayout.WEST, lblMaand, 6, SpringLayout.EAST, sub_comboBox_maanden);
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, lblMaand, 0, SpringLayout.VERTICAL_CENTER, sub_comboBox_soort);
 		add(lblMaand);
 		
-		sub_btnDelete = new JButton("VERWIJDER");
+		sub_btnDelete = new JButton(Language.getString("delete"));
 		sub_btnDelete.setForeground(Color.RED);
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, sub_btnDelete, 0, SpringLayout.VERTICAL_CENTER, sub_comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, sub_btnDelete, 6, SpringLayout.EAST, lblMaand);
@@ -308,13 +309,13 @@ public class PriceConfigView extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<String> options = new ArrayList<String>();
-			    options.add("JA"); // 0
-			    options.add("NEE"); // 1
-				int choice = JOptionPane.showOptionDialog(null, "Bent u zeker dat u de prijs " + priceList.get(index).getTypeTicket() + " wilt verwijderen?", "Prijs verwijderen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options.toArray(), "NEE");
+			    options.add(Language.getString("yes")); // 0
+			    options.add(Language.getString("no")); // 1
+				int choice = JOptionPane.showOptionDialog(null, Language.getString("priceconfirmationone") + priceList.get(index).getTypeTicket() + Language.getString("priceconfirmationtwo"), Language.getString("deleteprice"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options.toArray(), Language.getString("no"));
 				if (choice == 0) {
 					ConfigurationController.deletePrice();
 					updatePriceList(0);
-					lblInfo.setText("Prijs verwijderd");
+					lblInfo.setText(Language.getString("pricemessagethree"));
 				}
 				else 
 					lblInfo.setText("");
@@ -328,12 +329,12 @@ public class PriceConfigView extends JPanel {
 			    options.add("JA"); // 0
 			    options.add("NEE"); // 1
 				int choice = JOptionPane.showOptionDialog(null, 
-						"Bent u zeker dat u de prijs " + subTypes.get(subTypes_index) + " (" + subLengths.get(subLengths_index) + " maanden) wilt verwijderen?",
-						"Prijs verwijderen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options.toArray(), "NEE");
+						Language.getString("priceconfirmationone") + subTypes.get(subTypes_index) + " (" + subLengths.get(subLengths_index) + Language.getString("months") + ")" + Language.getString("priceconfirmationtwo"),
+						Language.getString("deleteprice"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options.toArray(), Language.getString("no"));
 				if (choice == 0) {
 					ConfigurationController.deleteSubPrice();
 					updateSubPriceList(0, 0);
-					lblInfo.setText("Prijs verwijderd");
+					lblInfo.setText(Language.getString("pricemessagetwo"));
 				}
 				else 
 					lblInfo.setText("");
@@ -373,9 +374,9 @@ public class PriceConfigView extends JPanel {
 			public void itemStateChanged(ItemEvent event) {
 				if (event.getStateChange() == ItemEvent.SELECTED) {
 					if (event.getItem().toString().equals("1.0"))
-						lblMaand.setText("maand");
+						lblMaand.setText(Language.getString("month"));
 					else 
-						lblMaand.setText("maanden");
+						lblMaand.setText(Language.getString("months"));
 					
 					subLengths_index = subLengths.indexOf(event.getItem());
 					subPrice = SubscriptionPriceDAO.findSubPriceByTypeAndLength(subTypes.get(subTypes_index), subLengths.get(subLengths_index));
@@ -390,9 +391,9 @@ public class PriceConfigView extends JPanel {
 			public void itemStateChanged(ItemEvent event) {
 				if (event.getStateChange() == ItemEvent.SELECTED) {
 					if (event.getItem().toString().equals("1"))
-						lblMaandVoegToe.setText("maand");
+						lblMaandVoegToe.setText(Language.getString("month"));
 					else 
-						lblMaandVoegToe.setText("maanden");
+						lblMaandVoegToe.setText(Language.getString("months"));
 				}
 			}
 		});
@@ -402,7 +403,7 @@ public class PriceConfigView extends JPanel {
 			public void mouseClicked(MouseEvent e) {}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				lblInfo.setText("Even geduld ...");
+				lblInfo.setText(Language.getString("pleasewait"));
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -410,7 +411,7 @@ public class PriceConfigView extends JPanel {
 				txtSoort.setForeground(Color.LIGHT_GRAY);
 				txtSoort.setText(defaultTxt);
 				updatePriceList(-1);
-				lblInfo.setText("Ticket soort toegevoegd");
+				lblInfo.setText(Language.getString("ticketadd"));
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {}
@@ -423,7 +424,7 @@ public class PriceConfigView extends JPanel {
 			public void mouseClicked(MouseEvent e) {}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				lblInfo.setText("Even geduld ...");
+				lblInfo.setText(Language.getString("pleasewait"));
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -431,7 +432,7 @@ public class PriceConfigView extends JPanel {
 				sub_txtSoort.setForeground(Color.LIGHT_GRAY);
 				sub_txtSoort.setText(defaultTxt);
 				updateSubPriceList(-1, -1);
-				lblInfo.setText("Abonnement toegevoegd");
+				lblInfo.setText(Language.getString("subadd"));
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {}
@@ -444,7 +445,7 @@ public class PriceConfigView extends JPanel {
 			public void mouseClicked(MouseEvent e) {}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				lblInfo.setText("Even geduld ...");
+				lblInfo.setText(Language.getString("pleasewait"));
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -452,7 +453,7 @@ public class PriceConfigView extends JPanel {
 				ConfigurationController.updateSubPrice();
 				updatePriceList(index);
 				updateSubPriceList(subTypes_index, subLengths_index);
-				lblInfo.setText("Prijs gewijzigd");
+				lblInfo.setText(Language.getString("pricemessageone"));
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {}

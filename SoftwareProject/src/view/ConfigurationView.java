@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.ActionMenuController;
 import controller.ConfigurationController;
+import utilities.Language;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -35,7 +36,7 @@ public class ConfigurationView extends JPanel {
 		SpringLayout sl_contentPane = new SpringLayout();
 		this.setLayout(sl_contentPane);
 		
-		JLabel lblConfiguratie = new JLabel("Configuratiescherm");
+		JLabel lblConfiguratie = new JLabel(Language.getString("configtitle"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblConfiguratie, 10, SpringLayout.NORTH, this);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblConfiguratie, 20, SpringLayout.WEST, this);
 		lblConfiguratie.setFont(new Font("Arial Black", Font.PLAIN, 17));
@@ -71,7 +72,7 @@ public class ConfigurationView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnGebruikers, 141, SpringLayout.WEST, this);
 		add(btnGebruikers);
 		
-		JButton btnTerug = new JButton("Terug naar Menu");
+		JButton btnTerug = new JButton(Language.getString("return"));
 		btnTerug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();

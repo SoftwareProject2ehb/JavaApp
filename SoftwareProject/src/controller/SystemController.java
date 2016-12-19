@@ -4,6 +4,7 @@ import model.*;
 import model.Price.betalingsType;
 import model.User.Role;
 import utilities.*;
+import utilities.Language.LANGUAGE;
 import view.*;
 
 import java.io.BufferedReader;
@@ -29,6 +30,9 @@ public abstract class SystemController {
 	private String system_station;
 		
 	public static void startUp() {
+		//Set language of the application and load all language strings
+		Language.setLanguage(LANGUAGE.DUTCH);
+		Language.refresh();
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
 		SelectStationController.initialize(new SelectStationView());

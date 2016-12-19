@@ -14,6 +14,7 @@ import controller.SystemController;
 import model.Route;
 import model.RouteStation;
 import utilities.DateConverter;
+import utilities.Language;
 import utilities.PatternFilter;
 
 import javax.swing.JLabel;
@@ -61,9 +62,9 @@ public class SearchRouteView extends JPanel {
 	public JSeparator sep;
 	public JPanel panel;
 	public JScrollPane scrollPane;
-	public JButton btnBuyTicket = new JButton("Koop ticket");
-	public JButton btnBuySubscription = new JButton("Koop abonnement");
-	public JButton btnMore = new JButton("Meer info");
+	public JButton btnBuyTicket = new JButton(Language.getString("buyticket"));
+	public JButton btnBuySubscription = new JButton(Language.getString("buysub"));
+	public JButton btnMore = new JButton(Language.getString("moreinfo"));
 	public boolean showMore = false;
 	public Route route;
 	public ArrayList<RouteStation> rs;
@@ -76,13 +77,13 @@ public class SearchRouteView extends JPanel {
 		springLayout = new SpringLayout();
 		setLayout(springLayout);
 		
-		JLabel lblRoutevinder = new JLabel("Routevinder");
+		JLabel lblRoutevinder = new JLabel(Language.getString("routetitle"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblRoutevinder, 10, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblRoutevinder, 20, SpringLayout.WEST, this);
 		lblRoutevinder.setFont(new Font("Arial Black", Font.PLAIN, 17));
 		this.add(lblRoutevinder);
 		
-		JLabel lblVan = new JLabel("Van");
+		JLabel lblVan = new JLabel(Language.getString("from"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblVan, 31, SpringLayout.SOUTH, lblRoutevinder);
 		springLayout.putConstraint(SpringLayout.WEST, lblVan, 10, SpringLayout.WEST, this);
 		add(lblVan);
@@ -101,26 +102,26 @@ public class SearchRouteView extends JPanel {
 		add(cbbTot);
 		cbbTot.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		
-		JLabel lblTot = new JLabel("Tot");
+		JLabel lblTot = new JLabel(Language.getString("to"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblTot, 29, SpringLayout.SOUTH, lblVan);
 		springLayout.putConstraint(SpringLayout.WEST, lblTot, 0, SpringLayout.WEST, lblVan);
 		add(lblTot);
 		
-		JLabel lblDatum = new JLabel("Datum (dd/mm/jjjj)");
+		JLabel lblDatum = new JLabel(Language.getString("date") + " (dd/mm/jjjj)");
 		springLayout.putConstraint(SpringLayout.NORTH, lblDatum, 31, SpringLayout.SOUTH, cbbTot);
 		springLayout.putConstraint(SpringLayout.WEST, lblDatum, 10, SpringLayout.WEST, this);
 		add(lblDatum);
 		
-		JLabel lblUur = new JLabel("Uur");
+		JLabel lblUur = new JLabel(Language.getString("hour"));
 		springLayout.putConstraint(SpringLayout.WEST, lblUur, 10, SpringLayout.WEST, this);
 		add(lblUur);
 		
-		rdbtnVertrek = new JRadioButton("Vertrek");
+		rdbtnVertrek = new JRadioButton(Language.getString("departure"));
 		springLayout.putConstraint(SpringLayout.NORTH, rdbtnVertrek, -4, SpringLayout.NORTH, lblUur);
 		add(rdbtnVertrek);
 		rdbtnVertrek.setSelected(true);
 		
-		rdbtnAankomst = new JRadioButton("Aankomst");
+		rdbtnAankomst = new JRadioButton(Language.getString("arrival"));
 		springLayout.putConstraint(SpringLayout.NORTH, rdbtnAankomst, -4, SpringLayout.NORTH, lblUur);
 		springLayout.putConstraint(SpringLayout.WEST, rdbtnAankomst, 19, SpringLayout.EAST, rdbtnVertrek);
 		add(rdbtnAankomst);
@@ -129,13 +130,13 @@ public class SearchRouteView extends JPanel {
 	    groupAankomstVertrek.add(rdbtnVertrek);
 	    groupAankomstVertrek.add(rdbtnAankomst);
 		
-		btnTerug = new JButton("Terug naar Menu");
+		btnTerug = new JButton(Language.getString("return"));
 		btnTerug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deleteShowRoute();
 				
 				panel = new JPanel(new GridBagLayout());
-				panel.add(new JLabel("Zoek een route."));
+				panel.add(new JLabel(Language.getString("search")));
 				
 				scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 				scrollPane.setPreferredSize(new Dimension(350, 250));
@@ -182,7 +183,7 @@ public class SearchRouteView extends JPanel {
 		((AbstractDocument) txtDatum.getDocument()).setDocumentFilter(PatternFilter.datumFilter);
 		add(txtDatum);
 		
-		chckbxHeenterug = new JCheckBox("Heen-terug");
+		chckbxHeenterug = new JCheckBox(Language.getString("returnjourney"));
 		springLayout.putConstraint(SpringLayout.WEST, chckbxHeenterug, 0, SpringLayout.WEST, rdbtnAankomst);
 		springLayout.putConstraint(SpringLayout.SOUTH, chckbxHeenterug, 0, SpringLayout.SOUTH, lblVan);
 		add(chckbxHeenterug);
@@ -194,7 +195,7 @@ public class SearchRouteView extends JPanel {
 		add(sep);
 		
 		panel = new JPanel(new GridBagLayout());
-		panel.add(new JLabel("Zoek een route."));
+		panel.add(new JLabel(Language.getString("searchroute")));
 		
 		scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setPreferredSize(new Dimension(350, 250));
@@ -210,7 +211,7 @@ public class SearchRouteView extends JPanel {
 		
 		if(rs.isEmpty()) {
 			panel = new JPanel(new GridBagLayout());
-			panel.add(new JLabel("Geen route."));
+			panel.add(new JLabel(Language.getString("noroute")));
 			
 			scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			scrollPane.setPreferredSize(new Dimension(350, 250));
@@ -264,12 +265,12 @@ public class SearchRouteView extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (showMore) {
-					btnMore.setText("Meer info");
+					btnMore.setText(Language.getString("moreinfo"));
 					showMore = false;
 					showRoute();
 				}
 				else {
-					btnMore.setText("Minder info");
+					btnMore.setText(Language.getString("lessinfo"));
 					showMore = true;
 					showRoute();
 				}
@@ -299,10 +300,10 @@ public class SearchRouteView extends JPanel {
 			return;
 		}
 
-		panel.add(new JLabel(rs.get(0).getNaam() + " - " + rs.get(rs.size() - 1).getNaam() + " (Totale duur: " + route.calculateTimeProper() + ")"), gbc);
+		panel.add(new JLabel(rs.get(0).getNaam() + " - " + rs.get(rs.size() - 1).getNaam() + " (" + Language.getString("duration") + ": " + route.calculateTimeProper() + ")"), gbc);
 
 		gbc.gridy++;
-		panel.add(new JLabel("Vertrek: " + tussenstops.get(0).getNaam() + " (peron " + tussenstops.get(0).getDeparturePlatform() + ") " + tussenstops.get(0).getDepartureTime().substring(11,16)), gbc);
+		panel.add(new JLabel(Language.getString("departure") + ": " + tussenstops.get(0).getNaam() + " (" + Language.getString("platform") + tussenstops.get(0).getDeparturePlatform() + ") " + tussenstops.get(0).getDepartureTime().substring(11,16)), gbc);
 
 		if (showMore) {
 			int j = 1;
@@ -310,22 +311,22 @@ public class SearchRouteView extends JPanel {
 
 				while(j < rs.size()-1 && !tussenstops.get(i).getNaam().equals(rs.get(j).getNaam())) {
 					gbc.gridy++;
-					panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+					panel.add(new JLabel(rs.get(j).getNaam() + " (" + Language.getString("platform") + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
 					j++;
 				}
 				j++;
 				gbc.gridy++;
 				if (i % 2 == 1) {
-					panel.add(new JLabel("Afstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getArrivalPlatform() + ") " + tussenstops.get(i).getArrivalTime().substring(11,16)), gbc);
+					panel.add(new JLabel(Language.getString("disembark") + ": " + tussenstops.get(i).getNaam() + " (" + Language.getString("platform") + tussenstops.get(i).getArrivalPlatform() + ") " + tussenstops.get(i).getArrivalTime().substring(11,16)), gbc);
 				}
 				else {
-					panel.add(new JLabel("Opstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getDeparturePlatform() + ") " + tussenstops.get(i).getDepartureTime().substring(11,16)), gbc);
+					panel.add(new JLabel(Language.getString("embark") + ": " + tussenstops.get(i).getNaam() + " (" + Language.getString("platform") + tussenstops.get(i).getDeparturePlatform() + ") " + tussenstops.get(i).getDepartureTime().substring(11,16)), gbc);
 				}
 			}
 
 			while(j < rs.size()-1) {
 				gbc.gridy++;
-				panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+				panel.add(new JLabel(rs.get(j).getNaam() + " (" + Language.getString("platform") + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
 				j++;
 			}
 		}
@@ -333,16 +334,16 @@ public class SearchRouteView extends JPanel {
 			for (int i = 1; i < tussenstops.size() - 1; i++) {
 				gbc.gridy++;
 				if (i % 2 == 1) {
-					panel.add(new JLabel("Afstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getArrivalPlatform() + ") " + tussenstops.get(i).getArrivalTime().substring(11,16)), gbc);
+					panel.add(new JLabel(Language.getString("disembark") + ": " + tussenstops.get(i).getNaam() + " (" + Language.getString("platform") + tussenstops.get(i).getArrivalPlatform() + ") " + tussenstops.get(i).getArrivalTime().substring(11,16)), gbc);
 				}
 				else {
-					panel.add(new JLabel("Opstappen: " + tussenstops.get(i).getNaam() + " (peron " + tussenstops.get(i).getDeparturePlatform() + ") " + tussenstops.get(i).getDepartureTime().substring(11,16)), gbc);
+					panel.add(new JLabel(Language.getString("embark") + ": " + tussenstops.get(i).getNaam() + " (" + Language.getString("platform") + tussenstops.get(i).getDeparturePlatform() + ") " + tussenstops.get(i).getDepartureTime().substring(11,16)), gbc);
 				}
 			}
 		}
 
 		gbc.gridy++;
-		panel.add(new JLabel("Aankomst: " + tussenstops.get(tussenstops.size() -1).getNaam() + " (peron " + tussenstops.get(tussenstops.size() -1).getArrivalPlatform() + ") " + tussenstops.get(tussenstops.size() -1).getArrivalTime().substring(11,16)), gbc);
+		panel.add(new JLabel(Language.getString("arrival") + ": " + tussenstops.get(tussenstops.size() -1).getNaam() + " (" + Language.getString("platform") + tussenstops.get(tussenstops.size() -1).getArrivalPlatform() + ") " + tussenstops.get(tussenstops.size() -1).getArrivalTime().substring(11,16)), gbc);
 
 		gbc.gridy++;
 		panel.add(btnMore, gbc);
