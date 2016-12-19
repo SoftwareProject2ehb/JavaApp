@@ -159,13 +159,13 @@ public class ActionMenuView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnVerlorenVoorwerpen, -31, SpringLayout.NORTH, panel);
 		
 		JButton btnMyAccount = new JButton("My Account");
+		springLayout.putConstraint(SpringLayout.NORTH, btnMyAccount, 4, SpringLayout.NORTH, lblKeuzemenu);
+		springLayout.putConstraint(SpringLayout.EAST, btnMyAccount, -10, SpringLayout.EAST, this);
 		btnMyAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.AccountInfo();
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnMyAccount, 0, SpringLayout.NORTH, lblKeuzemenu);
-		springLayout.putConstraint(SpringLayout.EAST, btnMyAccount, 0, SpringLayout.EAST, panel);
 		add(btnMyAccount);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
