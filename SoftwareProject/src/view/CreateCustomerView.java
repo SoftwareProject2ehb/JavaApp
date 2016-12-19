@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.CustomerController;
+import controller.SystemController;
 
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
@@ -142,7 +143,7 @@ public class CreateCustomerView extends JPanel {
 		JButton btnKlantAanmaken = new JButton("Klant Aanmaken");
 		btnKlantAanmaken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				CustomerController.createCustomer();
 			}
 		});
 		sl_contentPane.putConstraint(SpringLayout.NORTH, button, 0, SpringLayout.NORTH, btnKlantAanmaken);
