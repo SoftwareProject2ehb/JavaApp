@@ -37,8 +37,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -198,21 +201,27 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
 		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
 		add(scrollPane);
+		
+		createButtonListeners();
 	}
 	
 	public void showRoute() {
-		showMore = false;
 		deleteShowRoute();
-		createButtons();
-		createPanel();
-		createScrollPane();
-		FrameController.changeSize(750, 300);
-	}
-	
-	public void reShowRoute() {
-		deleteShowRoute();
-		createPanel();
-		createScrollPane();
+		
+		if(rs.isEmpty()) {
+			panel = new JPanel(new GridBagLayout());
+			panel.add(new JLabel("Geen route."));
+			
+			scrollPane = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scrollPane.setPreferredSize(new Dimension(350, 250));
+			springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
+			springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
+			add(scrollPane);
+		}
+		else {
+			createPanel();
+			createScrollPane();
+		}
 		FrameController.changeSize(750, 300);
 	}
 	
@@ -222,12 +231,21 @@ public class SearchRouteView extends JPanel {
 	}
 
 	public void getRouteInformation() {
-		route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
-		rs = route.getQueriedRoute();
-		tussenstops = route.getRouteEssentials();
+		try {
+			route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem(), DateConverter.convert(txtDatum.getText()));
+			rs = route.getQueriedRoute();
+			tussenstops = route.getRouteEssentials();
+		} catch (ParseException e) {
+			route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
+			rs = route.getQueriedRoute();
+			tussenstops = route.getRouteEssentials();
+		}
+		
+		
+		//route.showQueriedRoute();
 	}
 	
-	public void createButtons() {
+	public void createButtonListeners() {
 		btnBuyTicket.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -248,12 +266,12 @@ public class SearchRouteView extends JPanel {
 				if (showMore) {
 					btnMore.setText("Meer info");
 					showMore = false;
-					reShowRoute();
+					showRoute();
 				}
 				else {
 					btnMore.setText("Minder info");
 					showMore = true;
-					reShowRoute();
+					showRoute();
 				}
 			}
 		});
@@ -276,6 +294,10 @@ public class SearchRouteView extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridwidth = 2;
 		gbc.gridy++;
+		
+		if(rs.isEmpty()) {
+			return;
+		}
 
 		panel.add(new JLabel(rs.get(0).getNaam() + " - " + rs.get(rs.size() - 1).getNaam() + " (Totale duur: " + route.calculateTimeProper() + ")"), gbc);
 

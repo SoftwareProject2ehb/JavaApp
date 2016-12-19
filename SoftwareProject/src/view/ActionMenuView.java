@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JPanel;
 
+import controller.ActionMenuController;
 import controller.ConfigurationController;
 import controller.LoginController;
 import controller.LostObjectController;
@@ -141,9 +142,21 @@ public class ActionMenuView extends JPanel {
 			}
 		});
 		springLayout.putConstraint(SpringLayout.SOUTH, btnVerlorenVoorwerpen, -31, SpringLayout.NORTH, panel);
+		
+		JButton btnMyAccount = new JButton("My Account");
+		springLayout.putConstraint(SpringLayout.NORTH, btnMyAccount, 4, SpringLayout.NORTH, lblKeuzemenu);
+		springLayout.putConstraint(SpringLayout.EAST, btnMyAccount, -10, SpringLayout.EAST, this);
+		btnMyAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ActionMenuController.AccountInfo();
+			}
+		});
+		add(btnMyAccount);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConfigurationController.switchToConfigurationView();
+				if(SystemController.checkAccess()){
+					ConfigurationController.switchToConfigurationView();
+				}
 			}
 		});
 		btnAbonnementOpzoeken.addActionListener(new ActionListener() {

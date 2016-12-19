@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import controller.ActionMenuController;
 import controller.ConfigurationController;
 
 import java.awt.Font;
@@ -64,6 +65,16 @@ public class EditPasswordView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, txtPass1, 0, SpringLayout.WEST, txtPass2);
 		springLayout.putConstraint(SpringLayout.NORTH, txtPass2, -3, SpringLayout.NORTH, lblNewLabel_1);
 		add(txtPass2);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ActionMenuController.switchToActionMenuView();
+			}
+		});
+		springLayout.putConstraint(SpringLayout.WEST, btnCancel, 0, SpringLayout.WEST, lblNewLabel);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnCancel, 0, SpringLayout.SOUTH, btnNewButton);
+		add(btnCancel);
 		
 	}
 }

@@ -23,6 +23,7 @@ import data_control.*;
 import data_control.UserDAO.FindUser;
 
 public abstract class SystemController {
+	public final static String EURO = "\u20ac";
 	public static SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
 	private String system_station;
@@ -32,7 +33,7 @@ public abstract class SystemController {
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
 		SelectStationController.initialize(new SelectStationView());
 		LoginController.initialize(new LoginView());
-		ActionMenuController.initialize(new ActionMenuView());
+		ActionMenuController.initialize(new ActionMenuView(), new AccountInfoView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
 		TicketController.initialize(new BuyTicketView());
 		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(),new EditPasswordView(), new ConfigurationView());
@@ -108,6 +109,15 @@ public abstract class SystemController {
 		Ticket new_ticket = new Ticket(type_ticket, is_one_way_ticket, ticket_price, start_station, end_station, date);
 		int ticket_id = TicketDAO.createTicket(new_ticket);
 		new_ticket.setId(ticket_id);
+		
+		if (JOptionPane.showConfirmDialog(null, "Ticket van " + start_station + " naar " + end_station + " gekocht voor " + EURO + String.valueOf(ticket_price).substring(0, 4) + ". Wilt u de ticket afprinten?", "Afprinten?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			try {
+				Printer.printTicket(new_ticket);
+			} catch (IOException e) {
+				System.out.println("Probleem met het printen in SystemController.buyTicket");
+			}
+		}
+		
 		return "Ticket bought.";
 	}
 
@@ -318,7 +328,9 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		user.setPostalCode(postal_code);
 		user.setCity(city);
 		user.setCountry(country);
-		user.setPassword(Encryptor.encrypt(password));
+		if ((password == "")) {
+			user.setPassword(Encryptor.encrypt(password));
+		}
 		UserDAO.updateUser(user);
 		return null;
 	}
@@ -333,6 +345,15 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 			ActionMenuController.switchToActionMenuView();
 			//SelectStationController.switchToSelectStationView();
 		}
+	}
+	
+	public static boolean checkAccess(){
+		User user  = SystemController.system.logged_user;
+		if (user.getRolen() == "ADMIN")
+			return true;
+		else
+			JOptionPane.showMessageDialog(null, "You have no access here.", "No Access", JOptionPane.WARNING_MESSAGE);
+			return false;
 	}
 	
 	public static ArrayList<User> searchUser(String searchText, UserDAO.FindUser att){
