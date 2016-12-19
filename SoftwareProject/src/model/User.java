@@ -171,9 +171,11 @@ public class User extends Address{
 	
 	@Override
 	public String toString() {
-		return "User [userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", phone=" + phone + ", login=" + login + ", password=" + password + ", rolen=" + rolen + ", active="
-				+ active + "]";
+		return  street + " " + number + ", " + postalCode + " "+ city + " - " + country;
+	}
+
+	public String toStringName() {
+		return  firstName + " " + lastName;
 	}
 
 	

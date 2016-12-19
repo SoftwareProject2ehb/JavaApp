@@ -249,6 +249,36 @@ public class ConfigurationController {
 		}
 	}
 	
+	public static ArrayList<User> findUser() throws InvalidParameterException{
+		UserDAO.FindUser fd = null;
+		ArrayList<User> ArrU = null;
+		Object find = find_user.searchAtt.getSelectedItem();
+		if (find == "ID") {
+			fd = UserDAO.FindUser.ID;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "FIRSTNAME") {
+			fd = UserDAO.FindUser.first_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "LASTNAME") {
+			fd = UserDAO.FindUser.last_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "EMAIL") {
+			fd = UserDAO.FindUser.last_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "PHONE") {
+			fd = UserDAO.FindUser.last_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "USERNAME") {
+			fd = UserDAO.FindUser.last_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		return ArrU;
+	}
 	public static void editDefaultPassword(){
 		User user  = SystemController.system.logged_user;
 		String pass1 = String.valueOf(edit_password_view.txtPass1.getPassword());
@@ -275,7 +305,6 @@ public class ConfigurationController {
 	    		find_user.refreshTable(find_user.tableModel);
 	        }
 	}
-	
 	public static void resetPassword(){
     	User u = getSelectedUser();
     	String password = u.getFirstName() + "_" + u.getLastName();
