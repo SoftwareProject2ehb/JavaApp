@@ -1,0 +1,1306 @@
+{
+  "StepOn": "Zele",
+  "StepOff": "brussel-zuid",
+  "Routes": [
+    {
+      "Departure": "Zele",
+      "Arrival": "brussel-zuid",
+      "Line": null,
+      "Cancelled": false,
+      "Trains": [
+        {
+          "Number": 3233,
+          "TrainType": 1,
+          "FullId": "IC 3233",
+          "DepartureStation": "Sint-Niklaas",
+          "TerminusStation": "Kortrijk",
+          "Stops": {
+            "Stations": [
+              {
+                "Name": "Sint-Niklaas",
+                "Coordinates": "4142966, 51171472",
+                "ArrivalPlatform": null,
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-10:24:00",
+                  "Arrival": "2016-12-12T00:00:00+01:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T10:24:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": null
+              },
+              {
+                "Name": "Belsele",
+                "Coordinates": "4088609, 51150995",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T10:29:00",
+                  "ActualArrival": "2016-12-12T10:30:00",
+                  "Departure": "2016-12-12T10:29:00",
+                  "ActualDeparture": "2016-12-12T10:30:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Sinaai",
+                "Coordinates": "4068940, 51143399",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T10:32:00",
+                  "ActualArrival": "2016-12-12T10:33:00",
+                  "Departure": "2016-12-12T10:32:00",
+                  "ActualDeparture": "2016-12-12T10:33:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Lokeren",
+                "Coordinates": "3987795, 51108062",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T10:38:00",
+                  "ActualArrival": "2016-12-12T10:38:00",
+                  "Departure": "2016-12-12T10:39:00",
+                  "ActualDeparture": "2016-12-12T10:40:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Zele",
+                "Coordinates": "4042000, 51073256",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T10:46:00",
+                  "ActualArrival": "2016-12-12T10:46:00",
+                  "Departure": "2016-12-12T10:47:00",
+                  "ActualDeparture": "2016-12-12T10:47:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Dendermonde",
+                "Coordinates": "4101427, 51022782",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:10:00",
+                  "Arrival": "2016-12-12T10:54:00",
+                  "ActualArrival": "2016-12-12T10:54:00",
+                  "Departure": "2016-12-12T11:04:00",
+                  "ActualDeparture": "2016-12-12T11:04:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Jette",
+                "Coordinates": "4326221, 50880833",
+                "ArrivalPlatform": "4",
+                "DeparturePlatform": "4",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T11:23:00",
+                  "ActualArrival": "2016-12-12T11:23:00",
+                  "Departure": "2016-12-12T11:25:00",
+                  "ActualDeparture": "2016-12-12T11:25:00"
+                },
+                "Platform": "4"
+              },
+              {
+                "Name": "Bru.-Noord / Brux.-Nord",
+                "Coordinates": "4360847, 50859663",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T11:31:00",
+                  "ActualArrival": "2016-12-12T11:32:00",
+                  "Departure": "2016-12-12T11:34:00",
+                  "ActualDeparture": "2016-12-12T11:34:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Bru.-Centraal / Brux.-Central",
+                "Coordinates": "4356802, 50845658",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T11:37:00",
+                  "ActualArrival": "2016-12-12T11:37:00",
+                  "Departure": "2016-12-12T11:38:00",
+                  "ActualDeparture": "2016-12-12T11:38:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Brussel-Zuid / Bruxelles-Midi",
+                "Coordinates": "4336531, 50835707",
+                "ArrivalPlatform": "9",
+                "DeparturePlatform": "9",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:03:00",
+                  "Arrival": "2016-12-12T11:42:00",
+                  "ActualArrival": "2016-12-12T11:42:00",
+                  "Departure": "2016-12-12T11:45:00",
+                  "ActualDeparture": "2016-12-12T11:45:00"
+                },
+                "Platform": "9"
+              },
+              {
+                "Name": "Halle",
+                "Coordinates": "4240634, 50733931",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T11:57:00",
+                  "ActualArrival": "2016-12-12T11:57:00",
+                  "Departure": "2016-12-12T11:58:00",
+                  "ActualDeparture": "2016-12-12T11:58:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Edingen / Enghien",
+                "Coordinates": "4047357, 50697273",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T12:08:00",
+                  "ActualArrival": "2016-12-12T12:08:00",
+                  "Departure": "2016-12-12T12:10:00",
+                  "ActualDeparture": "2016-12-12T12:10:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Silly",
+                "Coordinates": "3935864, 50662386",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T12:16:00",
+                  "ActualArrival": "2016-12-12T12:16:00",
+                  "Departure": "2016-12-12T12:17:00",
+                  "ActualDeparture": "2016-12-12T12:17:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Ath",
+                "Coordinates": "3777429, 50626933",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:03:00",
+                  "Arrival": "2016-12-12T12:26:00",
+                  "ActualArrival": "2016-12-12T12:26:00",
+                  "Departure": "2016-12-12T12:29:00",
+                  "ActualDeparture": "2016-12-12T12:29:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Leuze",
+                "Coordinates": "3616873, 50600612",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T12:37:00",
+                  "ActualArrival": "2016-12-12T12:37:00",
+                  "Departure": "2016-12-12T12:38:00",
+                  "ActualDeparture": "2016-12-12T12:38:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Tournai",
+                "Coordinates": "3396943, 50613134",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T12:51:00",
+                  "ActualArrival": "2016-12-12T12:51:00",
+                  "Departure": "2016-12-12T12:53:00",
+                  "ActualDeparture": "2016-12-12T12:53:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Froyennes",
+                "Coordinates": "3354837, 50629890",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T12:57:00",
+                  "ActualArrival": "2016-12-12T12:57:00",
+                  "Departure": "2016-12-12T12:57:00",
+                  "ActualDeparture": "2016-12-12T12:57:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Herseaux",
+                "Coordinates": "3245960, 50713894",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T13:07:00",
+                  "ActualArrival": "2016-12-12T13:07:00",
+                  "Departure": "2016-12-12T13:07:00",
+                  "ActualDeparture": "2016-12-12T13:07:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Moeskroen / Mouscron",
+                "Coordinates": "3228449, 50741006",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T13:11:00",
+                  "ActualArrival": "2016-12-12T13:11:00",
+                  "Departure": "2016-12-12T13:12:00",
+                  "ActualDeparture": "2016-12-12T13:12:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Kortrijk",
+                "Coordinates": "3264550, 50824507",
+                "ArrivalPlatform": "6",
+                "DeparturePlatform": null,
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "13:21:00",
+                  "Arrival": "2016-12-12T13:21:00",
+                  "ActualArrival": "2016-12-12T13:21:00",
+                  "Departure": "2016-12-12T00:00:00+01:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": null
+              }
+            ],
+            "Count": 20
+          },
+          "Cancelled": false,
+          "Time": {
+            "Date": "2016-12-12T00:00:00",
+            "Duration": "00:55:00",
+            "Arrival": "2016-12-12T11:42:00",
+            "ActualArrival": "2016-12-12T11:42:00",
+            "Departure": "2016-12-12T10:47:00",
+            "ActualDeparture": "2016-12-12T10:47:00"
+          },
+          "Jid": null,
+          "Cid": null
+        },
+        {
+          "Number": 3208,
+          "TrainType": 1,
+          "FullId": "IC 3208",
+          "DepartureStation": "Kortrijk",
+          "TerminusStation": "Sint-Niklaas",
+          "Stops": {
+            "Stations": [
+              {
+                "Name": "Kortrijk",
+                "Coordinates": "3264550, 50824507",
+                "ArrivalPlatform": null,
+                "DeparturePlatform": "7",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-08:39:00",
+                  "Arrival": "2016-12-12T00:00:00+01:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T08:39:00",
+                  "ActualDeparture": "2016-12-12T08:39:00"
+                },
+                "Platform": null
+              },
+              {
+                "Name": "Moeskroen / Mouscron",
+                "Coordinates": "3228449, 50741006",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T08:47:00",
+                  "ActualArrival": "2016-12-12T08:58:00",
+                  "Departure": "2016-12-12T08:48:00",
+                  "ActualDeparture": "2016-12-12T08:58:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Herseaux",
+                "Coordinates": "3245960, 50713894",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T08:55:00",
+                  "ActualArrival": "2016-12-12T09:03:00",
+                  "Departure": "2016-12-12T08:55:00",
+                  "ActualDeparture": "2016-12-12T09:04:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Froyennes",
+                "Coordinates": "3354837, 50629890",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T09:03:00",
+                  "ActualArrival": "2016-12-12T09:08:00",
+                  "Departure": "2016-12-12T09:03:00",
+                  "ActualDeparture": "2016-12-12T09:10:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Tournai",
+                "Coordinates": "3396943, 50613134",
+                "ArrivalPlatform": "4",
+                "DeparturePlatform": "4",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T09:07:00",
+                  "ActualArrival": "2016-12-12T09:10:00",
+                  "Departure": "2016-12-12T09:09:00",
+                  "ActualDeparture": "2016-12-12T09:10:00"
+                },
+                "Platform": "4"
+              },
+              {
+                "Name": "Leuze",
+                "Coordinates": "3616873, 50600612",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T09:20:00",
+                  "ActualArrival": "2016-12-12T09:20:00",
+                  "Departure": "2016-12-12T09:21:00",
+                  "ActualDeparture": "2016-12-12T09:22:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Ath",
+                "Coordinates": "3777429, 50626933",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:04:00",
+                  "Arrival": "2016-12-12T09:31:00",
+                  "ActualArrival": "2016-12-12T09:31:00",
+                  "Departure": "2016-12-12T09:34:00",
+                  "ActualDeparture": "2016-12-12T09:35:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Silly",
+                "Coordinates": "3935864, 50662386",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T09:42:00",
+                  "ActualArrival": "2016-12-12T09:42:00",
+                  "Departure": "2016-12-12T09:43:00",
+                  "ActualDeparture": "2016-12-12T09:43:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Edingen / Enghien",
+                "Coordinates": "4047357, 50697273",
+                "ArrivalPlatform": "4",
+                "DeparturePlatform": "4",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T09:50:00",
+                  "ActualArrival": "2016-12-12T09:50:00",
+                  "Departure": "2016-12-12T09:52:00",
+                  "ActualDeparture": "2016-12-12T09:52:00"
+                },
+                "Platform": "4"
+              },
+              {
+                "Name": "Halle",
+                "Coordinates": "4240634, 50733931",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T10:02:00",
+                  "ActualArrival": "2016-12-12T10:03:00",
+                  "Departure": "2016-12-12T10:03:00",
+                  "ActualDeparture": "2016-12-12T10:04:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Brussel-Zuid / Bruxelles-Midi",
+                "Coordinates": "4336531, 50835707",
+                "ArrivalPlatform": "7",
+                "DeparturePlatform": "7",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:04:00",
+                  "Arrival": "2016-12-12T10:15:00",
+                  "ActualArrival": "2016-12-12T10:15:00",
+                  "Departure": "2016-12-12T10:18:00",
+                  "ActualDeparture": "2016-12-12T10:19:00"
+                },
+                "Platform": "7"
+              },
+              {
+                "Name": "Bru.-Centraal / Brux.-Central",
+                "Coordinates": "4356802, 50845658",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T10:21:00",
+                  "ActualArrival": "2016-12-12T10:22:00",
+                  "Departure": "2016-12-12T10:22:00",
+                  "ActualDeparture": "2016-12-12T10:23:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Bru.-Noord / Brux.-Nord",
+                "Coordinates": "4360847, 50859663",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T10:26:00",
+                  "ActualArrival": "2016-12-12T10:26:00",
+                  "Departure": "2016-12-12T10:28:00",
+                  "ActualDeparture": "2016-12-12T10:28:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Jette",
+                "Coordinates": "4326221, 50880833",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T10:34:00",
+                  "ActualArrival": "2016-12-12T10:34:00",
+                  "Departure": "2016-12-12T10:36:00",
+                  "ActualDeparture": "2016-12-12T10:36:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Dendermonde",
+                "Coordinates": "4101427, 51022782",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:12:00",
+                  "Arrival": "2016-12-12T10:55:00",
+                  "ActualArrival": "2016-12-12T10:55:00",
+                  "Departure": "2016-12-12T11:07:00",
+                  "ActualDeparture": "2016-12-12T11:07:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Zele",
+                "Coordinates": "4042000, 51073256",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T11:14:00",
+                  "ActualArrival": "2016-12-12T11:14:00",
+                  "Departure": "2016-12-12T11:15:00",
+                  "ActualDeparture": "2016-12-12T11:15:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Lokeren",
+                "Coordinates": "3987795, 51108062",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T11:21:00",
+                  "ActualArrival": "2016-12-12T11:21:00",
+                  "Departure": "2016-12-12T11:22:00",
+                  "ActualDeparture": "2016-12-12T11:22:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Sinaai",
+                "Coordinates": "4068940, 51143399",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T11:28:00",
+                  "ActualArrival": "2016-12-12T11:28:00",
+                  "Departure": "2016-12-12T11:28:00",
+                  "ActualDeparture": "2016-12-12T11:28:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Belsele",
+                "Coordinates": "4088609, 51150995",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T11:31:00",
+                  "ActualArrival": "2016-12-12T11:31:00",
+                  "Departure": "2016-12-12T11:31:00",
+                  "ActualDeparture": "2016-12-12T11:31:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Sint-Niklaas",
+                "Coordinates": "4142966, 51171472",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": null,
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "11:36:00",
+                  "Arrival": "2016-12-12T11:36:00",
+                  "ActualArrival": "2016-12-12T11:36:00",
+                  "Departure": "2016-12-12T00:00:00+01:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": null
+              }
+            ],
+            "Count": 20
+          },
+          "Cancelled": false,
+          "Time": {
+            "Date": "2016-12-12T00:00:00",
+            "Duration": "-11:15:00",
+            "Arrival": "2016-12-12T12:38:00",
+            "ActualArrival": "2016-12-12T00:00:00+01:00",
+            "Departure": "2016-12-12T11:15:00",
+            "ActualDeparture": "2016-12-12T11:15:00"
+          },
+          "Jid": null,
+          "Cid": null
+        },
+        {
+          "Number": 3010,
+          "TrainType": 1,
+          "FullId": "IC 3010",
+          "DepartureStation": "Antwerpen-Centraal",
+          "TerminusStation": "Gent-Sint-Pieters",
+          "Stops": {
+            "Stations": [
+              {
+                "Name": "Antwerpen-Centraal",
+                "Coordinates": "4421102, 51217200",
+                "ArrivalPlatform": null,
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-10:51:00",
+                  "Arrival": "2016-12-12T00:00:00+01:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T10:51:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": null
+              },
+              {
+                "Name": "Antwerpen-Berchem",
+                "Coordinates": "4432221, 51199231",
+                "ArrivalPlatform": "6",
+                "DeparturePlatform": "6",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:03:00",
+                  "Arrival": "2016-12-12T10:55:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T10:58:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "6"
+              },
+              {
+                "Name": "Antwerpen-Zuid",
+                "Coordinates": "4390260, 51197829",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T11:02:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:03:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Sint-Niklaas",
+                "Coordinates": "4142966, 51171472",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:03:00",
+                  "Arrival": "2016-12-12T11:15:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:18:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Lokeren",
+                "Coordinates": "3987795, 51108062",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T11:26:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:28:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Beervelde",
+                "Coordinates": "3879385, 51087531",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T11:33:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:34:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Gent-Dampoort",
+                "Coordinates": "3740591, 51056365",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T11:42:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:43:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Gent-Sint-Pieters",
+                "Coordinates": "3710675, 51035897",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": null,
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "11:52:00",
+                  "Arrival": "2016-12-12T11:52:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T00:00:00+01:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": null
+              }
+            ],
+            "Count": 8
+          },
+          "Cancelled": false,
+          "Time": {
+            "Date": "2016-12-12T00:00:00",
+            "Duration": "00:55:00",
+            "Arrival": "2016-12-12T12:42:00",
+            "ActualArrival": "2016-12-12T00:00:00+01:00",
+            "Departure": "2016-12-12T11:47:00",
+            "ActualDeparture": "2016-12-12T00:00:00+01:00"
+          },
+          "Jid": null,
+          "Cid": null
+        },
+        {
+          "Number": 2811,
+          "TrainType": 1,
+          "FullId": "IC 2811",
+          "DepartureStation": "Brugge",
+          "TerminusStation": "Brussels Airport - Zaventem",
+          "Stops": {
+            "Stations": [
+              {
+                "Name": "Brugge",
+                "Coordinates": "3216727, 51197226",
+                "ArrivalPlatform": null,
+                "DeparturePlatform": "4",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-11:32:00",
+                  "Arrival": "2016-12-12T00:00:00+01:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:32:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": null
+              },
+              {
+                "Name": "Aalter",
+                "Coordinates": "3447849, 51092295",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T11:46:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:48:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Gent-Sint-Pieters",
+                "Coordinates": "3710675, 51035897",
+                "ArrivalPlatform": "11",
+                "DeparturePlatform": "11",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:08:00",
+                  "Arrival": "2016-12-12T12:01:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:09:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "11"
+              },
+              {
+                "Name": "Brussel-Zuid / Bruxelles-Midi",
+                "Coordinates": "4336531, 50835707",
+                "ArrivalPlatform": "8",
+                "DeparturePlatform": "8",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T12:38:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:40:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "8"
+              },
+              {
+                "Name": "Bru.-Centraal / Brux.-Central",
+                "Coordinates": "4356802, 50845658",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T12:43:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:44:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Bru.-Noord / Brux.-Nord",
+                "Coordinates": "4360847, 50859663",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T12:48:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:50:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Brussels Airport - Zaventem",
+                "Coordinates": "4482076, 50896456",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": null,
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "13:01:00",
+                  "Arrival": "2016-12-12T13:01:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T00:00:00+01:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": null
+              }
+            ],
+            "Count": 7
+          },
+          "Cancelled": false,
+          "Time": {
+            "Date": "0001-01-01T00:00:00",
+            "Duration": "01:29:00",
+            "Arrival": "2016-12-12T13:01:00",
+            "ActualArrival": "2016-12-12T00:00:00+01:00",
+            "Departure": "2016-12-12T11:32:00",
+            "ActualDeparture": "2016-12-12T00:00:00+01:00"
+          },
+          "Jid": null,
+          "Cid": null
+        },
+        {
+          "Number": 3234,
+          "TrainType": 1,
+          "FullId": "IC 3234",
+          "DepartureStation": "Sint-Niklaas",
+          "TerminusStation": "Kortrijk",
+          "Stops": {
+            "Stations": [
+              {
+                "Name": "Sint-Niklaas",
+                "Coordinates": "4142966, 51171472",
+                "ArrivalPlatform": null,
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-11:24:00",
+                  "Arrival": "2016-12-12T00:00:00+01:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:24:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": null
+              },
+              {
+                "Name": "Belsele",
+                "Coordinates": "4088609, 51150995",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T11:29:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:29:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Sinaai",
+                "Coordinates": "4068940, 51143399",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T11:32:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:32:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Lokeren",
+                "Coordinates": "3987795, 51108062",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T11:38:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:39:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Zele",
+                "Coordinates": "4042000, 51073256",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T11:46:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T11:47:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Dendermonde",
+                "Coordinates": "4101427, 51022782",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:10:00",
+                  "Arrival": "2016-12-12T11:54:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:04:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Jette",
+                "Coordinates": "4326221, 50880833",
+                "ArrivalPlatform": "4",
+                "DeparturePlatform": "4",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T12:23:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:25:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "4"
+              },
+              {
+                "Name": "Bru.-Noord / Brux.-Nord",
+                "Coordinates": "4360847, 50859663",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:03:00",
+                  "Arrival": "2016-12-12T12:31:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:34:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Bru.-Centraal / Brux.-Central",
+                "Coordinates": "4356802, 50845658",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T12:37:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:38:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Brussel-Zuid / Bruxelles-Midi",
+                "Coordinates": "4336531, 50835707",
+                "ArrivalPlatform": "9",
+                "DeparturePlatform": "9",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:03:00",
+                  "Arrival": "2016-12-12T12:42:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:45:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "9"
+              },
+              {
+                "Name": "Halle",
+                "Coordinates": "4240634, 50733931",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T12:57:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T12:58:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Edingen / Enghien",
+                "Coordinates": "4047357, 50697273",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T13:08:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T13:10:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Silly",
+                "Coordinates": "3935864, 50662386",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T13:16:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T13:17:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Ath",
+                "Coordinates": "3777429, 50626933",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:03:00",
+                  "Arrival": "2016-12-12T13:26:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T13:29:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Leuze",
+                "Coordinates": "3616873, 50600612",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T13:37:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T13:38:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Tournai",
+                "Coordinates": "3396943, 50613134",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:02:00",
+                  "Arrival": "2016-12-12T13:51:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T13:53:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Froyennes",
+                "Coordinates": "3354837, 50629890",
+                "ArrivalPlatform": "1",
+                "DeparturePlatform": "1",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T13:57:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T13:57:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "1"
+              },
+              {
+                "Name": "Herseaux",
+                "Coordinates": "3245960, 50713894",
+                "ArrivalPlatform": "2",
+                "DeparturePlatform": "2",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "00:00:00",
+                  "Arrival": "2016-12-12T14:07:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T14:07:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "2"
+              },
+              {
+                "Name": "Moeskroen / Mouscron",
+                "Coordinates": "3228449, 50741006",
+                "ArrivalPlatform": "3",
+                "DeparturePlatform": "3",
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "-00:01:00",
+                  "Arrival": "2016-12-12T14:11:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T14:12:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": "3"
+              },
+              {
+                "Name": "Kortrijk",
+                "Coordinates": "3264550, 50824507",
+                "ArrivalPlatform": "6",
+                "DeparturePlatform": null,
+                "Time": {
+                  "Date": "2016-12-12T00:00:00+01:00",
+                  "Duration": "14:21:00",
+                  "Arrival": "2016-12-12T14:21:00",
+                  "ActualArrival": "2016-12-12T00:00:00+01:00",
+                  "Departure": "2016-12-12T00:00:00+01:00",
+                  "ActualDeparture": "2016-12-12T00:00:00+01:00"
+                },
+                "Platform": null
+              }
+            ],
+            "Count": 20
+          },
+          "Cancelled": false,
+          "Time": {
+            "Date": "0001-01-01T00:00:00",
+            "Duration": "02:57:00",
+            "Arrival": "2016-12-12T14:21:00",
+            "ActualArrival": "2016-12-12T00:00:00+01:00",
+            "Departure": "2016-12-12T11:24:00",
+            "ActualDeparture": "2016-12-12T00:00:00+01:00"
+          },
+          "Jid": null,
+          "Cid": null
+        }
+      ],
+      "TransferStations": [
+        {
+          "FullId": "IC 3233",
+          "TerminusStation": "Kortrijk",
+          "TransferAt": null,
+          "ArrivalPlatform": "1",
+          "ArrivalTime": "2016-12-12T10:47:00",
+          "DeparturePlatform": "1",
+          "DepartureTime": "2016-12-12T10:47:00",
+          "StepOverTime": "00:00:00"
+        },
+        {
+          "FullId": "IC 3208",
+          "TerminusStation": "Sint-Niklaas",
+          "TransferAt": "Sint-Niklaas",
+          "ArrivalPlatform": null,
+          "ArrivalTime": "2016-12-12T00:00:00+01:00",
+          "DeparturePlatform": null,
+          "DepartureTime": "2016-12-12T00:00:00+01:00",
+          "StepOverTime": "00:00:00"
+        },
+        {
+          "FullId": "IC 3010",
+          "TerminusStation": "Gent-Sint-Pieters",
+          "TransferAt": "Lokeren",
+          "ArrivalPlatform": "2",
+          "ArrivalTime": "2016-12-12T11:21:00",
+          "DeparturePlatform": "1",
+          "DepartureTime": "2016-12-12T11:28:00",
+          "StepOverTime": "00:07:00"
+        },
+        {
+          "FullId": "IC 2811",
+          "TerminusStation": "Brussels Airport - Zaventem",
+          "TransferAt": "Gent-Sint-Pieters",
+          "ArrivalPlatform": "2",
+          "ArrivalTime": "2016-12-12T11:52:00",
+          "DeparturePlatform": "11",
+          "DepartureTime": "2016-12-12T12:09:00",
+          "StepOverTime": "00:17:00"
+        },
+        {
+          "FullId": "IC 3234",
+          "TerminusStation": "Kortrijk",
+          "TransferAt": "Brussel-Zuid / Bruxelles-Midi",
+          "ArrivalPlatform": "8",
+          "ArrivalTime": "2016-12-12T12:38:00",
+          "DeparturePlatform": "9",
+          "DepartureTime": "2016-12-12T12:45:00",
+          "StepOverTime": "00:07:00"
+        }
+      ]
+    }
+  ]
+}

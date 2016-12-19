@@ -155,7 +155,7 @@ public class Route {
 			/*
 			 * Zelfde werkwijze als de methode zonder transfers met het verschil dat ik eerst op zoek ga naar de eindstation
 			 * Eens ik die gevonden heb, ga ik kijken ofdat het op dezelfde treinroute zit als de startstation. Deze treinroute is altijd de eerste treinroute.
-			 * Als dit niet het geval is en het ligt op een andere treinroute  
+			 * Als dit niet het geval is en het ligt op een andere treinroute dan gaaat het over naar de volgende if structuur.
 			 */
 			for (int i=0;i<routes.size();i++) {
 				if (eind) {
@@ -179,10 +179,18 @@ public class Route {
 			if (eind && route_index == 0) {
 				fillQueriedRouteWithoutTransfers();
 			}else if (eind) {
+				/*
+				 * De eindstation is gevonden en we weten precies waar hij ligt met de route_index en station_index.
+				 * Nu gaan we net zoals in de zonder transfers methode de start vinden en vullen tot en met het eindstation met het einge verschil
+				 *het volgende.
+				 */
 					int m = 1;
 					
 					for (int h=0;h<routes.size();h++) {
-						
+						if (transfer_gevonden == false && h > 0 && m == 1) {
+							queried_route.clear();
+							break;
+						}
 						if (queried_route_compleet) {
 							break;
 						}
@@ -210,12 +218,18 @@ public class Route {
 							else if (h == route_index && !transfer_gevonden) {
 								queried_route.add(routes.get(h).get(f));
 							}
+							/*
+							 * we gaan hier nu kijken naar elke transferstation die we passeren en als we die vinden springen we naar de volgende treinroute
+							 * met die transfer en we voegen weer pas bij wanneer we aan de die transferstation geraken tot aan de volgende transfer ofwel tot aan
+							 * de treinroute met de route index van de eindstation en die worden behandeld door de 2 if-structuren hierboven.
+							 */
 							else if (routes.get(h).get(f).getNaam().toLowerCase().equals(transfer_stations.get(0).get(m).toLowerCase())) {
 								queried_route.add(routes.get(h).get(f));
 								if (!transfer_gevonden) {
 									transfer_gevonden = true;
 									break;
-								} else {
+								}
+								else {
 									transfer_gevonden = false;
 									m++;
 								}
@@ -257,6 +271,11 @@ public class Route {
 	}
 	
 	public double calculateDistance() {
+		
+		/*
+		 * afstandberekening in vogelvlucht met de coördinaten van de begin- en eindstation.
+		 */
+		
 		double distance = 0;
 		
 		if (queried_route.isEmpty()) {
@@ -355,6 +374,10 @@ public class Route {
 		}
 		
 		essentials.add(queried_route.get(0));
+		
+		/*
+		 * Ik return hier een list van stations met slechts de begin- eind- en transferstations voor gebruik in de views.
+		 */
 		for (int i=1;i<queried_route.size();i++) {
 			if (queried_route.get(i).getNaam().toLowerCase().contains(queried_route.get(i-1).getNaam().toLowerCase())) {
 				essentials.add(queried_route.get(i-1));
