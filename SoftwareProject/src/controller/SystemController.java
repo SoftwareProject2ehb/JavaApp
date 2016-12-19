@@ -25,10 +25,12 @@ import data_control.UserDAO.FindUser;
 public abstract class SystemController {
 	public static SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
+	private String system_station;
 		
 	public static void startUp() {
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
+		SelectStationController.initialize(new SelectStationView());
 		LoginController.initialize(new LoginView());
 		ActionMenuController.initialize(new ActionMenuView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
@@ -329,6 +331,7 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		}
 		else{
 			ActionMenuController.switchToActionMenuView();
+			//SelectStationController.switchToSelectStationView();
 		}
 	}
 	
@@ -367,5 +370,13 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 			}
 		}
 		return station_list;
+	}
+
+	public String getSystem_station() {
+		return system_station;
+	}
+
+	public void setSystem_station(String system_station) {
+		this.system_station = system_station;
 	}
 }

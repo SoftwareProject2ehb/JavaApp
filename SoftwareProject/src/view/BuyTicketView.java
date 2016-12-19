@@ -8,29 +8,19 @@ import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
 
-import org.apache.pdfbox.io.IOUtils;
-
 import controller.ActionMenuController;
 import controller.SystemController;
 import controller.TicketController;
 import utilities.DateConverter;
 import utilities.PatternFilter;
 
-import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
 public class BuyTicketView extends JPanel {

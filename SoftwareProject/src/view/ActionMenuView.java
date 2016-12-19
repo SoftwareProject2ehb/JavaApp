@@ -10,27 +10,12 @@ import controller.SubscriptionController;
 import controller.SystemController;
 import controller.TicketController;
 
-import java.awt.GridLayout;
-
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import java.awt.GridBagLayout;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
 
