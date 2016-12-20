@@ -170,7 +170,7 @@ public class LostObjectView extends JPanel {
 		add(tabbedPane);
 		// BEGIN EVERYTHING ABOUT PANEL ADD
 		JPanel pnlAdd = new JPanel();
-		tabbedPane.addTab("ADD", null, pnlAdd, null);
+		tabbedPane.addTab(Language.getString("add"), null, pnlAdd, null);
 		SpringLayout sl_pnlAdd = new SpringLayout();
 		pnlAdd.setLayout(sl_pnlAdd);
 		

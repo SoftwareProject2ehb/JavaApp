@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
@@ -12,6 +14,8 @@ import model.Price.betalingsType;
 import model.User;
 import model.User.Role;
 import utilities.Encryptor;
+import utilities.Language;
+import utilities.Language.LANGUAGE;
 import view.*;
 
 public class ConfigurationController {
@@ -332,5 +336,21 @@ public class ConfigurationController {
 	
 	public static void deleteSubPrice() {
 		SystemController.deleteSubscriptionType(price_config.getSubscriptionPrice());
+	}
+	
+	public static void changeLanguage(String language)
+	{
+		LANGUAGE l = Language.getCurrentLanguage();
+		System.out.println(language);
+		if(language.equals(Language.getString("dutch")))
+			l = LANGUAGE.DUTCH;
+		if(language.equals(Language.getString("french")))
+			l = LANGUAGE.FRENCH;
+		if(language.equals(Language.getString("english")))
+			l = LANGUAGE.ENGLISH;
+		System.out.println("Language to set: " + l.toString());
+		Language.setLanguage(l);
+		Language.refresh();
+		//refresh all views
 	}
 }

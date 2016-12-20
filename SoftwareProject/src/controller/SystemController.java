@@ -1,7 +1,6 @@
 package controller;
 
 import model.*;
-import model.Price.betalingsType;
 import model.User.Role;
 import utilities.*;
 import utilities.Language.LANGUAGE;
@@ -10,13 +9,11 @@ import view.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
@@ -31,11 +28,10 @@ public abstract class SystemController {
 		
 	public static void startUp() {
 		//Set language of the application and load all language strings
-		Language.setLanguage(LANGUAGE.ENGLISH);
+		Language.setLanguage(LANGUAGE.DUTCH);
 		Language.refresh();
 		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
-		SelectStationController.initialize(new SelectStationView());
 		LoginController.initialize(new LoginView());
 		ActionMenuController.initialize(new ActionMenuView(), new AccountInfoView());
 		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());

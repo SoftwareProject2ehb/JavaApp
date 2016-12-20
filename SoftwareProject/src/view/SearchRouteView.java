@@ -154,7 +154,7 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnTerug, -10, SpringLayout.SOUTH, this);
 		add(btnTerug);
 		
-		btnZoek = new JButton("Zoek");
+		btnZoek = new JButton(Language.getString("search"));
 		springLayout.putConstraint(SpringLayout.NORTH, btnZoek, 0, SpringLayout.NORTH, btnTerug);
 		btnZoek.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
