@@ -9,13 +9,13 @@ import java.util.List;
 
 public abstract class Cacher {
 
-	private static final String EXTENSION = ".txt";
-	private static final String PATH = "../cache/";
+	private static final String EXTENSION = ".json";
+	private static final String PATH = "cache/";
 	private static final Charset ENCODING = Charset.forName("UTF-8");
 	
 	public static String formatter(String from, String to)
 	{
-		String result = from + "-" + to + EXTENSION;
+		String result = "cache_" + from.toLowerCase() + "_" + to.toLowerCase() + EXTENSION;
 		return result;
 	}
 	
