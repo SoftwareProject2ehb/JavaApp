@@ -3,6 +3,7 @@ package controller;
 import model.*;
 import model.Price.betalingsType;
 import model.User.Role;
+import threads.CacheAllThread;
 import utilities.*;
 import view.*;
 
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -26,10 +28,15 @@ public abstract class SystemController {
 	public final static String EURO = "\u20ac";
 	public static SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
-	private String system_station;
 		
 	public static void startUp() {
-		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
+		//Delete all, if any, previously cached routes
+		Cacher.deleteAll();
+		//Set the station where the system is located and start caching all routes in the background
+		Cacher.setStationOfSystem("Tienen");
+		Thread cacheAll = new Thread(new CacheAllThread());
+		cacheAll.start();
+		//Initialize controllers and views
 		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
 		SelectStationController.initialize(new SelectStationView());
 		LoginController.initialize(new LoginView());
@@ -46,6 +53,8 @@ public abstract class SystemController {
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		        try {
 					BaseDAO.getConnection().close();
+					//Delete all cached routes
+					Cacher.deleteAll();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -391,13 +400,5 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 			}
 		}
 		return station_list;
-	}
-
-	public String getSystem_station() {
-		return system_station;
-	}
-
-	public void setSystem_station(String system_station) {
-		this.system_station = system_station;
 	}
 }

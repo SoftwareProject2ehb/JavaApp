@@ -18,7 +18,7 @@ public final class RouteCalculator {
 		String[] stops;
 		
 		try {
-			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2, station_1, station_2);
+			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2);
 			JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
 			stops = new String[stations.length()];
 			
@@ -39,7 +39,7 @@ public final class RouteCalculator {
 		String station_2_coordinates = "";
 		
 		try {
-			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2, station_1, station_2);
+			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2);
 			JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
 			
 			for (int i = 0; i < stations.length() ; i++) {
@@ -67,7 +67,7 @@ public final class RouteCalculator {
 	public static int calculateStations(String station_1, String station_2) {
 		int station_1_index = -1, station_2_index = -1;
 		try {
-			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2, station_1, station_2);
+			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2);
 			JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
 			
 			for (int i = 0; i < stations.length() ; i++) {
@@ -96,7 +96,7 @@ public final class RouteCalculator {
 	public static double calculateTime(String station_1, String station_2) {
 		Timestamp station_1_time = null, station_2_time = null;
 		try {
-			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2, station_1, station_2);
+			JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + station_1 + "/" + station_2);
 			//JSONObject json_data = ApiAccesser.readJsonFromUrl("http://dtsl.ehb.be/~bernd.wethmar/sp2.json");
 			JSONArray stations = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("Trains").getJSONObject(0).getJSONObject("Stops").getJSONArray("Stations");
 			
