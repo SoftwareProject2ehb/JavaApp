@@ -53,8 +53,6 @@ public abstract class SystemController {
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		        try {
 					BaseDAO.getConnection().close();
-					//Delete all cached routes
-					Cacher.deleteAll();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
