@@ -15,6 +15,11 @@ public class FrameController {
 		return frame;
 	}
 	
+	public static void refresh()
+	{
+		frame = null;
+	}
+	
 	public static void changeSize(int width, int height) {
 		frame.getContentpane().setPreferredSize(new Dimension(width, height));
 		frame.setContentPane(frame.getContentpane());

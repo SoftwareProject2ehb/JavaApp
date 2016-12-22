@@ -37,6 +37,16 @@ public class ConfigurationController {
 		ConfigurationController.configuration = configuration;
 	}
 	
+	public static void refresh() {
+		ConfigurationController.report = null;
+		ConfigurationController.price_config = null;
+		ConfigurationController.find_user = null;
+		ConfigurationController.edit_user = null;
+		ConfigurationController.edit_password_view = null;
+		ConfigurationController.create_user = null;
+		ConfigurationController.configuration = null;
+	}
+	
 	public static void switchToReportView() {
 		FrameController.getFrame().switchTo("REPORT");
 	}
@@ -351,6 +361,12 @@ public class ConfigurationController {
 		System.out.println("Language to set: " + l.toString());
 		Language.setLanguage(l);
 		Language.refresh();
-		//refresh all views
+		try {
+			Thread.sleep(2500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		SystemController.refreshAll();
 	}
 }

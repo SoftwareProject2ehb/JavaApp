@@ -10,6 +10,10 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import controller.LostObjectController;
+import controller.SystemController;
+import view.LostObjectView;
+
 public abstract class Language {
 	public enum LANGUAGE {DUTCH, FRENCH, ENGLISH;
 		

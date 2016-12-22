@@ -30,16 +30,8 @@ public abstract class SystemController {
 		//Set language of the application and load all language strings
 		Language.setLanguage(LANGUAGE.DUTCH);
 		Language.refresh();
-		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
-		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
-		LoginController.initialize(new LoginView());
-		ActionMenuController.initialize(new ActionMenuView(), new AccountInfoView());
-		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
-		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(),new EditPasswordView(), new ConfigurationView());
-		RouteController.initialize(new SearchRouteView());
-		LostObjectController.initialize(new LostObjectView());
-		ReportController.initialize(new ReportView());
+		
+		initializeAll();
 		
 		FrameController.getFrame().addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
@@ -52,6 +44,36 @@ public abstract class SystemController {
 				}
 		    }
 		});
+		FrameController.getFrame().setVisible(true);
+	}
+	
+	private static void initializeAll()
+	{
+		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
+		LoginController.initialize(new LoginView());
+		ActionMenuController.initialize(new ActionMenuView(), new AccountInfoView());
+		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
+		TicketController.initialize(new BuyTicketView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(),new EditPasswordView(), new ConfigurationView());
+		RouteController.initialize(new SearchRouteView());
+		LostObjectController.initialize(new LostObjectView());
+		ReportController.initialize(new ReportView());
+	}
+	
+	public static void refreshAll()
+	{
+		FrameController.getFrame().setVisible(false);
+		FrameController.refresh();
+		CustomerController.refresh();
+		LoginController.refresh();
+		ActionMenuController.refresh();
+		SubscriptionController.refresh();
+		TicketController.refresh();
+		ConfigurationController.refresh();
+		RouteController.refresh();
+		LostObjectController.refresh();
+		ReportController.refresh();
+		initializeAll();
 		FrameController.getFrame().setVisible(true);
 	}
 	
