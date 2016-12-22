@@ -47,7 +47,7 @@ public class ConfigurationView extends JPanel {
 		this.add(lblConfiguratie);
 		
 		JButton btnRapporten = new JButton(new ImageIcon(reports_icon_path));
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnRapporten, 72, SpringLayout.WEST, this);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnRapporten, 0, SpringLayout.WEST, lblConfiguratie);
 		btnRapporten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToReportView();
@@ -56,7 +56,6 @@ public class ConfigurationView extends JPanel {
 		add(btnRapporten);
 		
 		JButton btnPrijsconfg = new JButton(new ImageIcon(priceconfig_icon_path));
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnPrijsconfg, 77, SpringLayout.EAST, btnRapporten);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnPrijsconfg, 0, SpringLayout.SOUTH, btnRapporten);
 		btnPrijsconfg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -66,8 +65,9 @@ public class ConfigurationView extends JPanel {
 		add(btnPrijsconfg);
 		
 		JButton btnGebruikers = new JButton(new ImageIcon(users_icon_path));
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnGebruikers, 156, SpringLayout.NORTH, this);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnRapporten, -7, SpringLayout.NORTH, btnGebruikers);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnPrijsconfg, -69, SpringLayout.WEST, btnGebruikers);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnGebruikers, 0, SpringLayout.SOUTH, btnRapporten);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnGebruikers, -24, SpringLayout.EAST, this);
 		btnGebruikers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.switchToFindUserView();
@@ -76,7 +76,7 @@ public class ConfigurationView extends JPanel {
 		add(btnGebruikers);
 		
 		JButton btnTerug = new JButton(Language.getString("return"));
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnGebruikers, 74, SpringLayout.EAST, btnTerug);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnRapporten, -64, SpringLayout.NORTH, btnTerug);
 		btnTerug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();
@@ -87,6 +87,9 @@ public class ConfigurationView extends JPanel {
 		add(btnTerug);
 		
 		JComboBox comboBox = new JComboBox();
+		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox, 256, SpringLayout.WEST, this);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, comboBox, 0, SpringLayout.SOUTH, btnTerug);
+		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox, -6, SpringLayout.EAST, this);
 		comboBox.setModel(new DefaultComboBoxModel(Language.getLanguages().toArray()));
 		comboBox.addItemListener(new ItemListener() {
 	        public void itemStateChanged(ItemEvent event) {
@@ -96,18 +99,14 @@ public class ConfigurationView extends JPanel {
 	        		}
 	        	}
 	        });
-		
-		sl_contentPane.putConstraint(SpringLayout.NORTH, comboBox, 0, SpringLayout.NORTH, lblConfiguratie);
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox, -150, SpringLayout.EAST, this);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox, 0, SpringLayout.EAST, this);
 		comboBox.setMaximumRowCount(10);
 		add(comboBox);
 		
-		JLabel lblNewLabel = new JLabel(Language.getString("systemlanguage"));
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel, 2, SpringLayout.NORTH, comboBox);
-		sl_contentPane.putConstraint(SpringLayout.EAST, lblNewLabel, -6, SpringLayout.WEST, comboBox);
-		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		add(lblNewLabel);
+		JLabel lblSystemLanguage = new JLabel(Language.getString("systemlanguage"));
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblSystemLanguage, 3, SpringLayout.NORTH, btnTerug);
+		sl_contentPane.putConstraint(SpringLayout.EAST, lblSystemLanguage, -6, SpringLayout.WEST, comboBox);
+		lblSystemLanguage.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		add(lblSystemLanguage);
 	}
 }
 

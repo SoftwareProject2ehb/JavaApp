@@ -367,6 +367,7 @@ public class ConfigurationController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		JOptionPane.showMessageDialog(FrameController.getFrame(), Language.getString("languagechange"));
 		SystemController.refreshAll();
 	}
 }

@@ -71,6 +71,8 @@ public class LoginView extends JPanel {
 		txtPassword.setColumns(10);
 		
 		JButton btnMeldAan = new JButton(Language.getString("login"));
+		springLayout.putConstraint(SpringLayout.NORTH, btnMeldAan, 6, SpringLayout.SOUTH, txtPassword);
+		springLayout.putConstraint(SpringLayout.EAST, btnMeldAan, 0, SpringLayout.EAST, txtUsername);
 		btnMeldAan.addActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(ActionEvent e) {
@@ -82,11 +84,13 @@ public class LoginView extends JPanel {
             	}
             }
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnMeldAan, 44, SpringLayout.SOUTH, lblPaswoord);
-		springLayout.putConstraint(SpringLayout.WEST, btnMeldAan, 0, SpringLayout.WEST, lblGebruikersnaam);
 		add(btnMeldAan);
 		
 		JButton btnSluiten = new JButton(Language.getString("close"));
+		btnSluiten.setBackground(new Color(250, 128, 114));
+		springLayout.putConstraint(SpringLayout.NORTH, btnSluiten, 6, SpringLayout.SOUTH, txtPassword);
+		springLayout.putConstraint(SpringLayout.WEST, btnSluiten, 0, SpringLayout.WEST, lblGebruikersnaam);
+		springLayout.putConstraint(SpringLayout.EAST, btnSluiten, -225, SpringLayout.EAST, this);
 		btnSluiten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
             	try {
@@ -98,9 +102,6 @@ public class LoginView extends JPanel {
             	System.exit(0);
             }
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnSluiten, 44, SpringLayout.SOUTH, txtPassword);
-		springLayout.putConstraint(SpringLayout.WEST, btnSluiten, 51, SpringLayout.EAST, btnMeldAan);
-		springLayout.putConstraint(SpringLayout.EAST, btnSluiten, 0, SpringLayout.EAST, txtUsername);
 		add(btnSluiten);
 		
 		springLayout.putConstraint(SpringLayout.NORTH, lblStatus, 6, SpringLayout.SOUTH, lblPaswoord);
