@@ -114,14 +114,4 @@ public abstract class Language {
 	{
 		return variables.get(name);
 	}
-	
-	public static int getSize()
-	{
-		return variables.size();
-	}
-	
-	public static int getSizeToBe()
-	{
-		return numberOfVariables;
-	}
 }

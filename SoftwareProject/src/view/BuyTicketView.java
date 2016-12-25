@@ -72,7 +72,7 @@ public class BuyTicketView extends JPanel {
 		add(cbbEindstation);
 		
 		JLabel lblDatum = new JLabel(Language.getString("date"));
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblDatum, 2, SpringLayout.NORTH, lblEindstation);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, lblDatum, 0, SpringLayout.NORTH, lblEindstation);
 		add(lblDatum);
 		
 		txtDatum = new JTextField();
@@ -87,7 +87,7 @@ public class BuyTicketView extends JPanel {
 		JLabel lblHeenenterugreis = new JLabel(Language.getString("returnjourney"));
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblDatum, 0, SpringLayout.WEST, lblHeenenterugreis);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblHeenenterugreis, 30, SpringLayout.EAST, cbbBeginstation);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblHeenenterugreis, 3, SpringLayout.SOUTH, lblBeginstation);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblHeenenterugreis, 0, SpringLayout.SOUTH, lblBeginstation);
 		add(lblHeenenterugreis);
 		
 		checkBox = new JCheckBox("");
@@ -103,7 +103,7 @@ public class BuyTicketView extends JPanel {
 		cbbType = new JComboBox();
 		cbbType.setModel(new DefaultComboBoxModel(new String[] {Language.getString("standard"), Language.getString("weekend")}));
 		sl_contentPane.putConstraint(SpringLayout.WEST, cbbType, 0, SpringLayout.WEST, cbbBeginstation);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, cbbType, 9, SpringLayout.SOUTH, lblTypeTicket);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, cbbType, 0, SpringLayout.SOUTH, lblTypeTicket);
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbType, 106, SpringLayout.EAST, lblTypeTicket);
 		add(cbbType);
 		
@@ -129,14 +129,14 @@ public class BuyTicketView extends JPanel {
 		
 		txtPrijs = new JTextField();
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtPrijs, 0, SpringLayout.WEST, lblDatum);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtPrijs, -55, SpringLayout.SOUTH, btnOfferte);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtPrijs, 0, SpringLayout.SOUTH, btnOfferte);
 		add(txtPrijs);
 		txtPrijs.setColumns(10);
 		txtPrijs.setEditable(false);
 		
-		JLabel lblPrijs = new JLabel(Language.getString("price"));
+		JLabel lblPrijs = new JLabel("Prijs");
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblPrijs, 0, SpringLayout.WEST, lblDatum);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPrijs, -35, SpringLayout.NORTH, txtPrijs);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPrijs, -6, SpringLayout.NORTH, txtPrijs);
 		add(lblPrijs);
 		
 		JButton btnTerugNaarMenu = new JButton(Language.getString("return"));
@@ -151,3 +151,4 @@ public class BuyTicketView extends JPanel {
 
 	}
 }
+

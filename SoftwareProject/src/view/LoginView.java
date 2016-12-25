@@ -59,7 +59,7 @@ public class LoginView extends JPanel {
 		
 		JLabel lblPaswoord = new JLabel(Language.getString("password"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblPaswoord, 5, SpringLayout.SOUTH, lblGebruikersnaam);
-		springLayout.putConstraint(SpringLayout.WEST, lblPaswoord, 0, SpringLayout.WEST, lblGebruikersnaam);
+		springLayout.putConstraint(SpringLayout.WEST, lblPaswoord, 5, SpringLayout.WEST, lblGebruikersnaam);
 		springLayout.putConstraint(SpringLayout.SOUTH, lblPaswoord, 25, SpringLayout.SOUTH, lblGebruikersnaam);
 		add(lblPaswoord);
 		
@@ -89,8 +89,8 @@ public class LoginView extends JPanel {
 		JButton btnSluiten = new JButton(Language.getString("close"));
 		btnSluiten.setBackground(new Color(250, 128, 114));
 		springLayout.putConstraint(SpringLayout.NORTH, btnSluiten, 6, SpringLayout.SOUTH, txtPassword);
-		springLayout.putConstraint(SpringLayout.WEST, btnSluiten, 0, SpringLayout.WEST, lblGebruikersnaam);
-		springLayout.putConstraint(SpringLayout.EAST, btnSluiten, -225, SpringLayout.EAST, this);
+		springLayout.putConstraint(SpringLayout.WEST, btnSluiten, -20, SpringLayout.WEST, lblGebruikersnaam);
+		springLayout.putConstraint(SpringLayout.EAST, btnSluiten, -260, SpringLayout.EAST, this);
 		btnSluiten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
             	try {
