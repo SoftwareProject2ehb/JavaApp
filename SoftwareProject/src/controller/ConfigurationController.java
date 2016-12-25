@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
@@ -12,6 +14,8 @@ import model.Price.betalingsType;
 import model.User;
 import model.User.Role;
 import utilities.Encryptor;
+import utilities.Language;
+import utilities.Language.LANGUAGE;
 import view.*;
 
 public class ConfigurationController {
@@ -31,6 +35,16 @@ public class ConfigurationController {
 		ConfigurationController.edit_password_view = edit_password_view;
 		ConfigurationController.create_user = create_user;
 		ConfigurationController.configuration = configuration;
+	}
+	
+	public static void refresh() {
+		ConfigurationController.report = null;
+		ConfigurationController.price_config = null;
+		ConfigurationController.find_user = null;
+		ConfigurationController.edit_user = null;
+		ConfigurationController.edit_password_view = null;
+		ConfigurationController.create_user = null;
+		ConfigurationController.configuration = null;
 	}
 	
 	public static void switchToReportView() {
@@ -332,5 +346,28 @@ public class ConfigurationController {
 	
 	public static void deleteSubPrice() {
 		SystemController.deleteSubscriptionType(price_config.getSubscriptionPrice());
+	}
+	
+	public static void changeLanguage(String language)
+	{
+		LANGUAGE l = Language.getCurrentLanguage();
+		System.out.println(language);
+		if(language.equals(Language.getString("dutch")))
+			l = LANGUAGE.DUTCH;
+		if(language.equals(Language.getString("french")))
+			l = LANGUAGE.FRENCH;
+		if(language.equals(Language.getString("english")))
+			l = LANGUAGE.ENGLISH;
+		System.out.println("Language to set: " + l.toString());
+		Language.setLanguage(l);
+		Language.refresh();
+		try {
+			Thread.sleep(2500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JOptionPane.showMessageDialog(FrameController.getFrame(), Language.getString("languagechange"));
+		SystemController.refreshAll();
 	}
 }

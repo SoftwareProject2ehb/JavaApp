@@ -25,6 +25,11 @@ public static FindSubscriptionView find_subscription;
 		SubscriptionController.find_subscription = find_subscription;
 	}
 	
+	public static void refresh() {
+		SubscriptionController.buy_subscription = null;
+		SubscriptionController.find_subscription = null;
+	}
+	
 	public static void switchToBuySubscriptionView() {
 		FrameController.getFrame().switchTo("BUY_SUBSCRIPTION");
 		FrameController.changeSize(500, 350);

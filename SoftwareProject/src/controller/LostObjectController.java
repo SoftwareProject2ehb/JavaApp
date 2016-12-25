@@ -23,10 +23,6 @@ public abstract class LostObjectController {
 	public static LostObjectView lost_object;
 	static ArrayList<LostObject> lijstLostobject;
 
-	
-	
-	
-	
 	private LostObjectController() {
 		
 	}
@@ -36,6 +32,10 @@ public abstract class LostObjectController {
 		LostObjectController.lost_object = lost_object;
 	}
 	
+	public static void refresh() {
+		
+		LostObjectController.lost_object = null;
+	}
 
 	public static void switchToLostObjectView() 
 	{

@@ -16,6 +16,7 @@ import data_control.BaseDAO;
 import model.SystemNMBS;
 import model.User;
 import utilities.Encryptor;
+import utilities.Language;
 
 import javax.swing.border.LineBorder;
 
@@ -34,7 +35,7 @@ public class LoginView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, panel, -10, SpringLayout.EAST, this);
 		add(panel);
 		
-		JLabel lblNewLabel = new JLabel("Beheersysteem NMBS");
+		JLabel lblNewLabel = new JLabel(Language.getString("appname"));
 		panel.add(lblNewLabel);
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 50, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel, 0, SpringLayout.WEST, this);
@@ -43,7 +44,7 @@ public class LoginView extends JPanel {
 		lblNewLabel.setFont(new Font("Simplified Arabic", Font.BOLD, 17));
 		
 
-		JLabel lblGebruikersnaam = new JLabel("Gebruikersnaam");
+		JLabel lblGebruikersnaam = new JLabel(Language.getString("username"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblGebruikersnaam, 70, SpringLayout.SOUTH, panel);
 		springLayout.putConstraint(SpringLayout.WEST, lblGebruikersnaam, 106, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, lblGebruikersnaam, 90, SpringLayout.SOUTH, panel);
@@ -56,9 +57,9 @@ public class LoginView extends JPanel {
 		add(txtUsername);
 		txtUsername.setColumns(10);
 		
-		JLabel lblPaswoord = new JLabel("Paswoord");
+		JLabel lblPaswoord = new JLabel(Language.getString("password"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblPaswoord, 5, SpringLayout.SOUTH, lblGebruikersnaam);
-		springLayout.putConstraint(SpringLayout.WEST, lblPaswoord, 0, SpringLayout.WEST, lblGebruikersnaam);
+		springLayout.putConstraint(SpringLayout.WEST, lblPaswoord, 5, SpringLayout.WEST, lblGebruikersnaam);
 		springLayout.putConstraint(SpringLayout.SOUTH, lblPaswoord, 25, SpringLayout.SOUTH, lblGebruikersnaam);
 		add(lblPaswoord);
 		
@@ -69,7 +70,9 @@ public class LoginView extends JPanel {
 		add(txtPassword);
 		txtPassword.setColumns(10);
 		
-		JButton btnMeldAan = new JButton("Meld Aan");
+		JButton btnMeldAan = new JButton(Language.getString("login"));
+		springLayout.putConstraint(SpringLayout.NORTH, btnMeldAan, 6, SpringLayout.SOUTH, txtPassword);
+		springLayout.putConstraint(SpringLayout.EAST, btnMeldAan, 0, SpringLayout.EAST, txtUsername);
 		btnMeldAan.addActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(ActionEvent e) {
@@ -77,15 +80,17 @@ public class LoginView extends JPanel {
             		SystemController.defaultPasswordCheck();
             	} else {
             		lblStatus.setForeground(Color.RED);
-                    lblStatus.setText("Ongeldige combinatie.");
+                    lblStatus.setText(Language.getString("unvalidcombo"));
             	}
             }
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnMeldAan, 44, SpringLayout.SOUTH, lblPaswoord);
-		springLayout.putConstraint(SpringLayout.WEST, btnMeldAan, 0, SpringLayout.WEST, lblGebruikersnaam);
 		add(btnMeldAan);
 		
-		JButton btnSluiten = new JButton("Sluiten");
+		JButton btnSluiten = new JButton(Language.getString("close"));
+		btnSluiten.setBackground(new Color(250, 128, 114));
+		springLayout.putConstraint(SpringLayout.NORTH, btnSluiten, 6, SpringLayout.SOUTH, txtPassword);
+		springLayout.putConstraint(SpringLayout.WEST, btnSluiten, -20, SpringLayout.WEST, lblGebruikersnaam);
+		springLayout.putConstraint(SpringLayout.EAST, btnSluiten, -260, SpringLayout.EAST, this);
 		btnSluiten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
             	try {
@@ -97,9 +102,6 @@ public class LoginView extends JPanel {
             	System.exit(0);
             }
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnSluiten, 44, SpringLayout.SOUTH, txtPassword);
-		springLayout.putConstraint(SpringLayout.WEST, btnSluiten, 51, SpringLayout.EAST, btnMeldAan);
-		springLayout.putConstraint(SpringLayout.EAST, btnSluiten, 0, SpringLayout.EAST, txtUsername);
 		add(btnSluiten);
 		
 		springLayout.putConstraint(SpringLayout.NORTH, lblStatus, 6, SpringLayout.SOUTH, lblPaswoord);
@@ -134,7 +136,7 @@ public class LoginView extends JPanel {
 						SystemController.defaultPasswordCheck();
 	            	} else {
 	            		lblStatus.setForeground(Color.RED);
-	                    lblStatus.setText("Ongeldige combinatie.");
+	                    lblStatus.setText(Language.getString("unvalidcombo"));
 	            	}
 				}
 			}

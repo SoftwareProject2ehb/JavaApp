@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
 import controller.ConfigurationController;
+import utilities.Language;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -35,29 +36,29 @@ public class CreateUserView extends JPanel {
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 		
-		JLabel lblCreateUser = new JLabel("Create User");
+		JLabel lblCreateUser = new JLabel(Language.getString("usertitle"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblCreateUser, 10, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblCreateUser, 32, SpringLayout.WEST, this);
 		lblCreateUser.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblCreateUser);
 		
-		JLabel lblNewLabel = new JLabel("Voornaam *: ");
+		JLabel lblNewLabel = new JLabel(Language.getString("firstname") + "*");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 31, SpringLayout.SOUTH, lblCreateUser);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel, 69, SpringLayout.WEST, this);
 		add(lblNewLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("Email *: ");
+		JLabel lblNewLabel_2 = new JLabel(Language.getString("email") + "*");
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_2, 0, SpringLayout.WEST, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_2, -727, SpringLayout.EAST, this);
 		add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Telefoon Nr. *: ");
+		JLabel lblNewLabel_3 = new JLabel(Language.getString("telephone") + "*");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 21, SpringLayout.SOUTH, lblNewLabel_2);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_3, 0, SpringLayout.WEST, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_3, 37, SpringLayout.EAST, lblCreateUser);
 		add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_5 = new JLabel("Role: ");
+		JLabel lblNewLabel_5 = new JLabel(Language.getString("role"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_5, 28, SpringLayout.SOUTH, lblNewLabel_3);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_5, 0, SpringLayout.WEST, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_5, -657, SpringLayout.EAST, this);
@@ -104,11 +105,11 @@ public class CreateUserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, role, -3, SpringLayout.NORTH, lblNewLabel_5);
 		springLayout.putConstraint(SpringLayout.WEST, role, 0, SpringLayout.WEST, txtVoornaam);
 		springLayout.putConstraint(SpringLayout.EAST, role, 206, SpringLayout.EAST, lblNewLabel_5);
-		role.addItem("USER");
-		role.addItem("ADMIN");
+		role.addItem(Language.getString("user"));
+		role.addItem(Language.getString("admin"));
 		add(role);
 		
-		JButton btnCreate = new JButton("Create");
+		JButton btnCreate = new JButton(Language.getString("create"));
 		springLayout.putConstraint(SpringLayout.WEST, btnCreate, 650, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, btnCreate, -100, SpringLayout.EAST, this);
 		springLayout.putConstraint(SpringLayout.EAST, btnBack, -505, SpringLayout.WEST, btnCreate);
@@ -121,29 +122,29 @@ public class CreateUserView extends JPanel {
 		});
 		add(btnCreate);
 		
-		JLabel lblStreet = new JLabel("Street *: ");
+		JLabel lblStreet = new JLabel(Language.getString("street") + "*");
 		springLayout.putConstraint(SpringLayout.NORTH, lblStreet, 0, SpringLayout.NORTH, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.WEST, lblStreet, 34, SpringLayout.EAST, txtVoornaam);
 		add(lblStreet);
 		
-		JLabel lblNewLabel_4 = new JLabel("Number *: ");
+		JLabel lblNewLabel_4 = new JLabel(Language.getString("housenumber") + "*");
 		springLayout.putConstraint(SpringLayout.WEST, txtAchternaam, -239, SpringLayout.WEST, lblNewLabel_4);
 		springLayout.putConstraint(SpringLayout.EAST, txtAchternaam, -34, SpringLayout.WEST, lblNewLabel_4);
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_4, 25, SpringLayout.SOUTH, lblStreet);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_4, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_7 = new JLabel("Postalcode *: ");
+		JLabel lblNewLabel_7 = new JLabel(Language.getString("zip") + "*");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_7, 0, SpringLayout.NORTH, lblNewLabel_2);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_7, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_7);
 		
-		JLabel lblNewLabel_8 = new JLabel("City *: ");
+		JLabel lblNewLabel_8 = new JLabel(Language.getString("city") + "*");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_8, 21, SpringLayout.SOUTH, lblNewLabel_7);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_8, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_8);
 		
-		JLabel lblNewLabel_9 = new JLabel("Country *: ");
+		JLabel lblNewLabel_9 = new JLabel(Language.getString("country") + "*");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_9, 0, SpringLayout.NORTH, lblNewLabel_5);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_9, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_9);
@@ -191,13 +192,13 @@ public class CreateUserView extends JPanel {
 		add(txtCity);
 		txtCity.setColumns(10);
 		
-		JLabel lblAchternaam = new JLabel("Achternaam *: ");
+		JLabel lblAchternaam = new JLabel(Language.getString("lastname") + "*");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_2, 22, SpringLayout.SOUTH, lblAchternaam);
 		springLayout.putConstraint(SpringLayout.NORTH, lblAchternaam, 24, SpringLayout.SOUTH, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.WEST, lblAchternaam, 0, SpringLayout.WEST, lblNewLabel);
 		add(lblAchternaam);
 		
-		JLabel lblBus = new JLabel("Bus: ");
+		JLabel lblBus = new JLabel(Language.getString("bus") + "*");
 		springLayout.putConstraint(SpringLayout.WEST, txtBus, 26, SpringLayout.EAST, lblBus);
 		springLayout.putConstraint(SpringLayout.NORTH, lblBus, 22, SpringLayout.SOUTH, txtStreet);
 		springLayout.putConstraint(SpringLayout.WEST, lblBus, 18, SpringLayout.EAST, txtNumber);

@@ -1,21 +1,19 @@
 package controller;
 
 import model.*;
-import model.Price.betalingsType;
 import model.User.Role;
 import utilities.*;
+import utilities.Language.LANGUAGE;
 import view.*;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
@@ -26,18 +24,14 @@ public abstract class SystemController {
 	public final static String EURO = "\u20ac";
 	public static SystemNMBS system = new SystemNMBS();
 	static CustomerController customer_controller;
+	private String system_station;
 		
 	public static void startUp() {
-		// TODO Hier worden alle views aangemaakt en opgeslagen in hun Controllers
-		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
-		LoginController.initialize(new LoginView());
-		ActionMenuController.initialize(new ActionMenuView(), new AccountInfoView());
-		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
-		TicketController.initialize(new BuyTicketView());
-		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(),new EditPasswordView(), new ConfigurationView());
-		RouteController.initialize(new SearchRouteView());
-		LostObjectController.initialize(new LostObjectView());
-		ReportController.initialize(new ReportView());
+		//Set language of the application and load all language strings
+		Language.setLanguage(LANGUAGE.DUTCH);
+		Language.refresh();
+		
+		initializeAll();
 		
 		FrameController.getFrame().addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
@@ -50,6 +44,36 @@ public abstract class SystemController {
 				}
 		    }
 		});
+		FrameController.getFrame().setVisible(true);
+	}
+	
+	private static void initializeAll()
+	{
+		CustomerController.initialize(new CreateCustomerView(), new FindCustomerView());
+		LoginController.initialize(new LoginView());
+		ActionMenuController.initialize(new ActionMenuView(), new AccountInfoView());
+		SubscriptionController.initialize(new BuySubscriptionView(), new FindSubscriptionView());
+		TicketController.initialize(new BuyTicketView());
+		ConfigurationController.initialize(new ReportView(), new PriceConfigView(), new UserView(),new EditUserView(), new CreateUserView(),new EditPasswordView(), new ConfigurationView());
+		RouteController.initialize(new SearchRouteView());
+		LostObjectController.initialize(new LostObjectView());
+		ReportController.initialize(new ReportView());
+	}
+	
+	public static void refreshAll()
+	{
+		FrameController.getFrame().setVisible(false);
+		FrameController.refresh();
+		CustomerController.refresh();
+		LoginController.refresh();
+		ActionMenuController.refresh();
+		SubscriptionController.refresh();
+		TicketController.refresh();
+		ConfigurationController.refresh();
+		RouteController.refresh();
+		LostObjectController.refresh();
+		ReportController.refresh();
+		initializeAll();
 		FrameController.getFrame().setVisible(true);
 	}
 	
@@ -341,6 +365,7 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 		}
 		else{
 			ActionMenuController.switchToActionMenuView();
+			//SelectStationController.switchToSelectStationView();
 		}
 	}
 	
@@ -388,5 +413,13 @@ public static ArrayList<LostObject> findAllLostObjects(int select_view,int selec
 			}
 		}
 		return station_list;
+	}
+
+	public String getSystem_station() {
+		return system_station;
+	}
+
+	public void setSystem_station(String system_station) {
+		this.system_station = system_station;
 	}
 }

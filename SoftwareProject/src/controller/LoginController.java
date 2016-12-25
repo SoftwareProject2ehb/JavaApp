@@ -18,6 +18,10 @@ public class LoginController {
 		LoginController.login = login;
 	}
 	
+	public static void refresh() {
+		LoginController.login = null;
+	}
+	
 	public static void switchToLoginView() {
 		FrameController.getFrame().switchTo("LOGIN");
 		FrameController.changeSize();

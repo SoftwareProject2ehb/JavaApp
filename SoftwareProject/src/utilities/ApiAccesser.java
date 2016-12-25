@@ -2,17 +2,9 @@ package utilities;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.*;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import java.io.*;
 import org.json.*;
-
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import model.RouteStation;
 
 public abstract class ApiAccesser {

@@ -19,6 +19,10 @@ public class ReportController {
 		ReportController.report = report;
 	}
 	
+	public static void refresh() {
+		ReportController.report = null;
+	}
+	
 	public static void switchToReportView() {
 		FrameController.getFrame().switchTo("REPORT");
 	}
