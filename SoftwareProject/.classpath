@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry excluding="revised_usage/" kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="cache"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/json-20160810.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.40-bin.jar"/>
