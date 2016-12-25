@@ -23,6 +23,11 @@ public static AccountInfoView account_info;
 		ActionMenuController.account_info = account_info;
 	}
 	
+	public static void refresh() {
+		ActionMenuController.action_menu = null;
+		ActionMenuController.account_info = null;
+	}
+	
 	public static void switchToActionMenuView() {
 		FrameController.getFrame().switchTo("ACTION_MENU");
 		FrameController.changeSize(500, 300);

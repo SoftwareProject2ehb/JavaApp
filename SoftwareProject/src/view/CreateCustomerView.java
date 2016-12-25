@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.CustomerController;
 import controller.SystemController;
+import utilities.Language;
 
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
@@ -36,13 +37,13 @@ public class CreateCustomerView extends JPanel {
 		SpringLayout sl_contentPane = new SpringLayout();
 		this.setLayout(sl_contentPane);
 		
-		JLabel lblKlantMaken = new JLabel("Klant Aanmaken");
+		JLabel lblKlantMaken = new JLabel(Language.getString("customertitle"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblKlantMaken, 10, SpringLayout.NORTH, this);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblKlantMaken, 20, SpringLayout.WEST, this);
 		lblKlantMaken.setFont(new Font("Arial Black", Font.PLAIN, 17));
 		this.add(lblKlantMaken);
 		
-		JLabel lblVoornaam = new JLabel("Voornaam:");
+		JLabel lblVoornaam = new JLabel(Language.getString("firstname"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblVoornaam, 26, SpringLayout.SOUTH, lblKlantMaken);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblVoornaam, 39, SpringLayout.WEST, this);
 		this.add(lblVoornaam);
@@ -60,7 +61,7 @@ public class CreateCustomerView extends JPanel {
 		this.add(txtAchternaam);
 		txtAchternaam.setColumns(10);
 		
-		JLabel lblAchternaam = new JLabel("Achternaam:");
+		JLabel lblAchternaam = new JLabel(Language.getString("lastname"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtAchternaam, -4, SpringLayout.NORTH, lblAchternaam);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtAchternaam, 4, SpringLayout.SOUTH, lblAchternaam);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblAchternaam, 12, SpringLayout.SOUTH, lblVoornaam);
@@ -73,7 +74,7 @@ public class CreateCustomerView extends JPanel {
 		this.add(txtEmail);
 		txtEmail.setColumns(10);
 		
-		JLabel lblEmail = new JLabel("E-mail:");
+		JLabel lblEmail = new JLabel(Language.getString("email"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtEmail, -4, SpringLayout.NORTH, lblEmail);
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtEmail, 16, SpringLayout.EAST, lblEmail);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtEmail, 4, SpringLayout.SOUTH, lblEmail);
@@ -85,7 +86,7 @@ public class CreateCustomerView extends JPanel {
 		this.add(txtTelN);
 		txtTelN.setColumns(10);
 		
-		JLabel lblTelNo = new JLabel("Tel. N.:");
+		JLabel lblTelNo = new JLabel(Language.getString("telephone"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtTelN, -4, SpringLayout.NORTH, lblTelNo);
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtTelN, 16, SpringLayout.EAST, lblTelNo);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtTelN, 4, SpringLayout.SOUTH, lblTelNo);
@@ -98,7 +99,7 @@ public class CreateCustomerView extends JPanel {
 		this.add(txtStraatnaam);
 		txtStraatnaam.setColumns(10);
 		
-		JLabel lblStraatnaam = new JLabel("Straatnaam:");
+		JLabel lblStraatnaam = new JLabel(Language.getString("street"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtStraatnaam, -4, SpringLayout.NORTH, lblStraatnaam);
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtStraatnaam, 16, SpringLayout.EAST, lblStraatnaam);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtStraatnaam, 4, SpringLayout.SOUTH, lblStraatnaam);
@@ -111,7 +112,7 @@ public class CreateCustomerView extends JPanel {
 		this.add(txtPostcode);
 		txtPostcode.setColumns(10);
 		
-		JLabel lblPostcode = new JLabel("Postcode:");
+		JLabel lblPostcode = new JLabel(Language.getString("zip"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtPostcode, -4, SpringLayout.NORTH, lblPostcode);
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtPostcode, 16, SpringLayout.EAST, lblPostcode);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtPostcode, 4, SpringLayout.SOUTH, lblPostcode);
@@ -124,7 +125,7 @@ public class CreateCustomerView extends JPanel {
 		this.add(txtGemeente);
 		txtGemeente.setColumns(10);
 		
-		JLabel lblGemeente = new JLabel("Gemeente:");
+		JLabel lblGemeente = new JLabel(Language.getString("city"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtGemeente, -4, SpringLayout.NORTH, lblGemeente);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtGemeente, 4, SpringLayout.SOUTH, lblGemeente);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblGemeente, 220, SpringLayout.NORTH, this);
@@ -133,7 +134,7 @@ public class CreateCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblGemeente, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblGemeente);
 		
-		JButton button = new JButton("Terug naar menu");
+		JButton button = new JButton(Language.getString("return"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerController.switchToFindCustomerView();
@@ -142,7 +143,7 @@ public class CreateCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.WEST, button, 0, SpringLayout.WEST, lblKlantMaken);
 		this.add(button);
 		
-		JButton btnKlantAanmaken = new JButton("Klant Aanmaken");
+		JButton btnKlantAanmaken = new JButton(Language.getString("create"));
 		btnKlantAanmaken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustomerController.createCustomer();

@@ -25,6 +25,11 @@ public abstract class CustomerController {
 		CustomerController.find_customer = find_customer;
 	}
 	
+	public static void refresh() {
+		CustomerController.create_customer = null;
+		CustomerController.find_customer = null;
+	}
+	
 	public static void switchToCreateCustomerView() {
 		FrameController.getFrame().switchTo("CREATE_CUSTOMER");
 	}

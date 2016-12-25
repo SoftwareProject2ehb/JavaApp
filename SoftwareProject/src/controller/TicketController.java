@@ -23,6 +23,10 @@ public class TicketController {
 		TicketController.buy_ticket = buy_ticket;
 	}
 	
+	public static void refresh() {
+		TicketController.buy_ticket = null;
+	}
+	
 	public static void switchToBuyTicketView() {
 		FrameController.getFrame().switchTo("BUY_TICKET");
 		FrameController.changeSize(500,300);
