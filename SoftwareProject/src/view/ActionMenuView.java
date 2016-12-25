@@ -11,27 +11,12 @@ import controller.SubscriptionController;
 import controller.SystemController;
 import controller.TicketController;
 
-import java.awt.GridLayout;
-
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import java.awt.GridBagLayout;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
 
@@ -159,13 +144,13 @@ public class ActionMenuView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnVerlorenVoorwerpen, -31, SpringLayout.NORTH, panel);
 		
 		JButton btnMyAccount = new JButton("My Account");
+		springLayout.putConstraint(SpringLayout.NORTH, btnMyAccount, 4, SpringLayout.NORTH, lblKeuzemenu);
+		springLayout.putConstraint(SpringLayout.EAST, btnMyAccount, -10, SpringLayout.EAST, this);
 		btnMyAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.AccountInfo();
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnMyAccount, 0, SpringLayout.NORTH, lblKeuzemenu);
-		springLayout.putConstraint(SpringLayout.EAST, btnMyAccount, 0, SpringLayout.EAST, panel);
 		add(btnMyAccount);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
