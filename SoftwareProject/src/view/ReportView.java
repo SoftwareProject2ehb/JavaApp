@@ -6,6 +6,7 @@ import javax.swing.SpringLayout;
 import controller.ConfigurationController;
 import controller.ReportController;
 import model.Report;
+import utilities.Language;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -18,7 +19,7 @@ import javax.swing.JTextArea;
 
 
 public class ReportView extends JPanel {
-	String[] soortRaport = {"Meest verkochte ticket 'van' ","Meest verkochte ticket 'naar'","Meest verkochte ticket 'Type'","Aantal verkochte tickets","Meest verkochte abonoment 'van' ","Meest verkochte abonoment 'naar'","Meest verkochte abonoment 'Type'","Aantal verkochte abonomenten"};
+	String[] soortRaport = {Language.getString("routereport"), Language.getString("typereport"), Language.getString("amountreport"), Language.getString("subroutereport"), Language.getString("subroutereporttwo"), Language.getString("subtypereport"), Language.getString("subamountreport")};
 	public JComboBox cboxReport = new JComboBox(soortRaport);
 	public JTextArea outputReport = new JTextArea();
 	
@@ -32,7 +33,7 @@ public class ReportView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, outputReport, -134, SpringLayout.EAST, this);
 		setLayout(springLayout);
 		
-		JLabel lblRaporten = new JLabel("Raporten");
+		JLabel lblRaporten = new JLabel(Language.getString("reports"));
 		lblRaporten.setFont(new Font("Arial Black", Font.PLAIN, 17));
 		springLayout.putConstraint(SpringLayout.NORTH, lblRaporten, 10, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblRaporten, 10, SpringLayout.WEST, this);
@@ -42,7 +43,7 @@ public class ReportView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, cboxReport, 6, SpringLayout.SOUTH, lblRaporten);
 		add(cboxReport);
 		
-		JButton zoekBtn = new JButton("Zoek");
+		JButton zoekBtn = new JButton(Language.getString("search"));
 		springLayout.putConstraint(SpringLayout.NORTH, zoekBtn, 40, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.EAST, cboxReport, -6, SpringLayout.WEST, zoekBtn);
 		springLayout.putConstraint(SpringLayout.NORTH, outputReport, 4, SpringLayout.SOUTH, zoekBtn);
@@ -50,7 +51,7 @@ public class ReportView extends JPanel {
 		add(zoekBtn);
 		add(outputReport);
 		
-		JButton btnTerugNaarMenu = new JButton("Terug naar Menu");
+		JButton btnTerugNaarMenu = new JButton(Language.getString("return"));
 		springLayout.putConstraint(SpringLayout.SOUTH, outputReport, -4, SpringLayout.NORTH, btnTerugNaarMenu);
 		springLayout.putConstraint(SpringLayout.NORTH, btnTerugNaarMenu, 267, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 20, SpringLayout.WEST, this);
