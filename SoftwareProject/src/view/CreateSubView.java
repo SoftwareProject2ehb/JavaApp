@@ -2,6 +2,9 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+
+import utilities.Language;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -23,7 +26,7 @@ public class CreateSubView extends JPanel {
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 		
-		JLabel lblChooseType = new JLabel("Choose Type");
+		JLabel lblChooseType = new JLabel(Language.getString("subtype"));
 		springLayout.putConstraint(SpringLayout.WEST, lblChooseType, 10, SpringLayout.WEST, this);
 		add(lblChooseType);
 		
@@ -34,7 +37,7 @@ public class CreateSubView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, comboBox, -334, SpringLayout.EAST, this);
 		add(comboBox);
 		
-		JLabel lblStartdate = new JLabel("Startdate");
+		JLabel lblStartdate = new JLabel(Language.getString("startdate"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblStartdate, 28, SpringLayout.SOUTH, lblChooseType);
 		springLayout.putConstraint(SpringLayout.WEST, lblStartdate, 0, SpringLayout.WEST, lblChooseType);
 		add(lblStartdate);
@@ -46,7 +49,7 @@ public class CreateSubView extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblMonths = new JLabel("# Months");
+		JLabel lblMonths = new JLabel(Language.getString("nmonths"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblMonths, 35, SpringLayout.SOUTH, lblStartdate);
 		springLayout.putConstraint(SpringLayout.WEST, lblMonths, 10, SpringLayout.WEST, this);
 		add(lblMonths);
@@ -57,7 +60,7 @@ public class CreateSubView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, comboBox_1, 108, SpringLayout.EAST, lblMonths);
 		add(comboBox_1);
 		
-		JLabel lblStartstation = new JLabel("Startstation");
+		JLabel lblStartstation = new JLabel(Language.getString("startstation"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblStartstation, 0, SpringLayout.NORTH, lblChooseType);
 		springLayout.putConstraint(SpringLayout.WEST, lblStartstation, 38, SpringLayout.EAST, comboBox);
 		add(lblStartstation);
@@ -68,7 +71,7 @@ public class CreateSubView extends JPanel {
 		add(textField_1);
 		textField_1.setColumns(10);
 		
-		JLabel lblEndstation = new JLabel("Endstation");
+		JLabel lblEndstation = new JLabel(Language.getString("endstation"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblEndstation, 28, SpringLayout.SOUTH, lblStartstation);
 		springLayout.putConstraint(SpringLayout.WEST, lblEndstation, 0, SpringLayout.WEST, lblStartstation);
 		add(lblEndstation);
@@ -79,7 +82,7 @@ public class CreateSubView extends JPanel {
 		add(textField_2);
 		textField_2.setColumns(10);
 		
-		JLabel lblPreview = new JLabel("Preview:");
+		JLabel lblPreview = new JLabel(Language.getString("preview"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblPreview, 32, SpringLayout.SOUTH, lblMonths);
 		springLayout.putConstraint(SpringLayout.WEST, lblPreview, 10, SpringLayout.WEST, this);
 		add(lblPreview);
@@ -90,12 +93,12 @@ public class CreateSubView extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, table, -94, SpringLayout.SOUTH, this);
 		add(table);
 		
-		JButton btnCancel = new JButton("Cancel");
+		JButton btnCancel = new JButton(Language.getString("cancel"));
 		springLayout.putConstraint(SpringLayout.WEST, btnCancel, 10, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnCancel, -10, SpringLayout.SOUTH, this);
 		add(btnCancel);
 		
-		JButton btnNewButton = new JButton("Accept");
+		JButton btnNewButton = new JButton(Language.getString("create"));
 		springLayout.putConstraint(SpringLayout.EAST, table, 0, SpringLayout.EAST, btnNewButton);
 		springLayout.putConstraint(SpringLayout.WEST, btnNewButton, -106, SpringLayout.EAST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton, -10, SpringLayout.SOUTH, this);

@@ -11,6 +11,7 @@ import java.awt.Insets;
 
 import controller.ActionMenuController;
 import controller.ConfigurationController;
+import utilities.Language;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -28,23 +29,23 @@ public class EditPasswordView extends JPanel {
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 		
-		JLabel lblNewLabel = new JLabel("Password *:");
+		JLabel lblNewLabel = new JLabel(Language.getString("password") + "*");
 		springLayout.putConstraint(SpringLayout.SOUTH, lblNewLabel, -152, SpringLayout.SOUTH, this);
 		add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Confirm Password *:");
+		JLabel lblNewLabel_1 = new JLabel(Language.getString("confirmpassword") + "*");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_1, 177, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel, 0, SpringLayout.WEST, lblNewLabel_1);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_1, 73, SpringLayout.WEST, this);
 		add(lblNewLabel_1);
 		
-		JLabel lblChangeYourDefault = new JLabel("New password for your account");
+		JLabel lblChangeYourDefault = new JLabel(Language.getString("newpassword"));
 		springLayout.putConstraint(SpringLayout.WEST, lblChangeYourDefault, 102, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, lblChangeYourDefault, -55, SpringLayout.NORTH, lblNewLabel);
 		lblChangeYourDefault.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		add(lblChangeYourDefault);
 		
-		JButton btnNewButton = new JButton("Change");
+		JButton btnNewButton = new JButton(Language.getString("change"));
 		springLayout.putConstraint(SpringLayout.EAST, btnNewButton, -75, SpringLayout.EAST, this);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -66,7 +67,7 @@ public class EditPasswordView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, txtPass2, -3, SpringLayout.NORTH, lblNewLabel_1);
 		add(txtPass2);
 		
-		JButton btnCancel = new JButton("Cancel");
+		JButton btnCancel = new JButton(Language.getString("cancel"));
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();

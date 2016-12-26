@@ -10,6 +10,7 @@ import controller.RouteController;
 import controller.SubscriptionController;
 import controller.SystemController;
 import controller.TicketController;
+import utilities.Language;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -50,14 +51,14 @@ public class ActionMenuView extends JPanel {
 		
 		SpringLayout springLayout = new SpringLayout();
 		
-		JLabel lblKeuzemenu = new JLabel("Keuzemenu");
+		JLabel lblKeuzemenu = new JLabel(Language.getString("menutitle"));
 		springLayout.putConstraint(SpringLayout.NORTH, lblKeuzemenu, 10, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, lblKeuzemenu, 20, SpringLayout.WEST, this);
 		lblKeuzemenu.setFont(new Font("Arial Black", Font.PLAIN, 17));
 		this.add(lblKeuzemenu);
 		setLayout(springLayout);
 		
-		JButton btnAfmelden = new JButton("Afmelden");
+		JButton btnAfmelden = new JButton(Language.getString("logoff"));
 		btnAfmelden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SystemController.meldAf();
@@ -143,7 +144,7 @@ public class ActionMenuView extends JPanel {
 		});
 		springLayout.putConstraint(SpringLayout.SOUTH, btnVerlorenVoorwerpen, -31, SpringLayout.NORTH, panel);
 		
-		JButton btnMyAccount = new JButton("My Account");
+		JButton btnMyAccount = new JButton(Language.getString("myaccount"));
 		springLayout.putConstraint(SpringLayout.NORTH, btnMyAccount, 4, SpringLayout.NORTH, lblKeuzemenu);
 		springLayout.putConstraint(SpringLayout.EAST, btnMyAccount, -10, SpringLayout.EAST, this);
 		btnMyAccount.addActionListener(new ActionListener() {
