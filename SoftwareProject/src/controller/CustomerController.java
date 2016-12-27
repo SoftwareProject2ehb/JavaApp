@@ -31,6 +31,7 @@ public abstract class CustomerController {
 	
 	public static void switchToFindCustomerView() {
 		FrameController.getFrame().switchTo("FIND_CUSTOMER");
+		FrameController.changeSize(984, 485);
 	}
 	
 	public static void createCustomer() throws InvalidParameterException{
@@ -139,5 +140,9 @@ public static void useKlant() {
 	customer = lijstCustomers.get(find_customer.table.convertRowIndexToModel(find_customer.table.getSelectedRow()));
 	naam = customer.getFirstName() +" " + customer.getLastName();
 	SubscriptionController.setGebruikerField(naam);
+}
+
+public static int useKlantId() {
+	return lijstCustomers.get(find_customer.table.convertRowIndexToModel(find_customer.table.getSelectedRow())).getId();
 }
 }

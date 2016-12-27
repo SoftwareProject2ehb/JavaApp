@@ -20,7 +20,7 @@ public class SubscriptionDAO extends BaseDAO{
 		ResultSet res = null;
 		int id = -1;
 
-		String sql = "INSERT INTO Subscription VALUES (?,?,?,?,?,?,?,?,1)";
+		String sql = "INSERT INTO Subscription(type,price,customer,startstation,endstation,startdatum,enddatum,active) VALUES (?,?,?,?,?,?,?,1)";
 
 		try {
 
@@ -29,14 +29,14 @@ public class SubscriptionDAO extends BaseDAO{
 			}
 			ps = getConnection().prepareStatement(sql);
 
-			ps.setInt(1, sub.getId());
-			ps.setString(2, sub.getSubscriptionType());
-			ps.setDouble(3, sub.getPrice());
-			ps.setInt(4, sub.getCustomerId());
-			ps.setString(5, sub.getStartStation());
-			ps.setString(6, sub.getEndStation());
-			ps.setDate(7, sub.getStartDate());
-			ps.setDate(8, sub.getEndDate());
+			
+			ps.setString(1, sub.getSubscriptionType());
+			ps.setDouble(2, sub.getPrice());
+			ps.setInt(3, sub.getCustomerId());
+			ps.setString(4, sub.getStartStation());
+			ps.setString(5, sub.getEndStation());
+			ps.setDate(6, sub.getStartDate());
+			ps.setDate(7, sub.getEndDate());
 
 			ps.executeUpdate();
 			

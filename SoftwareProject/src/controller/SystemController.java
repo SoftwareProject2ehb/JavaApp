@@ -119,9 +119,10 @@ public abstract class SystemController {
 		return "Ticket bought.";
 	}
 
-	public static String buySubscription(String subscription_type, int customerId, String endStation, String startStation, Timestamp startDate, Timestamp endDate) {
+	public static String buySubscription(String subscription_type, double prijs,int customerId, String endStation, String startStation, Date startDate, Date endDate) {
 		Subscription subscription;
-		//SubscriptionDAO.createSubscription(subscription);
+		subscription = new Subscription (subscription_type,prijs,customerId,endStation,startStation, startDate,endDate);
+		SubscriptionDAO.createSubscription(subscription);
 		return "Abonnement gekocht.";
 	}
 	
