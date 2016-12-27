@@ -32,29 +32,60 @@ public abstract class ApiAccesser {
 	    return sb.toString();
 	  }
 	
-	// Deze methode opent de connectie met de api en geeft een json object terug met behulp van de hiervoor vermelde methode readAll.
-	  public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-		  System.out.println("readFromUrl");
-		  URLConnection openConnection = new URL(url).openConnection();
-		  JSONObject json;
-		  // Deze code is van belang omdat dit de aanvraagt maskeert alsof we het via een browser vragen en
-		  // voorkomt de 403 error.
-			openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
-			InputStream is = openConnection.getInputStream();
-			String text = Cacher.retrieve(currentFrom, currentTo);
-			json = new JSONObject(text);
-	    try {
-	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-	      String jsonText = readAll(rd);
-	      Cacher.cache(jsonText, currentFrom, currentTo);
-	      json = new JSONObject(jsonText);
-	      currentFrom = "";
-	      currentTo = "";
-	    } finally {
-	      is.close();
-	    }
-	    return json;
-	  }
+	public static JSONObject readJsonFromUrl(String url) throws IOException
+	{
+		URLConnection openConnection = null;
+		try {
+			openConnection = new URL(url).openConnection();
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} 
+		openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
+		InputStream is = null;
+		try {
+			is = openConnection.getInputStream();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		String jsonText = null;
+		try {
+			jsonText = Cacher.retrieve(currentFrom, currentTo);
+		} catch (IOException e) {
+			//file was not found
+		}
+		if(jsonText == null)
+		{
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+			try {
+				jsonText = readAll(rd);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			try {
+				Cacher.cache(jsonText, currentFrom, currentTo);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			JSONObject json = new JSONObject(jsonText);
+			currentFrom = "";
+			currentTo = "";
+			return json;
+		}
+		else
+		{
+			JSONObject json = new JSONObject(jsonText);
+			currentFrom = "";
+			currentTo = "";
+			return json;
+		}
+	}
 	  
 	  public static String readJsonToCache(String from, String to) throws MalformedURLException, IOException
 	  {
@@ -90,8 +121,6 @@ public abstract class ApiAccesser {
 		 
 		  currentFrom = a;
 		  currentTo = b;
-		  
-		  System.out.println("opvragingRoute: " + currentFrom + " " + currentTo);
 		  
 		  ArrayList<RouteStation> stops = new ArrayList<RouteStation>();
 		  ArrayList<String> transfers_per_route = new ArrayList<String>();
@@ -143,5 +172,4 @@ public abstract class ApiAccesser {
 				transfer_stations.removeAll(transfer_stations);
 			}
 	  }
-
 }
