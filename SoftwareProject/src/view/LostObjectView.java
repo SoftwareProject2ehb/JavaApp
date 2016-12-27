@@ -22,6 +22,7 @@ import javax.swing.table.TableRowSorter;
 import controller.ActionMenuController;
 import controller.LostObjectController;
 import model.LostObject;
+import utilities.Language;
 
 import javax.swing.SpringLayout;
 import javax.swing.JScrollPane;
@@ -62,26 +63,26 @@ public class LostObjectView extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, panel, 785, SpringLayout.WEST, this);
 		add(panel);
 		
-		JLabel lblSort = new JLabel("Sort");
+		JLabel lblSort = new JLabel(Language.getString("sort"));
 		cbbSort = new JComboBox();
-		cbbSort.setModel(new DefaultComboBoxModel(new String[] {"ALL","Claimed items ONLY", "Found Items ONLY" }));
+		cbbSort.setModel(new DefaultComboBoxModel(new String[] {Language.getString("all"),Language.getString("claimed"), Language.getString("found")}));
 		
 		
-		JLabel lblFrom = new JLabel("From :");
+		JLabel lblFrom = new JLabel(Language.getString("from"));
 		cbbFrom = new JComboBox();
-		cbbFrom.setModel(new DefaultComboBoxModel(new String[] {"1 month ago", "2 month ago", "3 month ago", "4 month ago", "5 month ago", "6 month ago", "7 month ago", "8 month ago", "9 month ago", "10 month ago", "11 month ago", "12 month ago"}));
+		cbbFrom.setModel(new DefaultComboBoxModel(new String[] {1 + Language.getString("monthsago"), 2 + Language.getString("monthsago"), 3 + Language.getString("monthsago"), 4 + Language.getString("monthsago"), 5 + Language.getString("monthsago"), 6 + Language.getString("monthsago"), 7 + Language.getString("monthsago"), 8 + Language.getString("monthsago"), 9 + Language.getString("monthsago"), 10 + Language.getString("monthsago"), 11 + Language.getString("monthsago"), 12 + Language.getString("monthsago")}));
 	
 		
-		JLabel lblTo = new JLabel("To : ");
+		JLabel lblTo = new JLabel(Language.getString("to"));
 		cbbTo = new JComboBox();
-		cbbTo.setModel(new DefaultComboBoxModel(new String[] {"NOW", "1 month ago", "2 month ago", "3 month ago", "4 month ago", "5 month ago", "6 month ago", "7 month ago", "8 month ago", "9 month ago", "10 month ago", "11 month ago"}));
+		cbbTo.setModel(new DefaultComboBoxModel(new String[] {Language.getString("now"), 1 + Language.getString("monthsago"), 2 + Language.getString("monthsago"), 3 + Language.getString("monthsago"), 4 + Language.getString("monthsago"), 5 + Language.getString("monthsago"), 6 + Language.getString("monthsago"), 7 + Language.getString("monthsago"), 8 + Language.getString("monthsago"), 9 + Language.getString("monthsago"), 10 + Language.getString("monthsago"), 11 + Language.getString("monthsago")}));
 
 		JScrollPane scrLostObject = new JScrollPane();
 		GroupLayout gl_panel = new GroupLayout(panel);
 		
 		//BEGIN EVERYTHING ABOUT TABLE
 		
-		String colname[] = {"ID","UserID","Name","Location","Description","time","claimed","user","locationclaimed","nameclaimed","time"};
+		String colname[] = {Language.getString("id"),Language.getString("userid"),Language.getString("name"),Language.getString("location"),Language.getString("description"),Language.getString("time"),Language.getString("claimedbool"),Language.getString("user"),Language.getString("locationofclaim"),Language.getString("nameofclaim"),Language.getString("time")};
 		DefaultTableModel tableModel = new DefaultTableModel(colname,0)
 		{
 			@Override
@@ -108,7 +109,7 @@ public class LostObjectView extends JPanel {
 		table.setModel(tableModel);
 		//END EVERYTHING ABOUT TABLE
 		
-		JButton btnSearch = new JButton("Search");
+		JButton btnSearch = new JButton(Language.getString("search"));
 		springLayout.putConstraint(SpringLayout.WEST, btnSearch, -187, SpringLayout.EAST, panel);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnSearch, -10, SpringLayout.SOUTH, this);
 		springLayout.putConstraint(SpringLayout.EAST, btnSearch, 0, SpringLayout.EAST, panel);
@@ -169,11 +170,11 @@ public class LostObjectView extends JPanel {
 		add(tabbedPane);
 		// BEGIN EVERYTHING ABOUT PANEL ADD
 		JPanel pnlAdd = new JPanel();
-		tabbedPane.addTab("ADD", null, pnlAdd, null);
+		tabbedPane.addTab(Language.getString("add"), null, pnlAdd, null);
 		SpringLayout sl_pnlAdd = new SpringLayout();
 		pnlAdd.setLayout(sl_pnlAdd);
 		
-		JLabel lblName = new JLabel("Name :");
+		JLabel lblName = new JLabel(Language.getString("name"));
 		sl_pnlAdd.putConstraint(SpringLayout.WEST, lblName, 10, SpringLayout.WEST, pnlAdd);
 		pnlAdd.add(lblName);
 		
@@ -184,7 +185,7 @@ public class LostObjectView extends JPanel {
 		txtNameFound.setColumns(10);
 		pnlAdd.add(txtNameFound);
 		
-		JLabel lblPlaceFound = new JLabel("Place : ");
+		JLabel lblPlaceFound = new JLabel(Language.getString("location"));
 		sl_pnlAdd.putConstraint(SpringLayout.NORTH, lblPlaceFound, 22, SpringLayout.SOUTH, lblName);
 		sl_pnlAdd.putConstraint(SpringLayout.WEST, lblPlaceFound, 0, SpringLayout.WEST, lblName);
 		pnlAdd.add(lblPlaceFound);
@@ -195,7 +196,7 @@ public class LostObjectView extends JPanel {
 		txtPlaceFound.setColumns(10);
 		pnlAdd.add(txtPlaceFound);
 		
-		JLabel lblDescription = new JLabel("Descritpion :");
+		JLabel lblDescription = new JLabel(Language.getString("description"));
 		sl_pnlAdd.putConstraint(SpringLayout.NORTH, lblDescription, 19, SpringLayout.SOUTH, lblPlaceFound);
 		sl_pnlAdd.putConstraint(SpringLayout.WEST, lblDescription, 10, SpringLayout.WEST, pnlAdd);
 		pnlAdd.add(lblDescription);
@@ -207,7 +208,7 @@ public class LostObjectView extends JPanel {
 		sl_pnlAdd.putConstraint(SpringLayout.EAST, txtDescription, -24, SpringLayout.EAST, pnlAdd);
 		pnlAdd.add(txtDescription);
 		
-		JButton btnAdd = new JButton("Add object");
+		JButton btnAdd = new JButton(Language.getString("addobject"));
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LostObjectController.addLostObject(tableModel);
@@ -223,10 +224,10 @@ public class LostObjectView extends JPanel {
 		SpringLayout sl_pnlUpdate = new SpringLayout();
 		pnlUpdate.setLayout(sl_pnlUpdate);
 		
-		JLabel lblPlaceClaimed = new JLabel("Place : ");
+		JLabel lblPlaceClaimed = new JLabel(Language.getString("location"));
 		pnlUpdate.add(lblPlaceClaimed);
 		
-		JLabel lblNameClaimed = new JLabel("Name :");
+		JLabel lblNameClaimed = new JLabel(Language.getString("name"));
 		sl_pnlUpdate.putConstraint(SpringLayout.WEST, lblPlaceClaimed, 0, SpringLayout.WEST, lblNameClaimed);
 		sl_pnlUpdate.putConstraint(SpringLayout.NORTH, lblNameClaimed, 21, SpringLayout.NORTH, pnlUpdate);
 		sl_pnlUpdate.putConstraint(SpringLayout.WEST, lblNameClaimed, 10, SpringLayout.WEST, pnlUpdate);
@@ -244,7 +245,7 @@ public class LostObjectView extends JPanel {
 		txtNameClaimed.setColumns(10);
 		pnlUpdate.add(txtNameClaimed);
 		
-		JButton btnUpdate = new JButton("Update Object");
+		JButton btnUpdate = new JButton(Language.getString("change"));
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LostObject lostObject;
@@ -264,17 +265,17 @@ public class LostObjectView extends JPanel {
 		SpringLayout sl_pnlFind = new SpringLayout();
 		pnlFind.setLayout(sl_pnlFind);
 		
-		JLabel lblSearch = new JLabel("Search attribut :");
+		JLabel lblSearch = new JLabel(Language.getString("searchattribute"));
 		pnlFind.add(lblSearch);
 		
 		cbbFind = new JComboBox();
-		cbbFind.setModel(new DefaultComboBoxModel(new String[] {"User that registred the found object", "Name who found the object", "Place where the object was found", "Description", "Time when it was found", "User that registred the claimed object", "name who claimed the object", "place where the object was claimed", "Time when it was claimed"}));
+		cbbFind.setModel(new DefaultComboBoxModel(new String[] {Language.getString("lostmessageone"), Language.getString("lostmessagetwo"), Language.getString("lostmessagethree"), Language.getString("description"), Language.getString("lostmessagefour"), Language.getString("lostmessagefive"), Language.getString("lostmessagesix"), Language.getString("lostmessageseven"), Language.getString("lostmessageeight")}));
 		sl_pnlFind.putConstraint(SpringLayout.NORTH, cbbFind, -3, SpringLayout.NORTH, lblSearch);
 		sl_pnlFind.putConstraint(SpringLayout.WEST, cbbFind, -229, SpringLayout.EAST, pnlFind);
 		sl_pnlFind.putConstraint(SpringLayout.EAST, cbbFind, -10, SpringLayout.EAST, pnlFind);
 		pnlFind.add(cbbFind);
 		
-		JLabel label_1 = new JLabel("Text Value :");
+		JLabel label_1 = new JLabel(Language.getString("textvalue"));
 		sl_pnlFind.putConstraint(SpringLayout.NORTH, label_1, 80, SpringLayout.NORTH, pnlFind);
 		sl_pnlFind.putConstraint(SpringLayout.WEST, lblSearch, 0, SpringLayout.WEST, label_1);
 		sl_pnlFind.putConstraint(SpringLayout.SOUTH, lblSearch, -23, SpringLayout.NORTH, label_1);
@@ -288,7 +289,7 @@ public class LostObjectView extends JPanel {
 		txtValue.setColumns(10);
 		pnlFind.add(txtValue);
 		
-		JButton btnFind = new JButton("Find object");
+		JButton btnFind = new JButton(Language.getString("search"));
 		btnFind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				table.clearSelection();
@@ -300,7 +301,7 @@ public class LostObjectView extends JPanel {
 		sl_pnlFind.putConstraint(SpringLayout.EAST, btnFind, -10, SpringLayout.EAST, pnlFind);
 		pnlFind.add(btnFind);
 		
-		JButton btnBack = new JButton("Back to Menu");
+		JButton btnBack = new JButton(Language.getString("return"));
 		springLayout.putConstraint(SpringLayout.NORTH, btnBack, -33, SpringLayout.SOUTH, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnBack, 0, SpringLayout.SOUTH, btnSearch);
 		btnBack.addActionListener(new ActionListener() {

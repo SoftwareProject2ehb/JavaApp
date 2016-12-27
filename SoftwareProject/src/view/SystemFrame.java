@@ -48,6 +48,7 @@ public class SystemFrame extends JFrame {
 		contentPane.add(CustomerController.create_customer);
 		contentPane.add(CustomerController.find_customer);
 		contentPane.add(LoginController.login);
+		//contentPane.add(SelectStationController.selectStation);
 		contentPane.add(ActionMenuController.action_menu);
 		contentPane.add(ActionMenuController.account_info);
 		contentPane.add(SubscriptionController.buy_subscription);
@@ -67,6 +68,7 @@ public class SystemFrame extends JFrame {
 		card_layout.addLayoutComponent(CustomerController.create_customer, "CREATE_CUSTOMER");
 		card_layout.addLayoutComponent(CustomerController.find_customer, "FIND_CUSTOMER");
 		card_layout.addLayoutComponent(LoginController.login, "LOGIN");
+		//card_layout.addLayoutComponent(SelectStationController.selectStation, "SELECT_STATION");
 		card_layout.addLayoutComponent(ActionMenuController.action_menu, "ACTION_MENU");
 		card_layout.addLayoutComponent(ActionMenuController.account_info, "ACCOUNT_INFO");
 		card_layout.addLayoutComponent(SubscriptionController.buy_subscription, "BUY_SUBSCRIPTION");

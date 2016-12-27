@@ -11,6 +11,10 @@ public static SearchRouteView search_route;
 		RouteController.search_route = search_route;
 	}
 	
+	public static void refresh() {
+		RouteController.search_route = null;
+	}
+	
 	public static void switchToSearchRouteView() {
 		FrameController.getFrame().switchTo("SEARCH_ROUTE");
 		FrameController.changeSize(750, 300);
