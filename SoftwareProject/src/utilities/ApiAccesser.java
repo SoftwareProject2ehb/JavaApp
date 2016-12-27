@@ -1,21 +1,17 @@
 package utilities;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.*;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import java.io.*;
 import org.json.*;
-
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import model.RouteStation;
 
 public abstract class ApiAccesser {
+	
+	private static String currentFrom;
+	private static String currentTo;
 	
 	/*
 	 *Sites die ik gebruikt heb voor referentie:
@@ -39,39 +35,46 @@ public abstract class ApiAccesser {
 	// Deze methode opent de connectie met de api en geeft een json object terug met behulp van de hiervoor vermelde methode readAll.
 	  public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 		  URLConnection openConnection = new URL(url).openConnection();
-		  
+		  JSONObject json;
 		  // Deze code is van belang omdat dit de aanvraagt maskeert alsof we het via een browser vragen en
 		  // voorkomt de 403 error.
 			openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
 			InputStream is = openConnection.getInputStream();
+			Cacher.retrieve(currentFrom, currentTo);
 	    try {
 	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 	      String jsonText = readAll(rd);
-	      JSONObject json = new JSONObject(jsonText);
-	      return json;
+	      Cacher.cache(jsonText, currentFrom, currentTo);
+	      json = new JSONObject(jsonText);
+	      currentFrom = "";
+	      currentTo = "";
 	    } finally {
 	      is.close();
 	    }
+	    return json;
 	  }
 	  
-	  public static JSONObject readJsonFromLocal(){
+	  public static String readJsonToCache(String from, String to) throws MalformedURLException, IOException
+	  {
+		  String url = "https://traintracks.online/api/Route/" + from + "/" + to + "/";
+		  String jsonText = null;
+		  URLConnection openConnection = new URL(url).openConnection();
+		  openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
+		  InputStream is = openConnection.getInputStream();
 		  
-		  JSONObject jsonn = null;
-	      BufferedReader rdd;
-		try {
-				rdd = new BufferedReader(new FileReader("offline_files/offlinejsondoc.json"));
-				String jsonText = readAll(rdd);
-				jsonn = new JSONObject(jsonText);
-				return jsonn;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		  try {
+		      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+		      jsonText = readAll(rd);
+		  } catch (IOException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	     
-	   return jsonn;
+		} finally {
+			  try {
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
+		 return jsonText;
 	  }
 	  
 	 // Ik moet hier nog een stuk code schrijven om efficiënt informatie te verkijgen van het json object.
@@ -83,6 +86,9 @@ public abstract class ApiAccesser {
 	  // dus het returntype zal meer iets zijn zoals ArrayList<RouteStop>
 	  public static void opvragingRoute(String a, String b, ArrayList<ArrayList<RouteStation>> routes, ArrayList<ArrayList<String>> transfer_stations, Date date){
 		 
+		  currentFrom = a;
+		  currentTo = b;
+		  
 		  ArrayList<RouteStation> stops = new ArrayList<RouteStation>();
 		  ArrayList<String> transfers_per_route = new ArrayList<String>();
 		  ArrayList<JSONArray> stations = new ArrayList<JSONArray>();

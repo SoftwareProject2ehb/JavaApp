@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import controller.ActionMenuController;
 import controller.SubscriptionController;
 import data_control.SubscriptionDAO;
+import utilities.Language;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -32,7 +33,7 @@ public class FindSubscriptionView extends JPanel {
 		setLayout(springLayout);
 		
 		
-		String col[] = {"ID","Type","Price", "Customer ID", "StartStation", "EndStation", "StartDate", "EndDate", "Active"};
+		String col[] = {Language.getString("id"),Language.getString("subtype"),Language.getString("price"), Language.getString("customerid"), Language.getString("startstation"), Language.getString("endstation"), Language.getString("startdate"), Language.getString("enddate"), Language.getString("active")};
 
 		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 		
@@ -44,19 +45,19 @@ public class FindSubscriptionView extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 		
-		JRadioButton rdbtnSearchById = new JRadioButton("Search op ID");
+		JRadioButton rdbtnSearchById = new JRadioButton(Language.getString("searchbyid"));
 		springLayout.putConstraint(SpringLayout.WEST, rdbtnSearchById, 10, SpringLayout.WEST, this);
 		buttonGroup.add(rdbtnSearchById);
 		springLayout.putConstraint(SpringLayout.NORTH, rdbtnSearchById, 8, SpringLayout.SOUTH, textField);
 		add(rdbtnSearchById);
 		
-		JRadioButton rdbtnSearchByCustomer = new JRadioButton("Search op ID van klant");
+		JRadioButton rdbtnSearchByCustomer = new JRadioButton(Language.getString("searchbycustomerid"));
 		springLayout.putConstraint(SpringLayout.WEST, rdbtnSearchByCustomer, 10, SpringLayout.WEST, this);
 		buttonGroup.add(rdbtnSearchByCustomer);
 		springLayout.putConstraint(SpringLayout.NORTH, rdbtnSearchByCustomer, 6, SpringLayout.SOUTH, rdbtnSearchById);
 		add(rdbtnSearchByCustomer);
 		
-		JButton btnFind = new JButton("Zoek Abonnement");
+		JButton btnFind = new JButton(Language.getString("search"));
 		btnFind.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -72,7 +73,7 @@ public class FindSubscriptionView extends JPanel {
 		});
 		add(btnFind);
 		
-		JButton btnCancel = new JButton("Terug naar Menu");
+		JButton btnCancel = new JButton(Language.getString("return"));
 		springLayout.putConstraint(SpringLayout.NORTH, btnFind, 0, SpringLayout.NORTH, btnCancel);
 		springLayout.putConstraint(SpringLayout.NORTH, btnCancel, 6, SpringLayout.SOUTH, rdbtnSearchByCustomer);
 		springLayout.putConstraint(SpringLayout.WEST, btnCancel, 0, SpringLayout.WEST, textField);
