@@ -34,13 +34,15 @@ public abstract class ApiAccesser {
 	
 	// Deze methode opent de connectie met de api en geeft een json object terug met behulp van de hiervoor vermelde methode readAll.
 	  public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+		  System.out.println("readFromUrl");
 		  URLConnection openConnection = new URL(url).openConnection();
 		  JSONObject json;
 		  // Deze code is van belang omdat dit de aanvraagt maskeert alsof we het via een browser vragen en
 		  // voorkomt de 403 error.
 			openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
 			InputStream is = openConnection.getInputStream();
-			Cacher.retrieve(currentFrom, currentTo);
+			String text = Cacher.retrieve(currentFrom, currentTo);
+			json = new JSONObject(text);
 	    try {
 	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 	      String jsonText = readAll(rd);
@@ -89,11 +91,13 @@ public abstract class ApiAccesser {
 		  currentFrom = a;
 		  currentTo = b;
 		  
+		  System.out.println("opvragingRoute: " + currentFrom + " " + currentTo);
+		  
 		  ArrayList<RouteStation> stops = new ArrayList<RouteStation>();
 		  ArrayList<String> transfers_per_route = new ArrayList<String>();
 		  ArrayList<JSONArray> stations = new ArrayList<JSONArray>();
 		  try {
-		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b + "/" + date.getTime() / 1000);
+		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
 		  //JSONObject json_data = ApiAccesser.readJsonFromLocal();
 		  
 		  	
