@@ -182,7 +182,10 @@ public class Route {
 					int m = 1;
 					
 					for (int h=0;h<routes.size();h++) {
-						
+						if (transfer_gevonden == false && h>0 && m==1) {
+							queried_route.clear();
+							break;
+						}
 						if (queried_route_compleet) {
 							break;
 						}

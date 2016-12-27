@@ -231,16 +231,19 @@ public class SearchRouteView extends JPanel {
 	}
 
 	public void getRouteInformation() {
+		/*
 		try {
 			route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem(), DateConverter.convert(txtDatum.getText()));
 			rs = route.getQueriedRoute();
 			tussenstops = route.getRouteEssentials();
 		} catch (ParseException e) {
+		*/
 			route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
 			rs = route.getQueriedRoute();
 			tussenstops = route.getRouteEssentials();
-		}
+		//}
 		
+		route.showQueriedRoute();
 	}
 	
 	public void createButtonListeners() {
