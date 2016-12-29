@@ -25,6 +25,11 @@ public static FindSubscriptionView find_subscription;
 		SubscriptionController.find_subscription = find_subscription;
 	}
 	
+	public static void refresh() {
+		SubscriptionController.buy_subscription = null;
+		SubscriptionController.find_subscription = null;
+	}
+	
 	public static void switchToBuySubscriptionView() {
 		FrameController.getFrame().switchTo("BUY_SUBSCRIPTION");
 		FrameController.changeSize(500, 350);
@@ -118,10 +123,22 @@ public static FindSubscriptionView find_subscription;
 
 	public static void buySubscription() {
 		calculatePrice();
-		buy_subscription.txtPrijs.getText();
+		//Double.valueOf(buy_subscription.txtPrijs.getText());
 		//TODO Fill customer
 		try {
-			SystemController.buySubscription((String) buy_subscription.cbbType.getSelectedItem(), 1, (String) buy_subscription.cbbEindstation.getSelectedItem(), (String) buy_subscription.cbbBeginstation.getSelectedItem(), DateConverter.timestampConverter(buy_subscription.txtBegindatum.getText()), DateConverter.timestampConverter(buy_subscription.txtBegindatum.getText()));
+			String eindDatum = buy_subscription.txtBegindatum.getText();
+			String month = eindDatum.substring(3,5);
+			String year = eindDatum.substring(6,eindDatum.length());
+			if (Integer.valueOf(month) + Integer.valueOf(buy_subscription.cbbGeldigheid.getSelectedItem().toString().substring(0, buy_subscription.cbbGeldigheid.getSelectedItem().toString().indexOf("."))) > 12) {
+				Integer bufferMonth = new Integer(Integer.valueOf(month) + Integer.valueOf(buy_subscription.cbbGeldigheid.getSelectedItem().toString().substring(0, buy_subscription.cbbGeldigheid.getSelectedItem().toString().indexOf("."))) - 12);
+				Integer bufferYear = new Integer(year);
+				month = String.format("%02d", bufferMonth);
+				year = (++bufferYear).toString();
+				
+			}
+			eindDatum = eindDatum.substring(0,2) + "/" + month + "/" + year;
+			
+			SystemController.buySubscription((String) buy_subscription.cbbType.getSelectedItem(), Double.valueOf(buy_subscription.txtPrijs.getText()),CustomerController.useKlantId() ,(String) buy_subscription.cbbEindstation.getSelectedItem(), (String) buy_subscription.cbbBeginstation.getSelectedItem(), DateConverter.convert(buy_subscription.txtBegindatum.getText()), DateConverter.convert(eindDatum));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

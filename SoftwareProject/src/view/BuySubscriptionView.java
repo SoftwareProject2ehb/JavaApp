@@ -19,6 +19,7 @@ import controller.SubscriptionController;
 import controller.SystemController;
 import data_control.SubscriptionPriceDAO;
 import utilities.DateConverter;
+import utilities.Language;
 import utilities.PatternFilter;
 
 import java.awt.event.ActionListener;
@@ -46,18 +47,18 @@ public class BuySubscriptionView extends JPanel {
 		SpringLayout sl_contentPane = new SpringLayout();
 		this.setLayout(sl_contentPane);
 		
-		JLabel lblAbonnementKopen = new JLabel("Abonnement Kopen");
+		JLabel lblAbonnementKopen = new JLabel(Language.getString("subtitle"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblAbonnementKopen, 10, SpringLayout.NORTH, this);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblAbonnementKopen, 20, SpringLayout.WEST, this);
 		lblAbonnementKopen.setFont(new Font("Arial Black", Font.PLAIN, 17));
 		this.add(lblAbonnementKopen);
 		
-		JLabel lblBeginstation = new JLabel("Beginstation");
+		JLabel lblBeginstation = new JLabel(Language.getString("startstation"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblBeginstation, 33, SpringLayout.SOUTH, lblAbonnementKopen);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblBeginstation, 20, SpringLayout.WEST, this);
 		add(lblBeginstation);
 		
-		JLabel lblEindstation = new JLabel("Eindstation");
+		JLabel lblEindstation = new JLabel(Language.getString("endstation"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblEindstation, 16, SpringLayout.SOUTH, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblEindstation, 0, SpringLayout.EAST, lblBeginstation);
 		add(lblEindstation);
@@ -76,12 +77,12 @@ public class BuySubscriptionView extends JPanel {
 		cbbEindstation.setModel(new DefaultComboBoxModel(SystemController.getStations()));
 		add(cbbEindstation);
 		
-		JLabel lblGeldigheid = new JLabel("Geldigheid");
+		JLabel lblGeldigheid = new JLabel(Language.getString("validity"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblGeldigheid, 0, SpringLayout.NORTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblGeldigheid, 30, SpringLayout.EAST, cbbEindstation);
 		add(lblGeldigheid);
 		
-		JLabel lblTypeAbonnement = new JLabel("Type abon.");
+		JLabel lblTypeAbonnement = new JLabel(Language.getString("subtype"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblTypeAbonnement, 16, SpringLayout.SOUTH, lblEindstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblTypeAbonnement, 0, SpringLayout.EAST, lblBeginstation);
 		add(lblTypeAbonnement);
@@ -93,7 +94,7 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, cbbType, 106, SpringLayout.EAST, lblTypeAbonnement);
 		add(cbbType);
 		
-		JButton btnOfferte = new JButton("Offerte");
+		JButton btnOfferte = new JButton(Language.getString("priceoffer"));
 		btnOfferte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SubscriptionController.calculatePrice();
@@ -103,7 +104,7 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnOfferte, 0, SpringLayout.EAST, cbbBeginstation);
 		add(btnOfferte);
 		
-		JButton btnKoopTicket = new JButton("Koop Abonnement");
+		JButton btnKoopTicket = new JButton(Language.getString("buysub"));
 		btnKoopTicket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SubscriptionController.buySubscription();
@@ -120,7 +121,7 @@ public class BuySubscriptionView extends JPanel {
 		txtPrijs.setColumns(10);
 		txtPrijs.setEditable(false);
 		
-		JLabel lblPrijs = new JLabel("Prijs");
+		JLabel lblPrijs = new JLabel(Language.getString("price"));
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblPrijs, 0, SpringLayout.WEST, lblGeldigheid);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPrijs, -6, SpringLayout.NORTH, txtPrijs);
 		add(lblPrijs);
@@ -133,7 +134,7 @@ public class BuySubscriptionView extends JPanel {
 		add(txtBegindatum);
 		txtBegindatum.setColumns(10);
 		
-		JLabel lblBegindatum = new JLabel("Begindatum");
+		JLabel lblBegindatum = new JLabel(Language.getString("startdate"));
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtBegindatum, 6, SpringLayout.EAST, lblBegindatum);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblBegindatum, 0, SpringLayout.SOUTH, lblBeginstation);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblBegindatum, 0, SpringLayout.EAST, lblGeldigheid);
@@ -145,12 +146,12 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, cbbGeldigheid, 0, SpringLayout.SOUTH, lblEindstation);
 		add(cbbGeldigheid);
 		
-		JLabel lblMaand = new JLabel("maand");
+		JLabel lblMaand = new JLabel(Language.getString("month"));
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblMaand, 6, SpringLayout.EAST, cbbGeldigheid);
 		sl_contentPane.putConstraint(SpringLayout.VERTICAL_CENTER, lblMaand, 0, SpringLayout.VERTICAL_CENTER, lblEindstation);
 		add(lblMaand);
 		
-		JButton btnTerugNaarMenu = new JButton("Terug naar Menu");
+		JButton btnTerugNaarMenu = new JButton(Language.getString("return"));
 		btnTerugNaarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ActionMenuController.switchToActionMenuView();
@@ -160,7 +161,7 @@ public class BuySubscriptionView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 10, SpringLayout.WEST, this);
 		add(btnTerugNaarMenu);
 		
-		JLabel lblGebruiker = new JLabel("Gebruiker");
+		JLabel lblGebruiker = new JLabel(Language.getString("user"));
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblGebruiker, 0, SpringLayout.SOUTH, lblTypeAbonnement);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblGebruiker, 0, SpringLayout.EAST, lblGeldigheid);
 		add(lblGebruiker);
@@ -170,6 +171,7 @@ public class BuySubscriptionView extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				CustomerController.switchToFindCustomerView();
+				
 			}
 		});
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtGebruiker, 0, SpringLayout.WEST, txtBegindatum);
@@ -192,9 +194,9 @@ public class BuySubscriptionView extends JPanel {
 			public void itemStateChanged(ItemEvent event) {
 				if (event.getStateChange() == ItemEvent.SELECTED) {
 					if (event.getItem().toString().equals("1.0"))
-						lblMaand.setText("maand");
+						lblMaand.setText(Language.getString("month"));
 					else 
-						lblMaand.setText("maanden");
+						lblMaand.setText(Language.getString("months"));
 				}
 			}
 		});

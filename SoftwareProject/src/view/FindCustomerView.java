@@ -18,6 +18,7 @@ import controller.CustomerController;
 import controller.LostObjectController;
 import controller.SubscriptionController;
 import controller.SystemController;
+import utilities.Language;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -45,13 +46,13 @@ public class FindCustomerView extends JPanel {
 		SpringLayout sl_contentPane = new SpringLayout();
 		this.setLayout(sl_contentPane);
 		
-		JLabel lblKlantZoeken = new JLabel("Klant Zoeken");
+		JLabel lblKlantZoeken = new JLabel(Language.getString("searchtitle"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblKlantZoeken, 10, SpringLayout.NORTH, this);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblKlantZoeken, 20, SpringLayout.WEST, this);
 		lblKlantZoeken.setFont(new Font("Arial Black", Font.PLAIN, 17));
 		this.add(lblKlantZoeken);
 		
-		JLabel lblVoornaam = new JLabel("Voornaam:");
+		JLabel lblVoornaam = new JLabel(Language.getString("firstname"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblVoornaam, 26, SpringLayout.SOUTH, lblKlantZoeken);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblVoornaam, 39, SpringLayout.WEST, this);
 		this.add(lblVoornaam);
@@ -64,15 +65,15 @@ public class FindCustomerView extends JPanel {
 		this.add(txtVoornaam);
 		txtVoornaam.setColumns(10);
 		
-		JLabel lblAchternaam = new JLabel("Achternaam:");
+		JLabel lblAchternaam = new JLabel(Language.getString("lastname"));
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblAchternaam, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblAchternaam);
 		
-		JLabel lblEmail = new JLabel("E-mail:");
+		JLabel lblEmail = new JLabel(Language.getString("email"));
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblEmail, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblEmail);
 		
-		JLabel lblTelN = new JLabel("Tel. N.:");
+		JLabel lblTelN = new JLabel(Language.getString("telephone"));
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblTelN, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblTelN);
 		
@@ -107,7 +108,7 @@ public class FindCustomerView extends JPanel {
 		this.add(txtStraatnaam);
 		txtStraatnaam.setColumns(10);
 		
-		JLabel lblStraatnaam = new JLabel("Straatnaam:");
+		JLabel lblStraatnaam = new JLabel(Language.getString("street"));
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblStraatnaam, 0, SpringLayout.SOUTH, txtStraatnaam);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblStraatnaam, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblStraatnaam);
@@ -119,7 +120,7 @@ public class FindCustomerView extends JPanel {
 		this.add(txtPostcode);
 		txtPostcode.setColumns(10);
 		
-		JLabel lblPostcode = new JLabel("Postcode:");
+		JLabel lblPostcode = new JLabel(Language.getString("zip"));
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPostcode, 0, SpringLayout.SOUTH, txtPostcode);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblPostcode, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblPostcode);
@@ -131,12 +132,12 @@ public class FindCustomerView extends JPanel {
 		this.add(txtGemeente);
 		txtGemeente.setColumns(10);
 		
-		JLabel lblGemeente = new JLabel("Gemeente:");
+		JLabel lblGemeente = new JLabel(Language.getString("city"));
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblGemeente, 0, SpringLayout.SOUTH, txtGemeente);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblGemeente, 0, SpringLayout.EAST, lblVoornaam);
 		this.add(lblGemeente);
 		
-		JButton btnTerugNaarMenu = new JButton("Terug naar Menu");
+		JButton btnTerugNaarMenu = new JButton(Language.getString("return"));
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnTerugNaarMenu, -10, SpringLayout.SOUTH, this);
 		btnTerugNaarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -146,15 +147,15 @@ public class FindCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnTerugNaarMenu, 0, SpringLayout.WEST, lblKlantZoeken);
 		this.add(btnTerugNaarMenu);
 		
-		JButton btnKlantGebruiken = new JButton("Klant Gebruiken");
+		JButton btnKlantGebruiken = new JButton(Language.getString("usecustomer"));
 		btnKlantGebruiken.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(table.getSelectedRow() == -1)
 				{
 					JOptionPane.showMessageDialog(null,
-						    "Search a customer and select the customer in the table",
-						    "Something happened",
+							Language.getString("customermessageone"),
+							Language.getString("customermessagetwo"),
 						    JOptionPane.ERROR_MESSAGE);
 				}
 				else{
@@ -166,12 +167,12 @@ public class FindCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnKlantGebruiken, 0, SpringLayout.NORTH, btnTerugNaarMenu);
 		this.add(btnKlantGebruiken);
 		
-		JLabel lblGevondenKlanten = new JLabel("Gevonden klanten:");
+		JLabel lblGevondenKlanten = new JLabel(Language.getString("foundcustomers"));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblGevondenKlanten, 18, SpringLayout.NORTH, this);
 		sl_contentPane.putConstraint(SpringLayout.WEST, lblGevondenKlanten, 204, SpringLayout.EAST, lblKlantZoeken);
 		this.add(lblGevondenKlanten);
 		
-		JButton btnMaakNieuweKlant = new JButton("Maak Nieuwe Klant");
+		JButton btnMaakNieuweKlant = new JButton(Language.getString("newcustomer"));
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnKlantGebruiken, 6, SpringLayout.EAST, btnMaakNieuweKlant);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnMaakNieuweKlant, 0, SpringLayout.NORTH, btnTerugNaarMenu);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnMaakNieuweKlant, 6, SpringLayout.EAST, btnTerugNaarMenu);
@@ -181,7 +182,7 @@ public class FindCustomerView extends JPanel {
 			}
 		});
 		add(btnMaakNieuweKlant);
-		String colname[] = {"ID","FirstName","LastName","Address","Email","Phone"};
+		String colname[] = {Language.getString("id"),Language.getString("firstname"),Language.getString("lastname"),Language.getString("address"),Language.getString("email"),Language.getString("telephone")};
 		DefaultTableModel tableModel = new DefaultTableModel(colname,0)
 		{
 			@Override
@@ -206,7 +207,7 @@ public class FindCustomerView extends JPanel {
 		table.setModel(tableModel);
 		
 		
-		JButton btnSearch = new JButton("Search");
+		JButton btnSearch = new JButton(Language.getString("search"));
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnSearch, 15, SpringLayout.EAST, btnKlantGebruiken);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnSearch, -20, SpringLayout.EAST, this);
 		btnSearch.addMouseListener(new MouseAdapter() {
