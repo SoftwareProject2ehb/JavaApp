@@ -21,6 +21,16 @@ public class Route {
 	private String begin_station;
 	private String eind_station;
 	
+	public Route(String begin_station, String eind_station, Date time) {
+		routes = new ArrayList<ArrayList<RouteStation>>();
+		transfer_stations = new ArrayList<ArrayList<String>>();
+		this.begin_station = begin_station;
+		this.eind_station = eind_station;
+		
+		ApiAccesser.opvragingRoute(begin_station, eind_station, routes, transfer_stations, time);
+		fillQueriedRouteWithTransfers();
+	}
+	
 	public Route(String begin_station, String eind_station) {
 		routes = new ArrayList<ArrayList<RouteStation>>();
 		transfer_stations = new ArrayList<ArrayList<String>>();
@@ -28,7 +38,7 @@ public class Route {
 		this.eind_station = eind_station;
 		
 		//Hier vul ik de route datamember op met alle mogelijke routes.
-		ApiAccesser.opvragingRoute(begin_station, eind_station, routes, transfer_stations);
+		ApiAccesser.opvragingRoute(begin_station, eind_station, routes, transfer_stations, new Date());
 		//Vervolgens filter ik die routes met de volgende methode om een route te bekomen met alle relevante stations met eventuele transfers.
 		fillQueriedRouteWithTransfers();
 	}
@@ -66,6 +76,11 @@ public class Route {
 	public boolean fillQueriedRouteWithoutTransfers() {
 		boolean eind = false;
 		boolean start = false;
+		
+		if (routes.isEmpty()) {
+			return false;
+		}
+		
 		/*
 		 * In kort ga ik hier eerst op zoek naar de startstation
 		 * eens ik die gevonden heb vul ik de stations erna in de queried_route list
@@ -132,6 +147,10 @@ public class Route {
 			boolean transfer_gevonden = false;
 			int route_index = -1;
 			int station_index = -1;
+			
+			if (routes.isEmpty()) {
+				return;
+			}
 			
 			/*
 			 * Zelfde werkwijze als de methode zonder transfers met het verschil dat ik eerst op zoek ga naar de eindstation
@@ -240,6 +259,9 @@ public class Route {
 	public double calculateDistance() {
 		double distance = 0;
 		
+		if (queried_route.isEmpty()) {
+			return 0;
+		}
 		
 		
 		String station_1_coordinates = queried_route.get(0).getCoordinates();
@@ -260,6 +282,10 @@ public class Route {
 	
 	public double calculateTime() {
 		Timestamp station_1_time = null, station_2_time = null;
+		
+		if (queried_route.isEmpty()) {
+			return 0.0;
+		}
 		
 			try {
 				station_1_time = DateConverter.timestampConverter(queried_route.get(0).getDepartureTime().replaceAll("T", " "));
@@ -291,6 +317,10 @@ public class Route {
 	public String calculateTimeProper() {
 		Timestamp station_1_time = null, station_2_time = null;
 		
+		if (queried_route.isEmpty()) {
+			return "Geen route";
+		}
+		
 			try {
 				station_1_time = DateConverter.timestampConverter(queried_route.get(0).getDepartureTime().replaceAll("T", " "));
 				station_2_time = DateConverter.timestampConverter(queried_route.get(queried_route.size()-1).getArrivalTime().replaceAll("T", " "));
@@ -319,6 +349,11 @@ public class Route {
 	
 	public ArrayList<RouteStation> getRouteEssentials() {
 		ArrayList<RouteStation> essentials = new ArrayList<RouteStation>();
+		
+		if (queried_route.isEmpty()) {
+			return null;
+		}
+		
 		essentials.add(queried_route.get(0));
 		for (int i=1;i<queried_route.size();i++) {
 			if (queried_route.get(i).getNaam().toLowerCase().contains(queried_route.get(i-1).getNaam().toLowerCase())) {

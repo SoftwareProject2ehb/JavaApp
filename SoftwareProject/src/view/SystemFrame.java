@@ -49,11 +49,13 @@ public class SystemFrame extends JFrame {
 		contentPane.add(CustomerController.find_customer);
 		contentPane.add(LoginController.login);
 		contentPane.add(ActionMenuController.action_menu);
+		contentPane.add(ActionMenuController.account_info);
 		contentPane.add(SubscriptionController.buy_subscription);
 		contentPane.add(SubscriptionController.find_subscription);
 		contentPane.add(TicketController.buy_ticket);
 		contentPane.add(ConfigurationController.create_user);
 		contentPane.add(ConfigurationController.find_user);
+		contentPane.add(ConfigurationController.edit_password_view);
 		contentPane.add(ConfigurationController.edit_user);
 		contentPane.add(ConfigurationController.price_config);
 		contentPane.add(ConfigurationController.report);
@@ -66,12 +68,14 @@ public class SystemFrame extends JFrame {
 		card_layout.addLayoutComponent(CustomerController.find_customer, "FIND_CUSTOMER");
 		card_layout.addLayoutComponent(LoginController.login, "LOGIN");
 		card_layout.addLayoutComponent(ActionMenuController.action_menu, "ACTION_MENU");
+		card_layout.addLayoutComponent(ActionMenuController.account_info, "ACCOUNT_INFO");
 		card_layout.addLayoutComponent(SubscriptionController.buy_subscription, "BUY_SUBSCRIPTION");
 		card_layout.addLayoutComponent(SubscriptionController.find_subscription, "FIND_SUBSCRIPTION");
 		card_layout.addLayoutComponent(TicketController.buy_ticket, "BUY_TICKET");
 		card_layout.addLayoutComponent(ConfigurationController.create_user, "CREATE_USER");
 		card_layout.addLayoutComponent(ConfigurationController.edit_user, "EDIT_USER");
 		card_layout.addLayoutComponent(ConfigurationController.find_user, "FIND_USER");
+		card_layout.addLayoutComponent(ConfigurationController.edit_password_view, "EDIT_PASSWORD");
 		card_layout.addLayoutComponent(ConfigurationController.price_config, "PRICE_CONFIG");
 		card_layout.addLayoutComponent(ConfigurationController.report, "REPORT");
 		card_layout.addLayoutComponent(ConfigurationController.configuration, "CONFIGURATION");

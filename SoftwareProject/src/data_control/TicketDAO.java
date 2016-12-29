@@ -17,7 +17,7 @@ public class TicketDAO extends BaseDAO {
 		ResultSet res = null;
 		int id = -1;
 		
-		String sql = "INSERT INTO Ticket(type, oneWayTicket, price, startsation, endstation, date) VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO Ticket(type, oneWayTicket, price, startstation, endstation, date) VALUES(?,?,?,?,?,?)";
 		
 		try {
 

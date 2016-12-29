@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import data_control.UserDAO;
 import model.Price.betalingsType;
@@ -19,13 +20,15 @@ public class ConfigurationController {
 	public static UserView find_user;
 	public static CreateUserView create_user;
 	public static EditUserView edit_user;
+	public static EditPasswordView edit_password_view;
 	public static ConfigurationView configuration;
 	
-	public static void initialize(ReportView report, PriceConfigView price_config, UserView find_user, EditUserView edit_user, CreateUserView create_user, ConfigurationView configuration) {
+	public static void initialize(ReportView report, PriceConfigView price_config, UserView find_user, EditUserView edit_user, CreateUserView create_user,EditPasswordView edit_password_view , ConfigurationView configuration) {
 		ConfigurationController.report = report;
 		ConfigurationController.price_config = price_config;
 		ConfigurationController.find_user = find_user;
 		ConfigurationController.edit_user = edit_user;
+		ConfigurationController.edit_password_view = edit_password_view;
 		ConfigurationController.create_user = create_user;
 		ConfigurationController.configuration = configuration;
 	}
@@ -40,9 +43,14 @@ public class ConfigurationController {
 	}
 	
 	public static void switchToFindUserView() {
-		FrameController.changeSize(665,430);
+		FrameController.changeSize(800,450);
 		find_user.refreshTable(find_user.tableModel);
 		FrameController.getFrame().switchTo("FIND_USER");
+	}
+	public static void switchToEditPasswordView() {
+		edit_password_view.txtPass1.setText("");
+		edit_password_view.txtPass2.setText("");
+		FrameController.getFrame().switchTo("EDIT_PASSWORD");
 	}
 	
 	public static void switchToCreateUserView() {
@@ -75,8 +83,13 @@ public class ConfigurationController {
 	public static User getSelectedUser(){
 		int column = 0;
 		int row = find_user.table.getSelectedRow();
-		int value = Integer.parseInt(find_user.table.getModel().getValueAt(row, column).toString());
-		User user = UserDAO.findUserById(value);
+		User user = null;
+		if (row == -1){ // no row selected 
+			JOptionPane.showMessageDialog(find_user, "No row was selected");
+		}else{
+			int value = Integer.parseInt(find_user.table.getModel().getValueAt(row, column).toString());
+			user = UserDAO.findUserById(value);
+		}
 		return user;
 	}
 	
@@ -112,26 +125,45 @@ public class ConfigurationController {
 		if (chosenRole == "ADMIN") {
 			rol = Role.ADMIN;
 		}
-		//TODO empty fields check
-		SystemController.addUser(voornaam,achternaam,email,phone, rol, street, number, bus, postalCode, city, country);
-		create_user.txtVoornaam.setText("");
-		create_user.txtAchternaam.setText("");
-		create_user.txtEmail.setText("");
-		create_user.txtPhone.setText("");
-		create_user.txtStreet.setText("");
-		create_user.txtNumber.setText("");
-		create_user.txtBus.setText("");
-		create_user.txtPostalCode.setText("");
-		create_user.txtCity.setText("");
-		create_user.txtCountry.setText("");
-		switchToFindUserView();
+		if(allFieldsEmptyCreate()){
+			SystemController.addUser(voornaam,achternaam,email,phone, rol, street, number, bus, postalCode, city, country);
+			create_user.txtVoornaam.setText("");
+			create_user.txtAchternaam.setText("");
+			create_user.txtEmail.setText("");
+			create_user.txtPhone.setText("");
+			create_user.txtStreet.setText("");
+			create_user.txtNumber.setText("");
+			create_user.txtBus.setText("");
+			create_user.txtPostalCode.setText("");
+			create_user.txtCity.setText("");
+			create_user.txtCountry.setText("");
+			switchToFindUserView();
+		}		
 	}
+	public static boolean allFieldsEmptyCreate() {
+		ArrayList<JTextField> array = create_user.getTextFields();
+			for (JTextField textbox : array) {
+	            if (textbox.getText().trim().isEmpty()) {
+	            	JOptionPane.showMessageDialog(create_user, "Field(s) missing !");
+	                return false;
+	            }
+	        }
+        return true;
+    }
+	public static boolean AllFieldsEmptyEdit() {
+		ArrayList<JTextField> array = edit_user.getTextFields();
+        for (JTextField textbox : array) {
+            if (textbox.getText().trim().isEmpty() ) {
+            	JOptionPane.showMessageDialog(edit_user, "Field(s) missing !");
+                return false;
+            }
+        }
+        return true;
+    }
 		
 	public static void editUser() throws InvalidParameterException{
 		Role rol = null;
 		Object chosenRole = edit_user.comboRole.getSelectedItem();
-		String password = null;
-		
 		String voornaam = edit_user.txtVoornaam.getText();
 		String achternaam = edit_user.txtAchternaam.getText();
 		String email = edit_user.txtEmail.getText();
@@ -151,14 +183,15 @@ public class ConfigurationController {
 			rol = Role.ADMIN;
 		}
 		if(pass1.equals(pass2) || pass1 == null && pass2 == null || pass1 == "" && pass2 == ""){
-			password = pass1;
-			SystemController.editUser(voornaam,achternaam,email,phone, rol,street,number,bus,postalCode,city,country,password);
-			edit_user.txtPass1.setText("");
-			edit_user.txtPass2.setText("");
-			switchToFindUserView();
+			if(AllFieldsEmptyEdit()){
+				SystemController.editUser(voornaam,achternaam,email,phone, rol,street,number,bus,postalCode,city,country,pass1);
+				edit_user.txtPass1.setText("");
+				edit_user.txtPass2.setText("");
+				switchToFindUserView();
+			}
 		}
 		else {
-			JOptionPane.showMessageDialog(edit_user, "Passwords do not match!");
+			JOptionPane.showMessageDialog(edit_user, "Passwords don't match !");
 		}
 		//TODO empty fields check
 		
@@ -189,6 +222,18 @@ public class ConfigurationController {
 		if(chosenAttribute == "Role"){
 			fUser = UserDAO.FindUser.role;
 		}
+		if(chosenAttribute == "Straat"){
+			fUser = UserDAO.FindUser.street;
+		}
+		if(chosenAttribute == "Postcode"){
+			fUser = UserDAO.FindUser.postalcode;
+		}
+		if(chosenAttribute == "Land"){
+			fUser = UserDAO.FindUser.country;
+		}
+		if(chosenAttribute == "Stad"){
+			fUser = UserDAO.FindUser.city;
+		}
 		//TODO empty field check
 		find_user.tableModel.setRowCount(0);
 		ArrayList<User> users = SystemController.searchUser(txtSearch, fUser);
@@ -197,13 +242,60 @@ public class ConfigurationController {
 			String voornaam = users.get(i).getFirstName();
 			String achternaam = users.get(i).getLastName();
 			String email = users.get(i).getEmail();
-			String phone = users.get(i).getPhone();
 			String login = users.get(i).getLogin();
 			String role = users.get(i).getRolen();
+			String city = users.get(i).getCity();
 					   
-			Object[] data = {id,voornaam,achternaam,email,phone,login,role};
+			Object[] data = {id,voornaam,achternaam,email,city,login,role};
 			find_user.tableModel.addRow(data);
 		}
+	}
+	
+	public static ArrayList<User> findUser() throws InvalidParameterException{
+		UserDAO.FindUser fd = null;
+		ArrayList<User> ArrU = null;
+		Object find = find_user.searchAtt.getSelectedItem();
+		if (find == "ID") {
+			fd = UserDAO.FindUser.ID;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "FIRSTNAME") {
+			fd = UserDAO.FindUser.first_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "LASTNAME") {
+			fd = UserDAO.FindUser.last_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "EMAIL") {
+			fd = UserDAO.FindUser.last_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "PHONE") {
+			fd = UserDAO.FindUser.last_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		if (find == "USERNAME") {
+			fd = UserDAO.FindUser.last_name;
+			ArrU = UserDAO.findUserByAttribute(fd, find_user.txtSearch.getText());
+		}
+		return ArrU;
+	}
+	public static void editDefaultPassword(){
+		User user  = SystemController.system.logged_user;
+		String pass1 = String.valueOf(edit_password_view.txtPass1.getPassword());
+		String pass2 = String.valueOf(edit_password_view.txtPass2.getPassword());
+		if(pass1.equals(pass2) || pass1 == null && pass2 == null || pass1 == "" && pass2 == ""){
+			user.setPassword(Encryptor.encrypt(pass1));
+			UserDAO.updateUser(user);
+			edit_password_view.txtPass1.setText("");
+			edit_password_view.txtPass2.setText("");
+			ActionMenuController.switchToActionMenuView();
+		}
+		else {
+			JOptionPane.showMessageDialog(edit_password_view, "Passwords do not match!");
+		}
+		
 	}
 	
 	public static void setInactiveUser(){
@@ -215,7 +307,6 @@ public class ConfigurationController {
 	    		find_user.refreshTable(find_user.tableModel);
 	        }
 	}
-	
 	public static void resetPassword(){
     	User u = getSelectedUser();
     	String password = u.getFirstName() + "_" + u.getLastName();

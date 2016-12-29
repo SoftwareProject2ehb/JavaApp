@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import controller.ConfigurationController;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class CreateUserView extends JPanel {
@@ -27,7 +28,6 @@ public class CreateUserView extends JPanel {
 	public JTextField txtPostalCode;
 	public JTextField txtCity;
 	public JComboBox role;
-	
 	/**
 	 * Create the panel.
 	 */
@@ -41,17 +41,17 @@ public class CreateUserView extends JPanel {
 		lblCreateUser.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblCreateUser);
 		
-		JLabel lblNewLabel = new JLabel("Voornaam: ");
+		JLabel lblNewLabel = new JLabel("Voornaam *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel, 31, SpringLayout.SOUTH, lblCreateUser);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel, 69, SpringLayout.WEST, this);
 		add(lblNewLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("Email: ");
+		JLabel lblNewLabel_2 = new JLabel("Email *: ");
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_2, 0, SpringLayout.WEST, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_2, -727, SpringLayout.EAST, this);
 		add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Telefoon Nr.: ");
+		JLabel lblNewLabel_3 = new JLabel("Telefoon Nr. *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 21, SpringLayout.SOUTH, lblNewLabel_2);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_3, 0, SpringLayout.WEST, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.EAST, lblNewLabel_3, 37, SpringLayout.EAST, lblCreateUser);
@@ -121,29 +121,29 @@ public class CreateUserView extends JPanel {
 		});
 		add(btnCreate);
 		
-		JLabel lblStreet = new JLabel("Street: ");
+		JLabel lblStreet = new JLabel("Street *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblStreet, 0, SpringLayout.NORTH, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.WEST, lblStreet, 34, SpringLayout.EAST, txtVoornaam);
 		add(lblStreet);
 		
-		JLabel lblNewLabel_4 = new JLabel("Number: ");
+		JLabel lblNewLabel_4 = new JLabel("Number *: ");
 		springLayout.putConstraint(SpringLayout.WEST, txtAchternaam, -239, SpringLayout.WEST, lblNewLabel_4);
 		springLayout.putConstraint(SpringLayout.EAST, txtAchternaam, -34, SpringLayout.WEST, lblNewLabel_4);
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_4, 25, SpringLayout.SOUTH, lblStreet);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_4, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_7 = new JLabel("Postalcode: ");
+		JLabel lblNewLabel_7 = new JLabel("Postalcode *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_7, 0, SpringLayout.NORTH, lblNewLabel_2);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_7, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_7);
 		
-		JLabel lblNewLabel_8 = new JLabel("City: ");
+		JLabel lblNewLabel_8 = new JLabel("City *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_8, 21, SpringLayout.SOUTH, lblNewLabel_7);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_8, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_8);
 		
-		JLabel lblNewLabel_9 = new JLabel("Country: ");
+		JLabel lblNewLabel_9 = new JLabel("Country *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_9, 0, SpringLayout.NORTH, lblNewLabel_5);
 		springLayout.putConstraint(SpringLayout.WEST, lblNewLabel_9, 0, SpringLayout.WEST, lblStreet);
 		add(lblNewLabel_9);
@@ -191,7 +191,7 @@ public class CreateUserView extends JPanel {
 		add(txtCity);
 		txtCity.setColumns(10);
 		
-		JLabel lblAchternaam = new JLabel("Achternaam: ");
+		JLabel lblAchternaam = new JLabel("Achternaam *: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewLabel_2, 22, SpringLayout.SOUTH, lblAchternaam);
 		springLayout.putConstraint(SpringLayout.NORTH, lblAchternaam, 24, SpringLayout.SOUTH, lblNewLabel);
 		springLayout.putConstraint(SpringLayout.WEST, lblAchternaam, 0, SpringLayout.WEST, lblNewLabel);
@@ -202,5 +202,20 @@ public class CreateUserView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, lblBus, 22, SpringLayout.SOUTH, txtStreet);
 		springLayout.putConstraint(SpringLayout.WEST, lblBus, 18, SpringLayout.EAST, txtNumber);
 		add(lblBus);
+	}
+	
+	
+	public ArrayList<JTextField> getTextFields() {
+		ArrayList<JTextField> array = new ArrayList<JTextField>();
+		array.add(txtVoornaam);
+		array.add(txtAchternaam);
+		array.add(txtEmail);
+		array.add(txtPhone);
+		array.add(txtStreet);
+		array.add(txtNumber);
+		array.add(txtCountry);
+		array.add(txtCity);
+		
+		return array;
 	}
 }

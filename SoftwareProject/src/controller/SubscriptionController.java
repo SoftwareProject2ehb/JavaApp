@@ -1,11 +1,14 @@
 package controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import data_control.*;
 import model.*;
+import utilities.DateConverter;
 import view.*;
 
 public class SubscriptionController {
@@ -24,6 +27,7 @@ public static FindSubscriptionView find_subscription;
 	
 	public static void switchToBuySubscriptionView() {
 		FrameController.getFrame().switchTo("BUY_SUBSCRIPTION");
+		FrameController.changeSize(500, 350);
 	}
 	
 	public static void switchToFindSubscriptionView() {
@@ -35,7 +39,12 @@ public static FindSubscriptionView find_subscription;
 		double prijs;
 		SubscriptionPrice sp = SubscriptionPriceDAO.findSubPriceByTypeAndLength((String) buy_subscription.cbbType.getSelectedItem(), (Double) buy_subscription.cbbGeldigheid.getSelectedItem());
 		
-		Route route = new Route ((String) buy_subscription.cbbBeginstation.getSelectedItem(), (String) buy_subscription.cbbEindstation.getSelectedItem());
+		Route route;
+		try {
+			route = new Route ((String) buy_subscription.cbbBeginstation.getSelectedItem(), (String) buy_subscription.cbbEindstation.getSelectedItem(), DateConverter.convert(buy_subscription.txtBegindatum.getText()));
+		} catch (ParseException e) {
+			route = new Route ((String) buy_subscription.cbbBeginstation.getSelectedItem(), (String) buy_subscription.cbbEindstation.getSelectedItem());
+		}
 		
 		switch(sp.getTypeBetaling()) {
 		case PER_KM:
@@ -55,7 +64,12 @@ public static FindSubscriptionView find_subscription;
 			break;
 		}
 		
-		buy_subscription.txtPrijs.setText(String.format("%.2f", prijs));
+		if (route.getQueriedRoute().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Kon geen prijs berekenen, de route is niet gevonden.");
+		} else {
+			buy_subscription.txtPrijs.setText(String.format("%.2f", prijs));
+		}
+		
 	}
 	
 	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model) {
@@ -94,5 +108,23 @@ public static FindSubscriptionView find_subscription;
 	}
 	public static void setGebruikerField(String naam) {
 		buy_subscription.txtGebruiker.setText(naam);
+	}
+	
+	public static void setInfo(String begin, String eind, String datum) {
+		buy_subscription.cbbBeginstation.setSelectedItem(begin);
+		buy_subscription.cbbEindstation.setSelectedItem(eind);
+		buy_subscription.txtBegindatum.setText(datum);
+	}
+
+	public static void buySubscription() {
+		calculatePrice();
+		buy_subscription.txtPrijs.getText();
+		//TODO Fill customer
+		try {
+			SystemController.buySubscription((String) buy_subscription.cbbType.getSelectedItem(), 1, (String) buy_subscription.cbbEindstation.getSelectedItem(), (String) buy_subscription.cbbBeginstation.getSelectedItem(), DateConverter.timestampConverter(buy_subscription.txtBegindatum.getText()), DateConverter.timestampConverter(buy_subscription.txtBegindatum.getText()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

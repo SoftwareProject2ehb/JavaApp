@@ -5,6 +5,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -43,20 +44,21 @@ public abstract class CustomerController {
 		String community;
 		
 		for (int i = 0; i < 7; i++) {
-			if (array.get(i) == null || array.get(i).getText() == "") {
+			if (array.get(i) == null || array.get(i).getText().equals("")) {
 				throw new InvalidParameterException("Een van de gegeven waarden voor de klant is ongeldig.");
 			}
 		}
 		
-		first_name = array.get(1).getText();
-		last_name = array.get(2).getText();
-		email = array.get(3).getText();
-		phone_number = array.get(4).getText();
-		street_name = array.get(5).getText();
-		postal_code = array.get(6).getText();
-		community = array.get(7).getText();
+		first_name = array.get(0).getText();
+		last_name = array.get(1).getText();
+		email = array.get(2).getText();
+		phone_number = array.get(3).getText();
+		street_name = array.get(4).getText();
+		postal_code = array.get(5).getText();
+		community = array.get(6).getText();
 		
 		SystemController.createCustomer(first_name, last_name, street_name + ", " + postal_code + " " + community, email, phone_number);
+		JOptionPane.showConfirmDialog(null, "Er is een klant toegevoegd met naam " + first_name + " " + last_name + ".", "Klant toegevoegd", JOptionPane.WARNING_MESSAGE);
 	}
 	
 public static void findCustomers(DefaultTableModel tableModel) {

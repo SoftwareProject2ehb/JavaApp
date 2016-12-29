@@ -81,13 +81,13 @@ public abstract class ApiAccesser {
 	  // Een route tussen a en b bevat veel meer informatie dan alleen de naam van het station dus
 	  // ik ga nog een klasse moeten aanmaken die dat informatie kan opvangen 
 	  // dus het returntype zal meer iets zijn zoals ArrayList<RouteStop>
-	  public static void opvragingRoute(String a, String b, ArrayList<ArrayList<RouteStation>> routes, ArrayList<ArrayList<String>> transfer_stations){
+	  public static void opvragingRoute(String a, String b, ArrayList<ArrayList<RouteStation>> routes, ArrayList<ArrayList<String>> transfer_stations, Date date){
 		 
 		  ArrayList<RouteStation> stops = new ArrayList<RouteStation>();
 		  ArrayList<String> transfers_per_route = new ArrayList<String>();
 		  ArrayList<JSONArray> stations = new ArrayList<JSONArray>();
 		  try {
-		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
+		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b + "/" + date.getTime() / 1000);
 		  //JSONObject json_data = ApiAccesser.readJsonFromLocal();
 		  
 		  	
@@ -127,17 +127,11 @@ public abstract class ApiAccesser {
 			transfer_stations.add(new ArrayList<String>(transfers_per_route));
 			
 		  } catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (IOException e) {
+				stops.removeAll(stops);
+				transfer_stations.removeAll(transfer_stations);
 			}
-
-			
-			
-		  
-
 	  }
 
 }
