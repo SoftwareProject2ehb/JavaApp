@@ -215,37 +215,37 @@ public class ConfigurationController {
 		String txtSearch = find_user.txtSearch.getText();
 		UserDAO.FindUser fUser = null;
 		Object chosenAttribute = find_user.searchAtt.getSelectedItem();
-		if(chosenAttribute == "ID"){
+		if(chosenAttribute == Language.getString("id")){
 			fUser = UserDAO.FindUser.ID;
 		}
-		if(chosenAttribute == "Voornaam"){
+		if(chosenAttribute == Language.getString("firstname")){
 			fUser = UserDAO.FindUser.first_name;
 		}
-		if(chosenAttribute == "Achternaam"){
+		if(chosenAttribute == Language.getString("lastname")){
 			fUser = UserDAO.FindUser.last_name;
 		}
-		if(chosenAttribute == "Email"){
+		if(chosenAttribute == Language.getString("email")){
 			fUser = UserDAO.FindUser.email;
 		}
-		if(chosenAttribute == "Telefoon Nr."){
+		if(chosenAttribute == Language.getString("telephone")){
 			fUser = UserDAO.FindUser.phone;
 		}
-		if(chosenAttribute == "Username"){
+		if(chosenAttribute == Language.getString("username")){
 			fUser = UserDAO.FindUser.login;
 		}
-		if(chosenAttribute == "Role"){
+		if(chosenAttribute == Language.getString("role")){
 			fUser = UserDAO.FindUser.role;
 		}
-		if(chosenAttribute == "Straat"){
+		if(chosenAttribute == Language.getString("street")){
 			fUser = UserDAO.FindUser.street;
 		}
-		if(chosenAttribute == "Postcode"){
+		if(chosenAttribute == Language.getString("zip")){
 			fUser = UserDAO.FindUser.postalcode;
 		}
-		if(chosenAttribute == "Land"){
+		if(chosenAttribute == Language.getString("country")){
 			fUser = UserDAO.FindUser.country;
 		}
-		if(chosenAttribute == "Stad"){
+		if(chosenAttribute == Language.getString("city")){
 			fUser = UserDAO.FindUser.city;
 		}
 		//TODO empty field check
