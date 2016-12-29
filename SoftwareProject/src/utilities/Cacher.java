@@ -54,7 +54,7 @@ public abstract class Cacher {
 			try {
 				cache(ApiAccesser.readJsonToCache(stationOfSystem, s), stationOfSystem, s);
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Cachen van route niet gelukt voor de route: " + stationOfSystem + " - " + s);
 			}
 		}
 	}
