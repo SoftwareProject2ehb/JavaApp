@@ -171,6 +171,7 @@ public class BuySubscriptionView extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				CustomerController.switchToFindCustomerView();
+				
 			}
 		});
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtGebruiker, 0, SpringLayout.WEST, txtBegindatum);

@@ -223,7 +223,7 @@ public class SearchRouteView extends JPanel {
 			createPanel();
 			createScrollPane();
 		}
-		FrameController.changeSize(750, 300);
+		FrameController.changeSize(800, 300);
 	}
 	
 	public void deleteShowRoute() {

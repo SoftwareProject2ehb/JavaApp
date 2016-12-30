@@ -1,1 +1,1 @@
-Een bestand om de cache folder weer te geven op GitHub!
+Leeg bestand om mapje cache weer te geven op GitHub!
