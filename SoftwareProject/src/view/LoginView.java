@@ -104,7 +104,7 @@ public class LoginView extends JPanel {
 		});
 		add(btnSluiten);
 		
-		springLayout.putConstraint(SpringLayout.NORTH, lblStatus, 6, SpringLayout.SOUTH, lblPaswoord);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblStatus, -6, SpringLayout.NORTH, lblGebruikersnaam);
 		springLayout.putConstraint(SpringLayout.WEST, lblStatus, 0, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, lblStatus, 0, SpringLayout.EAST, this);
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
