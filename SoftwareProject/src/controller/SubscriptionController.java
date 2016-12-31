@@ -12,9 +12,10 @@ import utilities.DateConverter;
 import view.*;
 
 public class SubscriptionController {
+	public static final String EURO = "\u20ac";
 
-public static BuySubscriptionView buy_subscription;
-public static FindSubscriptionView find_subscription;
+	public static BuySubscriptionView buy_subscription;
+	public static FindSubscriptionView find_subscription;
 
 	public SubscriptionController() {
 		
@@ -40,7 +41,7 @@ public static FindSubscriptionView find_subscription;
 		FrameController.changeSize(765, 415);
 	}
 	
-	public static void calculatePrice() {
+	public static double calculatePrice() {
 		double prijs;
 		SubscriptionPrice sp = SubscriptionPriceDAO.findSubPriceByTypeAndLength((String) buy_subscription.cbbType.getSelectedItem(), (Double) buy_subscription.cbbGeldigheid.getSelectedItem());
 		
@@ -72,9 +73,10 @@ public static FindSubscriptionView find_subscription;
 		if (route.getQueriedRoute().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Kon geen prijs berekenen, de route is niet gevonden.");
 		} else {
-			buy_subscription.txtPrijs.setText(String.format("%.2f", prijs));
+			buy_subscription.txtPrijs.setText(String.format("%.2f", prijs) + " " + EURO);
 		}
 		
+		return prijs;
 	}
 	
 	public static DefaultTableModel buildTableModel(ArrayList<Subscription> subList, DefaultTableModel model) {
@@ -122,7 +124,7 @@ public static FindSubscriptionView find_subscription;
 	}
 
 	public static void buySubscription() {
-		calculatePrice();
+		double prijs = calculatePrice();
 		//Double.valueOf(buy_subscription.txtPrijs.getText());
 		//TODO Fill customer
 		try {
@@ -138,10 +140,9 @@ public static FindSubscriptionView find_subscription;
 			}
 			eindDatum = eindDatum.substring(0,2) + "/" + month + "/" + year;
 			
-			SystemController.buySubscription((String) buy_subscription.cbbType.getSelectedItem(), Double.valueOf(buy_subscription.txtPrijs.getText()),CustomerController.useKlantId() ,(String) buy_subscription.cbbEindstation.getSelectedItem(), (String) buy_subscription.cbbBeginstation.getSelectedItem(), DateConverter.convert(buy_subscription.txtBegindatum.getText()), DateConverter.convert(eindDatum));
+			SystemController.buySubscription((String) buy_subscription.cbbType.getSelectedItem(), prijs,CustomerController.useKlantId() ,(String) buy_subscription.cbbEindstation.getSelectedItem(), (String) buy_subscription.cbbBeginstation.getSelectedItem(), DateConverter.convert(buy_subscription.txtBegindatum.getText()), DateConverter.convert(eindDatum));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Kon geen abonnement kopen.");
 		}
 	}
 }

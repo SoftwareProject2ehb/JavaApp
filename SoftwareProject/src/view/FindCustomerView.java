@@ -13,12 +13,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
+import javax.swing.text.AbstractDocument;
 
 import controller.CustomerController;
 import controller.LostObjectController;
 import controller.SubscriptionController;
 import controller.SystemController;
 import utilities.Language;
+import utilities.PatternFilter;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -100,6 +102,7 @@ public class FindCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.WEST, txtTelN, 0, SpringLayout.WEST, txtVoornaam);
 		this.add(txtTelN);
 		txtTelN.setColumns(10);
+		((AbstractDocument) txtTelN.getDocument()).setDocumentFilter(PatternFilter.cijferFilter);
 		
 		txtStraatnaam = new JTextField();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, txtStraatnaam, 6, SpringLayout.SOUTH, txtTelN);
@@ -119,6 +122,7 @@ public class FindCustomerView extends JPanel {
 		sl_contentPane.putConstraint(SpringLayout.EAST, txtPostcode, 0, SpringLayout.EAST, txtVoornaam);
 		this.add(txtPostcode);
 		txtPostcode.setColumns(10);
+		((AbstractDocument) txtPostcode.getDocument()).setDocumentFilter(PatternFilter.cijferFilter);
 		
 		JLabel lblPostcode = new JLabel(Language.getString("zip"));
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblPostcode, 0, SpringLayout.SOUTH, txtPostcode);

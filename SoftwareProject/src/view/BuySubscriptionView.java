@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
@@ -107,7 +108,8 @@ public class BuySubscriptionView extends JPanel {
 		JButton btnKoopTicket = new JButton(Language.getString("buysub"));
 		btnKoopTicket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SubscriptionController.buySubscription();
+				if (checkTextFields())
+					SubscriptionController.buySubscription();
 			}
 		});
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnKoopTicket, 13, SpringLayout.SOUTH, btnOfferte);
@@ -200,5 +202,53 @@ public class BuySubscriptionView extends JPanel {
 				}
 			}
 		});
+	}
+	
+	public boolean checkTextFields() {
+		boolean check = true;
+		
+		if (!checkDatum())
+		{
+			txtBegindatum.setBackground(Color.RED);
+			check = false;
+		}
+		else
+			txtBegindatum.setBackground(Color.WHITE);
+		
+		return check;
+	}
+	
+	public boolean checkDatum() {
+		if (txtBegindatum.getText().equals("") || txtBegindatum.getText().length() != 10)
+			return false;
+		
+		String day = txtBegindatum.getText().substring(0, 2);
+		if(toInteger(day) > 31 || toInteger(day) < 1)
+			return false;
+		
+		if (!txtBegindatum.getText().substring(2, 3).equals("/"))
+			return false;
+		
+		String month = txtBegindatum.getText().substring(3, 5);
+		if(toInteger(month) > 12 || toInteger(month) < 1)
+			return false;
+		
+		if (!txtBegindatum.getText().substring(5, 6).equals("/"))
+			return false;
+		
+		String year = txtBegindatum.getText().substring(6, 10);
+		if(toInteger(year) < 1)
+			return false;
+		
+		return true;
+	}
+	
+	public int toInteger(String s) {
+		try {
+			return Integer.parseInt(s);
+		}
+		catch(Exception e) {
+			return -1;
+		}
 	}
 }
