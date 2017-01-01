@@ -162,6 +162,7 @@ public class PriceConfigView extends JPanel {
 		txtPrijs = new JTextField();
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, txtPrijs, 0, SpringLayout.VERTICAL_CENTER, comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, txtPrijs, 6, SpringLayout.EAST, lblEuro);
+		
 		txtPrijs.setText(Double.toString(priceList.get(index).getCostPerUnit()));
 		txtPrijs.setColumns(4);
 		((AbstractDocument) txtPrijs.getDocument()).setDocumentFilter(PatternFilter.prijsFilter);
@@ -261,6 +262,7 @@ public class PriceConfigView extends JPanel {
 		sub_txtPrijs = new JTextField();
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, sub_txtPrijs, 0, SpringLayout.VERTICAL_CENTER, sub_comboBox_soort);
 		springLayout.putConstraint(SpringLayout.WEST, sub_txtPrijs, 6, SpringLayout.EAST, sub_lblEuro);
+		
 		sub_txtPrijs.setText(Double.toString(subPrice.getCostPerUnit()));
 		sub_txtPrijs.setColumns(4);
 		((AbstractDocument) sub_txtPrijs.getDocument()).setDocumentFilter(PatternFilter.prijsFilter);

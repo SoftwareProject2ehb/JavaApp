@@ -120,9 +120,6 @@ public class Price {
 	}
 
 	public int setTypeBetaling(betalingsType typeBetaling) {
-		/*if (typeBetaling == null)
-			return ErrorCode.NULL_PARAM;*/
-		
 		this.typeBetaling = typeBetaling;
 		return ErrorCode.NO_ERROR;
 	}
