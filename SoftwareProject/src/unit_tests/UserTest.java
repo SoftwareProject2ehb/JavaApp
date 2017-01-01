@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import model.ErrorCode;
 import model.User;
 import model.User.Role;
 
@@ -39,6 +40,8 @@ public class UserTest {
 		String voornaam = "test";
 		test.setFirstName(voornaam);
 		assertEquals(test.getFirstName(), voornaam);
+		assertEquals(test.setFirstName(null), ErrorCode.NULL_PARAM);
+		assertEquals(test.setFirstName(""), ErrorCode.INCORRECT_PARAM);
 	}
 	
 	@Test
@@ -59,6 +62,8 @@ public class UserTest {
 		String testPassword = "pass";
 		test.setPassword(testPassword);
 		assertEquals(test.getPassword(), testPassword);
+		assertEquals(test.setPassword(null), ErrorCode.NULL_PARAM);
+		assertEquals(test.setPassword(""), ErrorCode.INCORRECT_PARAM);
 	}
 	
 	@Test
