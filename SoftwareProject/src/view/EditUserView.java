@@ -154,8 +154,8 @@ public class EditUserView extends JPanel {
 		
 		txtNumber = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, txtNumber, -3, SpringLayout.NORTH, lblNewLabel_1);
-		springLayout.putConstraint(SpringLayout.WEST, txtNumber, 41, SpringLayout.EAST, lblNewLabel_5);
-		springLayout.putConstraint(SpringLayout.EAST, txtNumber, -22, SpringLayout.WEST, lblNewLabel_9);
+		springLayout.putConstraint(SpringLayout.WEST, txtNumber, 0, SpringLayout.WEST, txtStreet);
+		springLayout.putConstraint(SpringLayout.EAST, txtNumber, -6, SpringLayout.WEST, lblNewLabel_9);
 		add(txtNumber);
 		txtNumber.setColumns(10);
 		
@@ -168,32 +168,32 @@ public class EditUserView extends JPanel {
 		
 		txtPostalCode = new JTextField();
 		springLayout.putConstraint(SpringLayout.SOUTH, txtBus, -20, SpringLayout.NORTH, txtPostalCode);
-		springLayout.putConstraint(SpringLayout.NORTH, txtPostalCode, -3, SpringLayout.NORTH, lblNewLabel_2);
+		springLayout.putConstraint(SpringLayout.EAST, txtPostalCode, 0, SpringLayout.EAST, txtStreet);
 		springLayout.putConstraint(SpringLayout.WEST, txtPostalCode, 0, SpringLayout.WEST, txtStreet);
-		springLayout.putConstraint(SpringLayout.EAST, txtPostalCode, -97, SpringLayout.EAST, this);
+		springLayout.putConstraint(SpringLayout.NORTH, txtPostalCode, -3, SpringLayout.NORTH, lblNewLabel_2);
 		add(txtPostalCode);
 		txtPostalCode.setColumns(10);
 		
 		txtCity = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, txtCity, -3, SpringLayout.NORTH, lblNewLabel_3);
 		springLayout.putConstraint(SpringLayout.WEST, txtCity, 0, SpringLayout.WEST, txtStreet);
-		springLayout.putConstraint(SpringLayout.EAST, txtCity, -97, SpringLayout.EAST, this);
+		springLayout.putConstraint(SpringLayout.EAST, txtCity, 0, SpringLayout.EAST, txtStreet);
 		add(txtCity);
 		txtCity.setColumns(10);
 		
 		txtCountry = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, btnTerug, 33, SpringLayout.SOUTH, txtCountry);
-		springLayout.putConstraint(SpringLayout.WEST, txtCountry, 39, SpringLayout.EAST, lblNewLabel_8);
-		springLayout.putConstraint(SpringLayout.EAST, txtCountry, -97, SpringLayout.EAST, this);
+		springLayout.putConstraint(SpringLayout.EAST, txtCountry, 0, SpringLayout.EAST, txtStreet);
 		springLayout.putConstraint(SpringLayout.NORTH, txtCountry, -3, SpringLayout.NORTH, lblNewLabel_4);
+		springLayout.putConstraint(SpringLayout.WEST, txtCountry, 0, SpringLayout.WEST, txtStreet);
 		add(txtCountry);
 		txtCountry.setColumns(10);
 		
 		JButton btnEdit = new JButton(Language.getString("change"));
-		springLayout.putConstraint(SpringLayout.EAST, btnTerug, -82, SpringLayout.WEST, btnEdit);
-		springLayout.putConstraint(SpringLayout.WEST, btnEdit, 649, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.EAST, btnEdit, -97, SpringLayout.EAST, this);
-		springLayout.putConstraint(SpringLayout.NORTH, btnEdit, 33, SpringLayout.SOUTH, txtCountry);
+		springLayout.putConstraint(SpringLayout.EAST, btnTerug, -83, SpringLayout.WEST, btnEdit);
+		springLayout.putConstraint(SpringLayout.WEST, btnEdit, 644, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.NORTH, btnEdit, 0, SpringLayout.NORTH, btnTerug);
+		springLayout.putConstraint(SpringLayout.EAST, btnEdit, 0, SpringLayout.EAST, txtStreet);
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConfigurationController.editUser();
@@ -213,7 +213,6 @@ public class EditUserView extends JPanel {
 		add(lblNewPassword);
 		
 		JLabel lblConfirmPassword = new JLabel(Language.getString("confirmpassword"));
-		springLayout.putConstraint(SpringLayout.WEST, btnTerug, 311, SpringLayout.EAST, lblConfirmPassword);
 		springLayout.putConstraint(SpringLayout.NORTH, lblNewPassword, -33, SpringLayout.NORTH, lblConfirmPassword);
 		springLayout.putConstraint(SpringLayout.SOUTH, lblNewPassword, -19, SpringLayout.NORTH, lblConfirmPassword);
 		springLayout.putConstraint(SpringLayout.NORTH, lblConfirmPassword, -55, SpringLayout.SOUTH, this);
@@ -222,6 +221,7 @@ public class EditUserView extends JPanel {
 		add(lblConfirmPassword);
 		
 		txtPass1 = new JPasswordField();
+		springLayout.putConstraint(SpringLayout.WEST, btnTerug, 54, SpringLayout.EAST, txtPass1);
 		springLayout.putConstraint(SpringLayout.NORTH, txtPass1, -3, SpringLayout.NORTH, lblNewPassword);
 		springLayout.putConstraint(SpringLayout.WEST, txtPass1, 0, SpringLayout.WEST, txtVoornaam);
 		springLayout.putConstraint(SpringLayout.EAST, txtPass1, 0, SpringLayout.EAST, txtVoornaam);

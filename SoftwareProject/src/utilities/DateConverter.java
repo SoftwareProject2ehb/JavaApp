@@ -23,10 +23,15 @@ public class DateConverter {
 	
 	public static String getDate() {
 		String d = "";
-		
-		d += LocalDate.now().getDayOfMonth();
+		if (LocalDate.now().getDayOfMonth() < 10)
+			d += "0" + LocalDate.now().getDayOfMonth();
+		else
+			d += LocalDate.now().getDayOfMonth();
 		d += "/";
-		d += LocalDate.now().getMonthValue();
+		if ( LocalDate.now().getMonthValue() < 10)
+			d += "0" +  LocalDate.now().getMonthValue();
+		else
+			d += LocalDate.now().getMonthValue();
 		d += "/";
 		d += LocalDate.now().getYear();
 		

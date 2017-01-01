@@ -85,10 +85,10 @@ public class ConfigurationController {
 		edit_user.txtCity.setText(user.getCity());
 		edit_user.txtCountry.setText(user.getCountry());
 		if(user.getRolen() == "ADMIN"){
-			edit_user.comboRole.setSelectedItem("ADMIN");
+			edit_user.comboRole.setSelectedItem(Language.getString("admin"));
 		}
 		else{
-			edit_user.comboRole.setSelectedItem("USER");
+			edit_user.comboRole.setSelectedItem(Language.getString("user"));
 		}
 		FrameController.changeSize(850,350);
 		FrameController.getFrame().switchTo("EDIT_USER");
@@ -133,10 +133,10 @@ public class ConfigurationController {
 		String country = create_user.txtCountry.getText();
 		Role rol = null;
 		Object chosenRole = create_user.role.getSelectedItem();
-		if (chosenRole == "USER") {
+		if (chosenRole == Language.getString("user")) {
 			rol = Role.USER;
 		}
-		if (chosenRole == "ADMIN") {
+		if (chosenRole == Language.getString("admin")) {
 			rol = Role.ADMIN;
 		}
 		if(allFieldsEmptyCreate()){
@@ -190,10 +190,10 @@ public class ConfigurationController {
 		String country = edit_user.txtCountry.getText();
 		String pass1 = String.valueOf(edit_user.txtPass1.getPassword());
 		String pass2 = String.valueOf(edit_user.txtPass2.getPassword());
-		if (chosenRole == "USER") {
+		if (chosenRole == Language.getString("user")) {
 			rol = Role.USER;
 		}
-		if (chosenRole == "ADMIN") {
+		if (chosenRole == Language.getString("admin")) {
 			rol = Role.ADMIN;
 		}
 		if(pass1.equals(pass2) || pass1 == null && pass2 == null || pass1 == "" && pass2 == ""){

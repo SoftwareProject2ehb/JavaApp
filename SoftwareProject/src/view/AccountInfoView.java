@@ -101,7 +101,7 @@ public class AccountInfoView extends JPanel {
 				ConfigurationController.switchToEditPasswordView();
 			}
 		});
-		btnChangePassword.setBounds(282, 22, 144, 29);
+		btnChangePassword.setBounds(252, 22, 174, 29);
 		add(btnChangePassword);
 				
 
