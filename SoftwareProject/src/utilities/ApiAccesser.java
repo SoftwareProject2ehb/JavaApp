@@ -110,6 +110,26 @@ public abstract class ApiAccesser {
 		 return jsonText;
 	  }
 	  
+	public static JSONObject readJsonFromLocal(String a, String b){
+			  
+			  JSONObject jsonn = null;
+		      BufferedReader rdd;
+			try {
+					rdd = new BufferedReader(new FileReader("offline_files/offlinejsondoc_" + a.toLowerCase() + "_" + b.toLowerCase() + ".json"));
+					String jsonText = readAll(rdd);
+					jsonn = new JSONObject(jsonText);
+					return jsonn;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		     
+		   return jsonn;
+		  }	
+	  
 	 // Ik moet hier nog een stuk code schrijven om efficiënt informatie te verkijgen van het json object.
 	 // Ook heb je een aparte json library nodig om dit te laten werken en ik zal die ook uploaden op de drive.
 	  
@@ -127,7 +147,7 @@ public abstract class ApiAccesser {
 		  ArrayList<JSONArray> stations = new ArrayList<JSONArray>();
 		  try {
 		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
-		  //JSONObject json_data = ApiAccesser.readJsonFromLocal();
+		  //JSONObject json_data = ApiAccesser.readJsonFromLocal(a,b);
 		  
 		  	
 		  JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
