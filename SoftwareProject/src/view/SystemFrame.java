@@ -16,23 +16,6 @@ public class SystemFrame extends JFrame {
 	private CardLayout card_layout = new CardLayout(0, 0);
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SystemFrame frame = new SystemFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	
-	/**
 	 * Create the frame.
 	 */
 	public SystemFrame() {

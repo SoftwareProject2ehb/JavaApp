@@ -38,15 +38,15 @@ public class ActionMenuView extends JPanel {
 
 		ticket_icon_path = this.getClass().getClassLoader().getResource("ticket.png").getFile();
 		ticket_icon_path = ticket_icon_path.replaceAll("%20", " ");
-		find_icon_path = this.getClass().getClassLoader().getResource("find.png").getFile();
+		find_icon_path = this.getClass().getClassLoader().getResource(Language.getString("findimg")).getFile();
 		find_icon_path = find_icon_path.replaceAll("%20", " ");
 		config_icon_path = this.getClass().getClassLoader().getResource("config.png").getFile();
 		config_icon_path = config_icon_path.replaceAll("%20", " ");
-		subscription_icon_path = this.getClass().getClassLoader().getResource("subscription.png").getFile();
+		subscription_icon_path = this.getClass().getClassLoader().getResource(Language.getString("subimg")).getFile();
 		subscription_icon_path = subscription_icon_path.replaceAll("%20", " ");
-		route_icon_path = this.getClass().getClassLoader().getResource("route.png").getFile();
+		route_icon_path = this.getClass().getClassLoader().getResource(Language.getString("routeimg")).getFile();
 		route_icon_path = route_icon_path.replaceAll("%20", " ");
-		lostobject_icon_path = this.getClass().getClassLoader().getResource("lostobjects.png").getFile();
+		lostobject_icon_path = this.getClass().getClassLoader().getResource(Language.getString("lostimg")).getFile();
 		lostobject_icon_path = lostobject_icon_path.replaceAll("%20", " ");
 		
 		SpringLayout springLayout = new SpringLayout();

@@ -29,11 +29,11 @@ public class ConfigurationView extends JPanel {
 	 * Create the panel.
 	 */
 	public ConfigurationView() {
-		users_icon_path = this.getClass().getClassLoader().getResource("users.png").getFile();
+		users_icon_path = this.getClass().getClassLoader().getResource(Language.getString("usersimg")).getFile();
 		users_icon_path = users_icon_path.replaceAll("%20", " ");
-		reports_icon_path = this.getClass().getClassLoader().getResource("reports.png").getFile();
+		reports_icon_path = this.getClass().getClassLoader().getResource(Language.getString("reportsimg")).getFile();
 		reports_icon_path = reports_icon_path.replaceAll("%20", " ");
-		priceconfig_icon_path = this.getClass().getClassLoader().getResource("priceconfig.png").getFile();
+		priceconfig_icon_path = this.getClass().getClassLoader().getResource(Language.getString("priceimg")).getFile();
 		priceconfig_icon_path = priceconfig_icon_path.replaceAll("%20", " ");
 		
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));

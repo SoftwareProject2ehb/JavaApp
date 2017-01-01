@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
@@ -120,7 +121,8 @@ public class BuyTicketView extends JPanel {
 		JButton btnKoopTicket = new JButton(Language.getString("buyticket"));
 		btnKoopTicket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TicketController.buyTicket();
+				if (checkTextFields())
+					TicketController.buyTicket();
 			}
 		});
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnKoopTicket, 13, SpringLayout.SOUTH, btnOfferte);
@@ -148,7 +150,54 @@ public class BuyTicketView extends JPanel {
 			}
 		});
 		add(btnTerugNaarMenu);
-
+	}
+	
+	public boolean checkTextFields() {
+		boolean check = true;
+		
+		if (!checkDatum())
+		{
+			txtDatum.setBackground(Color.RED);
+			check = false;
+		}
+		else
+			txtDatum.setBackground(Color.WHITE);
+		
+		return check;
+	}
+	
+	public boolean checkDatum() {
+		if (txtDatum.getText().equals("") || txtDatum.getText().length() != 10)
+			return false;
+		
+		String day = txtDatum.getText().substring(0, 2);
+		if(toInteger(day) > 31 || toInteger(day) < 1)
+			return false;
+		
+		if (!txtDatum.getText().substring(2, 3).equals("/"))
+			return false;
+		
+		String month = txtDatum.getText().substring(3, 5);
+		if(toInteger(month) > 12 || toInteger(month) < 1)
+			return false;
+		
+		if (!txtDatum.getText().substring(5, 6).equals("/"))
+			return false;
+		
+		String year = txtDatum.getText().substring(6, 10);
+		if(toInteger(year) < 1)
+			return false;
+		
+		return true;
+	}
+	
+	public int toInteger(String s) {
+		try {
+			return Integer.parseInt(s);
+		}
+		catch(Exception e) {
+			return -1;
+		}
 	}
 }
 

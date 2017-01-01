@@ -13,7 +13,9 @@ import javax.swing.text.DocumentFilter;
 public class PatternFilter extends DocumentFilter {
 	public static PatternFilter datumFilter = new PatternFilter("[0-3](\\d(/(0([1-9](/(\\d{0,4})?)?)?)?)?)?|[0-3](\\d(/(1([0-2](/(\\d{0,4})?)?)?)?)?)?");
 	public static PatternFilter uurFilter = new PatternFilter("0?(\\d(:(0(\\d)?)?)?)?|0?(\\d(:([1-5](\\d)?)?)?)?|1(\\d(:(0(\\d)?)?)?)?|1(\\d(:([1-5](\\d)?)?)?)?|2([0-3](:(0(\\d)?)?)?)?|2([0-3](:([1-5](\\d)?)?)?)?");
-	public static PatternFilter prijsFilter = new PatternFilter("\\d+(\\.(\\d{0,2})?)?");		
+	public static PatternFilter prijsFilter = new PatternFilter("\\d+(\\.(\\d{0,2})?)?");
+	public static PatternFilter cijferFilter = new PatternFilter("\\d+");
+	public static PatternFilter letterFilter = new PatternFilter("[a-zA-Z]+");
 	
     // Useful for every kind of input validation !
     // this is the insert pattern

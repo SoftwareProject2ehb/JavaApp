@@ -134,19 +134,6 @@ public class Printer {
 		document.save(title);
 		document.close();
 
-		PrinterJob job = PrinterJob.getPrinterJob();
-		//job.setPrintable(new PDFPageable(document));
-		job.setPageable(new PDFPageable(document));
-		
-		if (job.printDialog()) {
-			try {
-				job.print();
-			} catch (PrinterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
 		Path path = FileSystems.getDefault().getPath(image);
 
 		try {
@@ -154,16 +141,6 @@ public class Printer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		/* Uncomment this to delete pdf after it was printed.
-		Path path2 = FileSystems.getDefault().getPath(title);
-
-		try {
-			Files.delete(path2);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 
 	public static void printSubscription(Subscription s) throws IOException {
@@ -286,25 +263,5 @@ public class Printer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		PrinterJob job = PrinterJob.getPrinterJob();
-		job.setPageable(new PDFPageable(document));
-		if (job.printDialog()) {
-			try {
-				job.print();
-			} catch (PrinterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		/* Uncomment this to delete pdf after it was printed.
-		Path path2 = FileSystems.getDefault().getPath(title);
-
-		try {
-			Files.delete(path2);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 }

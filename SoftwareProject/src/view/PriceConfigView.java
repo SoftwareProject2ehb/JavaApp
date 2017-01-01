@@ -449,11 +449,16 @@ public class PriceConfigView extends JPanel {
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				ConfigurationController.updatePrice();
-				ConfigurationController.updateSubPrice();
-				updatePriceList(index);
-				updateSubPriceList(subTypes_index, subLengths_index);
-				lblInfo.setText(Language.getString("pricemessageone"));
+				if (checkTextFields())
+				{
+					ConfigurationController.updatePrice();
+					ConfigurationController.updateSubPrice();
+					updatePriceList(index);
+					updateSubPriceList(subTypes_index, subLengths_index);
+					lblInfo.setText(Language.getString("pricemessageone"));
+				}
+				else
+					lblInfo.setText("");
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {}
@@ -511,5 +516,76 @@ public class PriceConfigView extends JPanel {
 		subPrice.setCostPerUnit(Double.parseDouble(sub_txtPrijs.getText()));
 		subPrice.setTypeBetaling((betalingsType) sub_comboBox_type.getSelectedItem());
 		return subPrice;
+	}
+	
+	public boolean checkTextFields() {
+		boolean check = true;
+		
+		if (!checkPrice())
+		{
+			txtPrijs.setBackground(Color.RED);
+			check = false;
+		}
+		else
+			txtPrijs.setBackground(Color.WHITE);
+		
+		if (!checkSubPrice())
+		{
+			sub_txtPrijs.setBackground(Color.RED);
+ 			check = false;
+		}
+		else
+			sub_txtPrijs.setBackground(Color.WHITE);
+		
+		return check;
+	}
+	
+	public boolean checkPrice() {
+		int length = txtPrijs.getText().length();
+		
+		if (length < 4)
+			return false;
+		
+		String decimals = txtPrijs.getText().substring(length - 2, length);
+		if (toInteger(decimals) < 0)
+			return false;
+		
+		if (!txtPrijs.getText().substring(length - 3, length - 2).equals("."))
+			return false;
+		
+		String num = txtPrijs.getText().substring(0, length - 3);
+		if (toInteger(num) < 0)
+			return false;
+		
+		return true;
+	}
+	
+	public boolean checkSubPrice() {
+		int length = sub_txtPrijs.getText().length();
+		
+		if (length < 4)
+			return false;
+		
+		String decimals = sub_txtPrijs.getText().substring(length - 2, length);
+		if (toInteger(decimals) < 0)
+			return false;
+		
+		if (!sub_txtPrijs.getText().substring(length - 3, length - 2).equals("."))
+			return false;
+		
+		String num = sub_txtPrijs.getText().substring(0, length - 3);
+		if (toInteger(num) < 0)
+			return false;
+		
+		return true;
+	}
+	
+	public int toInteger(String s) {
+		try {
+			return Integer.parseInt(s);
+		}
+		catch(Exception e) {
+			return -1;
+		}
 	}
 }

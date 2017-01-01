@@ -12,6 +12,7 @@ import utilities.DateConverter;
 import view.BuyTicketView;
 
 public class TicketController {
+	public static final String EURO = "\u20ac";
 
 	public static BuyTicketView buy_ticket;
 	
@@ -51,7 +52,7 @@ public class TicketController {
 		if (price == 0) {
 			JOptionPane.showMessageDialog(null, "Geen route gevonden tussen deze twee stations");
 		} else {
-			buy_ticket.txtPrijs.setText(String.format("%.2f", price));
+			buy_ticket.txtPrijs.setText(String.format("%.2f", price) + " " + EURO);
 		}
 		return price;
 	}

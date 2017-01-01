@@ -154,7 +154,17 @@ public abstract class SystemController {
 	public static String buySubscription(String subscription_type, double prijs,int customerId, String endStation, String startStation, Date startDate, Date endDate) {
 		Subscription subscription;
 		subscription = new Subscription (subscription_type,prijs,customerId,endStation,startStation, startDate,endDate);
-		SubscriptionDAO.createSubscription(subscription);
+		int id = SubscriptionDAO.createSubscription(subscription);
+		subscription.setId(id);
+		
+		if (JOptionPane.showConfirmDialog(null, "Abonnement van " + startStation + " naar " + endStation + " gekocht voor " + EURO + String.valueOf(prijs).substring(0, 4) + ". Wilt u het abonnement afprinten?", "Afprinten?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			try {
+				Printer.printSubscription(subscription);
+			} catch (IOException e) {
+				System.out.println("Probleem met het printen in SystemController.buySubscription");
+			}
+		}
+		
 		return "Abonnement gekocht.";
 	}
 	

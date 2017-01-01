@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -158,8 +159,11 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, btnZoek, 0, SpringLayout.NORTH, btnTerug);
 		btnZoek.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getRouteInformation();
-				showRoute();
+				if(checkTextFields())
+				{
+					getRouteInformation();
+					showRoute();
+				}
 			}
 		});
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, btnZoek, 0, SpringLayout.HORIZONTAL_CENTER, this);
@@ -232,16 +236,17 @@ public class SearchRouteView extends JPanel {
 	}
 
 	public void getRouteInformation() {
+		/*
 		try {
 			route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem(), DateConverter.convert(txtDatum.getText()));
 			rs = route.getQueriedRoute();
 			tussenstops = route.getRouteEssentials();
 		} catch (ParseException e) {
+		*/
 			route = new Route ((String) cbbVan.getSelectedItem(), (String) cbbTot.getSelectedItem());
 			rs = route.getQueriedRoute();
 			tussenstops = route.getRouteEssentials();
-		}
-		
+		//}
 		
 		//route.showQueriedRoute();
 	}
@@ -311,7 +316,12 @@ public class SearchRouteView extends JPanel {
 
 				while(j < rs.size()-1 && !tussenstops.get(i).getNaam().equals(rs.get(j).getNaam())) {
 					gbc.gridy++;
-					panel.add(new JLabel(rs.get(j).getNaam() + " (" + Language.getString("platform") + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+					
+					if(rs.get(j).getArrivalPlatform().equals("null"))
+						panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getDeparturePlatform() + ") " + rs.get(j).getDepartureTime().substring(11,16)), gbc);
+					else
+						panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+					
 					j++;
 				}
 				j++;
@@ -326,7 +336,12 @@ public class SearchRouteView extends JPanel {
 
 			while(j < rs.size()-1) {
 				gbc.gridy++;
-				panel.add(new JLabel(rs.get(j).getNaam() + " (" + Language.getString("platform") + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+				
+				if(rs.get(j).getArrivalPlatform().equals("null"))
+					panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getDeparturePlatform() + ") " + rs.get(j).getDepartureTime().substring(11,16)), gbc);
+				else
+					panel.add(new JLabel(rs.get(j).getNaam() + " (peron " + rs.get(j).getArrivalPlatform() + ") " + rs.get(j).getArrivalTime().substring(11,16)), gbc);
+				
 				j++;
 			}
 		}
@@ -355,5 +370,97 @@ public class SearchRouteView extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 15, SpringLayout.EAST, sep);
 		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 25, SpringLayout.NORTH, this);
 		add(scrollPane);
+	}
+	
+	public boolean checkTextFields() {
+		boolean check = true;
+		
+		if (!checkDatum())
+		{
+			txtDatum.setBackground(Color.RED);
+			check = false;
+		}
+		else
+			txtDatum.setBackground(Color.WHITE);
+		
+		if (!checkHour())
+		{
+			txtUur.setBackground(Color.RED);
+ 			check = false;
+		}
+		else
+			txtUur.setBackground(Color.WHITE);
+		
+		return check;
+	}
+	
+	public boolean checkDatum() {
+		if (txtDatum.getText().equals("") || txtDatum.getText().length() != 10)
+			return false;
+		
+		String day = txtDatum.getText().substring(0, 2);
+		if(toInteger(day) > 31 || toInteger(day) < 1)
+			return false;
+		
+		if (!txtDatum.getText().substring(2, 3).equals("/"))
+			return false;
+		
+		String month = txtDatum.getText().substring(3, 5);
+		if(toInteger(month) > 12 || toInteger(month) < 1)
+			return false;
+		
+		if (!txtDatum.getText().substring(5, 6).equals("/"))
+			return false;
+		
+		String year = txtDatum.getText().substring(6, 10);
+		if(toInteger(year) < 1)
+			return false;
+		
+		return true;
+	}
+	
+	public boolean checkHour() {
+		if (txtUur.getText().equals(""))
+			return false;
+		
+		if (txtUur.getText().length() == 5) 
+		{
+			String uur = txtUur.getText().substring(0, 2);
+			if (toInteger(uur) < 0 || toInteger(uur) > 24)
+				return false;
+			
+			if (!txtUur.getText().substring(2, 3).equals(":"))
+				return false;
+			
+			String minuten = txtUur.getText().substring(3, 5);
+			if (toInteger(minuten) < 0 || toInteger(minuten) > 59)
+				return false;
+		}
+		else if (txtUur.getText().length() == 4) 
+		{
+			String uur = txtUur.getText().substring(0, 1);
+			if (toInteger(uur) < 0 || toInteger(uur) > 9)
+				return false;
+			
+			if (!txtUur.getText().substring(1, 2).equals(":"))
+				return false;
+			
+			String minuten = txtUur.getText().substring(2, 4);
+			if (toInteger(minuten) < 0 || toInteger(minuten) > 59)
+				return false;
+		}
+		else
+			return false;
+		
+		return true;
+	}
+	
+	public int toInteger(String s) {
+		try {
+			return Integer.parseInt(s);
+		}
+		catch(Exception e) {
+			return -1;
+		}
 	}
 }
