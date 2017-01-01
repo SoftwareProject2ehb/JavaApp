@@ -23,7 +23,7 @@ public class Ticket {
 	}
 	
 	public Ticket(String type, boolean oneWayTicket, double price, String start, String end, Date date) {
-		if (type == null || start == null || end == null || price < 0)
+		if (type == null || start == null || end == null || price < 0 || date == null)
 			throw new IllegalArgumentException();
 		
 		this.id = -1;
