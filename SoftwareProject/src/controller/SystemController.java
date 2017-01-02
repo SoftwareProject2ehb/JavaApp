@@ -37,8 +37,8 @@ public abstract class SystemController {
 		Cacher.deleteAll();
 		//Set the station where the system is located and start caching all routes in the background
 		Cacher.setStationOfSystem("Tienen");
-		Thread cacheAll = new Thread(new CacheAllThread());
-		cacheAll.start();
+		//Thread cacheAll = new Thread(new CacheAllThread());
+		//cacheAll.start();
 		//Initialize controllers and views
 	
 		FrameController.getFrame().addWindowListener(new java.awt.event.WindowAdapter() {

@@ -146,8 +146,8 @@ public abstract class ApiAccesser {
 		  ArrayList<String> transfers_per_route = new ArrayList<String>();
 		  ArrayList<JSONArray> stations = new ArrayList<JSONArray>();
 		  try {
-		  JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
-		  //JSONObject json_data = ApiAccesser.readJsonFromLocal(a,b);
+		  //JSONObject json_data = ApiAccesser.readJsonFromUrl("https://traintracks.online/api/Route/" + a + "/" + b);
+		  JSONObject json_data = ApiAccesser.readJsonFromLocal(a,b);
 		  
 		  	
 		  JSONArray transfers_opslag = json_data.getJSONArray("Routes").getJSONObject(0).getJSONArray("TransferStations");
@@ -187,9 +187,6 @@ public abstract class ApiAccesser {
 			
 		  } catch (JSONException e) {
 				e.printStackTrace();
-			} catch (IOException e) {
-				stops.removeAll(stops);
-				transfer_stations.removeAll(transfer_stations);
 			}
 	  }
 }
